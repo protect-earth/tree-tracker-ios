@@ -1,19 +1,8 @@
-//
-//  ViewController.swift
-//  Tree Tracker
-//
-//  Created by Łukasz Mróz on 25/12/2020.
-//
-
 import UIKit
 
-class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+final class ViewController: UIViewController {
+    override func loadView() {
+        view = UIView()
+        view.backgroundColor = .red
     }
-
-
 }
-
