@@ -1,6 +1,6 @@
 import Foundation
 
-protocol TreesNavigating {
+protocol TreesNavigating: AnyObject {
     func triggerAddTreesFlow(completion: @escaping ([Tree]) -> Void)
 }
 
@@ -13,7 +13,7 @@ final class TreesViewModel {
 
     private var api: Api
     private var database: Database
-    private var navigation: TreesNavigating
+    private weak var navigation: TreesNavigating?
 
     init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, navigation: TreesNavigating) {
         self.title = "Tree Tracker"
@@ -46,7 +46,6 @@ final class TreesViewModel {
     }
 
     func sync() {
-        print("syncing...")
         lazilyLoadAllRemoteTreesIfPossible()
     }
 
@@ -84,24 +83,22 @@ final class TreesViewModel {
 
     private func presentTreesFromDatabase() {
         database.fetchAll { [weak self] trees in
-            print("trees to show: \(trees.count)")
             self?.data = [.untitled(id: "trees", trees.map { tree in
                 let id = tree.remoteId.map(String.init) ?? tree.phImageId ?? UUID().uuidString
+                let imageLoader = tree.imageUrl.map { AnyImageLoader(imageLoader: URLImageLoader(url: $0)) }
                 return .tree(id: id,
-                             image: nil,
-                             name: tree.species,
-                             species: tree.species,
-                             supervisor: tree.supervisor,
+                             imageLoader: imageLoader,
+                             info: tree.species,
+                             detail: tree.supervisor,
                              tapAction: Action(id: "tree_action_\(id)") {
                                 print("tap action")
                              })
             })]
-            print("presented \(trees.count) trees")
         }
     }
 
     private func addTrees() {
-        navigation.triggerAddTreesFlow { [weak self] trees in
+        navigation?.triggerAddTreesFlow { [weak self] trees in
             self?.database.save(trees)
         }
     }

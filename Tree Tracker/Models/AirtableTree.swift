@@ -5,6 +5,7 @@ struct AirtableTree: Codable {
     let supervisor: String
     let species: String
     let notes: String?
+    let coordinates: String?
     let imageMd5: String?
     let uploadDate: Date?
     var imageUrl: String?
@@ -14,17 +15,19 @@ struct AirtableTree: Codable {
         case supervisor = "Supervisor"
         case species = "Species"
         case notes = "Notes"
+        case coordinates = "Coordinates"
         case image = "Image"
         case imageMd5 = "ImageMD5"
         case uploadDate = "UploadDate"
         case fields
     }
 
-    init(id: Int?, supervisor: String, species: String, notes: String?, imageUrl: String?, imageMd5: String?, uploadDate: Date?) {
+    init(id: Int?, supervisor: String, species: String, notes: String?, coordinates: String?, imageUrl: String?, imageMd5: String?, uploadDate: Date?) {
         self.id = id
         self.supervisor = supervisor
         self.species = species
         self.notes = notes
+        self.coordinates = coordinates
         self.imageUrl = imageUrl
         self.imageMd5 = imageMd5
         self.uploadDate = uploadDate
@@ -38,6 +41,7 @@ struct AirtableTree: Codable {
         supervisor = try container.decode(String.self, forKey: .supervisor)
         species = try container.decode(String.self, forKey: .species)
         notes = try container.decodeIfPresent(String.self, forKey: .notes)
+        coordinates = try container.decodeIfPresent(String.self, forKey: .coordinates)
         imageMd5 = try container.decodeIfPresent(String.self, forKey: .imageMd5)
         uploadDate = try container.decodeIfPresent(Date.self, forKey: .uploadDate)
 
@@ -45,7 +49,7 @@ struct AirtableTree: Codable {
             let image = try container.decodeIfPresent(AirtableImage.self, forKey: .image)
             imageUrl = image?.url
         } catch {
-            print("error decoding airtable image: \(error)")
+            print("Error decoding airtable image: \(error)")
             imageUrl = nil
         }
     }
@@ -58,11 +62,12 @@ struct AirtableTree: Codable {
         try container.encode(supervisor, forKey: .supervisor)
         try container.encode(species, forKey: .species)
         try container.encode(notes, forKey: .notes)
+        try container.encode(coordinates, forKey: .coordinates)
         try container.encode(imageUrl.map(AirtableImage.init), forKey: .id)
     }
 
     func toTree() -> Tree {
-        return Tree(supervisor: supervisor, species: species, notes: notes, imageMd5: imageMd5, phImageId: nil, remoteId: id, uploadDate: uploadDate)
+        return Tree(supervisor: supervisor, species: species, notes: notes, coordinates: coordinates, imageUrl: imageUrl, imageMd5: imageMd5, phImageId: nil, remoteId: id, uploadDate: uploadDate)
     }
 }
 

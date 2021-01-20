@@ -21,6 +21,7 @@ final class Database {
             try db.create(table: Tree.databaseTableName) { table in
                 table.autoIncrementedPrimaryKey("id")
                 table.column("\(Tree.CodingKeys.notes.stringValue)", .text)
+                table.column("\(Tree.CodingKeys.imageUrl.stringValue)", .text)
                 table.column("\(Tree.CodingKeys.imageMd5.stringValue)", .text)
                 table.column("\(Tree.CodingKeys.phImageId.stringValue)", .text)
                 table.column("\(Tree.CodingKeys.remoteId.stringValue)", .integer)

@@ -1,29 +1,37 @@
 import Photos
 import UIKit
 
-final class PHImageLoader: Hashable {
+final class PHImageLoader: ImageLoader {
     let phImageId: String
 
-    private var asset: PHAsset?
+    var id: String {
+        return phImageId
+    }
+
+    private var assetLocator: PHAssetLocator
     private lazy var manager: PHCachingImageManager = CurrentEnvironment.photosCachingManager
 
     init(phImageId: String) {
         self.phImageId = phImageId
+        self.assetLocator = PHAssetLocator(phImageId: phImageId)
     }
 
     func loadThumbnail(completion: @escaping (UIImage?) -> Void) {
-        guard let asset = findAsset() else { return }
+        guard let asset = assetLocator.asset else {
+            completion(nil)
+            return
+        }
 
         let options = PHImageRequestOptions()
         options.isNetworkAccessAllowed = true
-        options.resizeMode = .fast
+        options.resizeMode = .exact
         options.isSynchronous = false
-        options.deliveryMode = .fastFormat
+        options.deliveryMode = .highQualityFormat
 
         manager.allowsCachingHighQualityImages = false
         manager.requestImage(
             for: asset,
-            targetSize: CGSize(width: 256.0, height: 256.0),
+            targetSize: thumbnailSize,
             contentMode: .aspectFit,
             options: options) { image, info in
             completion(image)
@@ -31,7 +39,10 @@ final class PHImageLoader: Hashable {
     }
 
     func loadHighQualityImage(completion: @escaping (UIImage?) -> Void) {
-        guard let asset = findAsset() else { return }
+        guard let asset = assetLocator.asset else {
+            completion(nil)
+            return
+        }
 
         let options = PHImageRequestOptions()
         options.isNetworkAccessAllowed = true
@@ -42,22 +53,11 @@ final class PHImageLoader: Hashable {
         manager.allowsCachingHighQualityImages = false
         manager.requestImage(
             for: asset,
-            targetSize: CGSize(width: 2048.0, height: 2048.0),
+            targetSize: highQualitySize,
             contentMode: .aspectFit,
             options: options) { image, info in
             completion(image)
         }
-    }
-
-    private func findAsset() -> PHAsset? {
-        let options = PHFetchOptions()
-        options.wantsIncrementalChangeDetails = false
-
-        guard let asset = self.asset ?? PHAsset.fetchAssets(withLocalIdentifiers: [phImageId], options: nil).firstObject else { return nil }
-
-        self.asset = asset
-
-        return asset
     }
 
     static func == (lhs: PHImageLoader, rhs: PHImageLoader) -> Bool {

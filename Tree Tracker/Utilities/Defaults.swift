@@ -14,7 +14,7 @@ struct Defaults {
             userDefaults.string(forKey: key.rawValue)
         }
 
-        set {
+        nonmutating set {
             userDefaults.set(newValue, forKey: key.rawValue)
         }
     }

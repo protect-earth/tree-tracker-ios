@@ -6,25 +6,24 @@ import Combine
 final class TreesViewController: UIViewController {
     let viewModel: TreesViewModel
 
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .insetGrouped)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.automaticallyAdjustsScrollIndicatorInsets = false
-        tableView.contentInsetAdjustmentBehavior = .never
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
+    private lazy var layout: UICollectionViewLayout = {
+        let layout = GridCollectionViewLayout(columns: 4)
+        return layout
+    }()
 
-        return tableView
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.automaticallyAdjustsScrollIndicatorInsets = false
+        collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.backgroundColor = .clear
+        collectionView.alwaysBounceVertical = true
+
+        return collectionView
     }()
 
     private let actionButton: TappableButton = {
-        let button = TappableButton(type: .system)
-        button.backgroundColor = UIColor(named: "SecondaryColor")
-        button.layer.cornerRadius = 8.0
-        button.layer.borderWidth = 1.0
-        button.layer.borderColor = UIColor(named: "SecondaryColor")?.cgColor
-        button.setTitleColor(.black, for: .normal)
-        button.contentEdgeInsets = UIEdgeInsets(top: 10.0, left: 16.0, bottom: 10.0, right: 16.0)
+        let button = RoundedTappableButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
 
         return button
@@ -47,16 +46,16 @@ final class TreesViewController: UIViewController {
         view = UIView()
         view.backgroundColor = UIColor(named: "PrimaryColor")
 
-        tableView.dataSource = dataSource
+        collectionView.dataSource = dataSource
 
-        view.addSubview(tableView)
+        view.addSubview(collectionView)
         view.addSubview(actionButton)
 
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
+            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
 
             actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10.0),
             actionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -106,12 +105,12 @@ final class TreesViewController: UIViewController {
             }
     }
 
-    private func buildDataSource() -> TableViewDataSource<TreesListItem> {
-        return TableViewDataSource(tableView: tableView, cellTypes: [TreeTableViewCell.self]) { tableView, indexPath, model -> UITableViewCell? in
+    private func buildDataSource() -> CollectionViewDataSource<TreesListItem> {
+        return CollectionViewDataSource(collectionView: collectionView, cellTypes: [TreeCollectionViewCell.self]) { collectionView, indexPath, model -> UICollectionViewCell? in
             switch model {
-            case let .tree(_, image, name, species, supervisor, tapAction):
-                let cell = tableView.dequeue(cell: TreeTableViewCell.self, indexPath: indexPath)
-                cell.set(image: image, name: name, species: species, supervisor: supervisor, tapAction: tapAction)
+            case let .tree(_, imageLoader, info, detail, tapAction):
+                let cell = collectionView.dequeue(cell: TreeCollectionViewCell.self, indexPath: indexPath)
+                cell.set(imageLoader: imageLoader, info: info, detail: detail, tapAction: tapAction)
 
                 return cell
             }

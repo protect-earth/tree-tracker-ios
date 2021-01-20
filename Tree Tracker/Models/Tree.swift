@@ -5,6 +5,7 @@ struct Tree: Codable, FetchableRecord, PersistableRecord, TableRecord {
     let supervisor: String
     let species: String
     let notes: String?
+    var coordinates: String?
     var imageUrl: String?
     let imageMd5: String?
     let phImageId: String?
@@ -15,6 +16,7 @@ struct Tree: Codable, FetchableRecord, PersistableRecord, TableRecord {
         case supervisor
         case species
         case notes
+        case imageUrl
         case imageMd5
         case phImageId
         case remoteId
@@ -22,6 +24,6 @@ struct Tree: Codable, FetchableRecord, PersistableRecord, TableRecord {
     }
 
     func toAirtableTree() -> AirtableTree {
-        return AirtableTree(id: remoteId, supervisor: supervisor, species: species, notes: notes, imageUrl: imageUrl, imageMd5: imageMd5, uploadDate: uploadDate)
+        return AirtableTree(id: remoteId, supervisor: supervisor, species: species, notes: notes, coordinates: coordinates, imageUrl: imageUrl, imageMd5: imageMd5, uploadDate: uploadDate)
     }
 }

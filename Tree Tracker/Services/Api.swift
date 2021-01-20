@@ -104,9 +104,18 @@ final class Api {
                     completion(.failure(.explicitlyCancelled))
                     return
                 }
+                completion(.success(tree))
             case let .failure(error):
                 completion(.failure(error))
             }
+        }
+    }
+
+    func loadImage(url: String, completion: @escaping (UIImage?) -> Void) {
+        let request = session.request(url, method: .get, headers: Config.headers)
+
+        request.responseData { data in
+            completion(data.data.flatMap(UIImage.init(data:)))
         }
     }
 }
