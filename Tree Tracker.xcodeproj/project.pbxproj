@@ -54,6 +54,7 @@
 		85B839FB25B86F1A0008E167 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839FA25B86F1A0008E167 /* ImageLoader.swift */; };
 		85B839FE25B86F320008E167 /* URLImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839FD25B86F320008E167 /* URLImageLoader.swift */; };
 		85B83A0225B8735F0008E167 /* AnyImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A0125B8735F0008E167 /* AnyImageLoader.swift */; };
+		85B83A0D25B87C0D0008E167 /* BSImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 85B83A0C25B87C0D0008E167 /* BSImagePicker */; };
 		85E0E05E25B33F8C009D8FC0 /* TappableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */; };
 		85E0E06225B35744009D8FC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E06125B35744009D8FC0 /* UIView.swift */; };
 /* End PBXBuildFile section */
@@ -118,6 +119,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85A0EF7F25A226D9003CE744 /* GRDB in Frameworks */,
+				85B83A0D25B87C0D0008E167 /* BSImagePicker in Frameworks */,
 				85A0EF8325A2271C003CE744 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -305,6 +307,7 @@
 			packageProductDependencies = (
 				85A0EF7E25A226D9003CE744 /* GRDB */,
 				85A0EF8225A2271C003CE744 /* Alamofire */,
+				85B83A0C25B87C0D0008E167 /* BSImagePicker */,
 			);
 			productName = "Tree Tracker";
 			productReference = 853ABD522596144900144B0D /* Tree Tracker.app */;
@@ -336,6 +339,7 @@
 			packageReferences = (
 				85A0EF7D25A226D9003CE744 /* XCRemoteSwiftPackageReference "GRDB" */,
 				85A0EF8125A2271C003CE744 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				85B83A0B25B87C0D0008E167 /* XCRemoteSwiftPackageReference "BSImagePicker" */,
 			);
 			productRefGroup = 853ABD532596144900144B0D /* Products */;
 			projectDirPath = "";
@@ -623,6 +627,14 @@
 				minimumVersion = 5.4.1;
 			};
 		};
+		85B83A0B25B87C0D0008E167 /* XCRemoteSwiftPackageReference "BSImagePicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mikaoj/BSImagePicker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.3.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -635,6 +647,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 85A0EF8125A2271C003CE744 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		85B83A0C25B87C0D0008E167 /* BSImagePicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 85B83A0B25B87C0D0008E167 /* XCRemoteSwiftPackageReference "BSImagePicker" */;
+			productName = BSImagePicker;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

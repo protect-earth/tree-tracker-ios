@@ -1,5 +1,6 @@
 import UIKit
 import PhotosUI
+import BSImagePicker
 
 final class FlowViewController: UINavigationController, TreesNavigating, AskForDetailsAndStoreAssetsNavigating, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     init() {
@@ -43,7 +44,7 @@ final class FlowViewController: UINavigationController, TreesNavigating, AskForD
             if #available(iOS 14, *) {
                 self.presentNewPhotoPicker()
             } else {
-                self.presentLegacyPhotoPicker()
+                self.presentExternalPhotoPicker()
             }
         }
     }
@@ -112,6 +113,18 @@ extension FlowViewController: PHPickerViewControllerDelegate {
 
         picker.dismiss(animated: true) {
             self.askForDetailsAndStore(assets: assets)
+        }
+    }
+}
+
+extension FlowViewController {
+    private func presentExternalPhotoPicker() {
+        let imagePickerController = ImagePickerController()
+        imagePickerController.settings.fetch.assets.supportedMediaTypes = [.image]
+        presentImagePicker(imagePickerController, select: nil, deselect: nil, cancel: nil) { [weak self] assets in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self?.askForDetailsAndStore(assets: assets)
+            }
         }
     }
 }

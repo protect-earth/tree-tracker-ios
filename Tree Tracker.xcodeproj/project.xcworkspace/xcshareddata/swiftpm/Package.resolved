@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "BSImagePicker",
+        "repositoryURL": "https://github.com/mikaoj/BSImagePicker",
+        "state": {
+          "branch": null,
+          "revision": "750f26abd0fafbcc4124adef436251888a7c962a",
+          "version": "3.3.1"
+        }
+      },
+      {
         "package": "GRDB",
         "repositoryURL": "https://github.com/groue/GRDB.swift",
         "state": {
