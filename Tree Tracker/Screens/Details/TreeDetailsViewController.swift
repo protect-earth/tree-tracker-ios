@@ -1,8 +1,8 @@
 import UIKit
 import Combine
 
-final class AskForDetailsAndStoreAssetsViewController: UIViewController {
-    let viewModel: AskForDetailsAndStoreAssetsViewModel
+final class TreeDetailsViewController: UIViewController {
+    let viewModel: TreeDetailsViewModel
 
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -47,7 +47,7 @@ final class AskForDetailsAndStoreAssetsViewController: UIViewController {
 
     private var observables = Set<AnyCancellable>()
 
-    init(viewModel: AskForDetailsAndStoreAssetsViewModel) {
+    init(viewModel: TreeDetailsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -95,14 +95,14 @@ final class AskForDetailsAndStoreAssetsViewController: UIViewController {
         setup(viewModel: viewModel)
     }
 
-    private func setup(viewModel: AskForDetailsAndStoreAssetsViewModel) {
-        viewModel.$title
+    private func setup(viewModel: TreeDetailsViewModel) {
+        viewModel.titlePublisher
             .sink { [weak self] title in
                 self?.title = title
             }
             .store(in: &observables)
 
-        viewModel.$imageLoader
+        viewModel.imageLoaderPublisher
             .sink { [weak self] imageLoader in
                 imageLoader?.loadThumbnail { image in
                     self?.imageView.image = image
@@ -110,20 +110,20 @@ final class AskForDetailsAndStoreAssetsViewController: UIViewController {
             }
             .store(in: &observables)
 
-        viewModel.$cancelButton
+        viewModel.cancelButtonPublisher
             .sink { [weak self] cancelButton in
                 let buttons = [cancelButton].compactMap { $0 }
                 self?.update(navigationButtons: buttons)
             }
             .store(in: &observables)
 
-        viewModel.$fields
+        viewModel.fieldsPublisher
             .sink { [weak self] fields in
                 self?.update(fields: fields)
             }
             .store(in: &observables)
 
-        viewModel.$saveButton
+        viewModel.saveButtonPublisher
             .sink { [weak self] button in
                 guard let button = button else { return }
 

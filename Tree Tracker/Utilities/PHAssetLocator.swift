@@ -1,35 +1,18 @@
 import Foundation
 import Photos
 
-final class PHAssetLocator: Hashable {
-    let phImageId: String
-
-    var asset: PHAsset? {
-        findAsset()
-    }
-
-    private var cachedAsset: PHAsset?
-
-    init(phImageId: String) {
-        self.phImageId = phImageId
-    }
-
-    private func findAsset() -> PHAsset? {
+struct PHAssetLocator {
+    func findAssets(for ids: [String]) -> [PHAsset] {
         let options = PHFetchOptions()
         options.wantsIncrementalChangeDetails = false
 
-        guard let asset = self.cachedAsset ?? PHAsset.fetchAssets(withLocalIdentifiers: [phImageId], options: options).firstObject else { return nil }
+        let results = PHAsset.fetchAssets(withLocalIdentifiers: ids, options: options)
 
-        self.cachedAsset = asset
+        var assets = [PHAsset]()
+        results.enumerateObjects{ asset, _, _ in
+            assets.append(asset)
+        }
 
-        return asset
-    }
-
-    static func == (lhs: PHAssetLocator, rhs: PHAssetLocator) -> Bool {
-        return lhs.phImageId == rhs.phImageId
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(phImageId)
+        return assets
     }
 }

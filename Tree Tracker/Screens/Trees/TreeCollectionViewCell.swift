@@ -41,6 +41,7 @@ final class TreeCollectionViewCell: UICollectionViewCell, Reusable {
     }()
 
     private var imageLoader: AnyImageLoader?
+    private var tapAction: Action?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,6 +77,8 @@ final class TreeCollectionViewCell: UICollectionViewCell, Reusable {
 
     func set(imageLoader: AnyImageLoader?, info: String, detail: String?, tapAction: Action?) {
         self.imageLoader = imageLoader
+        self.tapAction = tapAction
+
         infoLabel.text = info.isEmpty ? " " : info
 
         imageLoader?.loadThumbnail { [weak self] image in
@@ -84,6 +87,14 @@ final class TreeCollectionViewCell: UICollectionViewCell, Reusable {
             }
 
             self.imageView.image = image
+        }
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+
+        if let location = touches.first?.location(in: self), self.bounds.contains(location) {
+            tapAction?()
         }
     }
 }

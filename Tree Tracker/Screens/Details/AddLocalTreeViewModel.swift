@@ -1,17 +1,31 @@
 import Combine
 import Photos
 
-protocol AskForDetailsAndStoreAssetsNavigating: AnyObject {
+protocol TreeDetailsNavigating: AnyObject {
     func detailsFilledSuccessfully()
     func abandonedFillingTheDetails()
 }
 
-final class AskForDetailsAndStoreAssetsViewModel {
+protocol TreeDetailsViewModel {
+    var imageLoaderPublisher: Published<PHImageLoader?>.Publisher { get }
+    var titlePublisher: Published<String>.Publisher { get }
+    var fieldsPublisher: Published<[TextFieldModel]>.Publisher { get }
+    var cancelButtonPublisher: Published<NavigationBarButtonModel?>.Publisher { get }
+    var saveButtonPublisher: Published<ButtonModel?>.Publisher { get }
+}
+
+final class AddLocalTreeViewModel: TreeDetailsViewModel {
     @Published var imageLoader: PHImageLoader?
     @Published var title: String
     @Published var fields: [TextFieldModel]
     @Published var cancelButton: NavigationBarButtonModel?
     @Published var saveButton: ButtonModel?
+
+    var imageLoaderPublisher: Published<PHImageLoader?>.Publisher { $imageLoader }
+    var titlePublisher: Published<String>.Publisher { $title }
+    var fieldsPublisher: Published<[TextFieldModel]>.Publisher { $fields }
+    var cancelButtonPublisher: Published<NavigationBarButtonModel?>.Publisher { $cancelButton }
+    var saveButtonPublisher: Published<ButtonModel?>.Publisher { $saveButton }
 
     private let api: Api
     private let database: Database
@@ -19,10 +33,9 @@ final class AskForDetailsAndStoreAssetsViewModel {
     private let initialAssetCount: Int
     private var currentAsset: Int
     private var assets: [PHAsset]
-    private var assetLocator: PHAssetLocator?
-    private weak var navigation: AskForDetailsAndStoreAssetsNavigating?
+    private weak var navigation: TreeDetailsNavigating?
 
-    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, defaults: Defaults = CurrentEnvironment.defaults, assets: [PHAsset], navigation: AskForDetailsAndStoreAssetsNavigating) {
+    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, defaults: Defaults = CurrentEnvironment.defaults, assets: [PHAsset], navigation: TreeDetailsNavigating) {
         self.api = api
         self.database = database
         self.defaults = defaults
@@ -61,12 +74,12 @@ final class AskForDetailsAndStoreAssetsViewModel {
         }
 
         self.imageLoader = PHImageLoader(phImageId: asset.localIdentifier)
-        self.assetLocator = PHAssetLocator(phImageId: asset.localIdentifier)
 
-        var coordinates: String = assetLocator?.asset?._coordinates ?? ""
+        var coordinates: String = asset._coordinates
         var species: String = defaults[.species] ?? ""
         var supervisor: String = defaults[.supervisor] ?? ""
-        var notes: String = defaults[.notes] ?? ""
+        var notes: String = ""
+        
         fields = [
             .init(placeholder: "Coordinates",
                   text: coordinates,
@@ -77,11 +90,11 @@ final class AskForDetailsAndStoreAssetsViewModel {
                   input: .keyboard(.default),
                   onChange: { species = $0 }),
             .init(placeholder: "Supervisor",
-                  text: defaults[.supervisor],
+                  text: supervisor,
                   input: .keyboard(.default),
                   onChange: { supervisor = $0 }),
             .init(placeholder: "Notes",
-                  text: defaults[.notes],
+                  text: notes,
                   input: .keyboard(.default),
                   onChange: { notes = $0 }),
         ]
@@ -95,11 +108,10 @@ final class AskForDetailsAndStoreAssetsViewModel {
     }
 
     private func save(asset: PHAsset, coordinates: String, species: String, supervisor: String, notes: String) {
-        let tree = Tree(supervisor: supervisor, species: species, notes: notes, coordinates: coordinates, imageUrl: nil, imageMd5: nil, phImageId: asset.localIdentifier, remoteId: nil, uploadDate: nil)
+        let tree = LocalTree(phImageId: asset.localIdentifier, createDate: asset.creationDate, supervisor: supervisor, species: species, notes: notes, coordinates: coordinates, imageMd5: nil)
 
         database.save([tree])
         assets.removeAll { $0 == asset }
         presentNextAssetToFillOrComplete()
     }
 }
-

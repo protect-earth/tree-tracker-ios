@@ -3,7 +3,8 @@
 ## Getting this to run
 1. Make sure you have downloaded Xcode 12.2+
 2. Open the project in Xcode (you'll notice the dependencies will start to fetch in the background).
-3. Now to run the project you'll need to create a file named `Secrets.xcconfig` in `__REPO_ROOT__/Tree Tracker/` directory (it should have the Info.plist file in there). This file needs to have a few of the secret api keys needed for this to work. Schema for the file looks like this:
+(In the meantime, Xcode will need to fetch dependencies for the project... 😴)
+3. Now, to run the project, you'll need to create a file named `Secrets.xcconfig` in `__REPO_ROOT__/Tree Tracker/` directory (it should have the Info.plist file in there). This file needs to have a few of the secret api keys needed for this to work. Schema for the file looks like this:
 ```
 AIRTABLE_API_KEY = yourKey123
 AIRTABLE_BASE_ID = appNiceTree

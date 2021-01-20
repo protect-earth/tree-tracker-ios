@@ -1,40 +1,24 @@
 import Foundation
 
-protocol TreesNavigating: AnyObject {
-    func triggerAddTreesFlow(completion: @escaping ([Tree]) -> Void)
-}
-
 final class TreesViewModel {
     @Published var title: String
     @Published var data: [ListSection<TreesListItem>]
-    @Published var syncProgress: SyncProgress?
-    @Published var syncButton: ButtonModel?
     @Published var navigationButtons: [NavigationBarButtonModel]
 
     private var api: Api
     private var database: Database
-    private weak var navigation: TreesNavigating?
 
-    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, navigation: TreesNavigating) {
-        self.title = "Tree Tracker"
+    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database) {
+        self.title = "Uploaded Trees"
         self.api = api
         self.database = database
-        self.navigation = navigation
         self.data = []
-        self.syncButton = nil
         self.navigationButtons = []
 
-        self.syncButton = ButtonModel(
-            title: .text("Sync"),
-            action: { [weak self] in
-                self?.sync()
-            },
-            isEnabled: true
-        )
         self.navigationButtons = [
             .init(
-                title: .system(.add),
-                action: { [weak self] in self?.addTrees() },
+                title: .system(.refresh),
+                action: { [weak self] in self?.sync() },
                 isEnabled: true
             )
         ]
@@ -42,7 +26,6 @@ final class TreesViewModel {
 
     func loadData() {
         presentTreesFromDatabase()
-        lazilyLoadAllRemoteTreesIfPossible()
     }
 
     func sync() {
@@ -66,40 +49,18 @@ final class TreesViewModel {
         }
     }
 
-    private func uploadLocalTreesRecursively() {
-        database.fetchTreesToSync { [weak self] trees in
-            if let tree = trees.first {
-                self?.api.upload(tree: tree, completion: { result in
-                    switch result {
-                    case let .success(airtableTree):
-                        self?.database.update(tree: tree, with: airtableTree)
-                    case let .failure(error):
-                        print("Error when uploading a local tree: \(error)")
-                    }
-                })
-            }
-        }
-    }
-
     private func presentTreesFromDatabase() {
-        database.fetchAll { [weak self] trees in
+        database.fetchRemoteTrees { [weak self] trees in
             self?.data = [.untitled(id: "trees", trees.map { tree in
-                let id = tree.remoteId.map(String.init) ?? tree.phImageId ?? UUID().uuidString
                 let imageLoader = tree.imageUrl.map { AnyImageLoader(imageLoader: URLImageLoader(url: $0)) }
-                return .tree(id: id,
+                return .tree(id: "\(tree.id)",
                              imageLoader: imageLoader,
                              info: tree.species,
                              detail: tree.supervisor,
-                             tapAction: Action(id: "tree_action_\(id)") {
+                             tapAction: Action(id: "tree_action_\(tree.id)") {
                                 print("tap action")
                              })
             })]
-        }
-    }
-
-    private func addTrees() {
-        navigation?.triggerAddTreesFlow { [weak self] trees in
-            self?.database.save(trees)
         }
     }
 }

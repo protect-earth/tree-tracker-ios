@@ -2,8 +2,8 @@ import UIKit
 import PhotosUI
 import Combine
 
-final class TreesViewController: UIViewController {
-    let viewModel: TreesViewModel
+final class UploadListViewController: UIViewController {
+    let viewModel: UploadListViewModel
 
     private lazy var layout: UICollectionViewLayout = {
         let layout = GridCollectionViewLayout(columns: 4)
@@ -21,10 +21,17 @@ final class TreesViewController: UIViewController {
         return collectionView
     }()
 
+    private let actionButton: TappableButton = {
+        let button = RoundedTappableButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+
+        return button
+    }()
+
     private var observables = Set<AnyCancellable>()
     private lazy var dataSource = buildDataSource()
 
-    init(viewModel: TreesViewModel) {
+    init(viewModel: UploadListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -41,12 +48,16 @@ final class TreesViewController: UIViewController {
         collectionView.dataSource = dataSource
 
         view.addSubview(collectionView)
+        view.addSubview(actionButton)
 
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+
+            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10.0),
+            actionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
     }
 
@@ -56,10 +67,18 @@ final class TreesViewController: UIViewController {
         setup(viewModel: viewModel)
     }
 
-    private func setup(viewModel: TreesViewModel) {
+    private func setup(viewModel: UploadListViewModel) {
         viewModel.$title
             .sink { [weak self] title in
                 self?.title = title
+            }
+            .store(in: &observables)
+
+        viewModel.$syncButton
+            .sink { [weak self] button in
+                guard let button = button else { return }
+
+                self?.actionButton.set(model: button)
             }
             .store(in: &observables)
 

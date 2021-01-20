@@ -1,12 +1,13 @@
 import Foundation
 
-struct AirtableTree: Codable {
-    let id: Int?
+struct AirtableTree: Decodable {
+    let id: Int
     let supervisor: String
     let species: String
     let notes: String?
     let coordinates: String?
     let imageMd5: String?
+    let createDate: Date?
     let uploadDate: Date?
     var imageUrl: String?
 
@@ -17,12 +18,13 @@ struct AirtableTree: Codable {
         case notes = "Notes"
         case coordinates = "Coordinates"
         case image = "Image"
-        case imageMd5 = "ImageMD5"
-        case uploadDate = "UploadDate"
+        case imageMd5 = "ImageSignature"
+        case createDate = "CreatedDate"
+        case uploadDate = "UploadedDate"
         case fields
     }
 
-    init(id: Int?, supervisor: String, species: String, notes: String?, coordinates: String?, imageUrl: String?, imageMd5: String?, uploadDate: Date?) {
+    init(id: Int, supervisor: String, species: String, notes: String?, coordinates: String?, imageUrl: String?, imageMd5: String?, uploadDate: Date?, createDate: Date?) {
         self.id = id
         self.supervisor = supervisor
         self.species = species
@@ -31,6 +33,7 @@ struct AirtableTree: Codable {
         self.imageUrl = imageUrl
         self.imageMd5 = imageMd5
         self.uploadDate = uploadDate
+        self.createDate = createDate
     }
 
     init(from decoder: Decoder) throws {
@@ -44,6 +47,7 @@ struct AirtableTree: Codable {
         coordinates = try container.decodeIfPresent(String.self, forKey: .coordinates)
         imageMd5 = try container.decodeIfPresent(String.self, forKey: .imageMd5)
         uploadDate = try container.decodeIfPresent(Date.self, forKey: .uploadDate)
+        createDate = try container.decodeIfPresent(Date.self, forKey: .createDate)
 
         do {
             let image = try container.decodeIfPresent(AirtableImage.self, forKey: .image)
@@ -54,20 +58,8 @@ struct AirtableTree: Codable {
         }
     }
 
-    func encode(to encoder: Encoder) throws {
-        var root = encoder.container(keyedBy: CodingKeys.self)
-        var container = root.nestedContainer(keyedBy: CodingKeys.self, forKey: .fields)
-
-        try container.encode(id, forKey: .id)
-        try container.encode(supervisor, forKey: .supervisor)
-        try container.encode(species, forKey: .species)
-        try container.encode(notes, forKey: .notes)
-        try container.encode(coordinates, forKey: .coordinates)
-        try container.encode(imageUrl.map(AirtableImage.init), forKey: .id)
-    }
-
-    func toTree() -> Tree {
-        return Tree(supervisor: supervisor, species: species, notes: notes, coordinates: coordinates, imageUrl: imageUrl, imageMd5: imageMd5, phImageId: nil, remoteId: id, uploadDate: uploadDate)
+    func toRemoteTree() -> RemoteTree {
+        return RemoteTree(id: id, supervisor: supervisor, species: species, notes: notes, coordinates: coordinates, imageUrl: imageUrl, imageMd5: imageMd5, createDate: createDate, uploadDate: uploadDate)
     }
 }
 
@@ -87,5 +79,60 @@ private struct AirtableImage: Codable {
         let container = try root.nestedContainer(keyedBy: CodingKeys.self)
 
         url = try container.decode(String.self, forKey: .url)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var root = encoder.unkeyedContainer()
+        var container = root.nestedContainer(keyedBy: CodingKeys.self)
+
+        try container.encode(url, forKey: .url)
+    }
+}
+
+struct AirtableTreeEncodable: Encodable {
+    let supervisor: String
+    let species: String
+    let notes: String?
+    let coordinates: String?
+    let imageMd5: String?
+    let createDate: Date?
+    let uploadDate: Date?
+    var imageUrl: String?
+
+    enum CodingKeys: String, CodingKey {
+        case supervisor = "Supervisor"
+        case species = "Species"
+        case notes = "Notes"
+        case coordinates = "Coordinates"
+        case image = "Image"
+        case imageMd5 = "ImageSignature"
+        case createDate = "CreatedDate"
+        case uploadDate = "UploadedDate"
+        case fields
+    }
+
+    init(supervisor: String, species: String, notes: String?, coordinates: String?, imageUrl: String?, imageMd5: String?, uploadDate: Date?, createDate: Date?) {
+        self.supervisor = supervisor
+        self.species = species
+        self.notes = notes
+        self.coordinates = coordinates
+        self.imageUrl = imageUrl
+        self.imageMd5 = imageMd5
+        self.uploadDate = uploadDate
+        self.createDate = createDate
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var root = encoder.container(keyedBy: CodingKeys.self)
+        var container = root.nestedContainer(keyedBy: CodingKeys.self, forKey: .fields)
+
+        try container.encode(supervisor, forKey: .supervisor)
+        try container.encode(species, forKey: .species)
+        try container.encode(notes, forKey: .notes)
+        try container.encode(coordinates, forKey: .coordinates)
+        try container.encode(imageMd5, forKey: .imageMd5)
+        try container.encode(imageUrl.map(AirtableImage.init), forKey: .image)
+        try container.encode(uploadDate, forKey: .uploadDate)
+        try container.encode(createDate, forKey: .createDate)
     }
 }

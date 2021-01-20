@@ -2,11 +2,15 @@ import UIKit
 import PhotosUI
 import BSImagePicker
 
-final class FlowViewController: UINavigationController, TreesNavigating, AskForDetailsAndStoreAssetsNavigating, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+final class UploadListFlowViewController: UINavigationController, UploadListNavigating, TreeDetailsNavigating, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    private let assetLocator = PHAssetLocator()
+    private var saveTreesCompletion: (() -> Void)?
+
     init() {
         super.init(nibName: nil, bundle: nil)
 
-        let rootViewController = TreesViewController(viewModel: TreesViewModel(navigation: self))
+        let rootViewController = UploadListViewController(viewModel: UploadListViewModel(navigation: self))
         navigationBar.prefersLargeTitles = true
         navigationBar.tintColor = .white
         viewControllers = [rootViewController]
@@ -17,8 +21,20 @@ final class FlowViewController: UINavigationController, TreesNavigating, AskForD
         fatalError("init(coder:) has not been implemented")
     }
 
-    func triggerAddTreesFlow(completion: @escaping ([Tree]) -> Void) {
+    func triggerAddTreesFlow(completion: @escaping () -> Void) {
+        saveTreesCompletion = completion
         askForPermissionsAndPresentPickerIfPossible()
+    }
+
+    func triggerFillDetailsFlow(phImageIds: [String], completion: @escaping () -> Void) {
+        saveTreesCompletion = completion
+        let assets = assetLocator.findAssets(for: phImageIds)
+        askForDetailsAndStore(assets: assets)
+    }
+
+    func triggerEditDetailsFlow(tree: LocalTree, completion: @escaping () -> Void) {
+        saveTreesCompletion = completion
+        presentEdit(tree: tree)
     }
 
     private func askForPermissionsAndPresentPickerIfPossible() {
@@ -73,24 +89,37 @@ final class FlowViewController: UINavigationController, TreesNavigating, AskForD
     private func askForDetailsAndStore(assets: [PHAsset]) {
         guard !assets.isEmpty else { return }
         
-        let viewModel = AskForDetailsAndStoreAssetsViewModel(assets: assets, navigation: self)
-        let viewController = AskForDetailsAndStoreAssetsViewController(viewModel: viewModel)
+        let viewModel = AddLocalTreeViewModel(assets: assets, navigation: self)
+        let viewController = TreeDetailsViewController(viewModel: viewModel)
         let navigationController = UINavigationController(rootViewController: viewController)
 
         viewControllers.last?.present(navigationController, animated: true, completion: nil)
     }
 
+    private func presentEdit(tree: LocalTree) {
+        let viewModel = EditLocalTreeViewModel(tree: tree, navigation: self)
+        let viewController = TreeDetailsViewController(viewModel: viewModel)
+        let navigationController = UINavigationController(rootViewController: viewController)
+
+        viewControllers.last?.present(navigationController, animated: true, completion: nil)
+    }
+
+
     func detailsFilledSuccessfully() {
-        viewControllers.last?.presentedViewController?.dismiss(animated: true, completion: nil)
+        viewControllers.last?.presentedViewController?.dismiss(animated: true) { [weak self] in
+            self?.saveTreesCompletion?()
+        }
     }
 
     func abandonedFillingTheDetails() {
-        viewControllers.last?.presentedViewController?.dismiss(animated: true, completion: nil)
+        viewControllers.last?.presentedViewController?.dismiss(animated: true) { [weak self] in
+            self?.saveTreesCompletion?()
+        }
     }
 }
 
 @available(iOS 14, *)
-extension FlowViewController: PHPickerViewControllerDelegate {
+extension UploadListFlowViewController: PHPickerViewControllerDelegate {
     private func presentNewPhotoPicker() {
         var configuration = PHPickerConfiguration(photoLibrary: .shared())
         configuration.selectionLimit = 0
@@ -117,7 +146,7 @@ extension FlowViewController: PHPickerViewControllerDelegate {
     }
 }
 
-extension FlowViewController {
+extension UploadListFlowViewController {
     private func presentExternalPhotoPicker() {
         let imagePickerController = ImagePickerController()
         imagePickerController.settings.fetch.assets.supportedMediaTypes = [.image]
