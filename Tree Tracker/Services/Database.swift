@@ -24,6 +24,7 @@ final class Database {
                     table.column(RemoteTree.CodingKeys.notes.stringValue, .text)
                     table.column(RemoteTree.CodingKeys.coordinates.stringValue, .text)
                     table.column(RemoteTree.CodingKeys.imageUrl.stringValue, .text)
+                    table.column(RemoteTree.CodingKeys.thumbnailUrl.stringValue, .text)
                     table.column(RemoteTree.CodingKeys.imageMd5.stringValue, .text)
                     table.column(RemoteTree.CodingKeys.uploadDate.stringValue, .date)
                     table.column(RemoteTree.CodingKeys.createDate.stringValue, .date)

@@ -8,6 +8,7 @@ struct RemoteTree: Codable, FetchableRecord, PersistableRecord, TableRecord {
     let notes: String?
     var coordinates: String?
     var imageUrl: String?
+    var thumbnailUrl: String?
     let imageMd5: String?
     var createDate: Date?
     var uploadDate: Date?
@@ -19,6 +20,7 @@ struct RemoteTree: Codable, FetchableRecord, PersistableRecord, TableRecord {
         case notes
         case coordinates
         case imageUrl
+        case thumbnailUrl
         case imageMd5
         case createDate
         case uploadDate

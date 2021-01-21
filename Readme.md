@@ -30,7 +30,7 @@ The file is ignored in git since we do not want to store these in the repository
 5. When running on a device, you'll also need to trust the certificate in Settings -> General -> Profiles, otherwise you'll see an error after installing the build and before running it.
 
 # Todo
-- [ ] Use Airtable's thumbnails for Uploaded Trees view
+- [x] Use Airtable's thumbnails for Uploaded Trees view
 - [ ] Better UI for editing tree details form
 - [ ] Better UI for tree cells
 - [ ] Progress indicator for uploads

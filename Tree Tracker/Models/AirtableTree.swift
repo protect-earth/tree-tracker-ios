@@ -10,6 +10,7 @@ struct AirtableTree: Decodable {
     let createDate: Date?
     let uploadDate: Date?
     var imageUrl: String?
+    var thumbnailUrl: String?
 
     enum CodingKeys: String, CodingKey {
         case id = "ID"
@@ -24,13 +25,14 @@ struct AirtableTree: Decodable {
         case fields
     }
 
-    init(id: Int, supervisor: String, species: String, notes: String?, coordinates: String?, imageUrl: String?, imageMd5: String?, uploadDate: Date?, createDate: Date?) {
+    init(id: Int, supervisor: String, species: String, notes: String?, coordinates: String?, imageUrl: String?, thumbnailUrl: String?, imageMd5: String?, uploadDate: Date?, createDate: Date?) {
         self.id = id
         self.supervisor = supervisor
         self.species = species
         self.notes = notes
         self.coordinates = coordinates
         self.imageUrl = imageUrl
+        self.thumbnailUrl = thumbnailUrl
         self.imageMd5 = imageMd5
         self.uploadDate = uploadDate
         self.createDate = createDate
@@ -52,21 +54,56 @@ struct AirtableTree: Decodable {
         do {
             let image = try container.decodeIfPresent(AirtableImage.self, forKey: .image)
             imageUrl = image?.url
+            thumbnailUrl = image?.thumbnailUrl
         } catch {
             print("Error decoding airtable image: \(error)")
             imageUrl = nil
+            thumbnailUrl = nil
         }
     }
 
     func toRemoteTree() -> RemoteTree {
-        return RemoteTree(id: id, supervisor: supervisor, species: species, notes: notes, coordinates: coordinates, imageUrl: imageUrl, imageMd5: imageMd5, createDate: createDate, uploadDate: uploadDate)
+        return RemoteTree(id: id, supervisor: supervisor, species: species, notes: notes, coordinates: coordinates, imageUrl: imageUrl, thumbnailUrl: thumbnailUrl, imageMd5: imageMd5, createDate: createDate, uploadDate: uploadDate)
     }
 }
 
 private struct AirtableImage: Codable {
     let url: String
+    let thumbnailUrl: String?
 
     enum CodingKeys: String, CodingKey {
+        case url
+        case thumbnailUrl = "thumbnails"
+    }
+
+    init(url: String, thumbnailUrl: String?) {
+        self.url = url
+        self.thumbnailUrl = thumbnailUrl
+    }
+
+    init(from decoder: Decoder) throws {
+        var root = try decoder.unkeyedContainer()
+        let container = try root.nestedContainer(keyedBy: CodingKeys.self)
+
+        url = try container.decode(String.self, forKey: .url)
+        thumbnailUrl = (try container.decode(AirtableImageThumbnail.self, forKey: .thumbnailUrl)).url
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var root = encoder.unkeyedContainer()
+        var container = root.nestedContainer(keyedBy: CodingKeys.self)
+
+        try container.encode(url, forKey: .url)
+        try container.encode(thumbnailUrl, forKey: .thumbnailUrl)
+    }
+}
+
+struct AirtableImageThumbnail: Codable {
+    let url: String
+
+    enum CodingKeys: String, CodingKey {
+        case small
+        case large
         case url
     }
 
@@ -75,17 +112,17 @@ private struct AirtableImage: Codable {
     }
 
     init(from decoder: Decoder) throws {
-        var root = try decoder.unkeyedContainer()
-        let container = try root.nestedContainer(keyedBy: CodingKeys.self)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let small = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .large)
 
-        url = try container.decode(String.self, forKey: .url)
+        url = try small.decode(String.self, forKey: .url)
     }
 
     func encode(to encoder: Encoder) throws {
-        var root = encoder.unkeyedContainer()
-        var container = root.nestedContainer(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        var small = container.nestedContainer(keyedBy: CodingKeys.self, forKey: .large)
 
-        try container.encode(url, forKey: .url)
+        try small.encode(url, forKey: .url)
     }
 }
 
@@ -131,7 +168,7 @@ struct AirtableTreeEncodable: Encodable {
         try container.encode(notes, forKey: .notes)
         try container.encode(coordinates, forKey: .coordinates)
         try container.encode(imageMd5, forKey: .imageMd5)
-        try container.encode(imageUrl.map(AirtableImage.init), forKey: .image)
+        try container.encode(imageUrl.map { AirtableImage(url: $0, thumbnailUrl: nil) }, forKey: .image)
         try container.encode(uploadDate, forKey: .uploadDate)
         try container.encode(createDate, forKey: .createDate)
     }

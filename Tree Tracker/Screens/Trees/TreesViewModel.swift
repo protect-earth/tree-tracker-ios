@@ -52,7 +52,7 @@ final class TreesViewModel {
     private func presentTreesFromDatabase() {
         database.fetchRemoteTrees { [weak self] trees in
             self?.data = [.untitled(id: "trees", trees.map { tree in
-                let imageLoader = tree.imageUrl.map { AnyImageLoader(imageLoader: URLImageLoader(url: $0)) }
+                let imageLoader = (tree.thumbnailUrl ?? tree.imageUrl).map { AnyImageLoader(imageLoader: URLImageLoader(url: $0)) }
                 return .tree(id: "\(tree.id)",
                              imageLoader: imageLoader,
                              info: tree.species,
