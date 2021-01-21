@@ -36,6 +36,7 @@ The file is ignored in git since we do not want to store these in the repository
 - [ ] Progress indicator for uploads
 - [ ] Stop button for uploads
 - [ ] Map picker when tapping on coordinates so we can adjust it
+- [ ] Settings screen (enable/disable network fetching, credits for OSS & Icons)
 
 # License
 [MIT](License.md)
