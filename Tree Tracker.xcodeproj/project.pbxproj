@@ -59,6 +59,8 @@
 		85B83A1525B87E780008E167 /* UploadListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A1425B87E780008E167 /* UploadListViewModel.swift */; };
 		85B83A1825B881EC0008E167 /* LocalTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A1725B881EC0008E167 /* LocalTree.swift */; };
 		85B83A1C25B8AC650008E167 /* EditLocalTreeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A1B25B8AC650008E167 /* EditLocalTreeViewModel.swift */; };
+		85B83A2325B9C1BC0008E167 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A2225B9C1BC0008E167 /* NavigationViewController.swift */; };
+		85B83A2625B9C1D50008E167 /* MainFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A2525B9C1D50008E167 /* MainFlowViewController.swift */; };
 		85E0E05E25B33F8C009D8FC0 /* TappableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */; };
 		85E0E06225B35744009D8FC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E06125B35744009D8FC0 /* UIView.swift */; };
 /* End PBXBuildFile section */
@@ -117,6 +119,8 @@
 		85B83A1425B87E780008E167 /* UploadListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadListViewModel.swift; sourceTree = "<group>"; };
 		85B83A1725B881EC0008E167 /* LocalTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTree.swift; sourceTree = "<group>"; };
 		85B83A1B25B8AC650008E167 /* EditLocalTreeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocalTreeViewModel.swift; sourceTree = "<group>"; };
+		85B83A2225B9C1BC0008E167 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
+		85B83A2525B9C1D50008E167 /* MainFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowViewController.swift; sourceTree = "<group>"; };
 		85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableButton.swift; sourceTree = "<group>"; };
 		85E0E06125B35744009D8FC0 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -244,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				857BADAB25B1FAAA005D7D35 /* UploadListFlowViewController.swift */,
+				85B83A2525B9C1D50008E167 /* MainFlowViewController.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -300,6 +305,7 @@
 				85B839EE25B866370008E167 /* GridCollectionViewLayout.swift */,
 				85B839D525B74E960008E167 /* KeyboardAccessoryView.swift */,
 				85B839E325B753F10008E167 /* KeyboardLayoutGuide.swift */,
+				85B83A2225B9C1BC0008E167 /* NavigationViewController.swift */,
 				85B839F225B866590008E167 /* RoundedTappableButton.swift */,
 				85B839A825B35B540008E167 /* TableViewDataSource.swift */,
 				85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */,
@@ -413,6 +419,7 @@
 				85B839F325B866590008E167 /* RoundedTappableButton.swift in Sources */,
 				85B839AD25B47BD30008E167 /* Reusable.swift in Sources */,
 				85B839A925B35B540008E167 /* TableViewDataSource.swift in Sources */,
+				85B83A2325B9C1BC0008E167 /* NavigationViewController.swift in Sources */,
 				85792A9225B1D5A500BFDA96 /* ButtonModel.swift in Sources */,
 				853ABD5A2596144900144B0D /* TreesViewController.swift in Sources */,
 				85B839CE25B5F8F30008E167 /* UIAlertController.swift in Sources */,
@@ -426,6 +433,7 @@
 				85792A7D25B0A3E100BFDA96 /* Database.swift in Sources */,
 				85E0E06225B35744009D8FC0 /* UIView.swift in Sources */,
 				857BADA425B1FA87005D7D35 /* AddLocalTreeViewModel.swift in Sources */,
+				85B83A2625B9C1D50008E167 /* MainFlowViewController.swift in Sources */,
 				85B839D925B74FD20008E167 /* Keyboard.swift in Sources */,
 				85A0EF8D25A23062003CE744 /* RemoteTree.swift in Sources */,
 				85B839FB25B86F1A0008E167 /* ImageLoader.swift in Sources */,

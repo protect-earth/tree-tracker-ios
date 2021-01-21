@@ -21,4 +21,12 @@ extension UIImage {
         draw(in: CGRect(origin: .zero, size: size))
         return UIGraphicsGetImageFromCurrentImageContext()
     }
+
+    static var uploadIcon: UIImage {
+        return UIImage(named: "uploadIcon")!
+    }
+
+    static var listIcon: UIImage {
+        return UIImage(named: "listIcon")!
+    }
 }

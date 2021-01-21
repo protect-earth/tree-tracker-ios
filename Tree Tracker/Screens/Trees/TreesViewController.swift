@@ -27,6 +27,8 @@ final class TreesViewController: UIViewController {
     init(viewModel: TreesViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+
+        nonViewDependentSetup(viewModel: viewModel)
     }
 
     @available(*, unavailable)
@@ -56,13 +58,15 @@ final class TreesViewController: UIViewController {
         setup(viewModel: viewModel)
     }
 
-    private func setup(viewModel: TreesViewModel) {
+    private func nonViewDependentSetup(viewModel: TreesViewModel) {
         viewModel.$title
             .sink { [weak self] title in
                 self?.title = title
             }
             .store(in: &observables)
+    }
 
+    private func setup(viewModel: TreesViewModel) {
         viewModel.$data
             .sink { [weak self] data in
                 self?.dataSource.update(data: data)

@@ -34,6 +34,8 @@ final class UploadListViewController: UIViewController {
     init(viewModel: UploadListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+
+        nonViewDependentSetup(viewModel: viewModel)
     }
 
     @available(*, unavailable)
@@ -67,13 +69,15 @@ final class UploadListViewController: UIViewController {
         setup(viewModel: viewModel)
     }
 
-    private func setup(viewModel: UploadListViewModel) {
+    private func nonViewDependentSetup(viewModel: UploadListViewModel) {
         viewModel.$title
             .sink { [weak self] title in
                 self?.title = title
             }
             .store(in: &observables)
+    }
 
+    private func setup(viewModel: UploadListViewModel) {
         viewModel.$syncButton
             .sink { [weak self] button in
                 guard let button = button else { return }

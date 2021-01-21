@@ -2,23 +2,18 @@ import UIKit
 import PhotosUI
 import BSImagePicker
 
-final class UploadListFlowViewController: UINavigationController, UploadListNavigating, TreeDetailsNavigating, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+final class UploadListFlowViewController: NavigationViewController, UploadListNavigating, TreeDetailsNavigating, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     private let assetLocator = PHAssetLocator()
     private var saveTreesCompletion: (() -> Void)?
 
-    init() {
-        super.init(nibName: nil, bundle: nil)
+    override init() {
+        super.init()
 
         let rootViewController = UploadListViewController(viewModel: UploadListViewModel(navigation: self))
         navigationBar.prefersLargeTitles = true
         navigationBar.tintColor = .white
         viewControllers = [rootViewController]
-    }
-
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     func triggerAddTreesFlow(completion: @escaping () -> Void) {
