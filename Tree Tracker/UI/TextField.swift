@@ -2,6 +2,7 @@ import UIKit
 
 final class TextField: UITextField, UITextFieldDelegate {
     var onChange: ((String) -> Void)?
+    var placeholderColor: UIColor = .gray
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,6 +31,7 @@ final class TextField: UITextField, UITextFieldDelegate {
         onChange = model.onChange
         isEnabled = model.input.usesKeyboard
         text = model.text
+        attributedPlaceholder = NSAttributedString(string: model.placeholder ?? "", attributes: [.foregroundColor: placeholderColor])
         placeholder = model.placeholder
 
         switch model.input {

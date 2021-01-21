@@ -11,6 +11,20 @@ final class TreeDetailsViewController: UIViewController {
         return scrollView
     }()
 
+    private let textFieldsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins.left = 16.0
+        stackView.layoutMargins.right = 16.0
+        stackView.spacing = 8.0
+        stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
+        stackView.setContentCompressionResistancePriority(.required, for: .vertical)
+
+        return stackView
+    }()
+
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -66,6 +80,7 @@ final class TreeDetailsViewController: UIViewController {
         view.addSubview(actionButton)
 
         stackView.addArrangedSubview(imageViewWrapper)
+        stackView.addArrangedSubview(textFieldsStackView)
 
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -139,33 +154,34 @@ final class TreeDetailsViewController: UIViewController {
             }
     }
 
-    private func update(fields: [TextFieldModel]) {
-        let currentFieldsCount = stackView.arrangedSubviews.filter({ $0 is TextField }).count
-        if currentFieldsCount != fields.count {
-            if currentFieldsCount < fields.count {
-                let fieldsToAdd = fields.count - currentFieldsCount
+    private func update(fields models: [TextFieldModel]) {
+        let currentFieldsCount = textFieldsStackView.arrangedSubviews.count
+        if currentFieldsCount != models.count {
+            if currentFieldsCount < models.count {
+                let fieldsToAdd = models.count - currentFieldsCount
                 for _ in 0..<fieldsToAdd {
-                    stackView.addArrangedSubview(buildTextField())
+                    textFieldsStackView.addArrangedSubview(buildTextField())
                 }
             } else {
-                let fieldsToRemove = currentFieldsCount - fields.count
+                let fieldsToRemove = currentFieldsCount - models.count
                 for _ in 0..<fieldsToRemove {
-                    if let view = stackView.arrangedSubviews.first(where: { $0 is TextField }) {
-                        stackView.removeArrangedSubview(view)
+                    if let view = textFieldsStackView.arrangedSubviews.first(where: { $0 is TextField }) {
+                        textFieldsStackView.removeArrangedSubview(view)
                     }
                 }
             }
         }
 
-        let textFields = stackView.arrangedSubviews.compactMap { $0 as? TextField }
-        for (textField, field) in zip(textFields, fields) {
-            textField.set(model: field)
+        let textFields = textFieldsStackView.arrangedSubviews.compactMap { $0 as? TextField }
+        for (textField, model) in zip(textFields, models) {
+            textField.set(model: model)
         }
     }
 
     private func buildTextField() -> TextField {
         let textField = TextField()
         textField.textColor = .black
+        textField.borderStyle = .roundedRect
 
         return textField
     }
