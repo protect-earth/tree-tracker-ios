@@ -86,7 +86,7 @@ private struct AirtableImage: Codable {
         let container = try root.nestedContainer(keyedBy: CodingKeys.self)
 
         url = try container.decode(String.self, forKey: .url)
-        thumbnailUrl = (try container.decode(AirtableImageThumbnail.self, forKey: .thumbnailUrl)).url
+        thumbnailUrl = (try? container.decodeIfPresent(AirtableImageThumbnail.self, forKey: .thumbnailUrl))?.url
     }
 
     func encode(to encoder: Encoder) throws {
@@ -94,7 +94,7 @@ private struct AirtableImage: Codable {
         var container = root.nestedContainer(keyedBy: CodingKeys.self)
 
         try container.encode(url, forKey: .url)
-        try container.encode(thumbnailUrl, forKey: .thumbnailUrl)
+        try container.encodeIfPresent(thumbnailUrl, forKey: .thumbnailUrl)
     }
 }
 

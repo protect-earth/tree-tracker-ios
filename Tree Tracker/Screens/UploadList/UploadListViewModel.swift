@@ -53,23 +53,22 @@ final class UploadListViewModel {
     private func uploadLocalTreesRecursively() {
         print("Uploading images...")
         database.fetchLocalTrees { [weak self] trees in
-            if let tree = trees.first {
-                print("Now uploading tree: \(tree)")
-                self?.api.upload(tree: tree, completion: { result in
-                    switch result {
-                    case let .success(airtableTree):
-                        print("Successfully uploaded tree.")
-                        self?.database.save([airtableTree])
-                        self?.database.remove(tree: tree) {
-                            self?.uploadLocalTreesRecursively()
-                        }
-                    case let .failure(error):
-                        print("Error when uploading a local tree: \(error)")
+            guard let tree = trees.first else { return }
+            
+            print("Now uploading tree: \(tree)")
+            self?.api.upload(tree: tree, completion: { result in
+                switch result {
+                case let .success(airtableTree):
+                    print("Successfully uploaded tree.")
+                    self?.database.save([airtableTree])
+                    self?.database.remove(tree: tree) {
+                        self?.presentTreesFromDatabase()
+                        self?.uploadLocalTreesRecursively()
                     }
-                })
-            } else {
-                self?.presentTreesFromDatabase()
-            }
+                case let .failure(error):
+                    print("Error when uploading a local tree: \(error)")
+                }
+            })
         }
     }
 
