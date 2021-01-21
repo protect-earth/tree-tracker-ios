@@ -35,6 +35,7 @@ The file is ignored in git since we do not want to store these in the repository
 - [ ] Better UI for tree cells
 - [ ] Progress indicator for uploads
 - [ ] Stop button for uploads
+- [ ] Map picker when tapping on coordinates so we can adjust it
 
 # License
 [MIT](License.md)
