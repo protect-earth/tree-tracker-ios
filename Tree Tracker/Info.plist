@@ -24,8 +24,10 @@
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>IMGUR_CLIENT_ID</key>
-	<string>$(IMGUR_CLIENT_ID)</string>
+	<key>CLOUDINARY_CLOUD_NAME</key>
+	<string>$(CLOUDINARY_CLOUD_NAME)</string>
+	<key>CLOUDINARY_UPLOAD_PRESET_NAME</key>
+	<string>$(CLOUDINARY_UPLOAD_PRESET_NAME)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>

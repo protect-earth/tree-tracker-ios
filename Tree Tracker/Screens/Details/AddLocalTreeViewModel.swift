@@ -109,7 +109,8 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
 
     private func save(asset: PHAsset, coordinates: String, species: String, supervisor: String, notes: String) {
         let tree = LocalTree(phImageId: asset.localIdentifier, createDate: asset.creationDate, supervisor: supervisor, species: species, notes: notes, coordinates: coordinates, imageMd5: nil)
-
+        defaults[.species] = species
+        defaults[.supervisor] = supervisor
         database.save([tree])
         assets.removeAll { $0 == asset }
         presentNextAssetToFillOrComplete()

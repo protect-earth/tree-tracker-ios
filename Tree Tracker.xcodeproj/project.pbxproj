@@ -61,6 +61,11 @@
 		85B83A1C25B8AC650008E167 /* EditLocalTreeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A1B25B8AC650008E167 /* EditLocalTreeViewModel.swift */; };
 		85B83A2325B9C1BC0008E167 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A2225B9C1BC0008E167 /* NavigationViewController.swift */; };
 		85B83A2625B9C1D50008E167 /* MainFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A2525B9C1D50008E167 /* MainFlowViewController.swift */; };
+		85B83A2A25B9C5CB0008E167 /* JSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A2925B9C5CB0008E167 /* JSONDecoder.swift */; };
+		85B83A2D25B9C5DB0008E167 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A2C25B9C5DB0008E167 /* DateFormatter.swift */; };
+		85B83A3025B9C5E90008E167 /* JSONEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A2F25B9C5E90008E167 /* JSONEncoder.swift */; };
+		85B83A3325B9C9DC0008E167 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A3225B9C9DC0008E167 /* String.swift */; };
+		85B83A3825B9D9C40008E167 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A3725B9D9C40008E167 /* Data.swift */; };
 		85E0E05E25B33F8C009D8FC0 /* TappableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */; };
 		85E0E06225B35744009D8FC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E06125B35744009D8FC0 /* UIView.swift */; };
 /* End PBXBuildFile section */
@@ -121,6 +126,11 @@
 		85B83A1B25B8AC650008E167 /* EditLocalTreeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocalTreeViewModel.swift; sourceTree = "<group>"; };
 		85B83A2225B9C1BC0008E167 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		85B83A2525B9C1D50008E167 /* MainFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowViewController.swift; sourceTree = "<group>"; };
+		85B83A2925B9C5CB0008E167 /* JSONDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoder.swift; sourceTree = "<group>"; };
+		85B83A2C25B9C5DB0008E167 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		85B83A2F25B9C5E90008E167 /* JSONEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONEncoder.swift; sourceTree = "<group>"; };
+		85B83A3225B9C9DC0008E167 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		85B83A3725B9D9C40008E167 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableButton.swift; sourceTree = "<group>"; };
 		85E0E06125B35744009D8FC0 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -190,12 +200,17 @@
 		85792A7425B0A35100BFDA96 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				85B839EB25B8661E0008E167 /* Collection.swift */,
+				85B83A3725B9D9C40008E167 /* Data.swift */,
+				85B83A2C25B9C5DB0008E167 /* DateFormatter.swift */,
+				85B83A2925B9C5CB0008E167 /* JSONDecoder.swift */,
+				85B83A2F25B9C5E90008E167 /* JSONEncoder.swift */,
 				85B839CA25B5F3EC0008E167 /* PHAsset.swift */,
+				85B83A3225B9C9DC0008E167 /* String.swift */,
 				85B839CD25B5F8F30008E167 /* UIAlertController.swift */,
 				85792A7525B0A35A00BFDA96 /* UIImage.swift */,
 				85E0E06125B35744009D8FC0 /* UIView.swift */,
 				85792A7925B0A36B00BFDA96 /* URL.swift */,
-				85B839EB25B8661E0008E167 /* Collection.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -401,6 +416,7 @@
 				85B839B525B47C230008E167 /* TreesListItem.swift in Sources */,
 				85B839D225B742510008E167 /* TextFieldModel.swift in Sources */,
 				85B839B125B47C0A0008E167 /* Action.swift in Sources */,
+				85B83A3325B9C9DC0008E167 /* String.swift in Sources */,
 				857BAD9D25B1DCDE005D7D35 /* Defaults.swift in Sources */,
 				85B839E425B753F10008E167 /* KeyboardLayoutGuide.swift in Sources */,
 				85B839D625B74E960008E167 /* KeyboardAccessoryView.swift in Sources */,
@@ -419,6 +435,8 @@
 				85B839F325B866590008E167 /* RoundedTappableButton.swift in Sources */,
 				85B839AD25B47BD30008E167 /* Reusable.swift in Sources */,
 				85B839A925B35B540008E167 /* TableViewDataSource.swift in Sources */,
+				85B83A3825B9D9C40008E167 /* Data.swift in Sources */,
+				85B83A2D25B9C5DB0008E167 /* DateFormatter.swift in Sources */,
 				85B83A2325B9C1BC0008E167 /* NavigationViewController.swift in Sources */,
 				85792A9225B1D5A500BFDA96 /* ButtonModel.swift in Sources */,
 				853ABD5A2596144900144B0D /* TreesViewController.swift in Sources */,
@@ -427,6 +445,7 @@
 				853ABD562596144900144B0D /* AppDelegate.swift in Sources */,
 				857BADA825B1FA93005D7D35 /* TreeDetailsViewController.swift in Sources */,
 				85B83A1C25B8AC650008E167 /* EditLocalTreeViewModel.swift in Sources */,
+				85B83A2A25B9C5CB0008E167 /* JSONDecoder.swift in Sources */,
 				85A0EF8925A22FEE003CE744 /* AirtableTree.swift in Sources */,
 				85B839E025B74FF50008E167 /* TextField.swift in Sources */,
 				853ABD8925961F9700144B0D /* Constants.swift in Sources */,
@@ -439,6 +458,7 @@
 				85B839FB25B86F1A0008E167 /* ImageLoader.swift in Sources */,
 				85B839EF25B866370008E167 /* GridCollectionViewLayout.swift in Sources */,
 				85B839E725B862B80008E167 /* CollectionViewDataSource.swift in Sources */,
+				85B83A3025B9C5E90008E167 /* JSONEncoder.swift in Sources */,
 				85792A8625B1D53700BFDA96 /* Environment.swift in Sources */,
 				85792A8F25B1D59F00BFDA96 /* SyncProgress.swift in Sources */,
 				85B83A0225B8735F0008E167 /* AnyImageLoader.swift in Sources */,

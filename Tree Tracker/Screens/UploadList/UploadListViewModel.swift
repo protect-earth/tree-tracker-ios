@@ -67,6 +67,8 @@ final class UploadListViewModel {
                         print("Error when uploading a local tree: \(error)")
                     }
                 })
+            } else {
+                self?.presentTreesFromDatabase()
             }
         }
     }

@@ -88,30 +88,40 @@ final class Database {
     }
 
     func remove(tree: LocalTree, completion: @escaping () -> Void) {
-        _ = try? dbQueue?.write { db in
-            _ = try? tree.delete(db)
-            completion()
+        dbQueue?.asyncWrite { db in
+            try? tree.delete(db)
+        } completion: { db, result in
+            DispatchQueue.main.async {
+                completion()
+            }
         }
     }
 
     func update(tree: LocalTree, completion: @escaping () -> Void) {
-        _ = try? dbQueue?.write { db in
+        dbQueue?.asyncWrite { db in
             try? tree.update(db)
-            completion()
+        } completion: { db, result in
+            DispatchQueue.main.async {
+                completion()
+            }
         }
     }
 
     func fetchRemoteTrees(_ completion: @escaping ([RemoteTree]) -> Void) {
         dbQueue?.read { db in
             let trees = try? RemoteTree.fetchAll(db)
-            completion(trees ?? [])
+            DispatchQueue.main.async {
+                completion(trees ?? [])
+            }
         }
     }
 
     func fetchLocalTrees(_ completion: @escaping ([LocalTree]) -> Void) {
         dbQueue?.read { db in
             let trees = try? LocalTree.fetchAll(db)
-            completion(trees ?? [])
+            DispatchQueue.main.async {
+                completion(trees ?? [])
+            }
         }
     }
 }

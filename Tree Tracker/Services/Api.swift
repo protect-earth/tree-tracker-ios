@@ -9,13 +9,12 @@ struct Paginated<Model: Decodable>: Decodable {
 
 final class Api {
     private struct Config {
-        static let baseUrl = URL(string: "https://api.airtable.com/v0/\(Constants.airtableBaseId)")!
-        static let treesUrl = baseUrl.appendingPathComponent(Constants.airtableTreesTable)
-        static let headers = HTTPHeaders(["Authorization": "Bearer \(Constants.airtableApiKey)"])
+        static let baseUrl = URL(string: "https://api.airtable.com/v0/\(Constants.Airtable.baseId)")!
+        static let treesUrl = baseUrl.appendingPathComponent(Constants.Airtable.treesTable)
+        static let headers = HTTPHeaders(["Authorization": "Bearer \(Constants.Airtable.apiKey)"])
 
-        enum Imgur {
-            static let uploadUrl = URL(string: "https://api.imgur.com/3/image")!
-            static let headers = HTTPHeaders(["Authorization": "Client-ID \(Constants.imgurClientId)"])
+        enum Cloudinary {
+            static let uploadUrl = URL(string: "https://api.cloudinary.com/v1_1/\(Constants.Cloudinary.cloudName)/image/upload")!
         }
     }
 
@@ -25,7 +24,7 @@ final class Api {
     func treesPlanted(offset: String? = nil, completion: @escaping (Result<Paginated<AirtableTree>, AFError>) -> Void) {
         let request = session.request(Config.treesUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers, interceptor: nil, requestModifier: nil)
 
-        request.validate().responseDecodable { (response: DataResponse<Paginated<AirtableTree>, AFError>) in
+        request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<Paginated<AirtableTree>, AFError>) in
             completion(response.result)
         }
     }
@@ -42,49 +41,35 @@ final class Api {
                 return
             }
 
-            self?.authorizeImgur {
-                self?.upload(image: image) { result in
-                    switch result {
-                    case let .success(url):
-                        self?.upload(tree: tree, imageUrl: url, completion: completion)
-                    case let .failure(error):
-                        completion(.failure(error))
-                    }
+            self?.upload(image: image) { result in
+                switch result {
+                case let .success((url, md5)):
+                    var newTree = tree
+                    newTree.imageMd5 = md5
+                    self?.upload(tree: newTree, imageUrl: url, completion: completion)
+                case let .failure(error):
+                    completion(.failure(error))
                 }
             }
         }
     }
 
-
-    private func authorizeImgur(completion: @escaping () -> Void) {
-        let request = session.request("https://api.imgur.com/oauth2/authorize", method: .post, parameters: ["response_type": "token", "client_id": Constants.imgurClientId], encoding: JSONEncoding.default, headers: Config.Imgur.headers)
-
-        request.validate().responseJSON { result in
-            switch result.result {
-            case let .success(json):
-                print("IMGur authorize: success. \(json)")
-            case let .failure(error):
-                print("IMGur authorize failure. \(result.data.map { String.init(data: $0, encoding: .utf8) })")
-            }
-            completion()
-        }
-    }
-
-    private func upload(image: UIImage, completion: @escaping (Result<String, AFError>) -> Void) {
-        print("Uploading image to imgur...")
-        guard let data = image.pngData() else {
+    private func upload(image: UIImage, completion: @escaping (Result<(String, String), AFError>) -> Void) {
+        print("Uploading image to Cloudinary...")
+        guard let data = image.jpegData(compressionQuality: 0.8) else {
             print("No pngData for the image, bailing")
             completion(.failure(.explicitlyCancelled))
             return
         }
 
+        let md5 = data.md5() ?? ""
         let request = session.upload(
             multipartFormData: { formData in
-                formData.append(data, withName: "image")
+                formData.append(data, withName: "file", fileName: "image.jpg", mimeType: "image/jpg")
+                formData.append(Constants.Cloudinary.uploadPresetName.data(using: .utf8)!, withName: "upload_preset")
             },
-            to: Config.Imgur.uploadUrl,
-            method: .post,
-            headers: Config.Imgur.headers)
+            to: Config.Cloudinary.uploadUrl,
+            method: .post)
 
         request.validate().responseJSON { response in
             switch response.result {
@@ -92,11 +77,10 @@ final class Api {
                 print("Error when uploading image: \(response.data.map { String.init(data: $0, encoding: .utf8) })")
                 completion(.failure(error))
             case let .success(json as [String: Any]):
-                let data = json["data"] as? [String: Any]
-                let url = data?["link"] as? String
+                let url = json["secure_url"] as? String
 
                 if let url = url {
-                    completion(.success(url))
+                    completion(.success((url, md5)))
                 } else {
                     fallthrough
                 }
@@ -109,17 +93,12 @@ final class Api {
 
     private func upload(tree: LocalTree, imageUrl: String, completion: @escaping (Result<AirtableTree, AFError>) -> Void) {
         let airtableTree = tree.toAirtableTree(imageUrl: imageUrl)
+        let request = session.request(Config.treesUrl, method: .post, parameters: airtableTree, encoder: JSONParameterEncoder(encoder: ._iso8601ms), headers: Config.headers, interceptor: nil, requestModifier: nil)
 
-        let request = session.request(Config.treesUrl, method: .post, parameters: airtableTree, encoder: JSONParameterEncoder.default, headers: Config.headers, interceptor: nil, requestModifier: nil)
 
-        request.validate().responseDecodable { (response: DataResponse<Paginated<AirtableTree>, AFError>) in
+        request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<AirtableTree, AFError>) in
             switch response.result {
-            case let .success(paginatedTrees):
-                guard let tree = paginatedTrees.records.first else {
-                    print("Error when fetching Airtable success record: \(response.data.map { String.init(data: $0, encoding: .utf8) })")
-                    completion(.failure(.explicitlyCancelled))
-                    return
-                }
+            case let .success(tree):
                 print("Tree uploaded!")
                 completion(.success(tree))
             case let .failure(error):
