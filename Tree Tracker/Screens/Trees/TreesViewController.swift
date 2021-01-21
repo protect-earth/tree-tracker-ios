@@ -5,7 +5,7 @@ import Combine
 final class TreesViewController: UIViewController {
     let viewModel: TreesViewModel
 
-    private lazy var layout: UICollectionViewLayout = {
+    private lazy var layout: GridCollectionViewLayout = {
         let layout = GridCollectionViewLayout(columns: 4)
         return layout
     }()
@@ -56,6 +56,20 @@ final class TreesViewController: UIViewController {
         super.viewDidLoad()
 
         setup(viewModel: viewModel)
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        let isLandscape = view.frame.width > view.frame.height
+        let columns = isLandscape ? 10 : 4
+
+        if layout.columns != columns {
+            layout.columns = columns
+            collectionView.alwaysBounceVertical = isLandscape
+            collectionView.alwaysBounceHorizontal = !isLandscape
+            layout.invalidateLayout()
+        }
     }
 
     private func nonViewDependentSetup(viewModel: TreesViewModel) {

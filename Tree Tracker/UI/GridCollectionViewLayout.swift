@@ -28,8 +28,7 @@ final class GridCollectionViewLayout: UICollectionViewLayout {
     override func prepare() {
         guard attributes.isEmpty, let collectionView = collectionView, collectionView.frame.width > 0.0, columns > 0, collectionView.numberOfSections > 0 else { return }
 
-        let insets = collectionView.contentInset
-        contentWidth = collectionView.bounds.width - (insets.left + insets.right)
+        contentWidth = collectionView.bounds.width
         contentHeight = 0.0
 
         let items = collectionView.numberOfItems(inSection: 0)
