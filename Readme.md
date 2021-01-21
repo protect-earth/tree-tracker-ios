@@ -1,5 +1,6 @@
 #  Tree Tracker
 
+# Running the app
 ## Prerequisites
 
 ### Airtable setup
@@ -12,7 +13,7 @@ Because Airtable doesn't support uploading images yet, we have to use an externa
 2. Now create an [upload preset](https://cloudinary.com/console/settings/upload) (this will give you the Upload Preset name).
 3. Keep the keys as you'd need to add them to Secrets.xcconfig later on.
 
-## Getting this to run
+## Running from Xcode
 1. Make sure you have downloaded Xcode 12.2+
 2. Open the project in Xcode (you'll notice the dependencies will start to fetch in the background).
 (In the meantime, Xcode will need to fetch dependencies for the project... 😴)
@@ -27,6 +28,13 @@ CLOUDINARY_UPLOAD_PRESET_NAME = iadfadff
 The file is ignored in git since we do not want to store these in the repository itself.
 4. You'll most likely need to change bundle identifier of the project. Basically because the project is set to auto-sign, each person that wants to run this on the device would need to update the bundle to be a unique id not registered before. E.g. from `com.sunshinejr.Tree-Tracker` to `com.mynickname.Tree-Tracker`.
 5. When running on a device, you'll also need to trust the certificate in Settings -> General -> Profiles, otherwise you'll see an error after installing the build and before running it.
+
+# Todo
+- [ ] Use Airtable's thumbnails for Uploaded Trees view
+- [ ] Better UI for editing tree details form
+- [ ] Better UI for tree cells
+- [ ] Progress indicator for uploads
+- [ ] Stop button for uploads
 
 # License
 [MIT](License.md)
