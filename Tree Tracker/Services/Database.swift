@@ -23,6 +23,7 @@ final class Database {
                     table.column(RemoteTree.CodingKeys.species.stringValue, .text)
                     table.column(RemoteTree.CodingKeys.notes.stringValue, .text)
                     table.column(RemoteTree.CodingKeys.coordinates.stringValue, .text)
+                    table.column(RemoteTree.CodingKeys.what3words.stringValue, .text)
                     table.column(RemoteTree.CodingKeys.imageUrl.stringValue, .text)
                     table.column(RemoteTree.CodingKeys.thumbnailUrl.stringValue, .text)
                     table.column(RemoteTree.CodingKeys.imageMd5.stringValue, .text)
@@ -41,6 +42,7 @@ final class Database {
                     table.column(LocalTree.CodingKeys.species.stringValue, .text)
                     table.column(LocalTree.CodingKeys.notes.stringValue, .text)
                     table.column(LocalTree.CodingKeys.coordinates.stringValue, .text)
+                    table.column(LocalTree.CodingKeys.what3words.stringValue, .text)
                     table.column(LocalTree.CodingKeys.imageMd5.stringValue, .text)
 
                     table.primaryKey([LocalTree.CodingKeys.phImageId.stringValue])

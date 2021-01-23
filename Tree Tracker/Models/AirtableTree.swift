@@ -6,6 +6,7 @@ struct AirtableTree: Decodable {
     let species: String
     let notes: String?
     let coordinates: String?
+    let what3words: String?
     let imageMd5: String?
     let createDate: Date?
     let uploadDate: Date?
@@ -18,6 +19,7 @@ struct AirtableTree: Decodable {
         case species = "Species"
         case notes = "Notes"
         case coordinates = "Coordinates"
+        case what3words = "What3Words"
         case image = "Image"
         case imageMd5 = "ImageSignature"
         case createDate = "CreatedDate"
@@ -25,12 +27,13 @@ struct AirtableTree: Decodable {
         case fields
     }
 
-    init(id: Int, supervisor: String, species: String, notes: String?, coordinates: String?, imageUrl: String?, thumbnailUrl: String?, imageMd5: String?, uploadDate: Date?, createDate: Date?) {
+    init(id: Int, supervisor: String, species: String, notes: String?, coordinates: String?, what3words: String?, imageUrl: String?, thumbnailUrl: String?, imageMd5: String?, uploadDate: Date?, createDate: Date?) {
         self.id = id
         self.supervisor = supervisor
         self.species = species
         self.notes = notes
         self.coordinates = coordinates
+        self.what3words = what3words
         self.imageUrl = imageUrl
         self.thumbnailUrl = thumbnailUrl
         self.imageMd5 = imageMd5
@@ -47,6 +50,7 @@ struct AirtableTree: Decodable {
         species = try container.decode(String.self, forKey: .species)
         notes = try container.decodeIfPresent(String.self, forKey: .notes)
         coordinates = try container.decodeIfPresent(String.self, forKey: .coordinates)
+        what3words = try container.decodeIfPresent(String.self, forKey: .what3words)
         imageMd5 = try container.decodeIfPresent(String.self, forKey: .imageMd5)
         uploadDate = try container.decodeIfPresent(Date.self, forKey: .uploadDate)
         createDate = try container.decodeIfPresent(Date.self, forKey: .createDate)
@@ -63,7 +67,7 @@ struct AirtableTree: Decodable {
     }
 
     func toRemoteTree() -> RemoteTree {
-        return RemoteTree(id: id, supervisor: supervisor, species: species, notes: notes, coordinates: coordinates, imageUrl: imageUrl, thumbnailUrl: thumbnailUrl, imageMd5: imageMd5, createDate: createDate, uploadDate: uploadDate)
+        return RemoteTree(id: id, supervisor: supervisor, species: species, notes: notes, coordinates: coordinates, what3words: what3words, imageUrl: imageUrl, thumbnailUrl: thumbnailUrl, imageMd5: imageMd5, createDate: createDate, uploadDate: uploadDate)
     }
 }
 
@@ -131,6 +135,7 @@ struct AirtableTreeEncodable: Encodable {
     let species: String
     let notes: String?
     let coordinates: String?
+    let what3words: String?
     let imageMd5: String?
     let createDate: Date?
     let uploadDate: Date?
@@ -141,6 +146,7 @@ struct AirtableTreeEncodable: Encodable {
         case species = "Species"
         case notes = "Notes"
         case coordinates = "Coordinates"
+        case what3words = "What3Words"
         case image = "Image"
         case imageMd5 = "ImageSignature"
         case createDate = "CreatedDate"
@@ -148,11 +154,12 @@ struct AirtableTreeEncodable: Encodable {
         case fields
     }
 
-    init(supervisor: String, species: String, notes: String?, coordinates: String?, imageUrl: String?, imageMd5: String?, uploadDate: Date?, createDate: Date?) {
+    init(supervisor: String, species: String, notes: String?, coordinates: String?, what3words: String?, imageUrl: String?, imageMd5: String?, uploadDate: Date?, createDate: Date?) {
         self.supervisor = supervisor
         self.species = species
         self.notes = notes
         self.coordinates = coordinates
+        self.what3words = what3words
         self.imageUrl = imageUrl
         self.imageMd5 = imageMd5
         self.uploadDate = uploadDate
@@ -167,6 +174,7 @@ struct AirtableTreeEncodable: Encodable {
         try container.encode(species, forKey: .species)
         try container.encode(notes, forKey: .notes)
         try container.encode(coordinates, forKey: .coordinates)
+        try container.encode(what3words, forKey: .what3words)
         try container.encode(imageMd5, forKey: .imageMd5)
         try container.encode(imageUrl.map { AirtableImage(url: $0, thumbnailUrl: nil) }, forKey: .image)
         try container.encode(uploadDate, forKey: .uploadDate)
