@@ -15,6 +15,7 @@ final class UploadListViewModel {
 
     private var api: Api
     private var database: Database
+    private var currentUpload: Cancellable?
     private weak var navigation: UploadListNavigating?
 
     init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, navigation: UploadListNavigating) {
@@ -26,13 +27,8 @@ final class UploadListViewModel {
         self.syncButton = nil
         self.navigationButtons = []
 
-        self.syncButton = ButtonModel(
-            title: .text("Upload"),
-            action: { [weak self] in
-                self?.upload()
-            },
-            isEnabled: true
-        )
+        presentUploadButton(isUploading: false)
+
         self.navigationButtons = [
             .init(
                 title: .system(.add),
@@ -46,8 +42,28 @@ final class UploadListViewModel {
         presentTreesFromDatabase()
     }
 
+    private func presentUploadButton(isUploading: Bool) {
+        self.syncButton = ButtonModel(
+            title: .text(isUploading ? "Stop uploading" : "Upload"),
+            action: { [weak self] in
+                if isUploading {
+                    self?.stopUploading()
+                } else {
+                    self?.upload()
+                }
+                self?.presentUploadButton(isUploading: !isUploading)
+            },
+            isEnabled: true
+        )
+    }
+
     func upload() {
         uploadLocalTreesRecursively()
+    }
+
+    private func stopUploading() {
+        print("Uploading cancelled.")
+        currentUpload?.cancel()
     }
 
     private func uploadLocalTreesRecursively() {
@@ -56,7 +72,7 @@ final class UploadListViewModel {
             guard let tree = trees.first else { return }
             
             print("Now uploading tree: \(tree)")
-            self?.api.upload(tree: tree, completion: { result in
+            self?.currentUpload = self?.api.upload(tree: tree, completion: { result in
                 switch result {
                 case let .success(airtableTree):
                     print("Successfully uploaded tree.")

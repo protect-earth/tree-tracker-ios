@@ -34,7 +34,7 @@ The file is ignored in git since we do not want to store these in the repository
 - [ ] Better UI for editing tree details form
 - [ ] Better UI for tree cells
 - [ ] Progress indicator for uploads
-- [ ] Stop button for uploads
+- [x] Stop button for uploads
 - [ ] Edit uploaded tree
 - [ ] Map picker when tapping on coordinates so we can adjust it
 - [ ] Settings screen (enable/disable network fetching, credits for OSS & Icons)
