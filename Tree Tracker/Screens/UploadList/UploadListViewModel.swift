@@ -9,7 +9,6 @@ protocol UploadListNavigating: AnyObject {
 final class UploadListViewModel {
     @Published var title: String
     @Published var data: [ListSection<TreesListItem>]
-    @Published var syncProgress: SyncProgress?
     @Published var syncButton: ButtonModel?
     @Published var navigationButtons: [NavigationBarButtonModel]
 
@@ -64,12 +63,17 @@ final class UploadListViewModel {
     private func stopUploading() {
         print("Uploading cancelled.")
         currentUpload?.cancel()
+        presentTreesFromDatabase()
     }
 
     private func uploadLocalTreesRecursively() {
         print("Uploading images...")
         database.fetchLocalTrees { [weak self] trees in
-            guard let tree = trees.first else { return }
+            guard let tree = trees.first else {
+                print("No more items to upload - bailing.")
+                self?.presentUploadButton(isUploading: false)
+                return
+            }
             
             print("Now uploading tree: \(tree)")
             self?.currentUpload = self?.api.upload(
