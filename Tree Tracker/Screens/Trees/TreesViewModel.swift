@@ -55,6 +55,7 @@ final class TreesViewModel {
                 let imageLoader = (tree.thumbnailUrl ?? tree.imageUrl).map { AnyImageLoader(imageLoader: URLImageLoader(url: $0)) }
                 return .tree(id: "\(tree.id)",
                              imageLoader: imageLoader,
+                             progress: 0,
                              info: tree.species,
                              detail: tree.supervisor,
                              tapAction: Action(id: "tree_action_\(tree.id)") {

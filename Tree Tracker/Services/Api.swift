@@ -29,9 +29,9 @@ final class Api {
         }
     }
 
-    func upload(tree: LocalTree, completion: @escaping (Result<AirtableTree, AFError>) -> Void) -> Cancellable {
+    func upload(tree: LocalTree, progress: @escaping (Double) -> Void = { _ in }, completion: @escaping (Result<AirtableTree, AFError>) -> Void) -> Cancellable {
         let upload = ImageUpload(tree: tree)
-        upload.upload(tree: tree, session: session, completion: completion)
+        upload.upload(tree: tree, progress: progress, session: session, completion: completion)
 
         return upload
     }
@@ -54,6 +54,7 @@ final class ImageUpload: Cancellable {
     private let imageLoader: PHImageLoader
 
     private var request: Request?
+    private var progress: ((Double) -> Void)?
     private var isCancelled = false
 
     init(tree: LocalTree) {
@@ -68,7 +69,9 @@ final class ImageUpload: Cancellable {
         request?.cancel()
     }
 
-    func upload(tree: LocalTree, session: Session, completion: @escaping (Result<AirtableTree, AFError>) -> Void) {
+    func upload(tree: LocalTree, progress: @escaping (Double) -> Void = { _ in }, session: Session, completion: @escaping (Result<AirtableTree, AFError>) -> Void) {
+        self.progress = progress
+
         imageLoader.loadHighQualityImage { [weak self] image in
             guard self?.isCancelled != true else {
                 completion(.failure(AFError.explicitlyCancelled))
@@ -79,6 +82,8 @@ final class ImageUpload: Cancellable {
                 completion(.failure(AFError.explicitlyCancelled))
                 return
             }
+
+            self?.progress?(0.2)
 
             self?.request = self?.upload(image: image, session: session) { result in
                 switch result {
@@ -102,13 +107,17 @@ final class ImageUpload: Cancellable {
         }
 
         let md5 = data.md5() ?? ""
-        let request = session.upload(
-            multipartFormData: { formData in
-                formData.append(data, withName: "file", fileName: "image.jpg", mimeType: "image/jpg")
-                formData.append(Constants.Cloudinary.uploadPresetName.data(using: .utf8)!, withName: "upload_preset")
-            },
-            to: Api.Config.Cloudinary.uploadUrl,
-            method: .post)
+        let request = session
+            .upload(
+                multipartFormData: { formData in
+                    formData.append(data, withName: "file", fileName: "image.jpg", mimeType: "image/jpg")
+                    formData.append(Constants.Cloudinary.uploadPresetName.data(using: .utf8)!, withName: "upload_preset")
+                },
+                to: Api.Config.Cloudinary.uploadUrl,
+                method: .post
+            ).uploadProgress { progress in
+                self.progress?(0.2 + 0.75 * progress.fractionCompleted)
+            }
 
         return request.validate().responseJSON { response in
             switch response.result {
@@ -134,7 +143,9 @@ final class ImageUpload: Cancellable {
         let airtableTree = tree.toAirtableTree(imageUrl: imageUrl)
         let request = session.request(Api.Config.treesUrl, method: .post, parameters: airtableTree, encoder: JSONParameterEncoder(encoder: ._iso8601ms), headers: Api.Config.headers, interceptor: nil, requestModifier: nil)
 
-        return request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<AirtableTree, AFError>) in
+        return request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { [weak self] (response: DataResponse<AirtableTree, AFError>) in
+            self?.progress?(1.0)
+
             switch response.result {
             case let .success(tree):
                 print("Tree uploaded!")

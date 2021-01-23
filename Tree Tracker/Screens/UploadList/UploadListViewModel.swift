@@ -72,36 +72,56 @@ final class UploadListViewModel {
             guard let tree = trees.first else { return }
             
             print("Now uploading tree: \(tree)")
-            self?.currentUpload = self?.api.upload(tree: tree, completion: { result in
-                switch result {
-                case let .success(airtableTree):
-                    print("Successfully uploaded tree.")
-                    self?.database.save([airtableTree])
-                    self?.database.remove(tree: tree) {
-                        self?.presentTreesFromDatabase()
-                        self?.uploadLocalTreesRecursively()
+            self?.currentUpload = self?.api.upload(
+                tree: tree,
+                progress: { progress in
+                    NSLog("progress: \(progress)")
+                    self?.update(uploadProgress: progress, for: tree)
+                },
+                completion: { result in
+                    switch result {
+                    case let .success(airtableTree):
+                        print("Successfully uploaded tree.")
+                        self?.database.save([airtableTree])
+                        self?.database.remove(tree: tree) {
+                            self?.presentTreesFromDatabase()
+                            self?.uploadLocalTreesRecursively()
+                        }
+                    case let .failure(error):
+                        print("Error when uploading a local tree: \(error)")
                     }
-                case let .failure(error):
-                    print("Error when uploading a local tree: \(error)")
                 }
-            })
+            )
         }
+    }
+
+    private func update(uploadProgress: Double, for tree: LocalTree) {
+        guard let section = data.first else { return }
+
+        let newItem = buildItem(tree: tree, progress: uploadProgress)
+        let newSection = section.section(replacing: newItem)
+        data = [newSection]
     }
 
     private func presentTreesFromDatabase() {
         database.fetchLocalTrees { [weak self] trees in
-            self?.data = [.untitled(id: "trees", trees.map { tree in
-                let imageLoader = AnyImageLoader(imageLoader: PHImageLoader(phImageId: tree.phImageId))
-                return .tree(id: tree.phImageId,
-                             imageLoader: imageLoader,
-                             info: tree.species,
-                             detail: tree.supervisor,
-                             tapAction: Action(id: "tree_action_\(tree.phImageId)") {
-                                self?.navigation?.triggerEditDetailsFlow(tree: tree) {
-                                    self?.loadData()
-                                }
-                             })
+            self?.data = [.untitled(id: "trees", trees.compactMap { tree in
+                return self?.buildItem(tree: tree, progress: 0.0)
             })]
         }
+    }
+
+    private func buildItem(tree: LocalTree, progress: Double) -> TreesListItem {
+        let imageLoader = AnyImageLoader(imageLoader: PHImageLoader(phImageId: tree.phImageId))
+        return .tree(id: tree.phImageId,
+                     imageLoader: imageLoader,
+                     progress: progress,
+                     info: tree.species,
+                     detail: tree.supervisor,
+                     tapAction: Action(id: "tree_action_\(tree.phImageId)") { [weak self] in
+                        self?.navigation?.triggerEditDetailsFlow(tree: tree) {
+                            self?.loadData()
+                        }
+                     })
     }
 }

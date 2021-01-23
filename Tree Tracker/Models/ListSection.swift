@@ -1,6 +1,6 @@
 import Foundation
 
-enum ListSection<ListItem: Hashable>: Hashable, Identifiable {
+enum ListSection<ListItem: Hashable & Identifiable>: Hashable, Identifiable {
     case titled(String, [ListItem])
     case untitled(id: String = "untitled", [ListItem])
 
@@ -26,6 +26,22 @@ enum ListSection<ListItem: Hashable>: Hashable, Identifiable {
             return .titled(title, items)
         case let .untitled(id, _):
             return .untitled(id: id, items)
+        }
+    }
+
+    func section(replacing item: ListItem) -> ListSection {
+        var newItems = items
+        guard let index = newItems.firstIndex(where: { $0.id == item.id }) else {
+            return self
+        }
+
+        newItems[index] = item
+        
+        switch self {
+        case let .titled(title, _):
+            return .titled(title, newItems)
+        case let .untitled(id, _):
+            return .untitled(id: id, newItems)
         }
     }
 }

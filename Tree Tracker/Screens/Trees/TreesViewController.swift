@@ -106,9 +106,9 @@ final class TreesViewController: UIViewController {
     private func buildDataSource() -> CollectionViewDataSource<TreesListItem> {
         return CollectionViewDataSource(collectionView: collectionView, cellTypes: [TreeCollectionViewCell.self]) { collectionView, indexPath, model -> UICollectionViewCell? in
             switch model {
-            case let .tree(_, imageLoader, info, detail, tapAction):
+            case let .tree(_, imageLoader, progress, info, detail, tapAction):
                 let cell = collectionView.dequeue(cell: TreeCollectionViewCell.self, indexPath: indexPath)
-                cell.set(imageLoader: imageLoader, info: info, detail: detail, tapAction: tapAction)
+                cell.set(imageLoader: imageLoader, progress: progress, info: info, detail: detail, tapAction: tapAction)
 
                 return cell
             }

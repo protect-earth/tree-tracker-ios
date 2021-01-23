@@ -1,7 +1,6 @@
 import UIKit
 
-final class CollectionViewDataSource<ListItem: Hashable>: UICollectionViewDiffableDataSource<ListSection<ListItem>, ListItem> {
-
+final class CollectionViewDataSource<ListItem: Hashable & Identifiable>: UICollectionViewDiffableDataSource<ListSection<ListItem>, ListItem> {
     private var data = [ListSection<ListItem>]()
     private var currentItems: [ListSection<ListItem>] {
          return snapshot().sectionIdentifiers.map { $0.section(with: snapshot().itemIdentifiers(inSection: $0)) }

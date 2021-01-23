@@ -1,7 +1,6 @@
 import UIKit
 
-final class TableViewDataSource<ListItem: Hashable>: UITableViewDiffableDataSource<ListSection<ListItem>, ListItem>, UITableViewDelegate {
-
+final class TableViewDataSource<ListItem: Hashable & Identifiable>: UITableViewDiffableDataSource<ListSection<ListItem>, ListItem>, UITableViewDelegate {
     private var data = [ListSection<ListItem>]()
     private var currentItems: [ListSection<ListItem>] {
          return snapshot().sectionIdentifiers.map { $0.section(with: snapshot().itemIdentifiers(inSection: $0)) }

@@ -20,6 +20,16 @@ final class TreeCollectionViewCell: UICollectionViewCell, Reusable {
         return view
     }()
 
+    private var progress: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .green
+        view.layer.cornerRadius = 4.0
+        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+
+        return view
+    }()
+
     private let infoOverlay: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -40,6 +50,8 @@ final class TreeCollectionViewCell: UICollectionViewCell, Reusable {
         return label
     }()
 
+    private lazy var progressWidthConstraint = progress.widthAnchor.constraint(equalToConstant: 0.0)
+
     private var imageLoader: AnyImageLoader?
     private var tapAction: Action?
 
@@ -57,13 +69,18 @@ final class TreeCollectionViewCell: UICollectionViewCell, Reusable {
 
     private func setup() {
         contentView.addSubview(wrapper)
-        wrapper.add(subviews: imageView, infoOverlay)
+        wrapper.add(subviews: imageView, progress, infoOverlay)
         infoOverlay.addSubview(infoLabel)
 
         wrapper.pin(to: contentView)
         imageView.pin(to: wrapper)
 
         NSLayoutConstraint.activate([
+            progress.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor),
+            progress.topAnchor.constraint(equalTo: wrapper.topAnchor),
+            progress.heightAnchor.constraint(equalToConstant: 5.0),
+            progressWidthConstraint,
+
             infoLabel.leadingAnchor.constraint(equalTo: infoOverlay.leadingAnchor, constant: 8.0),
             infoLabel.trailingAnchor.constraint(equalTo: infoOverlay.trailingAnchor, constant: -8.0),
             infoLabel.topAnchor.constraint(equalTo: infoOverlay.topAnchor, constant: 8.0),
@@ -75,7 +92,7 @@ final class TreeCollectionViewCell: UICollectionViewCell, Reusable {
         ])
     }
 
-    func set(imageLoader: AnyImageLoader?, info: String, detail: String?, tapAction: Action?) {
+    func set(imageLoader: AnyImageLoader?, progress: Double, info: String, detail: String?, tapAction: Action?) {
         self.imageLoader = imageLoader
         self.tapAction = tapAction
 
@@ -87,6 +104,12 @@ final class TreeCollectionViewCell: UICollectionViewCell, Reusable {
             }
 
             self.imageView.image = image
+        }
+
+        progressWidthConstraint.constant = CGFloat(progress) * imageView.bounds.width
+
+        UIView.animate(withDuration: 0.1) {
+            self.progress.layoutIfNeeded()
         }
     }
 
