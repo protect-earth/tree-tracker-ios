@@ -30,6 +30,9 @@ final class TreesViewModel {
 
     func sync() {
         lazilyLoadAllRemoteTreesIfPossible()
+        lazilyLoadAllSpeciesIfPossible()
+        lazilyLoadAllSitesIfPossible()
+        lazilyLoadAllSupervisorsIfPossible()
     }
 
     private func lazilyLoadAllRemoteTreesIfPossible(offset: String? = nil) {
@@ -44,6 +47,48 @@ final class TreesViewModel {
                 }
             case let .failure(error):
                 self?.presentTreesFromDatabase()
+                print("Error when saving airtable records: \(error)")
+            }
+        }
+    }
+
+    private func lazilyLoadAllSpeciesIfPossible(offset: String? = nil) {
+        api.species(offset: offset) { [weak self] result in
+            switch result {
+            case let .success(paginatedResults):
+                self?.database.save(paginatedResults.records.map { $0.toSpecies() })
+                if let offset = paginatedResults.offset {
+                    self?.lazilyLoadAllSpeciesIfPossible(offset: offset)
+                }
+            case let .failure(error):
+                print("Error when saving airtable records: \(error)")
+            }
+        }
+    }
+
+    private func lazilyLoadAllSupervisorsIfPossible(offset: String? = nil) {
+        api.supervisors(offset: offset) { [weak self] result in
+            switch result {
+            case let .success(paginatedResults):
+                self?.database.save(paginatedResults.records.map { $0.toSupervisor() })
+                if let offset = paginatedResults.offset {
+                    self?.lazilyLoadAllSupervisorsIfPossible(offset: offset)
+                }
+            case let .failure(error):
+                print("Error when saving airtable records: \(error)")
+            }
+        }
+    }
+
+    private func lazilyLoadAllSitesIfPossible(offset: String? = nil) {
+        api.sites(offset: offset) { [weak self] result in
+            switch result {
+            case let .success(paginatedResults):
+                self?.database.save(paginatedResults.records.map { $0.toSite() })
+                if let offset = paginatedResults.offset {
+                    self?.lazilyLoadAllSitesIfPossible(offset: offset)
+                }
+            case let .failure(error):
                 print("Error when saving airtable records: \(error)")
             }
         }

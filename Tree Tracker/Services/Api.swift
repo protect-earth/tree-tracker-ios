@@ -11,6 +11,9 @@ final class Api {
     fileprivate struct Config {
         static let baseUrl = URL(string: "https://api.airtable.com/v0/\(Constants.Airtable.baseId)")!
         static let treesUrl = baseUrl.appendingPathComponent(Constants.Airtable.treesTable)
+        static let supervisorsUrl = baseUrl.appendingPathComponent(Constants.Airtable.supervisorsTable)
+        static let sitesUrl = baseUrl.appendingPathComponent(Constants.Airtable.sitesTable)
+        static let speciesUrl = baseUrl.appendingPathComponent(Constants.Airtable.speciesTable)
         static let headers = HTTPHeaders(["Authorization": "Bearer \(Constants.Airtable.apiKey)"])
 
         enum Cloudinary {
@@ -25,6 +28,30 @@ final class Api {
         let request = session.request(Config.treesUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers, interceptor: nil, requestModifier: nil)
 
         request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<Paginated<AirtableTree>, AFError>) in
+            completion(response.result)
+        }
+    }
+
+    func species(offset: String? = nil, completion: @escaping (Result<Paginated<AirtableSpecies>, AFError>) -> Void) {
+        let request = session.request(Config.speciesUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers, interceptor: nil, requestModifier: nil)
+
+        request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<Paginated<AirtableSpecies>, AFError>) in
+            completion(response.result)
+        }
+    }
+
+    func sites(offset: String? = nil, completion: @escaping (Result<Paginated<AirtableSite>, AFError>) -> Void) {
+        let request = session.request(Config.sitesUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers, interceptor: nil, requestModifier: nil)
+
+        request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<Paginated<AirtableSite>, AFError>) in
+            completion(response.result)
+        }
+    }
+
+    func supervisors(offset: String? = nil, completion: @escaping (Result<Paginated<AirtableSupervisor>, AFError>) -> Void) {
+        let request = session.request(Config.supervisorsUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers, interceptor: nil, requestModifier: nil)
+
+        request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<Paginated<AirtableSupervisor>, AFError>) in
             completion(response.result)
         }
     }

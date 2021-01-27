@@ -1,7 +1,7 @@
 import Foundation
 import GRDB
 
-struct RemoteTree: Codable, FetchableRecord, PersistableRecord, TableRecord {
+struct RemoteTree: Codable, FetchableRecord, PersistableRecord, TableRecord, Identifiable {
     let id: Int
     let supervisor: String
     let species: String

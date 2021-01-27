@@ -71,65 +71,6 @@ struct AirtableTree: Decodable {
     }
 }
 
-private struct AirtableImage: Codable {
-    let url: String
-    let thumbnailUrl: String?
-
-    enum CodingKeys: String, CodingKey {
-        case url
-        case thumbnailUrl = "thumbnails"
-    }
-
-    init(url: String, thumbnailUrl: String?) {
-        self.url = url
-        self.thumbnailUrl = thumbnailUrl
-    }
-
-    init(from decoder: Decoder) throws {
-        var root = try decoder.unkeyedContainer()
-        let container = try root.nestedContainer(keyedBy: CodingKeys.self)
-
-        url = try container.decode(String.self, forKey: .url)
-        thumbnailUrl = (try? container.decodeIfPresent(AirtableImageThumbnail.self, forKey: .thumbnailUrl))?.url
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var root = encoder.unkeyedContainer()
-        var container = root.nestedContainer(keyedBy: CodingKeys.self)
-
-        try container.encode(url, forKey: .url)
-        try container.encodeIfPresent(thumbnailUrl, forKey: .thumbnailUrl)
-    }
-}
-
-struct AirtableImageThumbnail: Codable {
-    let url: String
-
-    enum CodingKeys: String, CodingKey {
-        case small
-        case large
-        case url
-    }
-
-    init(url: String) {
-        self.url = url
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let small = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .large)
-
-        url = try small.decode(String.self, forKey: .url)
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        var small = container.nestedContainer(keyedBy: CodingKeys.self, forKey: .large)
-
-        try small.encode(url, forKey: .url)
-    }
-}
-
 struct AirtableTreeEncodable: Encodable {
     let supervisor: String
     let species: String

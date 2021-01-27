@@ -22,6 +22,9 @@ Because Airtable doesn't support uploading images yet, we have to use an externa
 AIRTABLE_API_KEY = yourKey123
 AIRTABLE_BASE_ID = appNiceTree
 AIRTABLE_TREES_TABLE_NAME = Trees Planted
+AIRTABLE_SPECIES_TABLE_NAME = Species
+AIRTABLE_SUPERVISORS_TABLE_NAME = Supervisors
+AIRTABLE_SITES_TABLE_NAME = Sites
 CLOUDINARY_CLOUD_NAME = qqq2ek4mq
 CLOUDINARY_UPLOAD_PRESET_NAME = iadfadff
 ```

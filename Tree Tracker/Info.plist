@@ -6,6 +6,12 @@
 	<string>$(AIRTABLE_API_KEY)</string>
 	<key>AIRTABLE_BASE_ID</key>
 	<string>$(AIRTABLE_BASE_ID)</string>
+	<key>AIRTABLE_SITES_TABLE_NAME</key>
+	<string>$(AIRTABLE_SITES_TABLE_NAME)</string>
+	<key>AIRTABLE_SPECIES_TABLE_NAME</key>
+	<string>$(AIRTABLE_SPECIES_TABLE_NAME)</string>
+	<key>AIRTABLE_SUPERVISORS_TABLE_NAME</key>
+	<string>$(AIRTABLE_SUPERVISORS_TABLE_NAME)</string>
 	<key>AIRTABLE_TREES_TABLE_NAME</key>
 	<string>$(AIRTABLE_TREES_TABLE_NAME)</string>
 	<key>CFBundleDevelopmentRegion</key>

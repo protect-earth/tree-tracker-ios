@@ -48,6 +48,48 @@ final class Database {
                     table.primaryKey([LocalTree.CodingKeys.phImageId.stringValue])
                 }
             }
+
+            if try db.tableExists(LocalTree.databaseTableName) == false {
+                try db.create(table: LocalTree.databaseTableName) { table in
+                    table.column(LocalTree.CodingKeys.phImageId.stringValue, .text)
+                    table.column(LocalTree.CodingKeys.createDate.stringValue, .date)
+                    table.column(LocalTree.CodingKeys.supervisor.stringValue, .text)
+                    table.column(LocalTree.CodingKeys.species.stringValue, .text)
+                    table.column(LocalTree.CodingKeys.notes.stringValue, .text)
+                    table.column(LocalTree.CodingKeys.coordinates.stringValue, .text)
+                    table.column(LocalTree.CodingKeys.what3words.stringValue, .text)
+                    table.column(LocalTree.CodingKeys.imageMd5.stringValue, .text)
+
+                    table.primaryKey([LocalTree.CodingKeys.phImageId.stringValue])
+                }
+            }
+
+            if try db.tableExists(Site.databaseTableName) == false {
+                try db.create(table: Site.databaseTableName) { table in
+                    table.column(Site.CodingKeys.id.stringValue, .text)
+                    table.column(Site.CodingKeys.name.stringValue, .text)
+
+                    table.primaryKey([Site.CodingKeys.id.stringValue])
+                }
+            }
+
+            if try db.tableExists(Supervisor.databaseTableName) == false {
+                try db.create(table: Supervisor.databaseTableName) { table in
+                    table.column(Supervisor.CodingKeys.id.stringValue, .text)
+                    table.column(Supervisor.CodingKeys.name.stringValue, .text)
+
+                    table.primaryKey([Supervisor.CodingKeys.id.stringValue])
+                }
+            }
+
+            if try db.tableExists(Species.databaseTableName) == false {
+                try db.create(table: Species.databaseTableName) { table in
+                    table.column(Species.CodingKeys.id.stringValue, .text)
+                    table.column(Species.CodingKeys.name.stringValue, .text)
+
+                    table.primaryKey([Species.CodingKeys.id.stringValue])
+                }
+            }
         }
     }
 
@@ -90,6 +132,27 @@ final class Database {
         }
     }
 
+    func save<T: Identifiable & TableRecord & FetchableRecord & PersistableRecord>(_ models: [T]) where T.ID: DatabaseValueConvertible {
+        try? dbQueue?.write { db in
+            models.forEach { model in
+                do {
+                    let potentialModel = try T
+                        .filter(key: model.id)
+                        .fetchOne(db)
+
+                    if potentialModel == nil {
+                        try model.insert(db)
+                    }
+
+                    print("Saved: \(model)")
+                } catch {
+                    print("Model: \(model)")
+                    print("Error when adding model to DB. \(error)")
+                }
+            }
+        }
+    }
+
     func remove(tree: LocalTree, completion: @escaping () -> Void) {
         dbQueue?.asyncWrite { db in
             try? tree.delete(db)
@@ -124,6 +187,15 @@ final class Database {
             let trees = try? LocalTree.fetchAll(db)
             DispatchQueue.main.async {
                 completion(trees ?? [])
+            }
+        }
+    }
+
+    func fetch<T: Identifiable & TableRecord & FetchableRecord & PersistableRecord>(_ completion: @escaping ([T]) -> Void) {
+        dbQueue?.read { db in
+            let models = try? T.fetchAll(db)
+            DispatchQueue.main.async {
+                completion(models ?? [])
             }
         }
     }

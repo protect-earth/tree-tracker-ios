@@ -5,6 +5,9 @@ enum Constants {
         static let apiKey = Bundle.main.infoDictionary?["AIRTABLE_API_KEY"] as! String
         static let baseId = Bundle.main.infoDictionary?["AIRTABLE_BASE_ID"] as! String
         static let treesTable = Bundle.main.infoDictionary?["AIRTABLE_TREES_TABLE_NAME"] as! String
+        static let sitesTable = Bundle.main.infoDictionary?["AIRTABLE_SITES_TABLE_NAME"] as! String
+        static let supervisorsTable = Bundle.main.infoDictionary?["AIRTABLE_SUPERVISORS_TABLE_NAME"] as! String
+        static let speciesTable = Bundle.main.infoDictionary?["AIRTABLE_SPECIES_TABLE_NAME"] as! String
     }
     enum Cloudinary {
         static let cloudName = Bundle.main.infoDictionary?["CLOUDINARY_CLOUD_NAME"] as! String
