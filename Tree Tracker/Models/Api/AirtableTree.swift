@@ -4,6 +4,7 @@ struct AirtableTree: Decodable {
     let id: Int
     let supervisor: String
     let species: String
+    let site: String
     let notes: String?
     let coordinates: String?
     let what3words: String?
@@ -17,6 +18,7 @@ struct AirtableTree: Decodable {
         case id = "ID"
         case supervisor = "Supervisor"
         case species = "Species"
+        case site = "Sites"
         case notes = "Notes"
         case coordinates = "Coordinates"
         case what3words = "What3Words"
@@ -27,10 +29,11 @@ struct AirtableTree: Decodable {
         case fields
     }
 
-    init(id: Int, supervisor: String, species: String, notes: String?, coordinates: String?, what3words: String?, imageUrl: String?, thumbnailUrl: String?, imageMd5: String?, uploadDate: Date?, createDate: Date?) {
+    init(id: Int, supervisor: String, species: String, site: String, notes: String?, coordinates: String?, what3words: String?, imageUrl: String?, thumbnailUrl: String?, imageMd5: String?, uploadDate: Date?, createDate: Date?) {
         self.id = id
         self.supervisor = supervisor
         self.species = species
+        self.site = site
         self.notes = notes
         self.coordinates = coordinates
         self.what3words = what3words
@@ -46,8 +49,9 @@ struct AirtableTree: Decodable {
         let container = try root.nestedContainer(keyedBy: CodingKeys.self, forKey: .fields)
 
         id = try container.decode(Int.self, forKey: .id)
-        supervisor = try container.decode(String.self, forKey: .supervisor)
-        species = try container.decode(String.self, forKey: .species)
+        site = try container.decodeSingleStringInArray(forKey: .site)
+        supervisor = try container.decodeSingleStringInArray(forKey: .supervisor)
+        species = try container.decodeSingleStringInArray(forKey: .species)
         notes = try container.decodeIfPresent(String.self, forKey: .notes)
         coordinates = try container.decodeIfPresent(String.self, forKey: .coordinates)
         what3words = try container.decodeIfPresent(String.self, forKey: .what3words)
@@ -67,13 +71,14 @@ struct AirtableTree: Decodable {
     }
 
     func toRemoteTree() -> RemoteTree {
-        return RemoteTree(id: id, supervisor: supervisor, species: species, notes: notes, coordinates: coordinates, what3words: what3words, imageUrl: imageUrl, thumbnailUrl: thumbnailUrl, imageMd5: imageMd5, createDate: createDate, uploadDate: uploadDate)
+        return RemoteTree(id: id, supervisor: supervisor, species: species, site: site, notes: notes, coordinates: coordinates, what3words: what3words, imageUrl: imageUrl, thumbnailUrl: thumbnailUrl, imageMd5: imageMd5, createDate: createDate, uploadDate: uploadDate)
     }
 }
 
 struct AirtableTreeEncodable: Encodable {
     let supervisor: String
     let species: String
+    let site: String
     let notes: String?
     let coordinates: String?
     let what3words: String?
@@ -85,6 +90,7 @@ struct AirtableTreeEncodable: Encodable {
     enum CodingKeys: String, CodingKey {
         case supervisor = "Supervisor"
         case species = "Species"
+        case site = "Sites"
         case notes = "Notes"
         case coordinates = "Coordinates"
         case what3words = "What3Words"
@@ -95,9 +101,10 @@ struct AirtableTreeEncodable: Encodable {
         case fields
     }
 
-    init(supervisor: String, species: String, notes: String?, coordinates: String?, what3words: String?, imageUrl: String?, imageMd5: String?, uploadDate: Date?, createDate: Date?) {
+    init(supervisor: String, species: String, site: String, notes: String?, coordinates: String?, what3words: String?, imageUrl: String?, imageMd5: String?, uploadDate: Date?, createDate: Date?) {
         self.supervisor = supervisor
         self.species = species
+        self.site = site
         self.notes = notes
         self.coordinates = coordinates
         self.what3words = what3words
@@ -111,8 +118,9 @@ struct AirtableTreeEncodable: Encodable {
         var root = encoder.container(keyedBy: CodingKeys.self)
         var container = root.nestedContainer(keyedBy: CodingKeys.self, forKey: .fields)
 
-        try container.encode(supervisor, forKey: .supervisor)
-        try container.encode(species, forKey: .species)
+        try container.encodeSingleStringInArray(species, forKey: .species)
+        try container.encodeSingleStringInArray(supervisor, forKey: .supervisor)
+        try container.encodeSingleStringInArray(site, forKey: .site)
         try container.encode(notes, forKey: .notes)
         try container.encode(coordinates, forKey: .coordinates)
         try container.encode(what3words, forKey: .what3words)

@@ -5,6 +5,7 @@ struct RemoteTree: Codable, FetchableRecord, PersistableRecord, TableRecord, Ide
     let id: Int
     let supervisor: String
     let species: String
+    let site: String
     let notes: String?
     var coordinates: String?
     let what3words: String?
@@ -18,6 +19,7 @@ struct RemoteTree: Codable, FetchableRecord, PersistableRecord, TableRecord, Ide
         case id
         case supervisor
         case species
+        case site
         case notes
         case coordinates
         case what3words

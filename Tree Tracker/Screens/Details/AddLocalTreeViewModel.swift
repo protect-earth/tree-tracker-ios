@@ -33,6 +33,9 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
     private let initialAssetCount: Int
     private var currentAsset: Int
     private var assets: [PHAsset]
+    private var sites: [Site] = []
+    private var species: [Species] = []
+    private var supervisors: [Supervisor] = []
     private weak var navigation: TreeDetailsNavigating?
 
     init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, defaults: Defaults = CurrentEnvironment.defaults, assets: [PHAsset], navigation: TreeDetailsNavigating) {
@@ -56,7 +59,34 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
             },
             isEnabled: true)
 
-        presentNextAssetToFillOrComplete()
+        fetchDatabaseContent { [weak self] in
+            self?.presentNextAssetToFillOrComplete()
+        }
+    }
+
+    private func fetchDatabaseContent(completion: @escaping () -> Void) {
+        let group = DispatchGroup()
+        group.enter()
+        group.enter()
+        group.enter()
+        group.notify(queue: .main) {
+            completion()
+        }
+
+        database.fetch { [weak self] (sites: [Site]) in
+            self?.sites = sites
+            group.leave()
+        }
+
+        database.fetch { [weak self] (supervisors: [Supervisor]) in
+            self?.supervisors = supervisors
+            group.leave()
+        }
+
+        database.fetch { [weak self] (species: [Species]) in
+            self?.species = species
+            group.leave()
+        }
     }
 
     private func presentNextAssetToFillOrComplete() {
@@ -78,6 +108,7 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
         var coordinates: String = asset._coordinates
         var species: String = defaults[.species] ?? ""
         var supervisor: String = defaults[.supervisor] ?? ""
+        var site: String = ""
         var notes: String = ""
         
         fields = [
@@ -87,12 +118,16 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
                   onChange: { coordinates = $0 }),
             .init(placeholder: "Species",
                   text: species,
-                  input: .keyboard(.default),
+                  input: .keyboard(.selection(self.species.map(\.name))),
                   onChange: { species = $0 }),
             .init(placeholder: "Supervisor",
                   text: supervisor,
-                  input: .keyboard(.default),
+                  input: .keyboard(.selection(self.supervisors.map(\.name))),
                   onChange: { supervisor = $0 }),
+            .init(placeholder: "Site",
+                  text: supervisor,
+                  input: .keyboard(.selection(self.sites.map(\.name))),
+                  onChange: { site = $0 }),
             .init(placeholder: "Notes",
                   text: notes,
                   input: .keyboard(.default),
@@ -101,14 +136,14 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
         saveButton = ButtonModel(
             title: .text("Save"),
             action: { [weak self] in
-                self?.save(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, notes: notes)
+                self?.save(asset: asset, coordinates: coordinates, species: species, site: site, supervisor: supervisor, notes: notes)
             },
             isEnabled: true
         )
     }
 
-    private func save(asset: PHAsset, coordinates: String, species: String, supervisor: String, notes: String) {
-        let tree = LocalTree(phImageId: asset.localIdentifier, createDate: asset.creationDate, supervisor: supervisor, what3words: nil, species: species, notes: notes, coordinates: coordinates, imageMd5: nil)
+    private func save(asset: PHAsset, coordinates: String, species: String, site: String, supervisor: String, notes: String) {
+        let tree = LocalTree(phImageId: asset.localIdentifier, createDate: asset.creationDate, supervisor: supervisor, species: species, site: site, what3words: nil, notes: notes, coordinates: coordinates, imageMd5: nil)
         defaults[.species] = species
         defaults[.supervisor] = supervisor
         database.save([tree])
