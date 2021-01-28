@@ -109,6 +109,11 @@ final class UploadListViewModel {
 
     private func presentTreesFromDatabase() {
         database.fetchLocalTrees { [weak self] trees in
+            if trees.count > 0 {
+                self?.title = "Upload queue (\(trees.count))"
+            } else {
+                self?.title = "Upload queue"
+            }
             self?.data = [.untitled(id: "trees", trees.compactMap { tree in
                 return self?.buildItem(tree: tree, progress: 0.0)
             })]
