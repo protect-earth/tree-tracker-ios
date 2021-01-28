@@ -61,6 +61,7 @@ class TappableButton: UIButton {
     func set(title: ButtonModel.Title) {
         switch title {
         case let .text(text):
+            stopLoading()
             setTitle(text, for: .normal)
         case .loading:
             startLoading()
