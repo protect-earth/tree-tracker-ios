@@ -92,6 +92,8 @@ final class UploadListViewModel {
                             self?.uploadLocalTreesRecursively()
                         }
                     case let .failure(error):
+                        self?.update(uploadProgress: 0.0, for: tree)
+                        self?.presentUploadButton(isUploading: false)
                         print("Error when uploading a local tree: \(error)")
                     }
                 }
