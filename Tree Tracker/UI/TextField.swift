@@ -3,6 +3,7 @@ import UIKit
 final class TextField: UITextField, UITextFieldDelegate {
     var onChange: ((String) -> Void)?
     var placeholderColor: UIColor = .gray
+    var isCaretHidden = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,6 +34,8 @@ final class TextField: UITextField, UITextFieldDelegate {
         text = model.text
         attributedPlaceholder = NSAttributedString(string: model.placeholder ?? "", attributes: [.foregroundColor: placeholderColor])
         placeholder = model.placeholder
+        returnKeyType = model.returnKey ?? .default
+        isCaretHidden = false
 
         switch model.input {
         case let .keyboard(keyboard, accessory, autocorrectionType, capitalize):
@@ -44,6 +47,7 @@ final class TextField: UITextField, UITextFieldDelegate {
                 keyboardType = .default
             case let .selection(values, initialIndexSelected, indexSelected):
                 inputView = SelectionsKeyboardView(selections: values, initialIndexSelected: initialIndexSelected, indexSelected: indexSelected)
+                isCaretHidden = true
                 break
             }
 
@@ -54,6 +58,19 @@ final class TextField: UITextField, UITextFieldDelegate {
             #warning("TODO: TextField with map input")
             break
         }
+    }
+
+    override func caretRect(for position: UITextPosition) -> CGRect {
+        if isCaretHidden {
+            return .zero
+        } else {
+            return super.caretRect(for: position)
+        }
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        resignFirstResponder()
+        return true
     }
 }
 

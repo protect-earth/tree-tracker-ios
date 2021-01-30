@@ -87,6 +87,7 @@ final class EditLocalTreeViewModel: TreeDetailsViewModel {
             .init(placeholder: "Coordinates",
                   text: coordinates,
                   input: .keyboard(.default),
+                  returnKey: .done,
                   onChange: { coordinates = $0 }),
             .init(placeholder: "Species",
                   text: species?.name,
@@ -98,6 +99,7 @@ final class EditLocalTreeViewModel: TreeDetailsViewModel {
                                         self?.presentCurrentTreeFields(tree: tree, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
                                     }),
                                    .done()),
+                  returnKey: .done,
                   onChange: { _ in }),
             .init(placeholder: "Supervisor",
                   text: supervisor?.name,
@@ -109,6 +111,7 @@ final class EditLocalTreeViewModel: TreeDetailsViewModel {
                                         self?.presentCurrentTreeFields(tree: tree, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
                                     }),
                                    .done()),
+                  returnKey: .done,
                   onChange: { _ in }),
             .init(placeholder: "Site",
                   text: site?.name,
@@ -120,10 +123,12 @@ final class EditLocalTreeViewModel: TreeDetailsViewModel {
                                         self?.presentCurrentTreeFields(tree: tree, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
                                     }),
                                    .done()),
+                  returnKey: .done,
                   onChange: { _ in }),
             .init(placeholder: "Notes",
                   text: notes,
                   input: .keyboard(.default),
+                  returnKey: .done,
                   onChange: { notes = $0 }),
         ]
 

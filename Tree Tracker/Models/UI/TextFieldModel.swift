@@ -17,6 +17,7 @@ struct TextFieldModel: Hashable {
     let placeholder: String?
     let text: String?
     let input: Input
+    let returnKey: UIReturnKeyType?
     let onChange: ((String) -> Void)?
 
     static func == (lhs: TextFieldModel, rhs: TextFieldModel) -> Bool {
