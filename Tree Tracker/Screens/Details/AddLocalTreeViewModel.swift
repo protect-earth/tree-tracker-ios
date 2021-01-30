@@ -7,25 +7,31 @@ protocol TreeDetailsNavigating: AnyObject {
 }
 
 protocol TreeDetailsViewModel {
+    var alertPublisher: DelayedPublished<AlertModel>.Publisher { get }
     var imageLoaderPublisher: Published<PHImageLoader?>.Publisher { get }
     var titlePublisher: Published<String>.Publisher { get }
     var fieldsPublisher: Published<[TextFieldModel]>.Publisher { get }
     var cancelButtonPublisher: Published<NavigationBarButtonModel?>.Publisher { get }
     var saveButtonPublisher: Published<ButtonModel?>.Publisher { get }
+    var topRightNavigationButtonPublisher: Published<NavigationBarButtonModel?>.Publisher { get }
 }
 
 final class AddLocalTreeViewModel: TreeDetailsViewModel {
+    @DelayedPublished var alert: AlertModel
     @Published var imageLoader: PHImageLoader?
     @Published var title: String
     @Published var fields: [TextFieldModel]
     @Published var cancelButton: NavigationBarButtonModel?
     @Published var saveButton: ButtonModel?
+    @Published var topRightNavigationButton: NavigationBarButtonModel?
 
+    var alertPublisher: DelayedPublished<AlertModel>.Publisher { $alert }
     var imageLoaderPublisher: Published<PHImageLoader?>.Publisher { $imageLoader }
     var titlePublisher: Published<String>.Publisher { $title }
     var fieldsPublisher: Published<[TextFieldModel]>.Publisher { $fields }
     var cancelButtonPublisher: Published<NavigationBarButtonModel?>.Publisher { $cancelButton }
     var saveButtonPublisher: Published<ButtonModel?>.Publisher { $saveButton }
+    var topRightNavigationButtonPublisher: Published<NavigationBarButtonModel?>.Publisher { $topRightNavigationButton }
 
     private let api: Api
     private let database: Database
@@ -65,27 +71,11 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
     }
 
     private func fetchDatabaseContent(completion: @escaping () -> Void) {
-        let group = DispatchGroup()
-        group.enter()
-        group.enter()
-        group.enter()
-        group.notify(queue: .main) {
+        database.fetch(Site.self, Supervisor.self, Species.self) { [weak self] sites, supervisors, species in
+            self?.sites = sites.sorted(by: \.name, order: .ascending)
+            self?.supervisors = supervisors.sorted(by: \.name, order: .ascending)
+            self?.species = species.sorted(by: \.name, order: .ascending)
             completion()
-        }
-
-        database.fetch { [weak self] (sites: [Site]) in
-            self?.sites = sites
-            group.leave()
-        }
-
-        database.fetch { [weak self] (supervisors: [Supervisor]) in
-            self?.supervisors = supervisors
-            group.leave()
-        }
-
-        database.fetch { [weak self] (species: [Species]) in
-            self?.species = species
-            group.leave()
         }
     }
 
@@ -105,49 +95,90 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
 
         self.imageLoader = PHImageLoader(phImageId: asset.localIdentifier)
 
-        var coordinates: String = asset._coordinates
-        var species: String = defaults[.species] ?? ""
-        var supervisor: String = defaults[.supervisor] ?? ""
-        var site: String = ""
-        var notes: String = ""
-        
+        presentCurrentAssetFields(asset: asset)
+    }
+
+    private func presentCurrentAssetFields(asset: PHAsset, coordinates: String? = nil, species: Species? = nil, supervisor: Supervisor? = nil, site: Site? = nil, notes: String? = nil) {
+        let defaultSpecies = self.species.first(where: { $0.id == defaults[.speciesId] })
+        let defaultSupervisor = self.supervisors.first(where: { $0.id == defaults[.supervisorId] })
+        let defaultSite = self.sites.first(where: { $0.id == defaults[.siteId] })
+
+        var species = species ?? defaultSpecies
+        var supervisor = supervisor ?? defaultSupervisor
+        var site = site ?? defaultSite
+        var notes = notes ?? ""
+        var coordinates = coordinates ?? asset._coordinates
+
         fields = [
             .init(placeholder: "Coordinates",
                   text: coordinates,
                   input: .keyboard(.default),
                   onChange: { coordinates = $0 }),
             .init(placeholder: "Species",
-                  text: species,
-                  input: .keyboard(.selection(self.species.map(\.name))),
-                  onChange: { species = $0 }),
+                  text: species?.name,
+                  input: .keyboard(.selection(
+                                    self.species.map(\.name),
+                                    initialIndexSelected: self.species.firstIndex { $0.id == species?.id },
+                                    indexSelected: { [weak self] selectedSpecies in
+                                        species = self?.species[safe: selectedSpecies]
+                                        self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
+                                    }),
+                                   .done()),
+                  onChange: { _ in }),
             .init(placeholder: "Supervisor",
-                  text: supervisor,
-                  input: .keyboard(.selection(self.supervisors.map(\.name))),
-                  onChange: { supervisor = $0 }),
+                  text: supervisor?.name,
+                  input: .keyboard(.selection(
+                                    self.supervisors.map(\.name),
+                                    initialIndexSelected: supervisors.firstIndex { $0.id == supervisor?.id },
+                                    indexSelected: { [weak self] selectedSupervisor in
+                                        supervisor = self?.supervisors[safe: selectedSupervisor]
+                                        self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
+                                    }),
+                                   .done()),
+                  onChange: { _ in }),
             .init(placeholder: "Site",
-                  text: supervisor,
-                  input: .keyboard(.selection(self.sites.map(\.name))),
-                  onChange: { site = $0 }),
+                  text: site?.name,
+                  input: .keyboard(.selection(
+                                    self.sites.map(\.name),
+                                    initialIndexSelected: self.sites.firstIndex { $0.id == site?.id },
+                                    indexSelected: { [weak self] selectedSite in
+                                        site = self?.sites[safe: selectedSite]
+                                        self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
+                                    }),
+                                   .done()),
+                  onChange: { _ in }),
             .init(placeholder: "Notes",
                   text: notes,
                   input: .keyboard(.default),
                   onChange: { notes = $0 }),
         ]
-        saveButton = ButtonModel(
-            title: .text("Save"),
-            action: { [weak self] in
-                self?.save(asset: asset, coordinates: coordinates, species: species, site: site, supervisor: supervisor, notes: notes)
-            },
-            isEnabled: true
-        )
+
+        if let species = species, let site = site, let supervisor = supervisor {
+            saveButton = ButtonModel(
+                title: .text("Save"),
+                action: { [weak self] in
+                    self?.save(asset: asset, coordinates: coordinates, species: species, site: site, supervisor: supervisor, notes: notes)
+                },
+                isEnabled: true
+            )
+        } else {
+            saveButton = ButtonModel(
+                title: .text("Save"),
+                action: { },
+                isEnabled: false
+            )
+        }
     }
 
-    private func save(asset: PHAsset, coordinates: String, species: String, site: String, supervisor: String, notes: String) {
-        let tree = LocalTree(phImageId: asset.localIdentifier, createDate: asset.creationDate, supervisor: supervisor, species: species, site: site, what3words: nil, notes: notes, coordinates: coordinates, imageMd5: nil)
-        defaults[.species] = species
-        defaults[.supervisor] = supervisor
+    private func save(asset: PHAsset, coordinates: String, species: Species, site: Site, supervisor: Supervisor, notes: String) {
+        defaults[.speciesId] = species.id
+        defaults[.supervisorId] = supervisor.id
+        defaults[.siteId] = site.id
+
+        let tree = LocalTree(phImageId: asset.localIdentifier, createDate: asset.creationDate, supervisor: supervisor.id, species: species.id, site: site.id, what3words: nil, notes: notes, coordinates: coordinates, imageMd5: nil)
         database.save([tree])
         assets.removeAll { $0 == asset }
         presentNextAssetToFillOrComplete()
     }
 }
+

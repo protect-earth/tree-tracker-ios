@@ -21,6 +21,7 @@ final class Database {
                     table.column(RemoteTree.CodingKeys.id.stringValue, .text)
                     table.column(RemoteTree.CodingKeys.supervisor.stringValue, .text)
                     table.column(RemoteTree.CodingKeys.species.stringValue, .text)
+                    table.column(RemoteTree.CodingKeys.site.stringValue, .text)
                     table.column(RemoteTree.CodingKeys.notes.stringValue, .text)
                     table.column(RemoteTree.CodingKeys.coordinates.stringValue, .text)
                     table.column(RemoteTree.CodingKeys.what3words.stringValue, .text)
@@ -40,21 +41,7 @@ final class Database {
                     table.column(LocalTree.CodingKeys.createDate.stringValue, .date)
                     table.column(LocalTree.CodingKeys.supervisor.stringValue, .text)
                     table.column(LocalTree.CodingKeys.species.stringValue, .text)
-                    table.column(LocalTree.CodingKeys.notes.stringValue, .text)
-                    table.column(LocalTree.CodingKeys.coordinates.stringValue, .text)
-                    table.column(LocalTree.CodingKeys.what3words.stringValue, .text)
-                    table.column(LocalTree.CodingKeys.imageMd5.stringValue, .text)
-
-                    table.primaryKey([LocalTree.CodingKeys.phImageId.stringValue])
-                }
-            }
-
-            if try db.tableExists(LocalTree.databaseTableName) == false {
-                try db.create(table: LocalTree.databaseTableName) { table in
-                    table.column(LocalTree.CodingKeys.phImageId.stringValue, .text)
-                    table.column(LocalTree.CodingKeys.createDate.stringValue, .date)
-                    table.column(LocalTree.CodingKeys.supervisor.stringValue, .text)
-                    table.column(LocalTree.CodingKeys.species.stringValue, .text)
+                    table.column(LocalTree.CodingKeys.site.stringValue, .text)
                     table.column(LocalTree.CodingKeys.notes.stringValue, .text)
                     table.column(LocalTree.CodingKeys.coordinates.stringValue, .text)
                     table.column(LocalTree.CodingKeys.what3words.stringValue, .text)
@@ -191,11 +178,25 @@ final class Database {
         }
     }
 
-    func fetch<T: Identifiable & TableRecord & FetchableRecord & PersistableRecord>(_ completion: @escaping ([T]) -> Void) {
+    func fetch<T: Identifiable & TableRecord & FetchableRecord & PersistableRecord>(_ type: T, completion: @escaping ([T]) -> Void) {
         dbQueue?.read { db in
             let models = try? T.fetchAll(db)
             DispatchQueue.main.async {
                 completion(models ?? [])
+            }
+        }
+    }
+
+    func fetch<T, U, V>(_ type1: T.Type, _ type2: U.Type, _ type3: V.Type, completion: @escaping ([T], [U], [V]) -> Void) where
+        T: Identifiable & TableRecord & FetchableRecord & PersistableRecord,
+        U: Identifiable & TableRecord & FetchableRecord & PersistableRecord,
+        V: Identifiable & TableRecord & FetchableRecord & PersistableRecord {
+        dbQueue?.read { db in
+            let models1 = (try? T.fetchAll(db)) ?? []
+            let models2 = (try? U.fetchAll(db)) ?? []
+            let models3 = (try? V.fetchAll(db)) ?? []
+            DispatchQueue.main.async {
+                completion(models1, models2, models3)
             }
         }
     }

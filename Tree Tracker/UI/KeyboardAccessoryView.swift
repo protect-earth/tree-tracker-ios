@@ -59,7 +59,7 @@ final class KeyboardAccessoryView: UIInputView {
         }
         button.set(title: model?.title ?? .text(""))
         button.setTitleColor(.systemBlue, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 14.0, weight: isPrimary ? .medium : .regular)
+        button.titleLabel?.font = .systemFont(ofSize: 14.0, weight: isPrimary ? .bold : .regular)
         button.setContentHuggingPriority(.required, for: .horizontal)
         button.setContentCompressionResistancePriority(.required, for: .horizontal)
     }

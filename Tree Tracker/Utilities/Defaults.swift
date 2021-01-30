@@ -2,9 +2,9 @@ import Foundation
 
 struct Defaults {
     enum Key: String {
-        case supervisor
-        case species
-        case notes
+        case supervisorId
+        case speciesId
+        case siteId
     }
 
     private let userDefaults = UserDefaults.standard

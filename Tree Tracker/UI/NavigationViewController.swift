@@ -12,9 +12,15 @@ class NavigationViewController: UINavigationController {
         setup()
     }
 
-    private func setup() {
-        navigationBar.prefersLargeTitles = true
-        navigationBar.tintColor = .white
+    init(rootViewController: UIViewController, prefersLargeTitles: Bool) {
+        super.init(rootViewController: rootViewController)
+
+        setup(prefersLargeTitles: prefersLargeTitles)
+    }
+
+    private func setup(prefersLargeTitles: Bool = true) {
+        navigationBar.prefersLargeTitles = prefersLargeTitles
+        navigationBar.tintColor = prefersLargeTitles ? .white : .black
     }
 
     @available(*, unavailable)

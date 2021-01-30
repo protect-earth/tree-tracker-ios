@@ -7,6 +7,9 @@ final class TreesViewModel {
 
     private var api: Api
     private var database: Database
+    private var sites: [Site] = []
+    private var species: [Species] = []
+    private var supervisors: [Supervisor] = []
 
     init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database) {
         self.title = "Uploaded Trees"
@@ -22,10 +25,16 @@ final class TreesViewModel {
                 isEnabled: true
             )
         ]
+
+        lazilyLoadAllSpeciesIfPossible()
+        lazilyLoadAllSitesIfPossible()
+        lazilyLoadAllSupervisorsIfPossible()
     }
 
     func loadData() {
-        presentTreesFromDatabase()
+        fetchDatabaseContent { [weak self] in
+            self?.presentTreesFromDatabase()
+        }
     }
 
     func sync() {
@@ -33,6 +42,15 @@ final class TreesViewModel {
         lazilyLoadAllSpeciesIfPossible()
         lazilyLoadAllSitesIfPossible()
         lazilyLoadAllSupervisorsIfPossible()
+    }
+    
+    private func fetchDatabaseContent(completion: @escaping () -> Void) {
+        database.fetch(Site.self, Supervisor.self, Species.self) { [weak self] sites, supervisors, species in
+            self?.sites = sites.sorted(by: \.name, order: .ascending)
+            self?.supervisors = supervisors.sorted(by: \.name, order: .ascending)
+            self?.species = species.sorted(by: \.name, order: .ascending)
+            completion()
+        }
     }
 
     private func lazilyLoadAllRemoteTreesIfPossible(offset: String? = nil) {
@@ -98,10 +116,11 @@ final class TreesViewModel {
         database.fetchRemoteTrees { [weak self] trees in
             self?.data = [.untitled(id: "trees", trees.map { tree in
                 let imageLoader = (tree.thumbnailUrl ?? tree.imageUrl).map { AnyImageLoader(imageLoader: URLImageLoader(url: $0)) }
+                let info = self?.species.first { $0.id == tree.species }?.name ?? "Unknown specie"
                 return .tree(id: "\(tree.id)",
                              imageLoader: imageLoader,
                              progress: 0,
-                             info: tree.species,
+                             info: info,
                              detail: tree.supervisor,
                              tapAction: Action(id: "tree_action_\(tree.id)") {
                                 print("tap action")

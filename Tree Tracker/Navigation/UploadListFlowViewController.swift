@@ -86,7 +86,7 @@ final class UploadListFlowViewController: NavigationViewController, UploadListNa
         
         let viewModel = AddLocalTreeViewModel(assets: assets, navigation: self)
         let viewController = TreeDetailsViewController(viewModel: viewModel)
-        let navigationController = UINavigationController(rootViewController: viewController)
+        let navigationController = NavigationViewController(rootViewController: viewController, prefersLargeTitles: false)
 
         viewControllers.last?.present(navigationController, animated: true, completion: nil)
     }
@@ -94,7 +94,7 @@ final class UploadListFlowViewController: NavigationViewController, UploadListNa
     private func presentEdit(tree: LocalTree) {
         let viewModel = EditLocalTreeViewModel(tree: tree, navigation: self)
         let viewController = TreeDetailsViewController(viewModel: viewModel)
-        let navigationController = UINavigationController(rootViewController: viewController)
+        let navigationController = NavigationViewController(rootViewController: viewController, prefersLargeTitles: false)
 
         viewControllers.last?.present(navigationController, animated: true, completion: nil)
     }

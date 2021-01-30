@@ -40,3 +40,23 @@ struct NavigationBarButtonModel: Hashable {
         hasher.combine(isEnabled)
     }
 }
+
+struct AlertButtonModel: Hashable {
+    enum Style: String {
+        case `default`
+        case cancel
+        case destructive
+    }
+
+    let title: String
+    let style: Style
+    let action: (() -> Void)?
+
+    static func == (lhs: AlertButtonModel, rhs: AlertButtonModel) -> Bool {
+        return lhs.title == rhs.title && lhs.style == rhs.style
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(title)
+    }
+}

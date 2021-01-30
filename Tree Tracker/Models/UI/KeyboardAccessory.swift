@@ -4,7 +4,7 @@ struct KeyboardAccessory: Hashable {
     let leftButton: ButtonModel?
     let rightButton: ButtonModel?
 
-    static func `default`(cancel: (() -> Void)? = nil, done: (() -> Void)?) -> KeyboardAccessory {
+    static func `default`(cancel: (() -> Void)? = nil, done: (() -> Void)? = nil) -> KeyboardAccessory {
         let cancelButton = ButtonModel(
             title: .text("Cancel"),
             action: { cancel?() },
@@ -17,5 +17,14 @@ struct KeyboardAccessory: Hashable {
             isEnabled: true
         )
         return KeyboardAccessory(leftButton: cancelButton, rightButton: doneButton)
+    }
+
+    static func done(action: (() -> Void)? = nil) -> KeyboardAccessory {
+        let doneButton = ButtonModel(
+            title: .text("Done"),
+            action: { action?() },
+            isEnabled: true
+        )
+        return KeyboardAccessory(leftButton: nil, rightButton: doneButton)
     }
 }

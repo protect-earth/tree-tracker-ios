@@ -35,6 +35,9 @@
 		859F62D925C2215D005E61F7 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62D825C2215D005E61F7 /* Site.swift */; };
 		859F62DC25C2218B005E61F7 /* Supervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62DB25C2218B005E61F7 /* Supervisor.swift */; };
 		859F62E025C228AE005E61F7 /* KeyedContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62DF25C228AE005E61F7 /* KeyedContainer.swift */; };
+		859F62E425C22D6C005E61F7 /* SelectionsKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62E325C22D6C005E61F7 /* SelectionsKeyboardView.swift */; };
+		859F62E925C48FA2005E61F7 /* DelayedPublished.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62E825C48FA2005E61F7 /* DelayedPublished.swift */; };
+		859F62EF25C48FD8005E61F7 /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62EE25C48FD8005E61F7 /* AlertModel.swift */; };
 		85A0EF7F25A226D9003CE744 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 85A0EF7E25A226D9003CE744 /* GRDB */; };
 		85A0EF8325A2271C003CE744 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 85A0EF8225A2271C003CE744 /* Alamofire */; };
 		85A0EF8925A22FEE003CE744 /* AirtableTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0EF8825A22FEE003CE744 /* AirtableTree.swift */; };
@@ -111,6 +114,9 @@
 		859F62D825C2215D005E61F7 /* Site.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Site.swift; sourceTree = "<group>"; };
 		859F62DB25C2218B005E61F7 /* Supervisor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Supervisor.swift; sourceTree = "<group>"; };
 		859F62DF25C228AE005E61F7 /* KeyedContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyedContainer.swift; sourceTree = "<group>"; };
+		859F62E325C22D6C005E61F7 /* SelectionsKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionsKeyboardView.swift; sourceTree = "<group>"; };
+		859F62E825C48FA2005E61F7 /* DelayedPublished.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayedPublished.swift; sourceTree = "<group>"; };
+		859F62EE25C48FD8005E61F7 /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
 		85A0EF8825A22FEE003CE744 /* AirtableTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableTree.swift; sourceTree = "<group>"; };
 		85A0EF8C25A23062003CE744 /* RemoteTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteTree.swift; sourceTree = "<group>"; };
 		85B839A825B35B540008E167 /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
@@ -237,6 +243,7 @@
 		85792A8425B1D53000BFDA96 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				859F62EB25C48FA6005E61F7 /* Property Wrappers */,
 				85B83A0125B8735F0008E167 /* AnyImageLoader.swift */,
 				857BAD9C25B1DCDE005D7D35 /* Defaults.swift */,
 				85792A8525B1D53700BFDA96 /* Environment.swift */,
@@ -321,8 +328,17 @@
 				85B839BA25B4814F0008E167 /* ListSection.swift */,
 				85792A8E25B1D59F00BFDA96 /* SyncProgress.swift */,
 				85B839D125B742510008E167 /* TextFieldModel.swift */,
+				859F62EE25C48FD8005E61F7 /* AlertModel.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		859F62EB25C48FA6005E61F7 /* Property Wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				859F62E825C48FA2005E61F7 /* DelayedPublished.swift */,
+			);
+			path = "Property Wrappers";
 			sourceTree = "<group>";
 		};
 		85A0EF8B25A23041003CE744 /* Models */ = {
@@ -373,6 +389,7 @@
 				85B839E325B753F10008E167 /* KeyboardLayoutGuide.swift */,
 				85B83A2225B9C1BC0008E167 /* NavigationViewController.swift */,
 				85B839F225B866590008E167 /* RoundedTappableButton.swift */,
+				859F62E325C22D6C005E61F7 /* SelectionsKeyboardView.swift */,
 				85B839A825B35B540008E167 /* TableViewDataSource.swift */,
 				85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */,
 				85B839DF25B74FF50008E167 /* TextField.swift */,
@@ -484,11 +501,13 @@
 				85B839DD25B74FE00008E167 /* KeyboardAccessory.swift in Sources */,
 				85B83A1825B881EC0008E167 /* LocalTree.swift in Sources */,
 				85792A8B25B1D57F00BFDA96 /* TreesViewModel.swift in Sources */,
+				859F62E925C48FA2005E61F7 /* DelayedPublished.swift in Sources */,
 				85B839F325B866590008E167 /* RoundedTappableButton.swift in Sources */,
 				85B839AD25B47BD30008E167 /* Reusable.swift in Sources */,
 				85B839A925B35B540008E167 /* TableViewDataSource.swift in Sources */,
 				85B83A3825B9D9C40008E167 /* Data.swift in Sources */,
 				85B83A2D25B9C5DB0008E167 /* DateFormatter.swift in Sources */,
+				859F62E425C22D6C005E61F7 /* SelectionsKeyboardView.swift in Sources */,
 				859F62D625C22140005E61F7 /* Species.swift in Sources */,
 				85B83A2325B9C1BC0008E167 /* NavigationViewController.swift in Sources */,
 				85792A9225B1D5A500BFDA96 /* ButtonModel.swift in Sources */,
@@ -523,6 +542,7 @@
 				85B83A0225B8735F0008E167 /* AnyImageLoader.swift in Sources */,
 				859F62C325C1C44C005E61F7 /* AirtableImage.swift in Sources */,
 				857BADAC25B1FAAA005D7D35 /* UploadListFlowViewController.swift in Sources */,
+				859F62EF25C48FD8005E61F7 /* AlertModel.swift in Sources */,
 				85B839BB25B4814F0008E167 /* ListSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

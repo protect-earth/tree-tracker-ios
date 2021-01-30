@@ -98,12 +98,16 @@ final class TreeCollectionViewCell: UICollectionViewCell, Reusable {
 
         infoLabel.text = info.isEmpty ? " " : info
 
-        imageLoader?.loadThumbnail { [weak self] image in
-            guard let self = self, self.imageLoader == imageLoader else {
-                return
-            }
+        if let imageLoader = imageLoader {
+            imageLoader.loadThumbnail { [weak self] image in
+                guard let self = self, self.imageLoader == imageLoader else {
+                    return
+                }
 
-            self.imageView.image = image
+                self.imageView.image = image
+            }
+        } else {
+            self.imageView.image = nil
         }
 
         progressWidthConstraint.constant = CGFloat(progress) * imageView.bounds.width

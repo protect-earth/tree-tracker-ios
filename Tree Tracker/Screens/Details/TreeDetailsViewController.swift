@@ -128,7 +128,14 @@ final class TreeDetailsViewController: UIViewController {
         viewModel.cancelButtonPublisher
             .sink { [weak self] cancelButton in
                 let buttons = [cancelButton].compactMap { $0 }
-                self?.update(navigationButtons: buttons)
+                self?.update(leftNavigationButtons: buttons)
+            }
+            .store(in: &observables)
+
+        viewModel.topRightNavigationButtonPublisher
+            .sink { [weak self] button in
+                let buttons = [button].compactMap { $0 }
+                self?.update(rightNavigationButtons: buttons)
             }
             .store(in: &observables)
 
@@ -145,13 +152,20 @@ final class TreeDetailsViewController: UIViewController {
                 self?.actionButton.set(model: button)
             }
             .store(in: &observables)
+
+        viewModel.alertPublisher
+            .sink { [weak self] alert in
+                self?.present(alert: alert)
+            }
+            .store(in: &observables)
     }
 
-    private func update(navigationButtons: [NavigationBarButtonModel]) {
-        navigationItem.leftBarButtonItems = navigationButtons
-            .map { button in
-                return BarButtonItem(model: button)
-            }
+    private func update(leftNavigationButtons buttons: [NavigationBarButtonModel]) {
+        navigationItem.leftBarButtonItems = buttons.map(BarButtonItem.init)
+    }
+
+    private func update(rightNavigationButtons buttons: [NavigationBarButtonModel]) {
+        navigationItem.rightBarButtonItems = buttons.map(BarButtonItem.init)
     }
 
     private func update(fields models: [TextFieldModel]) {
@@ -176,6 +190,10 @@ final class TreeDetailsViewController: UIViewController {
         for (textField, model) in zip(textFields, models) {
             textField.set(model: model)
         }
+    }
+
+    private func present(alert: AlertModel) {
+        present(UIAlertController.from(model: alert), animated: true, completion: nil)
     }
 
     private func buildTextField() -> TextField {

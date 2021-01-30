@@ -14,11 +14,14 @@ final class UploadListViewModel {
 
     private var api: Api
     private var database: Database
+    private var sites: [Site] = []
+    private var species: [Species] = []
+    private var supervisors: [Supervisor] = []
     private var currentUpload: Cancellable?
     private weak var navigation: UploadListNavigating?
 
     init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, navigation: UploadListNavigating) {
-        self.title = "Upload queue"
+        self.title = ""
         self.api = api
         self.database = database
         self.navigation = navigation
@@ -26,6 +29,7 @@ final class UploadListViewModel {
         self.syncButton = nil
         self.navigationButtons = []
 
+        presentTitle(itemsCount: 0)
         presentUploadButton(isUploading: false)
 
         self.navigationButtons = [
@@ -38,7 +42,18 @@ final class UploadListViewModel {
     }
 
     func loadData() {
-        presentTreesFromDatabase()
+        fetchDatabaseContent { [weak self] in
+            self?.presentTreesFromDatabase()
+        }
+    }
+
+    private func fetchDatabaseContent(completion: @escaping () -> Void) {
+        database.fetch(Site.self, Supervisor.self, Species.self) { [weak self] sites, supervisors, species in
+            self?.sites = sites.sorted(by: \.name, order: .ascending)
+            self?.supervisors = supervisors.sorted(by: \.name, order: .ascending)
+            self?.species = species.sorted(by: \.name, order: .ascending)
+            completion()
+        }
     }
 
     private func presentUploadButton(isUploading: Bool) {
@@ -111,23 +126,28 @@ final class UploadListViewModel {
 
     private func presentTreesFromDatabase() {
         database.fetchLocalTrees { [weak self] trees in
-            if trees.count > 0 {
-                self?.title = "Upload queue (\(trees.count))"
-            } else {
-                self?.title = "Upload queue"
-            }
+            self?.presentTitle(itemsCount: trees.count)
             self?.data = [.untitled(id: "trees", trees.compactMap { tree in
                 return self?.buildItem(tree: tree, progress: 0.0)
             })]
         }
     }
 
+    private func presentTitle(itemsCount: Int) {
+        if itemsCount > 0 {
+            title = "Upload queue (\(itemsCount))"
+        } else {
+            title = "Upload queue"
+        }
+    }
+
     private func buildItem(tree: LocalTree, progress: Double) -> TreesListItem {
         let imageLoader = AnyImageLoader(imageLoader: PHImageLoader(phImageId: tree.phImageId))
+        let info = species.first { $0.id == tree.species }?.name ?? "Unknown specie"
         return .tree(id: tree.phImageId,
                      imageLoader: imageLoader,
                      progress: progress,
-                     info: tree.species,
+                     info: info,
                      detail: tree.supervisor,
                      tapAction: Action(id: "tree_action_\(tree.phImageId)") { [weak self] in
                         self?.navigation?.triggerEditDetailsFlow(tree: tree) {

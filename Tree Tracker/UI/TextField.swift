@@ -42,8 +42,8 @@ final class TextField: UITextField, UITextFieldDelegate {
             switch keyboard {
             case .default:
                 keyboardType = .default
-            case let .selection(values):
-                #warning("TODO: TextField with selection picker input")
+            case let .selection(values, initialIndexSelected, indexSelected):
+                inputView = SelectionsKeyboardView(selections: values, initialIndexSelected: initialIndexSelected, indexSelected: indexSelected)
                 break
             }
 
