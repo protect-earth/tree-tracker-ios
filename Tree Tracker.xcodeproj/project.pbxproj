@@ -120,6 +120,7 @@
 		859F62F125C5A7B8005E61F7 /* Cancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
 		859F62F425C5A7DC005E61F7 /* Paginated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paginated.swift; sourceTree = "<group>"; };
 		859F62FB25C70F29005E61F7 /* TableListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableListViewController.swift; sourceTree = "<group>"; };
+		859F630125C7176E005E61F7 /* Changelog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Changelog.md; sourceTree = "<group>"; };
 		85A0EF8825A22FEE003CE744 /* AirtableTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableTree.swift; sourceTree = "<group>"; };
 		85A0EF8C25A23062003CE744 /* RemoteTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteTree.swift; sourceTree = "<group>"; };
 		85B839A825B35B540008E167 /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
@@ -178,6 +179,7 @@
 		853ABD492596144900144B0D = {
 			isa = PBXGroup;
 			children = (
+				859F630125C7176E005E61F7 /* Changelog.md */,
 				853ABD7925961C6500144B0D /* License.md */,
 				853ABD7C25961C6D00144B0D /* Readme.md */,
 				853ABD542596144900144B0D /* Tree Tracker */,

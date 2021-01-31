@@ -1,12 +1,13 @@
 #  Tree Tracker
+App for managing trees.
 
-# Running the app
-## Prerequisites
+## Running the app
+### Prerequisites
 
-### Airtable setup
+#### Airtable setup
 TBD...
 
-### Cloudinary setup
+#### Cloudinary setup
 Because Airtable doesn't support uploading images yet, we have to use an external provider to do so instead. We tried Imgur, but the API is really not user friendly due to its auth requisites. For now, we are using Cloudinary but it might change in the future.
 
 1. Create a free account on [Cloudinary](https://cloudinary.com/users/register/free) (this will give you the needed Cloud name).
@@ -33,11 +34,10 @@ The file is ignored in git since we do not want to store these in the repository
 5. When running on a device, you'll also need to trust the certificate in Settings -> General -> Profiles, otherwise you'll see an error after installing the build and before running it.
 
 # Todo
-- [x] Use Airtable's thumbnails for Uploaded Trees view
+- [ ] Show errors for when image upload fails (details should show when tapped on a tree cell).
+- [ ] List of all trees should be grouped. It can be grouped by Site, but eventually it would be great to have a Group By button that would change the default grouping option.
 - [ ] Better UI for editing tree details form
 - [ ] Better UI for tree cells
-- [ ] Progress indicator for uploads
-- [x] Stop button for uploads
 - [ ] Edit uploaded tree
 - [ ] Map picker when tapping on coordinates so we can adjust it
 - [ ] Settings screen (enable/disable network fetching, credits for OSS & Icons)
