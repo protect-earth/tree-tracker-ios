@@ -2,11 +2,6 @@ import Foundation
 import Alamofire
 import class UIKit.UIImage
 
-struct Paginated<Model: Decodable>: Decodable {
-    let offset: String?
-    let records: [Model]
-}
-
 final class Api {
     fileprivate struct Config {
         static let baseUrl = URL(string: "https://api.airtable.com/v0/\(Constants.Airtable.baseId)")!
@@ -70,10 +65,6 @@ final class Api {
             completion(data.data.flatMap(UIImage.init(data:)))
         }
     }
-}
-
-protocol Cancellable {
-    func cancel()
 }
 
 final class ImageUpload: Cancellable {

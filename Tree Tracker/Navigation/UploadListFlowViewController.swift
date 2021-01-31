@@ -10,7 +10,7 @@ final class UploadListFlowViewController: NavigationViewController, UploadListNa
     override init() {
         super.init()
 
-        let rootViewController = UploadListViewController(viewModel: UploadListViewModel(navigation: self))
+        let rootViewController = TableListViewController(viewModel: UploadListViewModel(navigation: self))
         navigationBar.prefersLargeTitles = true
         navigationBar.tintColor = .white
         viewControllers = [rootViewController]

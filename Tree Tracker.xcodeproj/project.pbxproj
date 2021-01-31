@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		853ABD562596144900144B0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853ABD552596144900144B0D /* AppDelegate.swift */; };
-		853ABD5A2596144900144B0D /* TreesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853ABD592596144900144B0D /* TreesViewController.swift */; };
 		853ABD5F2596144A00144B0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 853ABD5E2596144A00144B0D /* Assets.xcassets */; };
 		853ABD622596144A00144B0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 853ABD602596144A00144B0D /* LaunchScreen.storyboard */; };
 		853ABD7325961B4800144B0D /* IDETemplateMacros.plist in Resources */ = {isa = PBXBuildFile; fileRef = 853ABD7225961B4800144B0D /* IDETemplateMacros.plist */; };
@@ -38,6 +37,9 @@
 		859F62E425C22D6C005E61F7 /* SelectionsKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62E325C22D6C005E61F7 /* SelectionsKeyboardView.swift */; };
 		859F62E925C48FA2005E61F7 /* DelayedPublished.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62E825C48FA2005E61F7 /* DelayedPublished.swift */; };
 		859F62EF25C48FD8005E61F7 /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62EE25C48FD8005E61F7 /* AlertModel.swift */; };
+		859F62F225C5A7B8005E61F7 /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62F125C5A7B8005E61F7 /* Cancellable.swift */; };
+		859F62F525C5A7DC005E61F7 /* Paginated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62F425C5A7DC005E61F7 /* Paginated.swift */; };
+		859F62FC25C70F29005E61F7 /* TableListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62FB25C70F29005E61F7 /* TableListViewController.swift */; };
 		85A0EF7F25A226D9003CE744 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 85A0EF7E25A226D9003CE744 /* GRDB */; };
 		85A0EF8325A2271C003CE744 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 85A0EF8225A2271C003CE744 /* Alamofire */; };
 		85A0EF8925A22FEE003CE744 /* AirtableTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0EF8825A22FEE003CE744 /* AirtableTree.swift */; };
@@ -67,7 +69,6 @@
 		85B839FE25B86F320008E167 /* URLImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839FD25B86F320008E167 /* URLImageLoader.swift */; };
 		85B83A0225B8735F0008E167 /* AnyImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A0125B8735F0008E167 /* AnyImageLoader.swift */; };
 		85B83A0D25B87C0D0008E167 /* BSImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 85B83A0C25B87C0D0008E167 /* BSImagePicker */; };
-		85B83A1225B87E710008E167 /* UploadListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A1125B87E710008E167 /* UploadListViewController.swift */; };
 		85B83A1525B87E780008E167 /* UploadListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A1425B87E780008E167 /* UploadListViewModel.swift */; };
 		85B83A1825B881EC0008E167 /* LocalTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A1725B881EC0008E167 /* LocalTree.swift */; };
 		85B83A1C25B8AC650008E167 /* EditLocalTreeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A1B25B8AC650008E167 /* EditLocalTreeViewModel.swift */; };
@@ -85,7 +86,6 @@
 /* Begin PBXFileReference section */
 		853ABD522596144900144B0D /* Tree Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tree Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		853ABD552596144900144B0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		853ABD592596144900144B0D /* TreesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreesViewController.swift; sourceTree = "<group>"; };
 		853ABD5E2596144A00144B0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		853ABD612596144A00144B0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		853ABD632596144A00144B0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -117,6 +117,9 @@
 		859F62E325C22D6C005E61F7 /* SelectionsKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionsKeyboardView.swift; sourceTree = "<group>"; };
 		859F62E825C48FA2005E61F7 /* DelayedPublished.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayedPublished.swift; sourceTree = "<group>"; };
 		859F62EE25C48FD8005E61F7 /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
+		859F62F125C5A7B8005E61F7 /* Cancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
+		859F62F425C5A7DC005E61F7 /* Paginated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paginated.swift; sourceTree = "<group>"; };
+		859F62FB25C70F29005E61F7 /* TableListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableListViewController.swift; sourceTree = "<group>"; };
 		85A0EF8825A22FEE003CE744 /* AirtableTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableTree.swift; sourceTree = "<group>"; };
 		85A0EF8C25A23062003CE744 /* RemoteTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteTree.swift; sourceTree = "<group>"; };
 		85B839A825B35B540008E167 /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
@@ -144,7 +147,6 @@
 		85B839FA25B86F1A0008E167 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		85B839FD25B86F320008E167 /* URLImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImageLoader.swift; sourceTree = "<group>"; };
 		85B83A0125B8735F0008E167 /* AnyImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyImageLoader.swift; sourceTree = "<group>"; };
-		85B83A1125B87E710008E167 /* UploadListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadListViewController.swift; sourceTree = "<group>"; };
 		85B83A1425B87E780008E167 /* UploadListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadListViewModel.swift; sourceTree = "<group>"; };
 		85B83A1725B881EC0008E167 /* LocalTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTree.swift; sourceTree = "<group>"; };
 		85B83A1B25B8AC650008E167 /* EditLocalTreeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocalTreeViewModel.swift; sourceTree = "<group>"; };
@@ -268,7 +270,6 @@
 			isa = PBXGroup;
 			children = (
 				85B839B425B47C230008E167 /* TreesListItem.swift */,
-				853ABD592596144900144B0D /* TreesViewController.swift */,
 				85792A8A25B1D57F00BFDA96 /* TreesViewModel.swift */,
 				85B839B725B47C3F0008E167 /* TreeCollectionViewCell.swift */,
 			);
@@ -303,6 +304,7 @@
 				859F62C525C1C464005E61F7 /* AirtableSpecies.swift */,
 				859F62D025C1C62D005E61F7 /* AirtableSupervisor.swift */,
 				85A0EF8825A22FEE003CE744 /* AirtableTree.swift */,
+				859F62F425C5A7DC005E61F7 /* Paginated.swift */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -364,6 +366,7 @@
 		85B839AB25B47BC80008E167 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				859F62F125C5A7B8005E61F7 /* Cancellable.swift */,
 				85B839FA25B86F1A0008E167 /* ImageLoader.swift */,
 				85B839AC25B47BD30008E167 /* Reusable.swift */,
 			);
@@ -373,7 +376,6 @@
 		85B83A0F25B87E310008E167 /* UploadList */ = {
 			isa = PBXGroup;
 			children = (
-				85B83A1125B87E710008E167 /* UploadListViewController.swift */,
 				85B83A1425B87E780008E167 /* UploadListViewModel.swift */,
 			);
 			path = UploadList;
@@ -390,6 +392,7 @@
 				85B83A2225B9C1BC0008E167 /* NavigationViewController.swift */,
 				85B839F225B866590008E167 /* RoundedTappableButton.swift */,
 				859F62E325C22D6C005E61F7 /* SelectionsKeyboardView.swift */,
+				859F62FB25C70F29005E61F7 /* TableListViewController.swift */,
 				85B839A825B35B540008E167 /* TableViewDataSource.swift */,
 				85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */,
 				85B839DF25B74FF50008E167 /* TextField.swift */,
@@ -485,6 +488,7 @@
 				85B839D225B742510008E167 /* TextFieldModel.swift in Sources */,
 				85B839B125B47C0A0008E167 /* Action.swift in Sources */,
 				85B83A3325B9C9DC0008E167 /* String.swift in Sources */,
+				859F62F525C5A7DC005E61F7 /* Paginated.swift in Sources */,
 				857BAD9D25B1DCDE005D7D35 /* Defaults.swift in Sources */,
 				85B839E425B753F10008E167 /* KeyboardLayoutGuide.swift in Sources */,
 				85B839D625B74E960008E167 /* KeyboardAccessoryView.swift in Sources */,
@@ -510,11 +514,11 @@
 				859F62E425C22D6C005E61F7 /* SelectionsKeyboardView.swift in Sources */,
 				859F62D625C22140005E61F7 /* Species.swift in Sources */,
 				85B83A2325B9C1BC0008E167 /* NavigationViewController.swift in Sources */,
+				859F62FC25C70F29005E61F7 /* TableListViewController.swift in Sources */,
 				85792A9225B1D5A500BFDA96 /* ButtonModel.swift in Sources */,
-				853ABD5A2596144900144B0D /* TreesViewController.swift in Sources */,
 				85B839CE25B5F8F30008E167 /* UIAlertController.swift in Sources */,
 				859F62C025C1C436005E61F7 /* AirtableImageThumbnail.swift in Sources */,
-				85B83A1225B87E710008E167 /* UploadListViewController.swift in Sources */,
+				859F62F225C5A7B8005E61F7 /* Cancellable.swift in Sources */,
 				859F62D125C1C62D005E61F7 /* AirtableSupervisor.swift in Sources */,
 				853ABD562596144900144B0D /* AppDelegate.swift in Sources */,
 				857BADA825B1FA93005D7D35 /* TreeDetailsViewController.swift in Sources */,

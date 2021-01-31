@@ -1,9 +1,15 @@
 import Foundation
 
-final class TreesViewModel {
+final class TreesViewModel: TableListViewModel {
     @Published var title: String
     @Published var data: [ListSection<TreesListItem>]
-    @Published var navigationButtons: [NavigationBarButtonModel]
+    @Published var rightNavigationButtons: [NavigationBarButtonModel]
+    @Published var actionButton: ButtonModel?
+
+    var titlePublisher: Published<String>.Publisher { $title }
+    var actionButtonPublisher: Published<ButtonModel?>.Publisher { $actionButton }
+    var rightNavigationButtonsPublisher: Published<[NavigationBarButtonModel]>.Publisher { $rightNavigationButtons }
+    var dataPublisher: Published<[ListSection<TreesListItem>]>.Publisher { $data }
 
     private var api: Api
     private var database: Database
@@ -16,9 +22,9 @@ final class TreesViewModel {
         self.api = api
         self.database = database
         self.data = []
-        self.navigationButtons = []
+        self.rightNavigationButtons = []
 
-        self.navigationButtons = [
+        self.rightNavigationButtons = [
             .init(
                 title: .system(.refresh),
                 action: { [weak self] in self?.sync() },

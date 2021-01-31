@@ -2,8 +2,17 @@ import UIKit
 import PhotosUI
 import Combine
 
-final class UploadListViewController: UIViewController {
-    let viewModel: UploadListViewModel
+protocol TableListViewModel {
+    var titlePublisher: Published<String>.Publisher { get }
+    var actionButtonPublisher: Published<ButtonModel?>.Publisher { get }
+    var rightNavigationButtonsPublisher: Published<[NavigationBarButtonModel]>.Publisher { get }
+    var dataPublisher: Published<[ListSection<TreesListItem>]>.Publisher { get }
+
+    func loadData()
+}
+
+final class TableListViewController: UIViewController {
+    let viewModel: TableListViewModel
 
     private lazy var layout: UICollectionViewLayout = {
         let layout = GridCollectionViewLayout(columns: 4)
@@ -31,7 +40,7 @@ final class UploadListViewController: UIViewController {
     private var observables = Set<AnyCancellable>()
     private lazy var dataSource = buildDataSource()
 
-    init(viewModel: UploadListViewModel) {
+    init(viewModel: TableListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
 
@@ -69,39 +78,42 @@ final class UploadListViewController: UIViewController {
         setup(viewModel: viewModel)
     }
 
-    private func nonViewDependentSetup(viewModel: UploadListViewModel) {
-        viewModel.$title
+    private func nonViewDependentSetup(viewModel: TableListViewModel) {
+        viewModel.titlePublisher
             .sink { [weak self] title in
                 self?.title = title
             }
             .store(in: &observables)
     }
 
-    private func setup(viewModel: UploadListViewModel) {
-        viewModel.$syncButton
-            .sink { [weak self] button in
-                guard let button = button else { return }
-
-                self?.actionButton.set(model: button)
+    private func setup(viewModel: TableListViewModel) {
+        viewModel.actionButtonPublisher
+            .sink { [weak self] model in
+                if let model = model {
+                    self?.actionButton.set(model: model)
+                    self?.actionButton.isHidden = false
+                } else {
+                    self?.actionButton.isHidden = true
+                }
             }
             .store(in: &observables)
 
-        viewModel.$data
+        viewModel.dataPublisher
             .sink { [weak self] data in
                 self?.dataSource.update(data: data)
             }
             .store(in: &observables)
 
-        viewModel.$navigationButtons
-            .sink { [weak self] navigationButtons in
-                self?.update(navigationButtons: navigationButtons)
+        viewModel.rightNavigationButtonsPublisher
+            .sink { [weak self] rightNavigationButtons in
+                self?.update(rightNavigationButtons: rightNavigationButtons)
             }
             .store(in: &observables)
 
         viewModel.loadData()
     }
 
-    private func update(navigationButtons: [NavigationBarButtonModel]) {
+    private func update(rightNavigationButtons navigationButtons: [NavigationBarButtonModel]) {
         navigationItem.rightBarButtonItems = navigationButtons
             .map { button in
                 return BarButtonItem(model: button)

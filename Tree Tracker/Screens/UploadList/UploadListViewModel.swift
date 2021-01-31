@@ -6,11 +6,16 @@ protocol UploadListNavigating: AnyObject {
     func triggerEditDetailsFlow(tree: LocalTree, completion: @escaping () -> Void)
 }
 
-final class UploadListViewModel {
+final class UploadListViewModel: TableListViewModel {
     @Published var title: String
     @Published var data: [ListSection<TreesListItem>]
-    @Published var syncButton: ButtonModel?
-    @Published var navigationButtons: [NavigationBarButtonModel]
+    @Published var actionButton: ButtonModel?
+    @Published var rightNavigationButtons: [NavigationBarButtonModel]
+
+    var titlePublisher: Published<String>.Publisher { $title }
+    var actionButtonPublisher: Published<ButtonModel?>.Publisher { $actionButton }
+    var rightNavigationButtonsPublisher: Published<[NavigationBarButtonModel]>.Publisher { $rightNavigationButtons }
+    var dataPublisher: Published<[ListSection<TreesListItem>]>.Publisher { $data }
 
     private var api: Api
     private var database: Database
@@ -26,13 +31,13 @@ final class UploadListViewModel {
         self.database = database
         self.navigation = navigation
         self.data = []
-        self.syncButton = nil
-        self.navigationButtons = []
+        self.actionButton = nil
+        self.rightNavigationButtons = []
 
         presentTitle(itemsCount: 0)
         presentUploadButton(isUploading: false)
 
-        self.navigationButtons = [
+        self.rightNavigationButtons = [
             .init(
                 title: .system(.add),
                 action: { [weak self] in self?.navigation?.triggerAddTreesFlow { self?.loadData() }  },
@@ -57,7 +62,7 @@ final class UploadListViewModel {
     }
 
     private func presentUploadButton(isUploading: Bool) {
-        self.syncButton = ButtonModel(
+        self.actionButton = ButtonModel(
             title: .text(isUploading ? "Stop uploading" : "Upload"),
             action: { [weak self] in
                 if isUploading {

@@ -6,7 +6,7 @@ final class MainFlowViewController: UITabBarController {
 
         let upload = UploadListFlowViewController()
 
-        let trees = NavigationViewController(rootViewController: TreesViewController(viewModel: TreesViewModel()))
+        let trees = NavigationViewController(rootViewController: TableListViewController(viewModel: TreesViewModel()))
 
         viewControllers = [upload, trees]
 
