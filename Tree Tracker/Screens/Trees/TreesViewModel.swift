@@ -18,7 +18,7 @@ final class TreesViewModel: TableListViewModel {
     private var supervisors: [Supervisor] = []
 
     init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database) {
-        self.title = "Uploaded Trees"
+        self.title = "List"
         self.api = api
         self.database = database
         self.data = []
