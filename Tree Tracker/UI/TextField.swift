@@ -68,6 +68,14 @@ final class TextField: UITextField, UITextFieldDelegate {
         }
     }
 
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        if isCaretHidden {
+            return false
+        } else {
+            return super.canPerformAction(action, withSender: sender)
+        }
+    }
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         resignFirstResponder()
         return true

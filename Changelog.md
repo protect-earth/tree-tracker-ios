@@ -1,5 +1,9 @@
 #  Tree Tracker
 
+## Next
+- Disabled longpress actions on textfields without caret (paste etc.)
+
+
 ## 0.2.0
 - Added count of trees to upload on the list.
 - Added ability to remove trees from the upload list (edit tree -> trash icon)
