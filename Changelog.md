@@ -1,6 +1,6 @@
 #  Tree Tracker
 
-## Next
+## 0.2.1
 - Disabled longpress actions on textfields without caret (paste etc.)
 - When adding a tree, add additional "--" field in keyboard picker when you don't want to select a Specie/Supervisor/Site yet.
 
