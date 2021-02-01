@@ -2,7 +2,7 @@
 
 ## Next
 - Disabled longpress actions on textfields without caret (paste etc.)
-
+- When adding a tree, add additional "--" field in keyboard picker when you don't want to select a Specie/Supervisor/Site yet.
 
 ## 0.2.0
 - Added count of trees to upload on the list.

@@ -118,10 +118,10 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
             .init(placeholder: "Species",
                   text: species?.name,
                   input: .keyboard(.selection(
-                                    self.species.map(\.name),
+                                    ["--"] + self.species.map(\.name),
                                     initialIndexSelected: self.species.firstIndex { $0.id == species?.id },
                                     indexSelected: { [weak self] selectedSpecies in
-                                        species = self?.species[safe: selectedSpecies]
+                                        species = self?.species[safe: selectedSpecies - 1]
                                         self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
                                     }),
                                    .done()),
@@ -130,10 +130,10 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
             .init(placeholder: "Supervisor",
                   text: supervisor?.name,
                   input: .keyboard(.selection(
-                                    self.supervisors.map(\.name),
+                                    ["--"] + self.supervisors.map(\.name),
                                     initialIndexSelected: supervisors.firstIndex { $0.id == supervisor?.id },
                                     indexSelected: { [weak self] selectedSupervisor in
-                                        supervisor = self?.supervisors[safe: selectedSupervisor]
+                                        supervisor = self?.supervisors[safe: selectedSupervisor - 1]
                                         self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
                                     }),
                                    .done()),
@@ -142,10 +142,10 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
             .init(placeholder: "Site",
                   text: site?.name,
                   input: .keyboard(.selection(
-                                    self.sites.map(\.name),
+                                    ["--"] + self.sites.map(\.name),
                                     initialIndexSelected: self.sites.firstIndex { $0.id == site?.id },
                                     indexSelected: { [weak self] selectedSite in
-                                        site = self?.sites[safe: selectedSite]
+                                        site = self?.sites[safe: selectedSite - 1]
                                         self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
                                     }),
                                    .done()),
