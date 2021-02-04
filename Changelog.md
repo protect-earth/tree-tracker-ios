@@ -1,6 +1,6 @@
 #  Tree Tracker
 
-## Next
+## 0.3.0
 - When uploading, we will now disable screen lock timer and enable it back on after the upload finishes/errors out.
 - Added delete all button to Upload Queue view - prompts with alert to confirm deleting all items from the queue and proceeds to do so when confirmed.
 
