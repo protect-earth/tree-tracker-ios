@@ -1,11 +1,13 @@
 import Foundation
 
 final class TreesViewModel: TableListViewModel {
+    @DelayedPublished var alert: AlertModel
     @Published var title: String
     @Published var data: [ListSection<TreesListItem>]
     @Published var rightNavigationButtons: [NavigationBarButtonModel]
     @Published var actionButton: ButtonModel?
 
+    var alertPublisher: DelayedPublished<AlertModel>.Publisher { $alert }
     var titlePublisher: Published<String>.Publisher { $title }
     var actionButtonPublisher: Published<ButtonModel?>.Publisher { $actionButton }
     var rightNavigationButtonsPublisher: Published<[NavigationBarButtonModel]>.Publisher { $rightNavigationButtons }
