@@ -19,16 +19,18 @@ final class UploadListViewModel: TableListViewModel {
 
     private var api: Api
     private var database: Database
+    private var screenLockManager: ScreenLockManaging
     private var sites: [Site] = []
     private var species: [Species] = []
     private var supervisors: [Supervisor] = []
     private var currentUpload: Cancellable?
     private weak var navigation: UploadListNavigating?
 
-    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, navigation: UploadListNavigating) {
+    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, screenLockManager: ScreenLockManaging = UIScreenLockManager(), navigation: UploadListNavigating) {
         self.title = ""
         self.api = api
         self.database = database
+        self.screenLockManager = screenLockManager
         self.navigation = navigation
         self.data = []
         self.actionButton = nil
@@ -77,13 +79,20 @@ final class UploadListViewModel: TableListViewModel {
     }
 
     func upload() {
+        screenLockManager.disableLocking()
         uploadLocalTreesRecursively()
     }
 
     private func stopUploading() {
+        screenLockManager.allowLocking()
+        presentUploadButton(isUploading: false)
+        presentTreesFromDatabase()
+    }
+
+    private func cancelUploading() {
         print("Uploading cancelled.")
         currentUpload?.cancel()
-        presentTreesFromDatabase()
+        stopUploading()
     }
 
     private func uploadLocalTreesRecursively() {
@@ -91,7 +100,7 @@ final class UploadListViewModel: TableListViewModel {
         database.fetchLocalTrees { [weak self] trees in
             guard let tree = trees.first else {
                 print("No more items to upload - bailing.")
-                self?.presentUploadButton(isUploading: false)
+                self?.stopUploading()
                 return
             }
             
