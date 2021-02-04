@@ -79,6 +79,7 @@
 		85B83A3025B9C5E90008E167 /* JSONEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A2F25B9C5E90008E167 /* JSONEncoder.swift */; };
 		85B83A3325B9C9DC0008E167 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A3225B9C9DC0008E167 /* String.swift */; };
 		85B83A3825B9D9C40008E167 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A3725B9D9C40008E167 /* Data.swift */; };
+		85C781A125CC744E0034292D /* ScreenLockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C781A025CC744E0034292D /* ScreenLockManager.swift */; };
 		85E0E05E25B33F8C009D8FC0 /* TappableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */; };
 		85E0E06225B35744009D8FC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E06125B35744009D8FC0 /* UIView.swift */; };
 /* End PBXBuildFile section */
@@ -158,6 +159,7 @@
 		85B83A2F25B9C5E90008E167 /* JSONEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONEncoder.swift; sourceTree = "<group>"; };
 		85B83A3225B9C9DC0008E167 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		85B83A3725B9D9C40008E167 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		85C781A025CC744E0034292D /* ScreenLockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenLockManager.swift; sourceTree = "<group>"; };
 		85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableButton.swift; sourceTree = "<group>"; };
 		85E0E06125B35744009D8FC0 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -254,6 +256,7 @@
 				85B839F725B86F0A0008E167 /* PHAssetLocator.swift */,
 				85B839BE25B492550008E167 /* PHImageLoader.swift */,
 				85B839FD25B86F320008E167 /* URLImageLoader.swift */,
+				85C781A025CC744E0034292D /* ScreenLockManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -509,6 +512,7 @@
 				85792A8B25B1D57F00BFDA96 /* TreesViewModel.swift in Sources */,
 				859F62E925C48FA2005E61F7 /* DelayedPublished.swift in Sources */,
 				85B839F325B866590008E167 /* RoundedTappableButton.swift in Sources */,
+				85C781A125CC744E0034292D /* ScreenLockManager.swift in Sources */,
 				85B839AD25B47BD30008E167 /* Reusable.swift in Sources */,
 				85B839A925B35B540008E167 /* TableViewDataSource.swift in Sources */,
 				85B83A3825B9D9C40008E167 /* Data.swift in Sources */,
