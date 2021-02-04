@@ -3,6 +3,7 @@ import PhotosUI
 import Combine
 
 protocol TableListViewModel {
+    var alertPublisher: DelayedPublished<AlertModel>.Publisher { get }
     var titlePublisher: Published<String>.Publisher { get }
     var actionButtonPublisher: Published<ButtonModel?>.Publisher { get }
     var rightNavigationButtonsPublisher: Published<[NavigationBarButtonModel]>.Publisher { get }
@@ -110,6 +111,12 @@ final class TableListViewController: UIViewController {
             }
             .store(in: &observables)
 
+        viewModel.alertPublisher
+            .sink { [weak self] alert in
+                self?.present(alert: alert)
+            }
+            .store(in: &observables)
+
         viewModel.loadData()
     }
 
@@ -118,6 +125,10 @@ final class TableListViewController: UIViewController {
             .map { button in
                 return BarButtonItem(model: button)
             }
+    }
+
+    private func present(alert: AlertModel) {
+        present(UIAlertController.from(model: alert), animated: true, completion: nil)
     }
 
     private func buildDataSource() -> CollectionViewDataSource<TreesListItem> {

@@ -7,11 +7,13 @@ protocol UploadListNavigating: AnyObject {
 }
 
 final class UploadListViewModel: TableListViewModel {
+    @DelayedPublished var alert: AlertModel
     @Published var title: String
     @Published var data: [ListSection<TreesListItem>]
     @Published var actionButton: ButtonModel?
     @Published var rightNavigationButtons: [NavigationBarButtonModel]
 
+    var alertPublisher: DelayedPublished<AlertModel>.Publisher { $alert }
     var titlePublisher: Published<String>.Publisher { $title }
     var actionButtonPublisher: Published<ButtonModel?>.Publisher { $actionButton }
     var rightNavigationButtonsPublisher: Published<[NavigationBarButtonModel]>.Publisher { $rightNavigationButtons }
@@ -38,14 +40,7 @@ final class UploadListViewModel: TableListViewModel {
 
         presentTitle(itemsCount: 0)
         presentUploadButton(isUploading: false)
-
-        self.rightNavigationButtons = [
-            .init(
-                title: .system(.add),
-                action: { [weak self] in self?.navigation?.triggerAddTreesFlow { self?.loadData() }  },
-                isEnabled: true
-            )
-        ]
+        presentNavigationButtons(isUploading: false)
     }
 
     func loadData() {
@@ -68,17 +63,40 @@ final class UploadListViewModel: TableListViewModel {
             title: .text(isUploading ? "Stop uploading" : "Upload"),
             action: { [weak self] in
                 if isUploading {
-                    self?.stopUploading()
+                    self?.cancelUploading()
                 } else {
                     self?.upload()
                 }
-                self?.presentUploadButton(isUploading: !isUploading)
             },
             isEnabled: true
         )
     }
 
+    private func presentNavigationButtons(isUploading: Bool) {
+        self.rightNavigationButtons =
+            [!isUploading ? .init(
+                title: .system(.trash),
+                action: { [weak self] in
+                    self?.alert = AlertModel(title: "Confirm", message: "Are you sure you want to delete ALL trees from the queue?", buttons: [
+                        .init(title: "Delete", style: .destructive, action: { [weak self] in
+                            self?.stopUploading()
+                            self?.clearQueue()
+                        }),
+                        .init(title: "Cancel", style: .cancel, action: nil),
+                    ])
+                },
+                isEnabled: true
+            ) : nil].compactMap { $0 } + [
+                .init(
+                title: .system(.add),
+                action: { [weak self] in self?.navigation?.triggerAddTreesFlow { self?.loadData() }  },
+                isEnabled: true
+            )]
+    }
+
     func upload() {
+        presentUploadButton(isUploading: true)
+        presentNavigationButtons(isUploading: true)
         screenLockManager.disableLocking()
         uploadLocalTreesRecursively()
     }
@@ -86,7 +104,14 @@ final class UploadListViewModel: TableListViewModel {
     private func stopUploading() {
         screenLockManager.allowLocking()
         presentUploadButton(isUploading: false)
+        presentNavigationButtons(isUploading: false)
         presentTreesFromDatabase()
+    }
+
+    private func clearQueue() {
+        database.removeLocalTrees { [weak self] in
+            self?.presentTreesFromDatabase()
+        }
     }
 
     private func cancelUploading() {

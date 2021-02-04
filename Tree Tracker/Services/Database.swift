@@ -150,6 +150,16 @@ final class Database {
         }
     }
 
+    func removeLocalTrees(completion: @escaping () -> Void) {
+        dbQueue?.asyncWrite { db in
+            try? LocalTree.deleteAll(db)
+        } completion: { db, result in
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+    }
+
     func update(tree: LocalTree, completion: @escaping () -> Void) {
         dbQueue?.asyncWrite { db in
             try? tree.update(db)
