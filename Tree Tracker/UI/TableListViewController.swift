@@ -82,7 +82,7 @@ final class TableListViewController: UIViewController {
     private func nonViewDependentSetup(viewModel: TableListViewModel) {
         viewModel.titlePublisher
             .sink { [weak self] title in
-                self?.title = title
+                self?.navigationItem.title = title
             }
             .store(in: &observables)
     }
