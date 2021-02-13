@@ -1,6 +1,6 @@
 #  Tree Tracker
 
-## Next
+## 0.4.0
 - Fix changing/showing tabbar item name for queue (the idea was to hide names for now).
 - Added new view for camera session flow (take a photo -> add details -> take another one...)
 - Added rounding precision (5) for coordinates
