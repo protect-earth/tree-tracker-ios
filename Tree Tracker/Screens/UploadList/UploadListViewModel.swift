@@ -126,7 +126,7 @@ final class UploadListViewModel: TableListViewModel {
     private func uploadLocalTreesRecursively() {
         print("Uploading images...")
         database.fetchLocalTrees { [weak self] trees in
-            guard let tree = trees.first else {
+            guard let tree = trees.sorted(by: \.createDate, order: .descending).first else {
                 print("No more items to upload - bailing.")
                 self?.stopUploading()
                 return
@@ -168,8 +168,9 @@ final class UploadListViewModel: TableListViewModel {
 
     private func presentTreesFromDatabase() {
         database.fetchLocalTrees { [weak self] trees in
-            self?.presentTitle(itemsCount: trees.count)
-            self?.data = [.untitled(id: "trees", trees.compactMap { tree in
+            let sortedTrees = trees.sorted(by: \.createDate, order: .descending)
+            self?.presentTitle(itemsCount: sortedTrees.count)
+            self?.data = [.untitled(id: "trees", sortedTrees.compactMap { tree in
                 return self?.buildItem(tree: tree, progress: 0.0)
             })]
         }
