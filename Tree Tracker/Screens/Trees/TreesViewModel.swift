@@ -39,14 +39,19 @@ final class TreesViewModel: TableListViewModel {
         lazilyLoadAllSupervisorsIfPossible()
     }
 
-    func loadData() {
+    func onAppear() {
+        refreshData()
+    }
+
+    private func refreshData() {
         fetchDatabaseContent { [weak self] in
             self?.presentTreesFromDatabase()
         }
     }
 
-    func sync() {
-        lazilyLoadAllRemoteTreesIfPossible()
+    private func sync() {
+        #warning("TODO: This is not scalable right now, need a better caching system (CD?) or better UX")
+//        lazilyLoadAllRemoteTreesIfPossible()
         lazilyLoadAllSpeciesIfPossible()
         lazilyLoadAllSitesIfPossible()
         lazilyLoadAllSupervisorsIfPossible()
@@ -121,19 +126,20 @@ final class TreesViewModel: TableListViewModel {
     }
 
     private func presentTreesFromDatabase() {
-        database.fetchRemoteTrees { [weak self] trees in
-            self?.data = [.untitled(id: "trees", trees.map { tree in
-                let imageLoader = (tree.thumbnailUrl ?? tree.imageUrl).map { AnyImageLoader(imageLoader: URLImageLoader(url: $0)) }
-                let info = self?.species.first { $0.id == tree.species }?.name ?? "Unknown specie"
-                return .tree(id: "\(tree.id)",
-                             imageLoader: imageLoader,
-                             progress: 0,
-                             info: info,
-                             detail: tree.supervisor,
-                             tapAction: Action(id: "tree_action_\(tree.id)") {
-                                print("tap action")
-                             })
-            })]
-        }
+        #warning("TODO: This is not scalable right now, need a better caching system (CD?) or better UX")
+//        database.fetchRemoteTrees { [weak self] trees in
+//            self?.data = [.untitled(id: "trees", trees.map { tree in
+//                let imageLoader = (tree.thumbnailUrl ?? tree.imageUrl).map { AnyImageLoader(imageLoader: URLImageLoader(url: $0)) }
+//                let info = self?.species.first { $0.id == tree.species }?.name ?? "Unknown specie"
+//                return .tree(id: "\(tree.id)",
+//                             imageLoader: imageLoader,
+//                             progress: 0,
+//                             info: info,
+//                             detail: tree.supervisor,
+//                             tapAction: Action(id: "tree_action_\(tree.id)") {
+//                                print("tap action")
+//                             })
+//            })]
+//        }
     }
 }

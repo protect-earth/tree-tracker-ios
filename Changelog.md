@@ -5,6 +5,7 @@
 - Added new view for camera session flow (take a photo -> add details -> take another one...)
 - Added rounding precision (5) for coordinates
 - Upload list is now sorted by `createdDate` if possible (descending)
+- Sync button on All Trees view doesn't fetch trees from Airtable now + we don't show the trees for now since it takes lots of memory and network bandwith for no reason
 
 ## 0.3.0
 - When uploading, we will now disable screen lock timer and enable it back on after the upload finishes/errors out.
