@@ -2,10 +2,9 @@ import UIKit
 import PhotosUI
 import BSImagePicker
 
-final class UploadListFlowViewController: NavigationViewController, UploadListNavigating, TreeDetailsNavigating, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
-    private let assetLocator = PHAssetLocator()
-    private var saveTreesCompletion: (() -> Void)?
+final class UploadListFlowViewController: NavigationViewController, UploadListNavigating, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    private let assetManager = PHAssetManager()
+    private var saveTreesCompletion: ((Bool) -> Void)?
 
     override init() {
         super.init()
@@ -16,20 +15,24 @@ final class UploadListFlowViewController: NavigationViewController, UploadListNa
         viewControllers = [rootViewController]
     }
 
-    func triggerAddTreesFlow(completion: @escaping () -> Void) {
+    func triggerAddTreesFlow(completion: @escaping (Bool) -> Void) {
         saveTreesCompletion = completion
         askForPermissionsAndPresentPickerIfPossible()
     }
 
-    func triggerFillDetailsFlow(phImageIds: [String], completion: @escaping () -> Void) {
+    func triggerFillDetailsFlow(phImageIds: [String], completion: @escaping (Bool) -> Void) {
         saveTreesCompletion = completion
-        let assets = assetLocator.findAssets(for: phImageIds)
+        let assets = assetManager.findAssets(for: phImageIds)
         askForDetailsAndStore(assets: assets)
     }
 
-    func triggerEditDetailsFlow(tree: LocalTree, completion: @escaping () -> Void) {
+    func triggerEditDetailsFlow(tree: LocalTree, completion: @escaping (Bool) -> Void) {
         saveTreesCompletion = completion
         presentEdit(tree: tree)
+    }
+
+    private func askForDetailsAndStore(assets: [PHAsset]) {
+        viewControllers.last?.present(TreeDetailsFlowViewController(assets: assets, completion: saveTreesCompletion), animated: true, completion: nil)
     }
 
     private func askForPermissionsAndPresentPickerIfPossible() {
@@ -81,35 +84,8 @@ final class UploadListFlowViewController: NavigationViewController, UploadListNa
         picker.dismiss(animated: true, completion: nil)
     }
 
-    private func askForDetailsAndStore(assets: [PHAsset]) {
-        guard !assets.isEmpty else { return }
-        
-        let viewModel = AddLocalTreeViewModel(assets: assets, navigation: self)
-        let viewController = TreeDetailsViewController(viewModel: viewModel)
-        let navigationController = NavigationViewController(rootViewController: viewController, prefersLargeTitles: false)
-
-        viewControllers.last?.present(navigationController, animated: true, completion: nil)
-    }
-
     private func presentEdit(tree: LocalTree) {
-        let viewModel = EditLocalTreeViewModel(tree: tree, navigation: self)
-        let viewController = TreeDetailsViewController(viewModel: viewModel)
-        let navigationController = NavigationViewController(rootViewController: viewController, prefersLargeTitles: false)
-
-        viewControllers.last?.present(navigationController, animated: true, completion: nil)
-    }
-
-
-    func detailsFilledSuccessfully() {
-        viewControllers.last?.presentedViewController?.dismiss(animated: true) { [weak self] in
-            self?.saveTreesCompletion?()
-        }
-    }
-
-    func abandonedFillingTheDetails() {
-        viewControllers.last?.presentedViewController?.dismiss(animated: true) { [weak self] in
-            self?.saveTreesCompletion?()
-        }
+        viewControllers.last?.present(TreeDetailsFlowViewController(tree: tree, completion: saveTreesCompletion), animated: true, completion: nil)
     }
 }
 

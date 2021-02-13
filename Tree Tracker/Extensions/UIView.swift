@@ -9,12 +9,12 @@ extension UIView {
         ])
     }
 
-    func pin(to view: UIView) {
+    func pin(to view: UIView, insets: UIEdgeInsets = .zero) {
         NSLayoutConstraint.activate([
-            topAnchor.constraint(equalTo: view.topAnchor),
-            leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            topAnchor.constraint(equalTo: view.topAnchor, constant: insets.top),
+            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: insets.left),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -insets.right),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -insets.bottom),
         ])
     }
     

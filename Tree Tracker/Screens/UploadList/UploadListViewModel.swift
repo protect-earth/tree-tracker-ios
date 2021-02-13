@@ -1,9 +1,8 @@
 import Foundation
 
 protocol UploadListNavigating: AnyObject {
-    func triggerAddTreesFlow(completion: @escaping () -> Void)
-    func triggerFillDetailsFlow(phImageIds: [String], completion: @escaping () -> Void)
-    func triggerEditDetailsFlow(tree: LocalTree, completion: @escaping () -> Void)
+    func triggerAddTreesFlow(completion: @escaping (Bool) -> Void)
+    func triggerEditDetailsFlow(tree: LocalTree, completion: @escaping (Bool) -> Void)
 }
 
 final class UploadListViewModel: TableListViewModel {
@@ -43,7 +42,11 @@ final class UploadListViewModel: TableListViewModel {
         presentNavigationButtons(isUploading: false)
     }
 
-    func loadData() {
+    func onAppear() {
+        refreshData()
+    }
+
+    private func refreshData() {
         fetchDatabaseContent { [weak self] in
             self?.presentTreesFromDatabase()
         }
@@ -89,7 +92,7 @@ final class UploadListViewModel: TableListViewModel {
             ) : nil].compactMap { $0 } + [
                 .init(
                 title: .system(.add),
-                action: { [weak self] in self?.navigation?.triggerAddTreesFlow { self?.loadData() }  },
+                action: { [weak self] in self?.navigation?.triggerAddTreesFlow { _ in self?.refreshData() }  },
                 isEnabled: true
             )]
     }
@@ -189,9 +192,7 @@ final class UploadListViewModel: TableListViewModel {
                      info: info,
                      detail: tree.supervisor,
                      tapAction: Action(id: "tree_action_\(tree.phImageId)") { [weak self] in
-                        self?.navigation?.triggerEditDetailsFlow(tree: tree) {
-                            self?.loadData()
-                        }
+                        self?.navigation?.triggerEditDetailsFlow(tree: tree) { _ in self?.refreshData() }
                      })
     }
 }

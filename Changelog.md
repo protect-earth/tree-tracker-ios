@@ -2,6 +2,7 @@
 
 ## Next
 - Fix changing/showing tabbar item name for queue (the idea was to hide names for now).
+- Added new view for camera session flow (take a photo -> add details -> take another one...)
 
 ## 0.3.0
 - When uploading, we will now disable screen lock timer and enable it back on after the upload finishes/errors out.
