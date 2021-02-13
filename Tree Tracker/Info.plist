@@ -38,6 +38,14 @@
 	<string>$(CLOUDINARY_UPLOAD_PRESET_NAME)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Please allow Tree Tracker to use camera to take pictures of the trees.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Please allow Tree Tracker to track location in order to get the best coordinates for upload.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Please allow Tree Tracker to track location in order to get the best coordinates for upload.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Please allow Tree Tracker to track location in order to get the best coordinates for upload.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Please allow Tree Tracker to inspect the photo library and photos to upload them afterwards.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

@@ -15,12 +15,10 @@ extension UIImage {
         draw(in: CGRect(origin: .zero, size: size))
         return UIGraphicsGetImageFromCurrentImageContext()
     }
+}
 
-    static var uploadIcon: UIImage {
-        return UIImage(named: "uploadIcon")!
-    }
-
-    static var listIcon: UIImage {
-        return UIImage(named: "listIcon")!
-    }
+extension UIImage {
+    static var uploadIcon: UIImage { UIImage(named: "uploadIcon")! }
+    static var listIcon: UIImage { UIImage(named: "listIcon")! }
+    static var cameraIcon: UIImage { UIImage(named: "cameraIcon")! }
 }

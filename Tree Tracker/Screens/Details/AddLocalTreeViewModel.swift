@@ -107,7 +107,7 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
         var supervisor = supervisor ?? defaultSupervisor
         var site = site ?? defaultSite
         var notes = notes ?? ""
-        var coordinates = coordinates ?? asset._coordinates
+        var coordinates = coordinates ?? asset.stringifyCoordinates()
 
         fields = [
             .init(placeholder: "Coordinates",

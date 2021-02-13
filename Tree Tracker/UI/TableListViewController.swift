@@ -9,7 +9,7 @@ protocol TableListViewModel {
     var rightNavigationButtonsPublisher: Published<[NavigationBarButtonModel]>.Publisher { get }
     var dataPublisher: Published<[ListSection<TreesListItem>]>.Publisher { get }
 
-    func loadData()
+    func onAppear()
 }
 
 final class TableListViewController: UIViewController {
@@ -79,6 +79,12 @@ final class TableListViewController: UIViewController {
         setup(viewModel: viewModel)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        viewModel.onAppear()
+    }
+
     private func nonViewDependentSetup(viewModel: TableListViewModel) {
         viewModel.titlePublisher
             .sink { [weak self] title in
@@ -116,8 +122,6 @@ final class TableListViewController: UIViewController {
                 self?.present(alert: alert)
             }
             .store(in: &observables)
-
-        viewModel.loadData()
     }
 
     private func update(rightNavigationButtons navigationButtons: [NavigationBarButtonModel]) {

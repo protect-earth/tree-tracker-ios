@@ -1,26 +1,30 @@
 import UIKit
 
 class NavigationViewController: UINavigationController {
+    var prefersLargeTitles: Bool {
+        get { navigationBar.prefersLargeTitles }
+        set {
+            navigationBar.prefersLargeTitles = newValue
+            navigationBar.tintColor = prefersLargeTitles ? .white : .black
+        }
+    }
+
     init() {
         super.init(nibName: nil, bundle: nil)
-        setup()
+
+        prefersLargeTitles = true
     }
 
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
 
-        setup()
+        prefersLargeTitles = true
     }
 
     init(rootViewController: UIViewController, prefersLargeTitles: Bool) {
         super.init(rootViewController: rootViewController)
 
-        setup(prefersLargeTitles: prefersLargeTitles)
-    }
-
-    private func setup(prefersLargeTitles: Bool = true) {
-        navigationBar.prefersLargeTitles = prefersLargeTitles
-        navigationBar.tintColor = prefersLargeTitles ? .white : .black
+        self.prefersLargeTitles = prefersLargeTitles
     }
 
     @available(*, unavailable)

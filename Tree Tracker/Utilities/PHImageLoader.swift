@@ -8,7 +8,7 @@ final class PHImageLoader: ImageLoader {
         return phImageId
     }
 
-    private var assetLocator = PHAssetLocator()
+    private var assetManager = PHAssetManager()
     private lazy var manager: PHCachingImageManager = CurrentEnvironment.photosCachingManager
 
     init(phImageId: String) {
@@ -16,7 +16,7 @@ final class PHImageLoader: ImageLoader {
     }
 
     func loadThumbnail(completion: @escaping (UIImage?) -> Void) {
-        guard let asset = assetLocator.findAssets(for: [phImageId]).first else {
+        guard let asset = assetManager.findAssets(for: [phImageId]).first else {
             completion(nil)
             return
         }
@@ -38,7 +38,7 @@ final class PHImageLoader: ImageLoader {
     }
 
     func loadHighQualityImage(completion: @escaping (UIImage?) -> Void) {
-        guard let asset = assetLocator.findAssets(for: [phImageId]).first else {
+        guard let asset = assetManager.findAssets(for: [phImageId]).first else {
             completion(nil)
             return
         }
