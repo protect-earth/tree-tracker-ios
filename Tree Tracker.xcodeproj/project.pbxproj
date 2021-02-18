@@ -759,14 +759,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 53CHNC6J63;
+				DEVELOPMENT_TEAM = K5RUKV288P;
 				INFOPLIST_FILE = "Tree Tracker/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.sunshinejr.Tree-Tracker";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.protect.earth.Tree-Tracker";
 				MARKETING_VERSION = 0.5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -780,14 +780,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 53CHNC6J63;
+				DEVELOPMENT_TEAM = K5RUKV288P;
 				INFOPLIST_FILE = "Tree Tracker/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.sunshinejr.Tree-Tracker";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.protect.earth.Tree-Tracker";
 				MARKETING_VERSION = 0.5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
