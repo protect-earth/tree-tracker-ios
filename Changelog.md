@@ -1,5 +1,8 @@
 #  Tree Tracker
 
+## Next
+- Added ability to cache images in sqlite & now we brought back trees in the list (though on hitting Refresh we don't fetch new ones to not flood the network with unnecessary requests for all trees in Airtable)
+
 ## 0.4.0
 - Fix changing/showing tabbar item name for queue (the idea was to hide names for now).
 - Added new view for camera session flow (take a photo -> add details -> take another one...)
