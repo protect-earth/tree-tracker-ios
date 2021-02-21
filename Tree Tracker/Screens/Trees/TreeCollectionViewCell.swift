@@ -66,6 +66,12 @@ final class TreeCollectionViewCell: UICollectionViewCell, Reusable {
 
         setup()
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        imageView.image = nil
+    }
 
     private func setup() {
         contentView.addSubview(wrapper)

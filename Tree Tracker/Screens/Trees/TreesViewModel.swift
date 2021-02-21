@@ -1,5 +1,9 @@
 import Foundation
 
+private extension LogCategory {
+    static var treeList = LogCategory(name: "TreeList")
+}
+
 final class TreesViewModel: TableListViewModel {
     @DelayedPublished var alert: AlertModel
     @Published var title: String
@@ -13,16 +17,18 @@ final class TreesViewModel: TableListViewModel {
     var rightNavigationButtonsPublisher: Published<[NavigationBarButtonModel]>.Publisher { $rightNavigationButtons }
     var dataPublisher: Published<[ListSection<TreesListItem>]>.Publisher { $data }
 
-    private var api: Api
-    private var database: Database
+    private let api: Api
+    private let database: Database
+    private let logger: Logging
     private var sites: [Site] = []
     private var species: [Species] = []
     private var supervisors: [Supervisor] = []
 
-    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database) {
+    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, logger: Logging = CurrentEnvironment.logger) {
         self.title = "List"
         self.api = api
         self.database = database
+        self.logger = logger
         self.data = []
         self.rightNavigationButtons = []
 
@@ -78,7 +84,7 @@ final class TreesViewModel: TableListViewModel {
                 }
             case let .failure(error):
                 self?.presentTreesFromDatabase()
-                print("Error when saving airtable records: \(error)")
+                self?.logger.log(.treeList, "Error when saving airtable records: \(error)")
             }
         }
     }
@@ -92,7 +98,7 @@ final class TreesViewModel: TableListViewModel {
                     self?.lazilyLoadAllSpeciesIfPossible(offset: offset)
                 }
             case let .failure(error):
-                print("Error when saving airtable records: \(error)")
+                self?.logger.log(.treeList, "Error when saving airtable records: \(error)")
             }
         }
     }
@@ -106,7 +112,7 @@ final class TreesViewModel: TableListViewModel {
                     self?.lazilyLoadAllSupervisorsIfPossible(offset: offset)
                 }
             case let .failure(error):
-                print("Error when saving airtable records: \(error)")
+                self?.logger.log(.treeList, "Error when saving airtable records: \(error)")
             }
         }
     }
@@ -120,26 +126,26 @@ final class TreesViewModel: TableListViewModel {
                     self?.lazilyLoadAllSitesIfPossible(offset: offset)
                 }
             case let .failure(error):
-                print("Error when saving airtable records: \(error)")
+                self?.logger.log(.treeList, "Error when saving airtable records: \(error)")
             }
         }
     }
 
     private func presentTreesFromDatabase() {
-        #warning("TODO: This is not scalable right now, need a better caching system (CD?) or better UX")
-//        database.fetchRemoteTrees { [weak self] trees in
-//            self?.data = [.untitled(id: "trees", trees.map { tree in
-//                let imageLoader = (tree.thumbnailUrl ?? tree.imageUrl).map { AnyImageLoader(imageLoader: URLImageLoader(url: $0)) }
-//                let info = self?.species.first { $0.id == tree.species }?.name ?? "Unknown specie"
-//                return .tree(id: "\(tree.id)",
-//                             imageLoader: imageLoader,
-//                             progress: 0,
-//                             info: info,
-//                             detail: tree.supervisor,
-//                             tapAction: Action(id: "tree_action_\(tree.id)") {
-//                                print("tap action")
-//                             })
-//            })]
-//        }
+        database.fetchRemoteTrees { [weak self] trees in
+            let sortedTrees = trees.sorted(by: \.createDate, order: .descending)
+            self?.data = [.untitled(id: "trees", sortedTrees.map { tree in
+                let imageLoader = (tree.thumbnailUrl ?? tree.imageUrl).map { AnyImageLoader(imageLoader: URLImageLoader(url: $0)) }
+                let info = self?.species.first { $0.id == tree.species }?.name ?? "Unknown specie"
+                return .tree(id: "\(tree.id)",
+                             imageLoader: imageLoader,
+                             progress: 0,
+                             info: info,
+                             detail: tree.supervisor,
+                             tapAction: Action(id: "tree_action_\(tree.id)") {
+                                print("tap action")
+                             })
+            })]
+        }
     }
 }

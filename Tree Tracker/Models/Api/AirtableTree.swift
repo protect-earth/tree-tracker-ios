@@ -64,7 +64,7 @@ struct AirtableTree: Decodable {
             imageUrl = image?.url
             thumbnailUrl = image?.thumbnailUrl
         } catch {
-            print("Error decoding airtable image: \(error)")
+            CurrentEnvironment.logger.log("Error decoding airtable image: \(error)")
             imageUrl = nil
             thumbnailUrl = nil
         }

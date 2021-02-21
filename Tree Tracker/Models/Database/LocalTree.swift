@@ -12,6 +12,7 @@ struct LocalTree: Codable, FetchableRecord, PersistableRecord, TableRecord {
     var coordinates: String?
     var imageMd5: String?
 
+    // Because these are not accessible when synthesized by Swift, please do not remove it
     enum CodingKeys: String, CodingKey {
         case phImageId
         case createDate
