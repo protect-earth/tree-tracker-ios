@@ -20,6 +20,7 @@
 		853ABD8025961EEA00144B0D /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853ABD7F25961EEA00144B0D /* Api.swift */; };
 		853ABD8925961F9700144B0D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853ABD8825961F9700144B0D /* Constants.swift */; };
 		85763A9425E29CE300CB4ED3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85763A9325E29CE300CB4ED3 /* Logger.swift */; };
+		85763A9D25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85763A9C25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift */; };
 		85792A7625B0A35A00BFDA96 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85792A7525B0A35A00BFDA96 /* UIImage.swift */; };
 		85792A7A25B0A36B00BFDA96 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85792A7925B0A36B00BFDA96 /* URL.swift */; };
 		85792A7D25B0A3E100BFDA96 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85792A7C25B0A3E100BFDA96 /* Database.swift */; };
@@ -112,6 +113,7 @@
 		853ABD7F25961EEA00144B0D /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		853ABD8825961F9700144B0D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		85763A9325E29CE300CB4ED3 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		85763A9C25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatingUIImagePickerController.swift; sourceTree = "<group>"; };
 		85792A7525B0A35A00BFDA96 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		85792A7925B0A36B00BFDA96 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		85792A7C25B0A3E100BFDA96 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
@@ -444,6 +446,7 @@
 				85B839D525B74E960008E167 /* KeyboardAccessoryView.swift */,
 				85B839E325B753F10008E167 /* KeyboardLayoutGuide.swift */,
 				85B83A2225B9C1BC0008E167 /* NavigationViewController.swift */,
+				85763A9C25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift */,
 				85B839F225B866590008E167 /* RoundedTappableButton.swift */,
 				859F62E325C22D6C005E61F7 /* SelectionsKeyboardView.swift */,
 				859F62FB25C70F29005E61F7 /* TableListViewController.swift */,
@@ -610,6 +613,7 @@
 				85DC214025E0FC9F003F0721 /* ImageCaching.swift in Sources */,
 				85792A8F25B1D59F00BFDA96 /* SyncProgress.swift in Sources */,
 				85B83A0225B8735F0008E167 /* AnyImageLoader.swift in Sources */,
+				85763A9D25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift in Sources */,
 				859F62C325C1C44C005E61F7 /* AirtableImage.swift in Sources */,
 				857BADAC25B1FAAA005D7D35 /* UploadListFlowViewController.swift in Sources */,
 				859F62EF25C48FD8005E61F7 /* AlertModel.swift in Sources */,

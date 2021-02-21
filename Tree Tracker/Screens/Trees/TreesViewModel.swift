@@ -143,7 +143,7 @@ final class TreesViewModel: TableListViewModel {
                              info: info,
                              detail: tree.supervisor,
                              tapAction: Action(id: "tree_action_\(tree.id)") {
-                                print("tap action")
+                                self?.logger.log(.treeList, "tap action")
                              })
             })]
         }

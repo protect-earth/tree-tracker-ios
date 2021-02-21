@@ -6,8 +6,6 @@ import Combine
 final class LiveUploadViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate {
     let viewModel: LiveUploadViewModel
 
-    private var currentCameraView: UIImagePickerController?
-
     private lazy var actionButton: RoundedTappableButton = {
         let button = RoundedTappableButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -48,14 +46,7 @@ final class LiveUploadViewController: UIViewController, UIImagePickerControllerD
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        currentCameraView?.startVideoCapture()
         viewModel.onAppear()
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-
-        currentCameraView?.stopVideoCapture()
     }
 
     private func setup(viewModel: LiveUploadViewModel) {
@@ -76,31 +67,35 @@ final class LiveUploadViewController: UIViewController, UIImagePickerControllerD
             }
             .store(in: &oservables)
     }
-
-    private func removeCurrentCameraView() {
-        currentCameraView?.view.removeFromSuperview()
-        currentCameraView = nil
+    
+    private func removeCurrentCameraViewIfNeeded(completion: @escaping () -> Void) {
+        if presentedViewController is UIImagePickerController {
+            dismiss(animated: true, completion: completion)
+        } else {
+            completion()
+        }
     }
 
     private func presentPhotoSession(cancel: @escaping () -> Void, completion: @escaping (Result<UIImage, Error>) -> Void) {
-        removeCurrentCameraView()
-        photoSessionCancel = cancel
-        photoSessionCompletion = completion
-        actionButton.isHidden = true
+        removeCurrentCameraViewIfNeeded { [weak self] in
+            self?.photoSessionCancel = cancel
+            self?.photoSessionCompletion = completion
+            self?.actionButton.isHidden = true
 
-        let picker = UIImagePickerController()
-        picker.mediaTypes = ["public.image"]
-        picker.sourceType = .camera
-        picker.delegate = self
-        add(picker, to: view, insets: .some(top: 0.0, bottom: 16.0))
-
-        self.currentCameraView = picker
+            let picker = RotatingUIImagePickerController()
+            picker.modalPresentationStyle = .overCurrentContext
+            picker.mediaTypes = ["public.image"]
+            picker.sourceType = .camera
+            picker.delegate = self
+            self?.present(picker, animated: true, completion: nil)
+        }
     }
 
     private func present(actionButton model: ButtonModel) {
-        removeCurrentCameraView()
-        actionButton.set(model: model)
-        actionButton.isHidden = false
+        removeCurrentCameraViewIfNeeded { [weak self] in
+            self?.actionButton.set(model: model)
+            self?.actionButton.isHidden = false
+        }
     }
 
     private func present(alert: AlertModel) {

@@ -22,7 +22,8 @@ final class MainFlowViewController: UITabBarController {
 extension MainFlowViewController: LiveUploadNavigating {
     func triggerAskForDetailsAndStoreFlow(assets: [PHAsset], completion: @escaping (Bool) -> Void) {
         DispatchQueue.main.async {
-            self.selectedViewController?.present(TreeDetailsFlowViewController(assets: assets, completion: completion), animated: true, completion: nil)
+            let controller = (self.selectedViewController as? UINavigationController)?.visibleViewController ?? self.selectedViewController?.presentedViewController ?? self.selectedViewController
+            controller?.present(TreeDetailsFlowViewController(assets: assets, completion: completion), animated: true, completion: nil)
         }
     }
 }
