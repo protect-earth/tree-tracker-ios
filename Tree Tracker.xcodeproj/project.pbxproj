@@ -87,6 +87,10 @@
 		85B83A3325B9C9DC0008E167 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A3225B9C9DC0008E167 /* String.swift */; };
 		85B83A3825B9D9C40008E167 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A3725B9D9C40008E167 /* Data.swift */; };
 		85C781A125CC744E0034292D /* ScreenLockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C781A025CC744E0034292D /* ScreenLockManager.swift */; };
+		85DC213C25E0FC8F003F0721 /* ImageCacheInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC213B25E0FC8F003F0721 /* ImageCacheInfo.swift */; };
+		85DC214025E0FC9F003F0721 /* ImageCaching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC213F25E0FC9F003F0721 /* ImageCaching.swift */; };
+		85DC214325E0FCAD003F0721 /* DiskImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC214225E0FCAD003F0721 /* DiskImageCache.swift */; };
+		85DC214625E0FCBF003F0721 /* GRDBImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC214525E0FCBF003F0721 /* GRDBImageCache.swift */; };
 		85E0E05E25B33F8C009D8FC0 /* TappableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */; };
 		85E0E06225B35744009D8FC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E06125B35744009D8FC0 /* UIView.swift */; };
 /* End PBXBuildFile section */
@@ -174,6 +178,10 @@
 		85B83A3225B9C9DC0008E167 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		85B83A3725B9D9C40008E167 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		85C781A025CC744E0034292D /* ScreenLockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenLockManager.swift; sourceTree = "<group>"; };
+		85DC213B25E0FC8F003F0721 /* ImageCacheInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheInfo.swift; sourceTree = "<group>"; };
+		85DC213F25E0FC9F003F0721 /* ImageCaching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCaching.swift; sourceTree = "<group>"; };
+		85DC214225E0FCAD003F0721 /* DiskImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskImageCache.swift; sourceTree = "<group>"; };
+		85DC214525E0FCBF003F0721 /* GRDBImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBImageCache.swift; sourceTree = "<group>"; };
 		85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableButton.swift; sourceTree = "<group>"; };
 		85E0E06125B35744009D8FC0 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -275,6 +283,7 @@
 		85792A8425B1D53000BFDA96 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				85DC213A25E0FC7A003F0721 /* Image Cache */,
 				859F62EB25C48FA6005E61F7 /* Property Wrappers */,
 				85B83A0125B8735F0008E167 /* AnyImageLoader.swift */,
 				857BAD9C25B1DCDE005D7D35 /* Defaults.swift */,
@@ -415,6 +424,17 @@
 			path = UploadList;
 			sourceTree = "<group>";
 		};
+		85DC213A25E0FC7A003F0721 /* Image Cache */ = {
+			isa = PBXGroup;
+			children = (
+				85DC213B25E0FC8F003F0721 /* ImageCacheInfo.swift */,
+				85DC213F25E0FC9F003F0721 /* ImageCaching.swift */,
+				85DC214225E0FCAD003F0721 /* DiskImageCache.swift */,
+				85DC214525E0FCBF003F0721 /* GRDBImageCache.swift */,
+			);
+			path = "Image Cache";
+			sourceTree = "<group>";
+		};
 		85E0E05C25B33F73009D8FC0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -515,6 +535,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85DC214325E0FCAD003F0721 /* DiskImageCache.swift in Sources */,
 				853415FA25CF0947006DDAC4 /* UIViewController.swift in Sources */,
 				85B839C325B4A5280008E167 /* BarButtonItem.swift in Sources */,
 				853ABD8025961EEA00144B0D /* Api.swift in Sources */,
@@ -552,6 +573,7 @@
 				85763A9425E29CE300CB4ED3 /* Logger.swift in Sources */,
 				859F62D625C22140005E61F7 /* Species.swift in Sources */,
 				85B83A2325B9C1BC0008E167 /* NavigationViewController.swift in Sources */,
+				85DC214625E0FCBF003F0721 /* GRDBImageCache.swift in Sources */,
 				859F62FC25C70F29005E61F7 /* TableListViewController.swift in Sources */,
 				85792A9225B1D5A500BFDA96 /* ButtonModel.swift in Sources */,
 				85B839CE25B5F8F30008E167 /* UIAlertController.swift in Sources */,
@@ -573,6 +595,7 @@
 				859F62E025C228AE005E61F7 /* KeyedContainer.swift in Sources */,
 				85B83A2625B9C1D50008E167 /* MainFlowViewController.swift in Sources */,
 				85B839D925B74FD20008E167 /* Keyboard.swift in Sources */,
+				85DC213C25E0FC8F003F0721 /* ImageCacheInfo.swift in Sources */,
 				85A0EF8D25A23062003CE744 /* RemoteTree.swift in Sources */,
 				858A0F2725D8156100E12C2B /* AssetDetailsFlowViewController.swift in Sources */,
 				859F62DC25C2218B005E61F7 /* Supervisor.swift in Sources */,
@@ -584,6 +607,7 @@
 				85B83A3025B9C5E90008E167 /* JSONEncoder.swift in Sources */,
 				853415F025CEEE39006DDAC4 /* LiveUploadViewController.swift in Sources */,
 				85792A8625B1D53700BFDA96 /* Environment.swift in Sources */,
+				85DC214025E0FC9F003F0721 /* ImageCaching.swift in Sources */,
 				85792A8F25B1D59F00BFDA96 /* SyncProgress.swift in Sources */,
 				85B83A0225B8735F0008E167 /* AnyImageLoader.swift in Sources */,
 				859F62C325C1C44C005E61F7 /* AirtableImage.swift in Sources */,

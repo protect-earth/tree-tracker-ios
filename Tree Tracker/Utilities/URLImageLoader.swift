@@ -48,9 +48,11 @@ final class URLImageLoader: ImageLoader {
                     return
                 }
 
-                print("Image from the webz for url: \(self.url)")
-                self.thumbnailsImageCache.add(image: image, for: url)
-                self.resize(image: image, completion: completion)
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.logger.log(.imageLoader, "Image from the webz for url: \(self.url)")
+                    self.thumbnailsImageCache.add(image: image, for: url)
+                    self.resize(image: image, completion: completion)
+                }
             }
         }
     }
