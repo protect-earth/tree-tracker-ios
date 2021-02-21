@@ -1,6 +1,6 @@
 #  Tree Tracker
 
-## Next
+## 0.5.0
 - Added ability to cache images in sqlite & now we brought back trees in the list (though on hitting Refresh we don't fetch new ones to not flood the network with unnecessary requests for all trees in Airtable).
 - Added landscape support for live camera session flow (it needed me to update the presentation mode of image picker, unfortunately).
 
