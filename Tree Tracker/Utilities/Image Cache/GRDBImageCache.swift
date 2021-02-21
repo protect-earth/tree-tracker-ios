@@ -48,31 +48,29 @@ final class GRDBImageCache: ImageCaching {
         dbQueue?.asyncWriteWithoutTransaction { [weak self] db in
             guard let self = self else { return }
             
-            DispatchQueue.global(qos: .userInitiated).async {
-                let data = image.jpegData(compressionQuality: 1.0) ?? Data()
-                let info = ImageCacheInfo(url: url.absoluteString, imageData: data, imageCost: Int64(data.count))
-                self.logger.log(.cache, "Image cost: \(info.imageCost) (\(url))")
-                let cacheCostQuery = ImageCacheInfo.select(sum(Column(ImageCacheInfo.CodingKeys.imageCost.rawValue)))
-                do {
-                    var cacheCost = try Int64.fetchOne(db, cacheCostQuery) ?? 0
-                    self.logger.log(.cache, "Current cache cost: \(cacheCost). Max cost: \(self.maxCost)")
-                    while (cacheCost + info.imageCost) > self.maxCost && cacheCost > 0 && self.maxCost > 0 {
-                        self.logger.log(.cache, "Current cost bigger than max, removing the oldest image...")
-                        do {
-                            try ImageCacheInfo.order(Column("id").asc).limit(1).deleteAll(db)
-                            cacheCost = (try? Int64.fetchOne(db, cacheCostQuery)) ?? 0
-                            self.logger.log(.cache, "Removed the oldest image, current cache cost: \(cacheCost)")
-                        } catch {
-                            self.logger.log(.cache, "Couldn't remove an image: \(error)")
-                            break
-                        }
+            let data = image.jpegData(compressionQuality: 1.0) ?? Data()
+            let info = ImageCacheInfo(url: url.absoluteString, imageData: data, imageCost: Int64(data.count))
+            self.logger.log(.cache, "Image cost: \(info.imageCost) (\(url))")
+            let cacheCostQuery = ImageCacheInfo.select(sum(Column(ImageCacheInfo.CodingKeys.imageCost.rawValue)))
+            do {
+                var cacheCost = try Int64.fetchOne(db, cacheCostQuery) ?? 0
+                self.logger.log(.cache, "Current cache cost: \(cacheCost). Max cost: \(self.maxCost)")
+                while (cacheCost + info.imageCost) > self.maxCost && cacheCost > 0 && self.maxCost > 0 {
+                    self.logger.log(.cache, "Current cost bigger than max, removing the oldest image...")
+                    do {
+                        try ImageCacheInfo.order(Column("id").asc).limit(1).deleteAll(db)
+                        cacheCost = (try? Int64.fetchOne(db, cacheCostQuery)) ?? 0
+                        self.logger.log(.cache, "Removed the oldest image, current cache cost: \(cacheCost)")
+                    } catch {
+                        self.logger.log(.cache, "Couldn't remove an image: \(error)")
+                        break
                     }
-                    
-                    try? info.insert(db)
-                    self.logger.log(.cache, "Added image to cache (\(url))")
-                } catch {
-                    self.logger.log(.cache, "Error when fetching current cache cost: \(error)")
                 }
+                
+                try? info.insert(db)
+                self.logger.log(.cache, "Added image to cache (\(url))")
+            } catch {
+                self.logger.log(.cache, "Error when fetching current cache cost: \(error)")
             }
         }
     }
@@ -80,14 +78,12 @@ final class GRDBImageCache: ImageCaching {
     func removeImage(for url: URL) {
         logger.log(.cache, "Removing image for url (\(url))")
         dbQueue?.asyncWriteWithoutTransaction { [weak self] db in
-            DispatchQueue.global(qos: .userInitiated).async {
-                do {
-                    try ImageCacheInfo.filter(Column(ImageCacheInfo.CodingKeys.url) == url.absoluteString)
-                        .deleteAll(db)
-                    self?.logger.log(.cache, "Image removed! \(url)")
-                } catch {
-                    self?.logger.log(.cache, "Couldn't remove an image: \(error)")
-                }
+            do {
+                try ImageCacheInfo.filter(Column(ImageCacheInfo.CodingKeys.url) == url.absoluteString)
+                    .deleteAll(db)
+                self?.logger.log(.cache, "Image removed! \(url)")
+            } catch {
+                self?.logger.log(.cache, "Couldn't remove an image: \(error)")
             }
         }
     }
