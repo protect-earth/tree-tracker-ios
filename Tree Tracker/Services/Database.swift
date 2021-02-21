@@ -1,15 +1,21 @@
 import Foundation
 import GRDB
 
+private extension LogCategory {
+    static var database = LogCategory(name: "Database")
+}
+
 final class Database {
     private enum Constants {
         static let databaseUrl = URL.documentsDirectory.appendingPathComponent("db.sqlite")
     }
 
     private let dbQueue: DatabaseQueue?
+    private let logger: Logging
 
-    init() {
+    init(logger: Logging = CurrentEnvironment.logger) {
         self.dbQueue = try? DatabaseQueue(path: Constants.databaseUrl.path)
+        self.logger = logger
 
         try? createTablesIfNeeded()
     }
@@ -93,8 +99,8 @@ final class Database {
                         try tree.insert(db)
                     }
                 } catch {
-                    print("Tree: \(tree)")
-                    print("Error when adding remote tree to DB. \(error)")
+                    logger.log(.database, "Tree: \(tree)")
+                    logger.log(.database, "Error when adding remote tree to DB. \(error)")
                 }
             }
         }
@@ -112,8 +118,8 @@ final class Database {
                         try tree.insert(db)
                     }
                 } catch {
-                    print("Tree: \(tree)")
-                    print("Error when adding tree to DB. \(error)")
+                    logger.log(.database, "Tree: \(tree)")
+                    logger.log(.database, "Error when adding tree to DB. \(error)")
                 }
             }
         }
@@ -131,10 +137,10 @@ final class Database {
                         try model.insert(db)
                     }
 
-                    print("Saved: \(model)")
+                    logger.log(.database, "Saved: \(model)")
                 } catch {
-                    print("Model: \(model)")
-                    print("Error when adding model to DB. \(error)")
+                    logger.log(.database, "Model: \(model)")
+                    logger.log(.database, "Error when adding model to DB. \(error)")
                 }
             }
         }

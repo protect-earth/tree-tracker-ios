@@ -1,80 +1,9 @@
-import UIKit
+import Foundation
+import class UIKit.UIImage
+import struct CoreGraphics.CGSize
 
-protocol ImageCaching {
-    func add(image: UIImage, for url: URL)
-    func removeImage(for url: URL)
-    func image(for url: URL) -> UIImage?
-}
-
-final class DiskImageCache: Codable, ImageCaching {
-    enum Constants {
-        static var diskUrl: URL {
-            URL.documentsDirectory.appendingPathComponent("imageCache")
-        }
-    }
-
-    struct CacheInfo: Codable {
-        let url: URL
-        let imageData: Data
-        let imageCost: Int
-    }
-
-    var maxCost: Int
-
-    private var cache: [CacheInfo]
-    private lazy var syncQueue = DispatchQueue(label: "com.TreeTracker.syncQueue")
-
-    init(maxCost: Int = 1024 * 1024 * 100, initialCache: [CacheInfo]) {
-        self.maxCost = maxCost
-        self.cache = initialCache
-    }
-
-    static func fromDisk() throws -> DiskImageCache {
-        let url = Constants.diskUrl
-        let data = try Data(contentsOf: url)
-        return try JSONDecoder().decode(DiskImageCache.self, from: data)
-    }
-
-    func saveToDisk() {
-        DispatchQueue.global(qos: .utility).async {
-            let data = try? JSONEncoder().encode(self)
-            try? data?.write(to: Constants.diskUrl)
-        }
-    }
-
-    func add(image: UIImage, for url: URL) {
-        syncQueue.async(flags: .barrier) { [weak self] in
-            let data = image.jpegData(compressionQuality: 1.0) ?? Data()
-            self?.cache.append(CacheInfo(url: url, imageData: data, imageCost: data.count))
-            self?.evaluateCostAndPerformActionsIfNecessary()
-            self?.saveToDisk()
-        }
-    }
-
-    private func evaluateCurrentCost() -> Int {
-        cache.reduce(0) { accumulator, element in
-            return accumulator + element.imageCost
-        }
-    }
-
-    private func evaluateCostAndPerformActionsIfNecessary() {
-        while (evaluateCurrentCost() > maxCost && cache.isNotEmpty) {
-            cache.removeFirst()
-        }
-    }
-
-    func removeImage(for url: URL) {
-        syncQueue.async(flags: .barrier) { [weak self] in
-            self?.cache.removeAll(where: { $0.url == url })
-            self?.saveToDisk()
-        }
-    }
-
-    func image(for url: URL) -> UIImage? {
-        return syncQueue.sync {
-            cache.first(where: { $0.url == url }).flatMap { UIImage(data: $0.imageData) }
-        }
-    }
+fileprivate extension LogCategory {
+    static var imageLoader = LogCategory(name: "ImageLoader")
 }
 
 final class URLImageLoader: ImageLoader {
@@ -86,11 +15,13 @@ final class URLImageLoader: ImageLoader {
 
     private let api: Api
     private let thumbnailsImageCache: ImageCaching
+    private let logger: Logging
 
-    init(url: String, api: Api = CurrentEnvironment.api, thumbnailsImageCache: ImageCaching = CurrentEnvironment.imageCache) {
+    init(url: String, api: Api = CurrentEnvironment.api, thumbnailsImageCache: ImageCaching = CurrentEnvironment.imageCache, logger: Logging = CurrentEnvironment.logger) {
         self.url = url
         self.api = api
         self.thumbnailsImageCache = thumbnailsImageCache
+        self.logger = logger
     }
 
     func loadThumbnail(completion: @escaping (UIImage?) -> Void) {
@@ -102,7 +33,7 @@ final class URLImageLoader: ImageLoader {
 
             if let image = self.thumbnailsImageCache.image(for: url) {
                 DispatchQueue.main.async {
-                    print("Image from cache for url: \(url)")
+                    self.logger.log(.imageLoader, "Image from cache for url: \(url)")
                     completion(image)
                 }
 

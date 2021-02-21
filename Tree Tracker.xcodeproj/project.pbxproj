@@ -19,6 +19,7 @@
 		853ABD7A25961C6500144B0D /* License.md in Resources */ = {isa = PBXBuildFile; fileRef = 853ABD7925961C6500144B0D /* License.md */; };
 		853ABD8025961EEA00144B0D /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853ABD7F25961EEA00144B0D /* Api.swift */; };
 		853ABD8925961F9700144B0D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853ABD8825961F9700144B0D /* Constants.swift */; };
+		85763A9425E29CE300CB4ED3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85763A9325E29CE300CB4ED3 /* Logger.swift */; };
 		85792A7625B0A35A00BFDA96 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85792A7525B0A35A00BFDA96 /* UIImage.swift */; };
 		85792A7A25B0A36B00BFDA96 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85792A7925B0A36B00BFDA96 /* URL.swift */; };
 		85792A7D25B0A3E100BFDA96 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85792A7C25B0A3E100BFDA96 /* Database.swift */; };
@@ -106,6 +107,7 @@
 		853ABD7C25961C6D00144B0D /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		853ABD7F25961EEA00144B0D /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		853ABD8825961F9700144B0D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		85763A9325E29CE300CB4ED3 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		85792A7525B0A35A00BFDA96 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		85792A7925B0A36B00BFDA96 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		85792A7C25B0A3E100BFDA96 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 				85B83A0125B8735F0008E167 /* AnyImageLoader.swift */,
 				857BAD9C25B1DCDE005D7D35 /* Defaults.swift */,
 				85792A8525B1D53700BFDA96 /* Environment.swift */,
+				85763A9325E29CE300CB4ED3 /* Logger.swift */,
 				85B839F725B86F0A0008E167 /* PHAssetManager.swift */,
 				85B839BE25B492550008E167 /* PHImageLoader.swift */,
 				85B839FD25B86F320008E167 /* URLImageLoader.swift */,
@@ -546,6 +549,7 @@
 				85B83A3825B9D9C40008E167 /* Data.swift in Sources */,
 				85B83A2D25B9C5DB0008E167 /* DateFormatter.swift in Sources */,
 				859F62E425C22D6C005E61F7 /* SelectionsKeyboardView.swift in Sources */,
+				85763A9425E29CE300CB4ED3 /* Logger.swift in Sources */,
 				859F62D625C22140005E61F7 /* Species.swift in Sources */,
 				85B83A2325B9C1BC0008E167 /* NavigationViewController.swift in Sources */,
 				859F62FC25C70F29005E61F7 /* TableListViewController.swift in Sources */,

@@ -5,6 +5,10 @@ protocol UploadListNavigating: AnyObject {
     func triggerEditDetailsFlow(tree: LocalTree, completion: @escaping (Bool) -> Void)
 }
 
+fileprivate extension LogCategory {
+    static var upload = LogCategory(name: "Upload")
+}
+
 final class UploadListViewModel: TableListViewModel {
     @DelayedPublished var alert: AlertModel
     @Published var title: String
@@ -21,17 +25,19 @@ final class UploadListViewModel: TableListViewModel {
     private var api: Api
     private var database: Database
     private var screenLockManager: ScreenLockManaging
+    private var logger: Logging
     private var sites: [Site] = []
     private var species: [Species] = []
     private var supervisors: [Supervisor] = []
     private var currentUpload: Cancellable?
     private weak var navigation: UploadListNavigating?
 
-    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, screenLockManager: ScreenLockManaging = UIScreenLockManager(), navigation: UploadListNavigating) {
+    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, screenLockManager: ScreenLockManaging = CurrentEnvironment.screenLockManager, logger: Logging = CurrentEnvironment.logger, navigation: UploadListNavigating) {
         self.title = ""
         self.api = api
         self.database = database
         self.screenLockManager = screenLockManager
+        self.logger = logger
         self.navigation = navigation
         self.data = []
         self.actionButton = nil
@@ -118,21 +124,21 @@ final class UploadListViewModel: TableListViewModel {
     }
 
     private func cancelUploading() {
-        print("Uploading cancelled.")
+        logger.log(.upload, "Uploading cancelled.")
         currentUpload?.cancel()
         stopUploading()
     }
 
     private func uploadLocalTreesRecursively() {
-        print("Uploading images...")
+        logger.log(.upload, "Uploading images...")
         database.fetchLocalTrees { [weak self] trees in
             guard let tree = trees.sorted(by: \.createDate, order: .descending).first else {
-                print("No more items to upload - bailing.")
+                self?.logger.log(.upload, "No more items to upload - bailing.")
                 self?.stopUploading()
                 return
             }
             
-            print("Now uploading tree: \(tree)")
+            self?.logger.log(.upload, "Now uploading tree: \(tree)")
             self?.currentUpload = self?.api.upload(
                 tree: tree,
                 progress: { progress in
@@ -142,7 +148,7 @@ final class UploadListViewModel: TableListViewModel {
                 completion: { result in
                     switch result {
                     case let .success(airtableTree):
-                        print("Successfully uploaded tree.")
+                        self?.logger.log(.upload, "Successfully uploaded tree.")
                         self?.database.save([airtableTree])
                         self?.database.remove(tree: tree) {
                             self?.presentTreesFromDatabase()
@@ -151,7 +157,7 @@ final class UploadListViewModel: TableListViewModel {
                     case let .failure(error):
                         self?.update(uploadProgress: 0.0, for: tree)
                         self?.presentUploadButton(isUploading: false)
-                        print("Error when uploading a local tree: \(error)")
+                        self?.logger.log(.upload, "Error when uploading a local tree: \(error)")
                     }
                 }
             )

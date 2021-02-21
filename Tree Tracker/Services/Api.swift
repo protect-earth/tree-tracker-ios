@@ -2,6 +2,10 @@ import Foundation
 import Alamofire
 import class UIKit.UIImage
 
+fileprivate extension LogCategory {
+    static var api = LogCategory(name: "Api")
+}
+
 final class Api {
     fileprivate struct Config {
         static let baseUrl = URL(string: "https://api.airtable.com/v0/\(Constants.Airtable.baseId)")!
@@ -17,8 +21,13 @@ final class Api {
     }
 
     private let session = Session()
+    private let logger: Logging
     private var imageLoaders = [String: PHImageLoader]()
 
+    init(logger: Logging = CurrentEnvironment.logger) {
+        self.logger = logger
+    }
+ 
     func treesPlanted(offset: String? = nil, completion: @escaping (Result<Paginated<AirtableTree>, AFError>) -> Void) {
         let request = session.request(Config.treesUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers, interceptor: nil, requestModifier: nil)
 
@@ -52,7 +61,7 @@ final class Api {
     }
 
     func upload(tree: LocalTree, progress: @escaping (Double) -> Void = { _ in }, completion: @escaping (Result<AirtableTree, AFError>) -> Void) -> Cancellable {
-        let upload = ImageUpload(tree: tree)
+        let upload = ImageUpload(tree: tree, logger: logger)
         upload.upload(tree: tree, progress: progress, session: session, completion: completion)
 
         return upload
@@ -70,14 +79,16 @@ final class Api {
 final class ImageUpload: Cancellable {
     private let tree: LocalTree
     private let imageLoader: PHImageLoader
+    private let logger: Logging
 
     private var request: Request?
     private var progress: ((Double) -> Void)?
     private var isCancelled = false
 
-    init(tree: LocalTree) {
+    init(tree: LocalTree, logger: Logging = CurrentEnvironment.logger) {
         self.tree = tree
         self.imageLoader = PHImageLoader(phImageId: tree.phImageId)
+        self.logger = logger
     }
 
     func cancel() {
@@ -117,9 +128,9 @@ final class ImageUpload: Cancellable {
     }
 
     private func upload(image: UIImage, session: Session, completion: @escaping (Result<(String, String), AFError>) -> Void) -> Request? {
-        print("Uploading image to Cloudinary...")
+        logger.log(.api, "Uploading image to Cloudinary...")
         guard let data = image.jpegData(compressionQuality: 0.8) else {
-            print("No pngData for the image, bailing")
+            logger.log(.api, "No pngData for the image, bailing")
             completion(.failure(.explicitlyCancelled))
             return nil
         }
@@ -137,10 +148,10 @@ final class ImageUpload: Cancellable {
                 self.progress?(0.2 + 0.75 * progress.fractionCompleted)
             }
 
-        return request.validate().responseJSON { response in
+        return request.validate().responseJSON { [weak self] response in
             switch response.result {
             case let .failure(error):
-                print("Error when uploading image: \(response.data.map { String.init(data: $0, encoding: .utf8) })")
+                self?.logger.log(.api, "Error when uploading image: \(response.data.map { String.init(data: $0, encoding: .utf8) })")
                 completion(.failure(error))
             case let .success(json as [String: Any]):
                 let url = json["secure_url"] as? String
@@ -151,7 +162,7 @@ final class ImageUpload: Cancellable {
                     fallthrough
                 }
             default:
-                print("Error when parsing json: \(response.data.map { String.init(data: $0, encoding: .utf8) })")
+                self?.logger.log(.api, "Error when parsing json: \(response.data.map { String.init(data: $0, encoding: .utf8) })")
                 completion(.failure(.explicitlyCancelled))
             }
         }
@@ -166,10 +177,10 @@ final class ImageUpload: Cancellable {
 
             switch response.result {
             case let .success(tree):
-                print("Tree uploaded!")
+                self?.logger.log(.api, "Tree uploaded!")
                 completion(.success(tree))
             case let .failure(error):
-                print("Error when creating Airtable record: \(response.data.map { String.init(data: $0, encoding: .utf8) })")
+                self?.logger.log(.api, "Error when creating Airtable record: \(response.data.map { String.init(data: $0, encoding: .utf8) })")
                 completion(.failure(error))
             }
         }
