@@ -145,10 +145,8 @@ final class LiveUploadViewModel {
         assetManager.save(image: image, location: location) { [weak self] result in
             switch result {
             case let .success(asset):
-                self?.navigation.triggerAskForDetailsAndStoreFlow(assets: [asset]) { success in
-                    if success {
-                        self?.askForPermissionsIfNeededAndStartNewSession()
-                    }
+                self?.navigation.triggerAskForDetailsAndStoreFlow(assets: [asset]) { _ in
+                    self?.askForPermissionsIfNeededAndStartNewSession()
                 }
             case let .failure(error):
                 self?.alert = .init(title: "Error", message: "Error happened while capturing an image. \n Details: \(error)", buttons: [.init(title: "Ok", style: .default, action: nil)])
