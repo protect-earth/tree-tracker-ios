@@ -1,5 +1,8 @@
 #  Tree Tracker
 
+## 0.5.1
+- Fixed a bug which, when you canceled saving details of a picture in live session, would freeze the camera view and you would need to kill the app. Now, when you cancel adding details to the image, we restart the camera picker since it seems like you cannot reuse the image again in the stock image picker.
+
 ## 0.5.0
 - Added ability to cache images in sqlite & now we brought back trees in the list (though on hitting Refresh we don't fetch new ones to not flood the network with unnecessary requests for all trees in Airtable).
 - Added landscape support for live camera session flow (it needed me to update the presentation mode of image picker, unfortunately).
