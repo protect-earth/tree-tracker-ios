@@ -2,18 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AIRTABLE_API_KEY</key>
-	<string>$(AIRTABLE_API_KEY)</string>
-	<key>AIRTABLE_BASE_ID</key>
-	<string>$(AIRTABLE_BASE_ID)</string>
-	<key>AIRTABLE_SITES_TABLE_NAME</key>
-	<string>$(AIRTABLE_SITES_TABLE_NAME)</string>
-	<key>AIRTABLE_SPECIES_TABLE_NAME</key>
-	<string>$(AIRTABLE_SPECIES_TABLE_NAME)</string>
-	<key>AIRTABLE_SUPERVISORS_TABLE_NAME</key>
-	<string>$(AIRTABLE_SUPERVISORS_TABLE_NAME)</string>
-	<key>AIRTABLE_TREES_TABLE_NAME</key>
-	<string>$(AIRTABLE_TREES_TABLE_NAME)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -32,10 +20,6 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>CLOUDINARY_CLOUD_NAME</key>
-	<string>$(CLOUDINARY_CLOUD_NAME)</string>
-	<key>CLOUDINARY_UPLOAD_PRESET_NAME</key>
-	<string>$(CLOUDINARY_UPLOAD_PRESET_NAME)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>

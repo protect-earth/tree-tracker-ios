@@ -2,15 +2,15 @@ import Foundation
 
 enum Constants {
     enum Airtable {
-        static let apiKey = Bundle.main.infoDictionary?["AIRTABLE_API_KEY"] as! String
-        static let baseId = Bundle.main.infoDictionary?["AIRTABLE_BASE_ID"] as! String
-        static let treesTable = Bundle.main.infoDictionary?["AIRTABLE_TREES_TABLE_NAME"] as! String
-        static let sitesTable = Bundle.main.infoDictionary?["AIRTABLE_SITES_TABLE_NAME"] as! String
-        static let supervisorsTable = Bundle.main.infoDictionary?["AIRTABLE_SUPERVISORS_TABLE_NAME"] as! String
-        static let speciesTable = Bundle.main.infoDictionary?["AIRTABLE_SPECIES_TABLE_NAME"] as! String
+        static let apiKey = Secrets.airtableApiKey
+        static let baseId = Secrets.airtableBaseId
+        static let treesTable = Secrets.airtableTreesTableName
+        static let sitesTable = Secrets.airtableSitesTableName
+        static let supervisorsTable = Secrets.airtableSupervisorsTableName
+        static let speciesTable = Secrets.airtableSpeciesTableName
     }
     enum Cloudinary {
-        static let cloudName = Bundle.main.infoDictionary?["CLOUDINARY_CLOUD_NAME"] as! String
-        static let uploadPresetName = Bundle.main.infoDictionary?["CLOUDINARY_UPLOAD_PRESET_NAME"] as! String
+        static let cloudName = Secrets.cloudinaryCloudName
+        static let uploadPresetName = Secrets.cloudinaryUploadPresetName
     }
 }

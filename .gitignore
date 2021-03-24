@@ -26,3 +26,4 @@ Podfile.lock
 .idea
 Carthage/Build
 Carthage/Checkouts%
+Secrets.swift
