@@ -17,7 +17,7 @@ Because Airtable doesn't support uploading images yet, we have to use an externa
 1. Make sure you have downloaded Xcode 12.2+
 2. Open the project in Xcode (you'll notice the dependencies will start to fetch in the background).
 (In the meantime, Xcode will need to fetch dependencies for the project... 😴)
-3. Now, to run the project, we'll need to generate Secrets file. This means you need to run first install `pouch` (the easiest is using `brew install sunshinejr/formulae/pouch`). Now, you need to have these environment variables:
+3. Now, to run the project, we'll need to generate Secrets file. This means you need to run first install [`pouch`](https://github.com/sunshinejr/pouch) (the easiest is using `brew install sunshinejr/formulae/pouch`). Now, you need to have these environment variables:
 ```
 AIRTABLE_API_KEY
 AIRTABLE_BASE_ID
