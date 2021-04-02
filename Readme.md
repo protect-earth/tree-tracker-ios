@@ -17,18 +17,18 @@ Because Airtable doesn't support uploading images yet, we have to use an externa
 1. Make sure you have downloaded Xcode 12.2+
 2. Open the project in Xcode (you'll notice the dependencies will start to fetch in the background).
 (In the meantime, Xcode will need to fetch dependencies for the project... 😴)
-3. Now, to run the project, we'll need to generate Secrets file. This means you need to run first install [`pouch`](https://github.com/sunshinejr/pouch) (the easiest is using `brew install sunshinejr/formulae/pouch`). Now, you need to have these environment variables:
+3. Now, to run the project, we'll need to generate Secrets file. This means you need to run first install [`pouch`](https://github.com/sunshinejr/pouch) (the easiest is using `brew install sunshinejr/formulae/pouch`). Now, you need to have these environment variables available. Have this at the end of the file (bash: most likely in `.bash_profile` or `.bashrc`, zsh: most likely `./zshenv` or `./zshrc`):
 ```
-AIRTABLE_API_KEY
-AIRTABLE_BASE_ID
-AIRTABLE_TREES_TABLE_NAME
-AIRTABLE_SPECIES_TABLE_NAME
-AIRTABLE_SUPERVISORS_TABLE_NAME
-AIRTABLE_SITES_TABLE_NAME
-CLOUDINARY_CLOUD_NAME
-CLOUDINARY_UPLOAD_PRESET_NAME
+export AIRTABLE_API_KEY=yourKey123
+export AIRTABLE_BASE_ID=appNiceTree
+export AIRTABLE_TREES_TABLE_NAME="Trees Planted"
+export AIRTABLE_SPECIES_TABLE_NAME=Species
+export AIRTABLE_SUPERVISORS_TABLE_NAME=Supervisors
+export AIRTABLE_SITES_TABLE_NAME=Sites
+export CLOUDINARY_CLOUD_NAME=qqq2ek4mq
+export CLOUDINARY_UPLOAD_PRESET_NAME=iadfadff
 ```
-Finally in the root folder run `pouch`, which should generate a file at `./TreeTracker/Secrets.swift`.
+Finally, in the root folder, run `pouch`, which should generate a file at `./TreeTracker/Secrets.swift`.
 4. You'll most likely need to change bundle identifier of the project. Basically because the project is set to auto-sign, each person that wants to run this on the device would need to update the bundle to be a unique id not registered before. E.g. from `com.protect.earth.Tree-Tracker` to `com.mynickname.Tree-Tracker`.
 5. When running on a device, you'll also need to trust the certificate in Settings -> General -> Profiles, otherwise you'll see an error after installing the build and before running it.
 

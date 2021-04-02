@@ -1,5 +1,8 @@
 #  Tree Tracker
 
+## Next
+- Replaced Secrets.xcconfig with Pouch config.
+
 ## 0.5.1
 - Fixed a bug which, when you canceled saving details of a picture in live session, would freeze the camera view and you would need to kill the app. Now, when you cancel adding details to the image, we restart the camera picker since it seems like you cannot reuse the image again in the stock image picker.
 
