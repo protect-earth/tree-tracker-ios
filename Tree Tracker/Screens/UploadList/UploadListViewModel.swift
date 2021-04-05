@@ -9,10 +9,10 @@ fileprivate extension LogCategory {
     static var upload = LogCategory(name: "Upload")
 }
 
-final class UploadListViewModel: TableListViewModel {
+final class UploadListViewModel: CollectionViewModel {
     @DelayedPublished var alert: AlertModel
     @Published var title: String
-    @Published var data: [ListSection<TreesListItem>]
+    @Published var data: [ListSection<CollectionListItem>]
     @Published var actionButton: ButtonModel?
     @Published var rightNavigationButtons: [NavigationBarButtonModel]
 
@@ -20,7 +20,7 @@ final class UploadListViewModel: TableListViewModel {
     var titlePublisher: Published<String>.Publisher { $title }
     var actionButtonPublisher: Published<ButtonModel?>.Publisher { $actionButton }
     var rightNavigationButtonsPublisher: Published<[NavigationBarButtonModel]>.Publisher { $rightNavigationButtons }
-    var dataPublisher: Published<[ListSection<TreesListItem>]>.Publisher { $data }
+    var dataPublisher: Published<[ListSection<CollectionListItem>]>.Publisher { $data }
 
     private var api: Api
     private var database: Database
@@ -190,7 +190,7 @@ final class UploadListViewModel: TableListViewModel {
         }
     }
 
-    private func buildItem(tree: LocalTree, progress: Double) -> TreesListItem {
+    private func buildItem(tree: LocalTree, progress: Double) -> CollectionListItem {
         let imageLoader = AnyImageLoader(imageLoader: PHImageLoader(phImageId: tree.phImageId))
         let info = species.first { $0.id == tree.species }?.name ?? "Unknown specie"
         return .tree(id: tree.phImageId,

@@ -2,18 +2,18 @@ import UIKit
 import PhotosUI
 import Combine
 
-protocol TableListViewModel {
+protocol CollectionViewModel {
     var alertPublisher: DelayedPublished<AlertModel>.Publisher { get }
     var titlePublisher: Published<String>.Publisher { get }
     var actionButtonPublisher: Published<ButtonModel?>.Publisher { get }
     var rightNavigationButtonsPublisher: Published<[NavigationBarButtonModel]>.Publisher { get }
-    var dataPublisher: Published<[ListSection<TreesListItem>]>.Publisher { get }
+    var dataPublisher: Published<[ListSection<CollectionListItem>]>.Publisher { get }
 
     func onAppear()
 }
 
-final class TableListViewController: UIViewController {
-    let viewModel: TableListViewModel
+final class CollectionViewController: UIViewController {
+    let viewModel: CollectionViewModel
 
     private lazy var layout: UICollectionViewLayout = {
         let layout = GridCollectionViewLayout(columns: 4)
@@ -41,7 +41,7 @@ final class TableListViewController: UIViewController {
     private var observables = Set<AnyCancellable>()
     private lazy var dataSource = buildDataSource()
 
-    init(viewModel: TableListViewModel) {
+    init(viewModel: CollectionViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
 
@@ -85,7 +85,7 @@ final class TableListViewController: UIViewController {
         viewModel.onAppear()
     }
 
-    private func nonViewDependentSetup(viewModel: TableListViewModel) {
+    private func nonViewDependentSetup(viewModel: CollectionViewModel) {
         viewModel.titlePublisher
             .sink { [weak self] title in
                 self?.navigationItem.title = title
@@ -93,7 +93,7 @@ final class TableListViewController: UIViewController {
             .store(in: &observables)
     }
 
-    private func setup(viewModel: TableListViewModel) {
+    private func setup(viewModel: CollectionViewModel) {
         viewModel.actionButtonPublisher
             .sink { [weak self] model in
                 if let model = model {
@@ -135,7 +135,7 @@ final class TableListViewController: UIViewController {
         present(UIAlertController.from(model: alert), animated: true, completion: nil)
     }
 
-    private func buildDataSource() -> CollectionViewDataSource<TreesListItem> {
+    private func buildDataSource() -> CollectionViewDataSource<CollectionListItem> {
         return CollectionViewDataSource(collectionView: collectionView, cellTypes: [TreeCollectionViewCell.self]) { collectionView, indexPath, model -> UICollectionViewCell? in
             switch model {
             case let .tree(_, imageLoader, progress, info, detail, tapAction):

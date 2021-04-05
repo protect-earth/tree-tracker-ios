@@ -4,10 +4,10 @@ private extension LogCategory {
     static var treeList = LogCategory(name: "TreeList")
 }
 
-final class TreesViewModel: TableListViewModel {
+final class TreesViewModel: CollectionViewModel {
     @DelayedPublished var alert: AlertModel
     @Published var title: String
-    @Published var data: [ListSection<TreesListItem>]
+    @Published var data: [ListSection<CollectionListItem>]
     @Published var rightNavigationButtons: [NavigationBarButtonModel]
     @Published var actionButton: ButtonModel?
 
@@ -15,7 +15,7 @@ final class TreesViewModel: TableListViewModel {
     var titlePublisher: Published<String>.Publisher { $title }
     var actionButtonPublisher: Published<ButtonModel?>.Publisher { $actionButton }
     var rightNavigationButtonsPublisher: Published<[NavigationBarButtonModel]>.Publisher { $rightNavigationButtons }
-    var dataPublisher: Published<[ListSection<TreesListItem>]>.Publisher { $data }
+    var dataPublisher: Published<[ListSection<CollectionListItem>]>.Publisher { $data }
 
     private let api: Api
     private let database: Database

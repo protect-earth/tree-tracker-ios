@@ -48,7 +48,7 @@
 		859F62EF25C48FD8005E61F7 /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62EE25C48FD8005E61F7 /* AlertModel.swift */; };
 		859F62F225C5A7B8005E61F7 /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62F125C5A7B8005E61F7 /* Cancellable.swift */; };
 		859F62F525C5A7DC005E61F7 /* Paginated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62F425C5A7DC005E61F7 /* Paginated.swift */; };
-		859F62FC25C70F29005E61F7 /* TableListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62FB25C70F29005E61F7 /* TableListViewController.swift */; };
+		859F62FC25C70F29005E61F7 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62FB25C70F29005E61F7 /* CollectionViewController.swift */; };
 		85A0EF7F25A226D9003CE744 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 85A0EF7E25A226D9003CE744 /* GRDB */; };
 		85A0EF8325A2271C003CE744 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 85A0EF8225A2271C003CE744 /* Alamofire */; };
 		85A0EF8925A22FEE003CE744 /* AirtableTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0EF8825A22FEE003CE744 /* AirtableTree.swift */; };
@@ -56,7 +56,7 @@
 		85B839A925B35B540008E167 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839A825B35B540008E167 /* TableViewDataSource.swift */; };
 		85B839AD25B47BD30008E167 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839AC25B47BD30008E167 /* Reusable.swift */; };
 		85B839B125B47C0A0008E167 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839B025B47C0A0008E167 /* Action.swift */; };
-		85B839B525B47C230008E167 /* TreesListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839B425B47C230008E167 /* TreesListItem.swift */; };
+		85B839B525B47C230008E167 /* CollectionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839B425B47C230008E167 /* CollectionListItem.swift */; };
 		85B839B825B47C3F0008E167 /* TreeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839B725B47C3F0008E167 /* TreeCollectionViewCell.swift */; };
 		85B839BB25B4814F0008E167 /* ListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839BA25B4814F0008E167 /* ListSection.swift */; };
 		85B839BF25B492550008E167 /* PHImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839BE25B492550008E167 /* PHImageLoader.swift */; };
@@ -142,14 +142,14 @@
 		859F62EE25C48FD8005E61F7 /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
 		859F62F125C5A7B8005E61F7 /* Cancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
 		859F62F425C5A7DC005E61F7 /* Paginated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paginated.swift; sourceTree = "<group>"; };
-		859F62FB25C70F29005E61F7 /* TableListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableListViewController.swift; sourceTree = "<group>"; };
+		859F62FB25C70F29005E61F7 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		859F630125C7176E005E61F7 /* Changelog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Changelog.md; sourceTree = "<group>"; };
 		85A0EF8825A22FEE003CE744 /* AirtableTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableTree.swift; sourceTree = "<group>"; };
 		85A0EF8C25A23062003CE744 /* RemoteTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteTree.swift; sourceTree = "<group>"; };
 		85B839A825B35B540008E167 /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
 		85B839AC25B47BD30008E167 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		85B839B025B47C0A0008E167 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
-		85B839B425B47C230008E167 /* TreesListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreesListItem.swift; sourceTree = "<group>"; };
+		85B839B425B47C230008E167 /* CollectionListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionListItem.swift; sourceTree = "<group>"; };
 		85B839B725B47C3F0008E167 /* TreeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeCollectionViewCell.swift; sourceTree = "<group>"; };
 		85B839BA25B4814F0008E167 /* ListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSection.swift; sourceTree = "<group>"; };
 		85B839BE25B492550008E167 /* PHImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHImageLoader.swift; sourceTree = "<group>"; };
@@ -237,7 +237,7 @@
 			children = (
 				857BADAA25B1FA9D005D7D35 /* Navigation */,
 				85792A8925B1D56D00BFDA96 /* Screens */,
-				85E0E05C25B33F73009D8FC0 /* UI */,
+				85E0E05C25B33F73009D8FC0 /* UI Components */,
 				85792A8425B1D53000BFDA96 /* Utilities */,
 				85792A7425B0A35100BFDA96 /* Extensions */,
 				85A0EF9025A231F2003CE744 /* Services */,
@@ -314,7 +314,7 @@
 		857BADA125B1FA71005D7D35 /* Trees */ = {
 			isa = PBXGroup;
 			children = (
-				85B839B425B47C230008E167 /* TreesListItem.swift */,
+				85B839B425B47C230008E167 /* CollectionListItem.swift */,
 				85792A8A25B1D57F00BFDA96 /* TreesViewModel.swift */,
 				85B839B725B47C3F0008E167 /* TreeCollectionViewCell.swift */,
 			);
@@ -438,10 +438,11 @@
 			path = "Image Cache";
 			sourceTree = "<group>";
 		};
-		85E0E05C25B33F73009D8FC0 /* UI */ = {
+		85E0E05C25B33F73009D8FC0 /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
 				85B839C225B4A5280008E167 /* BarButtonItem.swift */,
+				859F62FB25C70F29005E61F7 /* CollectionViewController.swift */,
 				85B839E625B862B80008E167 /* CollectionViewDataSource.swift */,
 				85B839EE25B866370008E167 /* GridCollectionViewLayout.swift */,
 				85B839D525B74E960008E167 /* KeyboardAccessoryView.swift */,
@@ -450,12 +451,11 @@
 				85763A9C25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift */,
 				85B839F225B866590008E167 /* RoundedTappableButton.swift */,
 				859F62E325C22D6C005E61F7 /* SelectionsKeyboardView.swift */,
-				859F62FB25C70F29005E61F7 /* TableListViewController.swift */,
 				85B839A825B35B540008E167 /* TableViewDataSource.swift */,
 				85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */,
 				85B839DF25B74FF50008E167 /* TextField.swift */,
 			);
-			path = UI;
+			path = "UI Components";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -545,7 +545,7 @@
 				853ABD8025961EEA00144B0D /* Api.swift in Sources */,
 				85B839FE25B86F320008E167 /* URLImageLoader.swift in Sources */,
 				853415F325CEEE40006DDAC4 /* LiveUploadViewModel.swift in Sources */,
-				85B839B525B47C230008E167 /* TreesListItem.swift in Sources */,
+				85B839B525B47C230008E167 /* CollectionListItem.swift in Sources */,
 				85B839D225B742510008E167 /* TextFieldModel.swift in Sources */,
 				85B839B125B47C0A0008E167 /* Action.swift in Sources */,
 				85B83A3325B9C9DC0008E167 /* String.swift in Sources */,
@@ -578,7 +578,7 @@
 				859F62D625C22140005E61F7 /* Species.swift in Sources */,
 				85B83A2325B9C1BC0008E167 /* NavigationViewController.swift in Sources */,
 				85DC214625E0FCBF003F0721 /* GRDBImageCache.swift in Sources */,
-				859F62FC25C70F29005E61F7 /* TableListViewController.swift in Sources */,
+				859F62FC25C70F29005E61F7 /* CollectionViewController.swift in Sources */,
 				85792A9225B1D5A500BFDA96 /* ButtonModel.swift in Sources */,
 				85B839CE25B5F8F30008E167 /* UIAlertController.swift in Sources */,
 				859F62C025C1C436005E61F7 /* AirtableImageThumbnail.swift in Sources */,
@@ -639,7 +639,6 @@
 /* Begin XCBuildConfiguration section */
 		853ABD642596144A00144B0D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 85B839C525B5C6070008E167 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -701,7 +700,6 @@
 		};
 		853ABD652596144A00144B0D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 85B839C525B5C6070008E167 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -768,8 +766,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.protect.earth.Tree-Tracker";
 				MARKETING_VERSION = 0.5.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.protect.earth.Tree-Tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -789,8 +787,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.protect.earth.Tree-Tracker";
 				MARKETING_VERSION = 0.5.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.protect.earth.Tree-Tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

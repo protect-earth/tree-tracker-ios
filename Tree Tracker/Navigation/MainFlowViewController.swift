@@ -7,7 +7,7 @@ final class MainFlowViewController: UITabBarController {
 
         let liveUpload = LiveUploadViewController(viewModel: LiveUploadViewModel(navigation: self))
         let uploadQueue = UploadListFlowViewController()
-        let allTrees = NavigationViewController(rootViewController: TableListViewController(viewModel: TreesViewModel()))
+        let allTrees = NavigationViewController(rootViewController: CollectionViewController(viewModel: TreesViewModel()))
 
         viewControllers = [liveUpload, uploadQueue, allTrees]
 
