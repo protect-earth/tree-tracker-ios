@@ -7,13 +7,13 @@ final class MainFlowViewController: UITabBarController {
 
         let liveUpload = LiveUploadViewController(viewModel: LiveUploadViewModel(navigation: self))
         let uploadQueue = UploadListFlowViewController()
-        let allTrees = NavigationViewController(rootViewController: CollectionViewController(viewModel: TreesViewModel()))
+        let entities = NavigationViewController(rootViewController: TableViewController(viewModel: EntitiesViewModel()))
 
-        viewControllers = [liveUpload, uploadQueue, allTrees]
+        viewControllers = [liveUpload, uploadQueue, entities]
 
         liveUpload.tabBarItem = UITabBarItem(title: "", image: .cameraIcon, selectedImage: .cameraIcon)
         uploadQueue.tabBarItem = UITabBarItem(title: "", image: .uploadIcon, selectedImage: .uploadIcon)
-        allTrees.tabBarItem = UITabBarItem(title: "", image: .listIcon, selectedImage: .listIcon)
+        entities.tabBarItem = UITabBarItem(title: "", image: .listIcon, selectedImage: .listIcon)
 
         selectedIndex = 1
     }

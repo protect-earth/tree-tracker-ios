@@ -145,6 +145,27 @@ final class Database {
             }
         }
     }
+    
+    /// Remove all current content and replace it with the following.
+    func replace<T: Identifiable & TableRecord & FetchableRecord & PersistableRecord>(_ models: [T], completion: @escaping () -> Void) where T.ID: DatabaseValueConvertible {
+        dbQueue?.asyncWrite { [weak self] db in
+            try T.deleteAll(db)
+            self?.logger.log(.database, "Removed all \(T.self) in preparation of new content.")
+            models.forEach { model in
+                do {
+                    try model.insert(db)
+                    self?.logger.log(.database, "Added: \(model)")
+                } catch {
+                    self?.logger.log(.database, "Model: \(model)")
+                    self?.logger.log(.database, "Error when adding model to DB. \(error)")
+                }
+            }
+        } completion: { db, result in
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+    }
 
     func remove(tree: LocalTree, completion: @escaping () -> Void) {
         dbQueue?.asyncWrite { db in

@@ -1,33 +1,30 @@
 import UIKit
 import Combine
 
-protocol CollectionViewModel {
+protocol TableViewModel {
     var alertPublisher: DelayedPublished<AlertModel>.Publisher { get }
     var titlePublisher: Published<String>.Publisher { get }
     var actionButtonPublisher: Published<ButtonModel?>.Publisher { get }
     var rightNavigationButtonsPublisher: Published<[NavigationBarButtonModel]>.Publisher { get }
-    var dataPublisher: Published<[ListSection<CollectionListItem>]>.Publisher { get }
+    var dataPublisher: Published<[ListSection<TableListItem>]>.Publisher { get }
 
     func onAppear()
 }
 
-final class CollectionViewController: UIViewController {
-    let viewModel: CollectionViewModel
+final class TableViewController: UIViewController {
+    let viewModel: TableViewModel
 
-    private lazy var layout: UICollectionViewLayout = {
-        let layout = GridCollectionViewLayout(columns: 4)
-        return layout
-    }()
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.automaticallyAdjustsScrollIndicatorInsets = false
+        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.backgroundColor = .clear
+        tableView.alwaysBounceVertical = true
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
 
-    private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.automaticallyAdjustsScrollIndicatorInsets = false
-        collectionView.contentInsetAdjustmentBehavior = .never
-        collectionView.backgroundColor = .clear
-        collectionView.alwaysBounceVertical = true
-
-        return collectionView
+        return tableView
     }()
 
     private let actionButton: TappableButton = {
@@ -40,7 +37,7 @@ final class CollectionViewController: UIViewController {
     private var observables = Set<AnyCancellable>()
     private lazy var dataSource = buildDataSource()
 
-    init(viewModel: CollectionViewModel) {
+    init(viewModel: TableViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
 
@@ -56,16 +53,17 @@ final class CollectionViewController: UIViewController {
         view = UIView()
         view.backgroundColor = UIColor(named: "PrimaryColor")
 
-        collectionView.dataSource = dataSource
+        tableView.dataSource = dataSource
+        tableView.delegate = dataSource
 
-        view.addSubview(collectionView)
+        view.addSubview(tableView)
         view.addSubview(actionButton)
 
         NSLayoutConstraint.activate([
-            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
-            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
 
             actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10.0),
             actionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -84,7 +82,7 @@ final class CollectionViewController: UIViewController {
         viewModel.onAppear()
     }
 
-    private func nonViewDependentSetup(viewModel: CollectionViewModel) {
+    private func nonViewDependentSetup(viewModel: TableViewModel) {
         viewModel.titlePublisher
             .sink { [weak self] title in
                 self?.navigationItem.title = title
@@ -92,7 +90,7 @@ final class CollectionViewController: UIViewController {
             .store(in: &observables)
     }
 
-    private func setup(viewModel: CollectionViewModel) {
+    private func setup(viewModel: TableViewModel) {
         viewModel.actionButtonPublisher
             .sink { [weak self] model in
                 if let model = model {
@@ -134,12 +132,12 @@ final class CollectionViewController: UIViewController {
         present(UIAlertController.from(model: alert), animated: true, completion: nil)
     }
 
-    private func buildDataSource() -> CollectionViewDataSource<CollectionListItem> {
-        return CollectionViewDataSource(collectionView: collectionView, cellTypes: [TreeCollectionViewCell.self]) { collectionView, indexPath, model -> UICollectionViewCell? in
+    private func buildDataSource() -> TableViewDataSource<TableListItem> {
+        return TableViewDataSource(tableView: tableView, cellTypes: [TextTableViewCell.self]) { tableView, indexPath, model -> UITableViewCell? in
             switch model {
-            case let .tree(_, imageLoader, progress, info, detail, tapAction):
-                let cell = collectionView.dequeue(cell: TreeCollectionViewCell.self, indexPath: indexPath)
-                cell.set(imageLoader: imageLoader, progress: progress, info: info, detail: detail, tapAction: tapAction)
+            case let .text(_, text, tapAction):
+                let cell = tableView.dequeue(cell: TextTableViewCell.self, indexPath: indexPath)
+                cell.set(text: text, tapAction: tapAction)
 
                 return cell
             }

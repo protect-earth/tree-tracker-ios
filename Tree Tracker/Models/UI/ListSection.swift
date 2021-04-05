@@ -12,6 +12,15 @@ enum ListSection<ListItem: Hashable & Identifiable>: Hashable, Identifiable {
             return rows
         }
     }
+    
+    var title: String? {
+        switch self {
+        case let .titled(title, _):
+            return title
+        case .untitled:
+            return nil
+        }
+    }
 
     var id: String {
         switch self {
