@@ -1,6 +1,7 @@
 #  Tree Tracker
 
 ## Next
+- Replaced "Tree list" screen with "Entities" screen.
 - Replaced Secrets.xcconfig with Pouch config.
 
 ## 0.5.1
