@@ -20,6 +20,7 @@ final class TableViewDataSource<ListItem: Hashable & Identifiable>: UITableViewD
      }
 
     func update(data: [ListSection<ListItem>], animating: Bool = false) {
+        self.data = data
         var snapshot = NSDiffableDataSourceSnapshot<ListSection<ListItem>, ListItem>()
 
         for section in data {
@@ -30,5 +31,22 @@ final class TableViewDataSource<ListItem: Hashable & Identifiable>: UITableViewD
         }
 
         apply(snapshot, animatingDifferences: animating)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let title = data[safe: section]?.title else { return nil }
+        
+        let label = UILabel()
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 16.0, weight: .semibold)
+        label.text = title
+        
+        let view = UIView()
+        view.addSubview(label)
+        
+        label.pin(to: view, insets: .some(top: 8.0, bottom: 8.0))
+        
+        return view
     }
 }
