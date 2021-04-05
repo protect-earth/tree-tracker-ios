@@ -48,7 +48,11 @@ final class EntitiesViewModel: TableViewModel {
 
     private func refreshData() {
         fetchDatabaseContent { [weak self] in
-            self?.presentContentFromDatabase()
+            if self?.sites.isEmpty == true || self?.supervisors.isEmpty == true || self?.species.isEmpty == true {
+                self?.sync()
+            } else {
+                self?.presentContentFromDatabase()
+            }
         }
     }
 
