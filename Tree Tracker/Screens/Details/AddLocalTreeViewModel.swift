@@ -123,7 +123,7 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
                   text: species?.name,
                   input: .keyboard(.selection(
                                     ["--"] + self.species.map(\.name),
-                                    initialIndexSelected: self.species.firstIndex { $0.id == species?.id },
+                                    initialIndexSelected: self.species.firstIndex { $0.id == species?.id }.map { $0 + 1 },
                                     indexSelected: { [weak self] selectedSpecies in
                                         species = self?.species[safe: selectedSpecies - 1]
                                         self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
@@ -138,7 +138,7 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
                                 text: supervisor?.name,
                                 input: .keyboard(.selection(
                                                   ["--"] + self.supervisors.map(\.name),
-                                                  initialIndexSelected: supervisors.firstIndex { $0.id == supervisor?.id },
+                                                  initialIndexSelected: supervisors.firstIndex { $0.id == supervisor?.id }.map { $0 + 1 },
                                                   indexSelected: { [weak self] selectedSupervisor in
                                                       supervisor = self?.supervisors[safe: selectedSupervisor - 1]
                                                       self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
@@ -153,7 +153,7 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
                                 text: site?.name,
                                 input: .keyboard(.selection(
                                                   ["--"] + self.sites.map(\.name),
-                                                  initialIndexSelected: self.sites.firstIndex { $0.id == site?.id },
+                                                  initialIndexSelected: self.sites.firstIndex { $0.id == site?.id }.map { $0 + 1 },
                                                   indexSelected: { [weak self] selectedSite in
                                                       site = self?.sites[safe: selectedSite - 1]
                                                       self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
