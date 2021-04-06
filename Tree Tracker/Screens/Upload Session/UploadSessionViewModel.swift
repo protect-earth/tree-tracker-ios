@@ -31,11 +31,7 @@ final class UploadSessionViewModel {
         self.locationManager = locationManager
     }
 
-    func onLoad() {
-        fetchDatabaseContent { [weak self] in
-            self?.presentContent()
-        }
-    }
+    func onLoad() {}
     
     private func fetchDatabaseContent(completion: @escaping () -> Void) {
         database.fetch(Site.self, Supervisor.self) { [weak self] sites, supervisors in
@@ -45,7 +41,11 @@ final class UploadSessionViewModel {
         }
     }
 
-    func onAppear() {}
+    func onAppear() {
+        fetchDatabaseContent { [weak self] in
+            self?.presentContent()
+        }
+    }
 
     private func presentContent(supervisor: Supervisor? = nil, site: Site? = nil) {
         locationManager.stopTrackingLocation()
