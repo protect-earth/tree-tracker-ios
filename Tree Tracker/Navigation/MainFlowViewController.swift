@@ -5,7 +5,7 @@ final class MainFlowViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let liveUpload = LiveUploadViewController(viewModel: LiveUploadViewModel(navigation: self))
+        let liveUpload = UploadSessionViewController(viewModel: UploadSessionViewModel(navigation: self))
         let uploadQueue = UploadListFlowViewController()
         let entities = NavigationViewController(rootViewController: TableViewController(viewModel: EntitiesViewModel()))
 

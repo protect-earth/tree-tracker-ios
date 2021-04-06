@@ -72,7 +72,7 @@ protocol LiveUploadNavigating: AnyObject {
     func triggerAskForDetailsAndStoreFlow(assets: [PHAsset], completion: @escaping (Bool) -> Void)
 }
 
-final class LiveUploadViewModel {
+final class UploadSessionViewModel {
     enum State {
         case actionButton(ButtonModel)
         case takeAPicture(cancel: () -> Void, completion: (Result<UIImage, Error>) -> Void)

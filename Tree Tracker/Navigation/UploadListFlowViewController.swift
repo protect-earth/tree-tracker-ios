@@ -2,14 +2,14 @@ import UIKit
 import PhotosUI
 import BSImagePicker
 
-final class UploadListFlowViewController: NavigationViewController, UploadListNavigating, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+final class UploadListFlowViewController: NavigationViewController, UploadNavigating, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     private let assetManager = PHAssetManager()
     private var saveTreesCompletion: ((Bool) -> Void)?
 
     override init() {
         super.init()
 
-        let rootViewController = CollectionViewController(viewModel: UploadListViewModel(navigation: self))
+        let rootViewController = CollectionViewController(viewModel: UploadViewModel(navigation: self))
         navigationBar.prefersLargeTitles = true
         navigationBar.tintColor = .white
         viewControllers = [rootViewController]

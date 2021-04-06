@@ -1,6 +1,6 @@
 import Foundation
 
-protocol UploadListNavigating: AnyObject {
+protocol UploadNavigating: AnyObject {
     func triggerAddTreesFlow(completion: @escaping (Bool) -> Void)
     func triggerEditDetailsFlow(tree: LocalTree, completion: @escaping (Bool) -> Void)
 }
@@ -9,7 +9,7 @@ fileprivate extension LogCategory {
     static var upload = LogCategory(name: "Upload")
 }
 
-final class UploadListViewModel: CollectionViewModel {
+final class UploadViewModel: CollectionViewModel {
     @DelayedPublished var alert: AlertModel
     @Published var title: String
     @Published var data: [ListSection<CollectionListItem>]
@@ -30,9 +30,9 @@ final class UploadListViewModel: CollectionViewModel {
     private var species: [Species] = []
     private var supervisors: [Supervisor] = []
     private var currentUpload: Cancellable?
-    private weak var navigation: UploadListNavigating?
+    private weak var navigation: UploadNavigating?
 
-    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, screenLockManager: ScreenLockManaging = CurrentEnvironment.screenLockManager, logger: Logging = CurrentEnvironment.logger, navigation: UploadListNavigating) {
+    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, screenLockManager: ScreenLockManaging = CurrentEnvironment.screenLockManager, logger: Logging = CurrentEnvironment.logger, navigation: UploadNavigating) {
         self.title = ""
         self.api = api
         self.database = database

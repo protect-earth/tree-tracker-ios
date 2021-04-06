@@ -3,8 +3,8 @@ import AVFoundation
 import CoreLocation
 import Combine
 
-final class LiveUploadViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate {
-    let viewModel: LiveUploadViewModel
+final class UploadSessionViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate {
+    let viewModel: UploadSessionViewModel
 
     private lazy var actionButton: RoundedTappableButton = {
         let button = RoundedTappableButton()
@@ -17,7 +17,7 @@ final class LiveUploadViewController: UIViewController, UIImagePickerControllerD
     private var photoSessionCompletion: ((Result<UIImage, Error>) -> Void)?
     private var oservables = Set<AnyCancellable>()
 
-    init(viewModel: LiveUploadViewModel) {
+    init(viewModel: UploadSessionViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -49,7 +49,7 @@ final class LiveUploadViewController: UIViewController, UIImagePickerControllerD
         viewModel.onAppear()
     }
 
-    private func setup(viewModel: LiveUploadViewModel) {
+    private func setup(viewModel: UploadSessionViewModel) {
         viewModel.$state
             .sink { [weak self] state in
                 switch state {
