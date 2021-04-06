@@ -112,7 +112,9 @@ extension UploadListFlowViewController: PHPickerViewControllerDelegate {
         }
 
         picker.dismiss(animated: true) {
-            self.askForDetailsAndStore(assets: assets)
+            if assets.isNotEmpty {
+                self.askForDetailsAndStore(assets: assets)
+            }
         }
     }
 }
