@@ -32,7 +32,7 @@ final class UploadListFlowViewController: NavigationViewController, UploadNaviga
     }
 
     private func askForDetailsAndStore(assets: [PHAsset]) {
-        viewControllers.last?.present(TreeDetailsFlowViewController(assets: assets, completion: saveTreesCompletion), animated: true, completion: nil)
+        viewControllers.last?.present(TreeDetailsFlowViewController(assets: assets, site: nil, supervisor: nil, completion: saveTreesCompletion), animated: true, completion: nil)
     }
 
     private func askForPermissionsAndPresentPickerIfPossible() {
@@ -85,7 +85,7 @@ final class UploadListFlowViewController: NavigationViewController, UploadNaviga
     }
 
     private func presentEdit(tree: LocalTree) {
-        viewControllers.last?.present(TreeDetailsFlowViewController(tree: tree, completion: saveTreesCompletion), animated: true, completion: nil)
+        viewControllers.last?.present(TreeDetailsFlowViewController(tree: tree, site: nil, supervisor: nil, completion: saveTreesCompletion), animated: true, completion: nil)
     }
 }
 

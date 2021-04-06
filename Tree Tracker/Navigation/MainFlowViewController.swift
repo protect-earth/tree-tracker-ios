@@ -20,10 +20,10 @@ final class MainFlowViewController: UITabBarController {
 }
 
 extension MainFlowViewController: UploadSessionNavigating {
-    func triggerAskForDetailsAndStoreFlow(assets: [PHAsset], completion: @escaping (Bool) -> Void) {
+    func triggerAskForDetailsAndStoreFlow(assets: [PHAsset], site: Site?, supervisor: Supervisor?, completion: @escaping (Bool) -> Void) {
         DispatchQueue.main.async {
             let controller = (self.selectedViewController as? UINavigationController)?.visibleViewController ?? self.selectedViewController?.presentedViewController ?? self.selectedViewController
-            controller?.present(TreeDetailsFlowViewController(assets: assets, completion: completion), animated: true, completion: nil)
+            controller?.present(TreeDetailsFlowViewController(assets: assets, site: site, supervisor: supervisor, completion: completion), animated: true, completion: nil)
         }
     }
 }

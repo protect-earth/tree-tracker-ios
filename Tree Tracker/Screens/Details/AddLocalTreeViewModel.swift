@@ -168,6 +168,7 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
                             input: .keyboard(.default),
                             returnKey: .done,
                             onChange: { notes = $0 }))
+        self.fields = fields
 
         if let species = species, let site = staticSite ?? site, let supervisor = staticSupervisor ?? supervisor {
             saveButton = ButtonModel(

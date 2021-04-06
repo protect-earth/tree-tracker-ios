@@ -12,10 +12,35 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
 
         return button
     }()
+    
+    private let textFieldsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins.left = 16.0
+        stackView.layoutMargins.right = 16.0
+        stackView.spacing = 8.0
+        stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
+        stackView.setContentCompressionResistancePriority(.required, for: .vertical)
+
+        return stackView
+    }()
+
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
+        stackView.setContentCompressionResistancePriority(.required, for: .vertical)
+        stackView.spacing = 8.0
+
+        return stackView
+    }()
 
     private var photoSessionCancel: (() -> Void)?
     private var photoSessionCompletion: ((Result<UIImage, Error>) -> Void)?
-    private var oservables = Set<AnyCancellable>()
+    private var observables = Set<AnyCancellable>()
 
     init(viewModel: UploadSessionViewModel) {
         self.viewModel = viewModel
@@ -32,8 +57,13 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
         view.backgroundColor = UIColor(named: "PrimaryColor")
 
         actionButton.isHidden = true
-        view.addSubview(actionButton)
-        actionButton.center(in: view)
+        
+        view.addSubview(stackView)
+
+        stackView.addArrangedSubview(textFieldsStackView)
+        stackView.addArrangedSubview(actionButton)
+
+        stackView.center(in: view)
     }
 
     override func viewDidLoad() {
@@ -59,13 +89,19 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
                     self?.presentPhotoSession(cancel: cancel, completion: completion)
                 }
             }
-            .store(in: &oservables)
+            .store(in: &observables)
 
+        viewModel.$fields
+            .sink { [weak self] fields in
+                self?.update(fields: fields)
+            }
+            .store(in: &observables)
+        
         viewModel.$alert
             .sink { [weak self] alert in
                 self?.present(alert: alert)
             }
-            .store(in: &oservables)
+            .store(in: &observables)
     }
     
     private func removeCurrentCameraViewIfNeeded(completion: @escaping () -> Void) {
@@ -74,6 +110,39 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
         } else {
             completion()
         }
+    }
+    
+    private func update(fields models: [TextFieldModel]) {
+        let currentFieldsCount = textFieldsStackView.arrangedSubviews.count
+        if currentFieldsCount != models.count {
+            if currentFieldsCount < models.count {
+                let fieldsToAdd = models.count - currentFieldsCount
+                for _ in 0..<fieldsToAdd {
+                    textFieldsStackView.addArrangedSubview(buildTextField())
+                }
+            } else {
+                let fieldsToRemove = currentFieldsCount - models.count
+                for _ in 0..<fieldsToRemove {
+                    if let view = textFieldsStackView.arrangedSubviews.first(where: { $0 is TextField }) {
+                        textFieldsStackView.removeArrangedSubview(view)
+                    }
+                }
+            }
+        }
+
+        let textFields = textFieldsStackView.arrangedSubviews.compactMap { $0 as? TextField }
+        for (textField, model) in zip(textFields, models) {
+            textField.set(model: model)
+        }
+    }
+    
+    private func buildTextField() -> TextField {
+        let textField = TextField()
+        textField.textColor = .black
+        textField.borderStyle = .roundedRect
+        textField.widthAnchor.constraint(equalToConstant: 250.0).isActive = true
+
+        return textField
     }
 
     private func presentPhotoSession(cancel: @escaping () -> Void, completion: @escaping (Result<UIImage, Error>) -> Void) {

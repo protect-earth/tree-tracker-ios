@@ -223,6 +223,18 @@ final class Database {
             }
         }
     }
+    
+    func fetch<T, U>(_ type1: T.Type, _ type2: U.Type, completion: @escaping ([T], [U]) -> Void) where
+        T: Identifiable & TableRecord & FetchableRecord & PersistableRecord,
+        U: Identifiable & TableRecord & FetchableRecord & PersistableRecord {
+        dbQueue?.read { db in
+            let models1 = (try? T.fetchAll(db)) ?? []
+            let models2 = (try? U.fetchAll(db)) ?? []
+            DispatchQueue.main.async {
+                completion(models1, models2)
+            }
+        }
+    }
 
     func fetch<T, U, V>(_ type1: T.Type, _ type2: U.Type, _ type3: V.Type, completion: @escaping ([T], [U], [V]) -> Void) where
         T: Identifiable & TableRecord & FetchableRecord & PersistableRecord,
