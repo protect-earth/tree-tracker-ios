@@ -27,7 +27,7 @@ final class TreeDetailsFlowViewController: NavigationViewController {
     private func askForDetailsAndStore(assets: [PHAsset]) {
         guard !assets.isEmpty else { return }
 
-        let viewModel = AddLocalTreeViewModel(assets: assets, navigation: self)
+        let viewModel = AddLocalTreeViewModel(assets: assets, staticSupervisor: nil, staticSite: nil, navigation: self)
         let viewController = TreeDetailsViewController(viewModel: viewModel)
         self.viewControllers = [viewController]
     }

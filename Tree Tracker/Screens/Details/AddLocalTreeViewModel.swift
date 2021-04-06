@@ -39,17 +39,21 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
     private let initialAssetCount: Int
     private var currentAsset: Int
     private var assets: [PHAsset]
+    private var staticSupervisor: Supervisor?
+    private var staticSite: Site?
     private var sites: [Site] = []
     private var species: [Species] = []
     private var supervisors: [Supervisor] = []
     private weak var navigation: TreeDetailsNavigating?
 
-    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, defaults: Defaults = CurrentEnvironment.defaults, assets: [PHAsset], navigation: TreeDetailsNavigating) {
+    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, defaults: Defaults = CurrentEnvironment.defaults, assets: [PHAsset], staticSupervisor: Supervisor?, staticSite: Site?, navigation: TreeDetailsNavigating) {
         self.api = api
         self.database = database
         self.defaults = defaults
         self.navigation = navigation
         self.assets = assets
+        self.staticSupervisor = staticSupervisor
+        self.staticSite = staticSite
         self.fields = []
         self.initialAssetCount = assets.count
         self.currentAsset = 0
@@ -109,7 +113,7 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
         var notes = notes ?? ""
         var coordinates = coordinates ?? asset.stringifyCoordinates()
 
-        fields = [
+        var fields: [TextFieldModel] = [
             .init(placeholder: "Coordinates",
                   text: coordinates,
                   input: .keyboard(.default),
@@ -126,39 +130,46 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
                                     }),
                                    .done()),
                   returnKey: .done,
-                  onChange: { _ in }),
-            .init(placeholder: "Supervisor",
-                  text: supervisor?.name,
-                  input: .keyboard(.selection(
-                                    ["--"] + self.supervisors.map(\.name),
-                                    initialIndexSelected: supervisors.firstIndex { $0.id == supervisor?.id },
-                                    indexSelected: { [weak self] selectedSupervisor in
-                                        supervisor = self?.supervisors[safe: selectedSupervisor - 1]
-                                        self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
-                                    }),
-                                   .done()),
-                  returnKey: .done,
-                  onChange: { _ in }),
-            .init(placeholder: "Site",
-                  text: site?.name,
-                  input: .keyboard(.selection(
-                                    ["--"] + self.sites.map(\.name),
-                                    initialIndexSelected: self.sites.firstIndex { $0.id == site?.id },
-                                    indexSelected: { [weak self] selectedSite in
-                                        site = self?.sites[safe: selectedSite - 1]
-                                        self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
-                                    }),
-                                   .done()),
-                  returnKey: .done,
-                  onChange: { _ in }),
-            .init(placeholder: "Notes",
-                  text: notes,
-                  input: .keyboard(.default),
-                  returnKey: .done,
-                  onChange: { notes = $0 }),
+                  onChange: { _ in })
         ]
+        
+        if staticSupervisor == nil {
+            fields.append(.init(placeholder: "Supervisor",
+                                text: supervisor?.name,
+                                input: .keyboard(.selection(
+                                                  ["--"] + self.supervisors.map(\.name),
+                                                  initialIndexSelected: supervisors.firstIndex { $0.id == supervisor?.id },
+                                                  indexSelected: { [weak self] selectedSupervisor in
+                                                      supervisor = self?.supervisors[safe: selectedSupervisor - 1]
+                                                      self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
+                                                  }),
+                                                 .done()),
+                                returnKey: .done,
+                                onChange: { _ in }))
+        }
+        
+        if staticSite == nil {
+            fields.append(.init(placeholder: "Site",
+                                text: site?.name,
+                                input: .keyboard(.selection(
+                                                  ["--"] + self.sites.map(\.name),
+                                                  initialIndexSelected: self.sites.firstIndex { $0.id == site?.id },
+                                                  indexSelected: { [weak self] selectedSite in
+                                                      site = self?.sites[safe: selectedSite - 1]
+                                                      self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
+                                                  }),
+                                                 .done()),
+                                returnKey: .done,
+                                onChange: { _ in }))
+        }
+        
+        fields.append(.init(placeholder: "Notes",
+                            text: notes,
+                            input: .keyboard(.default),
+                            returnKey: .done,
+                            onChange: { notes = $0 }))
 
-        if let species = species, let site = site, let supervisor = supervisor {
+        if let species = species, let site = staticSite ?? site, let supervisor = staticSupervisor ?? supervisor {
             saveButton = ButtonModel(
                 title: .text("Save"),
                 action: { [weak self] in
