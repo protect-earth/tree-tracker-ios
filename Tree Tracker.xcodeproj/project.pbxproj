@@ -93,6 +93,7 @@
 		85CC02E9261B6E820016E618 /* TableListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CC02E8261B6E820016E618 /* TableListItem.swift */; };
 		85CC02EC261B6EA90016E618 /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CC02EB261B6EA90016E618 /* TextTableViewCell.swift */; };
 		85CC02F1261B76D10016E618 /* EntitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CC02F0261B76D10016E618 /* EntitiesViewModel.swift */; };
+		85CC0304261CC8FE0016E618 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CC0303261CC8FE0016E618 /* LocationManager.swift */; };
 		85DC213C25E0FC8F003F0721 /* ImageCacheInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC213B25E0FC8F003F0721 /* ImageCacheInfo.swift */; };
 		85DC214025E0FC9F003F0721 /* ImageCaching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC213F25E0FC9F003F0721 /* ImageCaching.swift */; };
 		85DC214325E0FCAD003F0721 /* DiskImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC214225E0FCAD003F0721 /* DiskImageCache.swift */; };
@@ -189,6 +190,7 @@
 		85CC02E8261B6E820016E618 /* TableListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableListItem.swift; sourceTree = "<group>"; };
 		85CC02EB261B6EA90016E618 /* TextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTableViewCell.swift; sourceTree = "<group>"; };
 		85CC02F0261B76D10016E618 /* EntitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitiesViewModel.swift; sourceTree = "<group>"; };
+		85CC0303261CC8FE0016E618 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		85DC213B25E0FC8F003F0721 /* ImageCacheInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheInfo.swift; sourceTree = "<group>"; };
 		85DC213F25E0FC9F003F0721 /* ImageCaching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCaching.swift; sourceTree = "<group>"; };
 		85DC214225E0FCAD003F0721 /* DiskImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskImageCache.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				857BAD9C25B1DCDE005D7D35 /* Defaults.swift */,
 				85792A8525B1D53700BFDA96 /* Environment.swift */,
 				85763A9325E29CE300CB4ED3 /* Logger.swift */,
+				85CC0303261CC8FE0016E618 /* LocationManager.swift */,
 				85B839F725B86F0A0008E167 /* PHAssetManager.swift */,
 				85B839BE25B492550008E167 /* PHImageLoader.swift */,
 				85B839FD25B86F320008E167 /* URLImageLoader.swift */,
@@ -605,6 +608,7 @@
 				85B839CE25B5F8F30008E167 /* UIAlertController.swift in Sources */,
 				859F62C025C1C436005E61F7 /* AirtableImageThumbnail.swift in Sources */,
 				859F62F225C5A7B8005E61F7 /* Cancellable.swift in Sources */,
+				85CC0304261CC8FE0016E618 /* LocationManager.swift in Sources */,
 				859F62D125C1C62D005E61F7 /* AirtableSupervisor.swift in Sources */,
 				853ABD562596144900144B0D /* AppDelegate.swift in Sources */,
 				857BADA825B1FA93005D7D35 /* TreeDetailsViewController.swift in Sources */,
