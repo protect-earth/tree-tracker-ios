@@ -56,8 +56,6 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
         view = UIView()
         view.backgroundColor = UIColor(named: "PrimaryColor")
 
-        actionButton.isHidden = true
-        
         view.addSubview(stackView)
 
         stackView.addArrangedSubview(textFieldsStackView)
@@ -149,7 +147,6 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
         removeCurrentCameraViewIfNeeded { [weak self] in
             self?.photoSessionCancel = cancel
             self?.photoSessionCompletion = completion
-            self?.actionButton.isHidden = true
 
             let picker = RotatingUIImagePickerController()
             picker.modalPresentationStyle = .overCurrentContext
@@ -163,7 +160,6 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
     private func present(actionButton model: ButtonModel) {
         removeCurrentCameraViewIfNeeded { [weak self] in
             self?.actionButton.set(model: model)
-            self?.actionButton.isHidden = false
         }
     }
 
