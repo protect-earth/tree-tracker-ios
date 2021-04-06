@@ -68,7 +68,7 @@ final class LocationManager: NSObject, PermissionAsking, LocationProviding, CLLo
     }
 }
 
-protocol LiveUploadNavigating: AnyObject {
+protocol UploadSessionNavigating: AnyObject {
     func triggerAskForDetailsAndStoreFlow(assets: [PHAsset], completion: @escaping (Bool) -> Void)
 }
 
@@ -81,11 +81,11 @@ final class UploadSessionViewModel {
     @DelayedPublished var state: State
     @DelayedPublished var alert: AlertModel
 
-    private let navigation: LiveUploadNavigating
+    private let navigation: UploadSessionNavigating
     private let assetManager: AssetManaging
     private let locationManager: LocationProviding & PermissionAsking
 
-    init(navigation: LiveUploadNavigating, assetManager: AssetManaging = PHAssetManager(), locationManager: LocationProviding & PermissionAsking = LocationManager()) {
+    init(navigation: UploadSessionNavigating, assetManager: AssetManaging = PHAssetManager(), locationManager: LocationProviding & PermissionAsking = LocationManager()) {
         self.navigation = navigation
         self.assetManager = assetManager
         self.locationManager = locationManager
