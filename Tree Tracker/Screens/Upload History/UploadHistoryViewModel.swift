@@ -53,7 +53,7 @@ final class UploadHistoryViewModel: CollectionViewModel {
     }
 
     private func presentTreesFromDatabase() {
-        database.fetchRemoteTrees { [weak self] trees in
+        database.fetchUploadedTrees { [weak self] trees in
             let sortedTrees = trees.sorted(by: \.createDate, order: .descending)
             self?.data = [.untitled(id: "trees", sortedTrees.map { tree in
                 let imageLoader = (tree.thumbnailUrl ?? tree.imageUrl).map { AnyImageLoader(imageLoader: URLImageLoader(url: $0)) }

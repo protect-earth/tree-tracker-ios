@@ -29,6 +29,8 @@ final class Database {
             }
         }
         
+        var needsMigration: Bool = false
+        
         try dbQueue?.write { db in
             if try db.tableExists(RemoteTree.databaseTableName) == false {
                 try db.create(table: RemoteTree.databaseTableName) { table in
@@ -93,11 +95,15 @@ final class Database {
                 }
             }
             
-//            if let dbQueue = dbQueue, try !migrator.hasCompletedMigrations(db) {
-//                logger.log(.database, "Needs migration - starting...")
-//                try migrator.migrate(dbQueue)
-//                logger.log(.database, "Migration finished succesfully!")
-//            }
+            if try !migrator.hasCompletedMigrations(db) {
+                needsMigration = true
+            }
+        }
+        
+        if needsMigration, let dbQueue = dbQueue {
+            logger.log(.database, "Needs migration - starting...")
+            try migrator.migrate(dbQueue)
+            logger.log(.database, "Migration finished succesfully!")
         }
     }
 
