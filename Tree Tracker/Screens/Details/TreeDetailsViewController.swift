@@ -123,7 +123,7 @@ final class TreeDetailsViewController: UIViewController {
 
         viewModel.imageLoaderPublisher
             .sink { [weak self] imageLoader in
-                imageLoader?.loadThumbnail { image in
+                imageLoader?.loadHighQualityImage { image in
                     self?.imageView.image = image
                 }
             }
