@@ -14,6 +14,7 @@ struct RemoteTree: Codable, FetchableRecord, PersistableRecord, TableRecord, Ide
     let imageMd5: String?
     var createDate: Date?
     var uploadDate: Date?
+    var sentFromThisDevice: Bool
 
     // Because these are not accessible when synthesized by Swift, please do not remove it
     enum CodingKeys: String, CodingKey {
@@ -29,5 +30,6 @@ struct RemoteTree: Codable, FetchableRecord, PersistableRecord, TableRecord, Ide
         case imageMd5
         case createDate
         case uploadDate
+        case sentFromThisDevice
     }
 }

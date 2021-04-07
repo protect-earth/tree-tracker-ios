@@ -70,8 +70,8 @@ struct AirtableTree: Decodable {
         }
     }
 
-    func toRemoteTree() -> RemoteTree {
-        return RemoteTree(id: id, supervisor: supervisor, species: species, site: site, notes: notes, coordinates: coordinates, what3words: what3words, imageUrl: imageUrl, thumbnailUrl: thumbnailUrl, imageMd5: imageMd5, createDate: createDate, uploadDate: uploadDate)
+    func toRemoteTree(sentFromThisDevice: Bool) -> RemoteTree {
+        return RemoteTree(id: id, supervisor: supervisor, species: species, site: site, notes: notes, coordinates: coordinates, what3words: what3words, imageUrl: imageUrl, thumbnailUrl: thumbnailUrl, imageMd5: imageMd5, createDate: createDate, uploadDate: uploadDate, sentFromThisDevice: sentFromThisDevice)
     }
 }
 
