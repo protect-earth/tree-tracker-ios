@@ -5,7 +5,7 @@ final class MainFlowViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let liveUpload = LiveUploadViewController(viewModel: LiveUploadViewModel(navigation: self))
+        let liveUpload = UploadSessionViewController(viewModel: UploadSessionViewModel(navigation: self))
         let uploadQueue = UploadListFlowViewController()
         let entities = NavigationViewController(rootViewController: TableViewController(viewModel: EntitiesViewModel()))
 
@@ -19,11 +19,11 @@ final class MainFlowViewController: UITabBarController {
     }
 }
 
-extension MainFlowViewController: LiveUploadNavigating {
-    func triggerAskForDetailsAndStoreFlow(assets: [PHAsset], completion: @escaping (Bool) -> Void) {
+extension MainFlowViewController: UploadSessionNavigating {
+    func triggerAskForDetailsAndStoreFlow(assets: [PHAsset], site: Site?, supervisor: Supervisor?, completion: @escaping (Bool) -> Void) {
         DispatchQueue.main.async {
             let controller = (self.selectedViewController as? UINavigationController)?.visibleViewController ?? self.selectedViewController?.presentedViewController ?? self.selectedViewController
-            controller?.present(TreeDetailsFlowViewController(assets: assets, completion: completion), animated: true, completion: nil)
+            controller?.present(TreeDetailsFlowViewController(assets: assets, site: site, supervisor: supervisor, completion: completion), animated: true, completion: nil)
         }
     }
 }

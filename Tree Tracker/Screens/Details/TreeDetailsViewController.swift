@@ -29,6 +29,7 @@ final class TreeDetailsViewController: UIViewController {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
+        stackView.spacing = 16.0
         stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
         stackView.setContentCompressionResistancePriority(.required, for: .vertical)
 
@@ -47,7 +48,8 @@ final class TreeDetailsViewController: UIViewController {
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
 
         return imageView
     }()
@@ -55,6 +57,7 @@ final class TreeDetailsViewController: UIViewController {
     private let actionButton: TappableButton = {
         let button = RoundedTappableButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.font = .systemFont(ofSize: 18.0)
 
         return button
     }()
@@ -88,7 +91,7 @@ final class TreeDetailsViewController: UIViewController {
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor),
 
-            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16.0),
             stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.bottomAnchor, constant: -100.0),
@@ -97,9 +100,10 @@ final class TreeDetailsViewController: UIViewController {
             actionButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -10.0),
             actionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
-            imageView.centerXAnchor.constraint(equalTo: imageViewWrapper.centerXAnchor),
+            imageView.leadingAnchor.constraint(equalTo: imageViewWrapper.leadingAnchor, constant: 16.0),
+            imageView.trailingAnchor.constraint(equalTo: imageViewWrapper.trailingAnchor, constant: -16.0),
             imageView.topAnchor.constraint(equalTo: imageViewWrapper.topAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 2.0),
+            imageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 2.3),
             imageView.bottomAnchor.constraint(equalTo: imageViewWrapper.bottomAnchor),
         ])
     }
@@ -119,7 +123,7 @@ final class TreeDetailsViewController: UIViewController {
 
         viewModel.imageLoaderPublisher
             .sink { [weak self] imageLoader in
-                imageLoader?.loadThumbnail { image in
+                imageLoader?.loadHighQualityImage { image in
                     self?.imageView.image = image
                 }
             }
@@ -200,6 +204,7 @@ final class TreeDetailsViewController: UIViewController {
         let textField = TextField()
         textField.textColor = .black
         textField.borderStyle = .roundedRect
+        textField.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
 
         return textField
     }

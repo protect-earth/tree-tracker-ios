@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		853415F025CEEE39006DDAC4 /* LiveUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853415EF25CEEE39006DDAC4 /* LiveUploadViewController.swift */; };
-		853415F325CEEE40006DDAC4 /* LiveUploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853415F225CEEE40006DDAC4 /* LiveUploadViewModel.swift */; };
+		853415F025CEEE39006DDAC4 /* UploadSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853415EF25CEEE39006DDAC4 /* UploadSessionViewController.swift */; };
+		853415F325CEEE40006DDAC4 /* UploadSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853415F225CEEE40006DDAC4 /* UploadSessionViewModel.swift */; };
 		853415FA25CF0947006DDAC4 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853415F925CF0947006DDAC4 /* UIViewController.swift */; };
 		853415FD25CF0957006DDAC4 /* UIEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853415FC25CF0957006DDAC4 /* UIEdgeInsets.swift */; };
 		8534160025CF09CE006DDAC4 /* PHPhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853415FF25CF09CE006DDAC4 /* PHPhotoLibrary.swift */; };
@@ -78,7 +78,7 @@
 		85B839FE25B86F320008E167 /* URLImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839FD25B86F320008E167 /* URLImageLoader.swift */; };
 		85B83A0225B8735F0008E167 /* AnyImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A0125B8735F0008E167 /* AnyImageLoader.swift */; };
 		85B83A0D25B87C0D0008E167 /* BSImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 85B83A0C25B87C0D0008E167 /* BSImagePicker */; };
-		85B83A1525B87E780008E167 /* UploadListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A1425B87E780008E167 /* UploadListViewModel.swift */; };
+		85B83A1525B87E780008E167 /* UploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A1425B87E780008E167 /* UploadViewModel.swift */; };
 		85B83A1825B881EC0008E167 /* LocalTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A1725B881EC0008E167 /* LocalTree.swift */; };
 		85B83A1C25B8AC650008E167 /* EditLocalTreeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A1B25B8AC650008E167 /* EditLocalTreeViewModel.swift */; };
 		85B83A2325B9C1BC0008E167 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A2225B9C1BC0008E167 /* NavigationViewController.swift */; };
@@ -93,6 +93,7 @@
 		85CC02E9261B6E820016E618 /* TableListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CC02E8261B6E820016E618 /* TableListItem.swift */; };
 		85CC02EC261B6EA90016E618 /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CC02EB261B6EA90016E618 /* TextTableViewCell.swift */; };
 		85CC02F1261B76D10016E618 /* EntitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CC02F0261B76D10016E618 /* EntitiesViewModel.swift */; };
+		85CC0304261CC8FE0016E618 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CC0303261CC8FE0016E618 /* LocationManager.swift */; };
 		85DC213C25E0FC8F003F0721 /* ImageCacheInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC213B25E0FC8F003F0721 /* ImageCacheInfo.swift */; };
 		85DC214025E0FC9F003F0721 /* ImageCaching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC213F25E0FC9F003F0721 /* ImageCaching.swift */; };
 		85DC214325E0FCAD003F0721 /* DiskImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC214225E0FCAD003F0721 /* DiskImageCache.swift */; };
@@ -102,8 +103,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		853415EF25CEEE39006DDAC4 /* LiveUploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveUploadViewController.swift; sourceTree = "<group>"; };
-		853415F225CEEE40006DDAC4 /* LiveUploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveUploadViewModel.swift; sourceTree = "<group>"; };
+		853415EF25CEEE39006DDAC4 /* UploadSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadSessionViewController.swift; sourceTree = "<group>"; };
+		853415F225CEEE40006DDAC4 /* UploadSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadSessionViewModel.swift; sourceTree = "<group>"; };
 		853415F925CF0947006DDAC4 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		853415FC25CF0957006DDAC4 /* UIEdgeInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEdgeInsets.swift; sourceTree = "<group>"; };
 		853415FF25CF09CE006DDAC4 /* PHPhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHPhotoLibrary.swift; sourceTree = "<group>"; };
@@ -174,7 +175,7 @@
 		85B839FA25B86F1A0008E167 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		85B839FD25B86F320008E167 /* URLImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImageLoader.swift; sourceTree = "<group>"; };
 		85B83A0125B8735F0008E167 /* AnyImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyImageLoader.swift; sourceTree = "<group>"; };
-		85B83A1425B87E780008E167 /* UploadListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadListViewModel.swift; sourceTree = "<group>"; };
+		85B83A1425B87E780008E167 /* UploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewModel.swift; sourceTree = "<group>"; };
 		85B83A1725B881EC0008E167 /* LocalTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTree.swift; sourceTree = "<group>"; };
 		85B83A1B25B8AC650008E167 /* EditLocalTreeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocalTreeViewModel.swift; sourceTree = "<group>"; };
 		85B83A2225B9C1BC0008E167 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
@@ -189,6 +190,7 @@
 		85CC02E8261B6E820016E618 /* TableListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableListItem.swift; sourceTree = "<group>"; };
 		85CC02EB261B6EA90016E618 /* TextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTableViewCell.swift; sourceTree = "<group>"; };
 		85CC02F0261B76D10016E618 /* EntitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitiesViewModel.swift; sourceTree = "<group>"; };
+		85CC0303261CC8FE0016E618 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		85DC213B25E0FC8F003F0721 /* ImageCacheInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheInfo.swift; sourceTree = "<group>"; };
 		85DC213F25E0FC9F003F0721 /* ImageCaching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCaching.swift; sourceTree = "<group>"; };
 		85DC214225E0FCAD003F0721 /* DiskImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskImageCache.swift; sourceTree = "<group>"; };
@@ -211,13 +213,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		853415ED25CEEE28006DDAC4 /* Live Upload */ = {
+		853415ED25CEEE28006DDAC4 /* Upload Session */ = {
 			isa = PBXGroup;
 			children = (
-				853415EF25CEEE39006DDAC4 /* LiveUploadViewController.swift */,
-				853415F225CEEE40006DDAC4 /* LiveUploadViewModel.swift */,
+				853415EF25CEEE39006DDAC4 /* UploadSessionViewController.swift */,
+				853415F225CEEE40006DDAC4 /* UploadSessionViewModel.swift */,
 			);
-			path = "Live Upload";
+			path = "Upload Session";
 			sourceTree = "<group>";
 		};
 		853ABD492596144900144B0D = {
@@ -299,6 +301,7 @@
 				85B83A0125B8735F0008E167 /* AnyImageLoader.swift */,
 				857BAD9C25B1DCDE005D7D35 /* Defaults.swift */,
 				85792A8525B1D53700BFDA96 /* Environment.swift */,
+				85CC0303261CC8FE0016E618 /* LocationManager.swift */,
 				85763A9325E29CE300CB4ED3 /* Logger.swift */,
 				85B839F725B86F0A0008E167 /* PHAssetManager.swift */,
 				85B839BE25B492550008E167 /* PHImageLoader.swift */,
@@ -312,8 +315,8 @@
 			isa = PBXGroup;
 			children = (
 				85CC02EF261B76C80016E618 /* Entities */,
-				853415ED25CEEE28006DDAC4 /* Live Upload */,
-				85B83A0F25B87E310008E167 /* UploadList */,
+				853415ED25CEEE28006DDAC4 /* Upload Session */,
+				85B83A0F25B87E310008E167 /* Upload */,
 				857BADA225B1FA79005D7D35 /* Details */,
 				857BADA125B1FA71005D7D35 /* Trees */,
 			);
@@ -428,12 +431,12 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		85B83A0F25B87E310008E167 /* UploadList */ = {
+		85B83A0F25B87E310008E167 /* Upload */ = {
 			isa = PBXGroup;
 			children = (
-				85B83A1425B87E780008E167 /* UploadListViewModel.swift */,
+				85B83A1425B87E780008E167 /* UploadViewModel.swift */,
 			);
-			path = UploadList;
+			path = Upload;
 			sourceTree = "<group>";
 		};
 		85CC02EF261B76C80016E618 /* Entities */ = {
@@ -564,7 +567,7 @@
 				85B839C325B4A5280008E167 /* BarButtonItem.swift in Sources */,
 				853ABD8025961EEA00144B0D /* Api.swift in Sources */,
 				85B839FE25B86F320008E167 /* URLImageLoader.swift in Sources */,
-				853415F325CEEE40006DDAC4 /* LiveUploadViewModel.swift in Sources */,
+				853415F325CEEE40006DDAC4 /* UploadSessionViewModel.swift in Sources */,
 				85B839B525B47C230008E167 /* CollectionListItem.swift in Sources */,
 				85B839D225B742510008E167 /* TextFieldModel.swift in Sources */,
 				85B839B125B47C0A0008E167 /* Action.swift in Sources */,
@@ -581,7 +584,7 @@
 				85B839F825B86F0A0008E167 /* PHAssetManager.swift in Sources */,
 				85B839CB25B5F3EC0008E167 /* PHAsset.swift in Sources */,
 				85B839EC25B8661E0008E167 /* Collection.swift in Sources */,
-				85B83A1525B87E780008E167 /* UploadListViewModel.swift in Sources */,
+				85B83A1525B87E780008E167 /* UploadViewModel.swift in Sources */,
 				85792A7625B0A35A00BFDA96 /* UIImage.swift in Sources */,
 				85792A7A25B0A36B00BFDA96 /* URL.swift in Sources */,
 				85B839DD25B74FE00008E167 /* KeyboardAccessory.swift in Sources */,
@@ -605,6 +608,7 @@
 				85B839CE25B5F8F30008E167 /* UIAlertController.swift in Sources */,
 				859F62C025C1C436005E61F7 /* AirtableImageThumbnail.swift in Sources */,
 				859F62F225C5A7B8005E61F7 /* Cancellable.swift in Sources */,
+				85CC0304261CC8FE0016E618 /* LocationManager.swift in Sources */,
 				859F62D125C1C62D005E61F7 /* AirtableSupervisor.swift in Sources */,
 				853ABD562596144900144B0D /* AppDelegate.swift in Sources */,
 				857BADA825B1FA93005D7D35 /* TreeDetailsViewController.swift in Sources */,
@@ -631,7 +635,7 @@
 				8534160025CF09CE006DDAC4 /* PHPhotoLibrary.swift in Sources */,
 				853415FD25CF0957006DDAC4 /* UIEdgeInsets.swift in Sources */,
 				85B83A3025B9C5E90008E167 /* JSONEncoder.swift in Sources */,
-				853415F025CEEE39006DDAC4 /* LiveUploadViewController.swift in Sources */,
+				853415F025CEEE39006DDAC4 /* UploadSessionViewController.swift in Sources */,
 				85792A8625B1D53700BFDA96 /* Environment.swift in Sources */,
 				85DC214025E0FC9F003F0721 /* ImageCaching.swift in Sources */,
 				8563C263260BBC7A00752793 /* Secrets.swift in Sources */,
