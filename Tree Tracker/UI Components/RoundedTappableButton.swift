@@ -18,5 +18,6 @@ final class RoundedTappableButton: TappableButton {
         layer.borderColor = UIColor(named: "SecondaryColor")?.cgColor
         setTitleColor(.black, for: .normal)
         contentEdgeInsets = UIEdgeInsets(top: 10.0, left: 16.0, bottom: 10.0, right: 16.0)
+        heightAnchor.constraint(equalToConstant: 48.0).isActive = true
     }
 }

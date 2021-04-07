@@ -9,6 +9,7 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
     private lazy var actionButton: RoundedTappableButton = {
         let button = RoundedTappableButton()
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.font = .systemFont(ofSize: 18.0)
 
         return button
     }()
@@ -33,7 +34,7 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
         stackView.axis = .vertical
         stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
         stackView.setContentCompressionResistancePriority(.required, for: .vertical)
-        stackView.spacing = 8.0
+        stackView.spacing = 16.0
 
         return stackView
     }()
@@ -139,6 +140,7 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
         textField.textColor = .black
         textField.borderStyle = .roundedRect
         textField.widthAnchor.constraint(equalToConstant: 250.0).isActive = true
+        textField.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
 
         return textField
     }

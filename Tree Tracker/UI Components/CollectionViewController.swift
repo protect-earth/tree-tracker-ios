@@ -33,6 +33,7 @@ final class CollectionViewController: UIViewController {
     private let actionButton: TappableButton = {
         let button = RoundedTappableButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.font = .systemFont(ofSize: 18.0)
 
         return button
     }()
