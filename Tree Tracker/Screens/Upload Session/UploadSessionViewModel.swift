@@ -58,7 +58,7 @@ final class UploadSessionViewModel {
                   text: supervisor?.name,
                   input: .keyboard(.selection(
                                     ["--"] + self.supervisors.map(\.name),
-                                    initialIndexSelected: supervisors.firstIndex { $0.id == supervisor?.id },
+                                    initialIndexSelected: supervisors.firstIndex { $0.id == supervisor?.id }.map { $0 + 1 },
                                     indexSelected: { [weak self] selectedSupervisor in
                                         supervisor = self?.supervisors[safe: selectedSupervisor - 1]
                                         self?.presentContent(supervisor: supervisor, site: site)
@@ -70,7 +70,7 @@ final class UploadSessionViewModel {
                   text: site?.name,
                   input: .keyboard(.selection(
                                     ["--"] + self.sites.map(\.name),
-                                    initialIndexSelected: sites.firstIndex { $0.id == site?.id },
+                                    initialIndexSelected: sites.firstIndex { $0.id == site?.id }.map { $0 + 1 },
                                     indexSelected: { [weak self] selectedSite in
                                         site = self?.sites[safe: selectedSite - 1]
                                         self?.presentContent(supervisor: supervisor, site: site)
