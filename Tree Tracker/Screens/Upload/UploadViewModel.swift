@@ -149,7 +149,7 @@ final class UploadViewModel: CollectionViewModel {
                     switch result {
                     case let .success(airtableTree):
                         self?.logger.log(.upload, "Successfully uploaded tree.")
-                        self?.database.save([airtableTree])
+                        self?.database.save([airtableTree], sentFromThisDevice: true)
                         self?.database.remove(tree: tree) {
                             self?.presentTreesFromDatabase()
                             self?.uploadLocalTreesRecursively()
