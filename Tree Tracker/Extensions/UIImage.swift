@@ -19,6 +19,7 @@ extension UIImage {
 
 extension UIImage {
     static var uploadIcon: UIImage { UIImage(named: "uploadIcon")! }
+    static var historyIcon: UIImage { UIImage(named: "historyIcon")! }
     static var listIcon: UIImage { UIImage(named: "listIcon")! }
     static var cameraIcon: UIImage { UIImage(named: "cameraIcon")! }
 }

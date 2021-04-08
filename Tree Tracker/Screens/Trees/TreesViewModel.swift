@@ -76,7 +76,7 @@ final class TreesViewModel: CollectionViewModel {
         api.treesPlanted(offset: offset) { [weak self] result in
             switch result {
             case let .success(paginatedResults):
-                self?.database.save(paginatedResults.records)
+                self?.database.save(paginatedResults.records, sentFromThisDevice: false)
                 if let offset = paginatedResults.offset {
                     self?.lazilyLoadAllRemoteTreesIfPossible(offset: offset)
                 } else {

@@ -19,6 +19,7 @@
 		853ABD7A25961C6500144B0D /* License.md in Resources */ = {isa = PBXBuildFile; fileRef = 853ABD7925961C6500144B0D /* License.md */; };
 		853ABD8025961EEA00144B0D /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853ABD7F25961EEA00144B0D /* Api.swift */; };
 		853ABD8925961F9700144B0D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853ABD8825961F9700144B0D /* Constants.swift */; };
+		8547FC97261E19320062B82D /* UploadHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8547FC96261E19320062B82D /* UploadHistoryViewModel.swift */; };
 		8563C263260BBC7A00752793 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563C262260BBC7A00752793 /* Secrets.swift */; };
 		85763A9425E29CE300CB4ED3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85763A9325E29CE300CB4ED3 /* Logger.swift */; };
 		85763A9D25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85763A9C25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift */; };
@@ -118,6 +119,7 @@
 		853ABD7C25961C6D00144B0D /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		853ABD7F25961EEA00144B0D /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		853ABD8825961F9700144B0D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8547FC96261E19320062B82D /* UploadHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadHistoryViewModel.swift; sourceTree = "<group>"; };
 		8563C262260BBC7A00752793 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		85763A9325E29CE300CB4ED3 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		85763A9C25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatingUIImagePickerController.swift; sourceTree = "<group>"; };
@@ -271,6 +273,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8547FC95261E191A0062B82D /* Upload History */ = {
+			isa = PBXGroup;
+			children = (
+				8547FC96261E19320062B82D /* UploadHistoryViewModel.swift */,
+			);
+			path = "Upload History";
+			sourceTree = "<group>";
+		};
 		85792A7425B0A35100BFDA96 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,6 +326,7 @@
 			children = (
 				85CC02EF261B76C80016E618 /* Entities */,
 				853415ED25CEEE28006DDAC4 /* Upload Session */,
+				8547FC95261E191A0062B82D /* Upload History */,
 				85B83A0F25B87E310008E167 /* Upload */,
 				857BADA225B1FA79005D7D35 /* Details */,
 				857BADA125B1FA71005D7D35 /* Trees */,
@@ -647,6 +658,7 @@
 				859F62C325C1C44C005E61F7 /* AirtableImage.swift in Sources */,
 				857BADAC25B1FAAA005D7D35 /* UploadListFlowViewController.swift in Sources */,
 				859F62EF25C48FD8005E61F7 /* AlertModel.swift in Sources */,
+				8547FC97261E19320062B82D /* UploadHistoryViewModel.swift in Sources */,
 				85B839BB25B4814F0008E167 /* ListSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

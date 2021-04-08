@@ -17,10 +17,20 @@ final class Database {
         self.dbQueue = try? DatabaseQueue(path: Constants.databaseUrl.path)
         self.logger = logger
 
-        try? createTablesIfNeeded()
+        try? createTablesAndMigrateIfNeeded()
     }
 
-    private func createTablesIfNeeded() throws {
+    private func createTablesAndMigrateIfNeeded() throws {
+        var migrator = DatabaseMigrator()
+        migrator.registerMigration("v1") { db in
+            try db.alter(table: RemoteTree.databaseTableName) { table in
+                let column = table.add(column: RemoteTree.CodingKeys.sentFromThisDevice.stringValue, .boolean)
+                column.defaults(to: false)
+            }
+        }
+        
+        var needsMigration: Bool = false
+        
         try dbQueue?.write { db in
             if try db.tableExists(RemoteTree.databaseTableName) == false {
                 try db.create(table: RemoteTree.databaseTableName) { table in
@@ -36,6 +46,7 @@ final class Database {
                     table.column(RemoteTree.CodingKeys.imageMd5.stringValue, .text)
                     table.column(RemoteTree.CodingKeys.uploadDate.stringValue, .date)
                     table.column(RemoteTree.CodingKeys.createDate.stringValue, .date)
+                    table.column(RemoteTree.CodingKeys.sentFromThisDevice.stringValue, .boolean)
 
                     table.primaryKey([RemoteTree.CodingKeys.id.stringValue])
                 }
@@ -83,13 +94,23 @@ final class Database {
                     table.primaryKey([Species.CodingKeys.id.stringValue])
                 }
             }
+            
+            if try !migrator.hasCompletedMigrations(db) {
+                needsMigration = true
+            }
+        }
+        
+        if needsMigration, let dbQueue = dbQueue {
+            logger.log(.database, "Needs migration - starting...")
+            try migrator.migrate(dbQueue)
+            logger.log(.database, "Migration finished succesfully!")
         }
     }
 
-    func save(_ trees: [AirtableTree]) {
+    func save(_ trees: [AirtableTree], sentFromThisDevice: Bool) {
         try? dbQueue?.write { db in
             trees.forEach { tree in
-                let tree = tree.toRemoteTree()
+                let tree = tree.toRemoteTree(sentFromThisDevice: sentFromThisDevice)
                 do {
                     let potentialTree = try RemoteTree
                         .filter(key: tree.id)
@@ -200,6 +221,15 @@ final class Database {
     func fetchRemoteTrees(_ completion: @escaping ([RemoteTree]) -> Void) {
         dbQueue?.read { db in
             let trees = try? RemoteTree.fetchAll(db)
+            DispatchQueue.main.async {
+                completion(trees ?? [])
+            }
+        }
+    }
+    
+    func fetchUploadedTrees(_ completion: @escaping ([RemoteTree]) -> Void) {
+        dbQueue?.read { db in
+            let trees = try? RemoteTree.filter(Column(RemoteTree.CodingKeys.sentFromThisDevice.rawValue) == true).fetchAll(db)
             DispatchQueue.main.async {
                 completion(trees ?? [])
             }
