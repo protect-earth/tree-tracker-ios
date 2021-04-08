@@ -2,7 +2,7 @@
 
 ## Next
 - Added "Upload History" screen (from now on we will move trees added by this device to the History tab)
-.- Replaced "Tree list" screen with "Entities" screen.
+- Replaced "Tree list" screen with "Entities" screen.
 - Replaced Secrets.xcconfig with Pouch config.
 
 ## 0.5.1
