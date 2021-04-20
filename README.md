@@ -3,8 +3,14 @@ App for managing trees.
 
 ## Prerequisites
 
-### Airtable setup
-TBD...
+### Airtable tables
+Our current API type expects that you have 4 tables:
+
+| Trees Planted |
+| ID | Notes | Image | Species | Supervisor | Sites | Coordinates | What3Words | CreatedDate | UploadedDate | ImageSignature |
+| Auto Number | Long text | Attachment | Link to Species table  | Link to Supervisors table | Link to Sites table | Text | Text | Date and time | Date and time | Text |
+| number | string | array of attachment objects | array of record IDs (strings) | array of record IDs (strings) | array of record IDs (strings) | string | string | string (ISO 8601 formatted date) | string (ISO 8601 formatted date) |
+
 
 ### Cloudinary setup
 Because Airtable doesn't support uploading images yet, we have to use an external provider to do so instead. We tried Imgur, but the API is really not user friendly due to its auth requisites. For now, we are using Cloudinary but it might change in the future.
