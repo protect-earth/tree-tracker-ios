@@ -6,11 +6,32 @@ App for managing trees.
 ### Airtable tables
 Our current API type expects that you have 4 tables:
 
-| Trees Planted |
+#### Trees Planted
 | ID | Notes | Image | Species | Supervisor | Sites | Coordinates | What3Words | CreatedDate | UploadedDate | ImageSignature |
+| - | - | - | - | - | - | - | - | - | - | - |
 | Auto Number | Long text | Attachment | Link to Species table  | Link to Supervisors table | Link to Sites table | Text | Text | Date and time | Date and time | Text |
-| number | string | array of attachment objects | array of record IDs (strings) | array of record IDs (strings) | array of record IDs (strings) | string | string | string (ISO 8601 formatted date) | string (ISO 8601 formatted date) |
+| number | string | array of attachment objects | array of record IDs (strings) | array of record IDs (strings) | array of record IDs (strings) | string | string | string (ISO 8601 formatted date) | string (ISO 8601 formatted date) | string |
 
+#### Species
+_(notice there is no "ID" field - this is because we use the auto-generated ID through Airtable, the "ID" in the column above is a custom Auto Number field added manually)_
+| Name |
+| - |
+| Long text |
+| Long text |
+
+#### Supervisors
+_(the same structure as above)_
+| Name |
+| - |
+| Long text |
+| Long text |
+
+#### Sites
+_(the same structure as above)_
+| Name |
+| - |
+| Long text |
+| Long text |
 
 ### Cloudinary setup
 Because Airtable doesn't support uploading images yet, we have to use an external provider to do so instead. We tried Imgur, but the API is really not user friendly due to its auth requisites. For now, we are using Cloudinary but it might change in the future.
