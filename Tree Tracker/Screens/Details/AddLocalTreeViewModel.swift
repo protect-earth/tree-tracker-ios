@@ -36,6 +36,7 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
     private let api: Api
     private let database: Database
     private let defaults: Defaults
+    private let recentSpeciesManager: RecentSpeciesManaging
     private let initialAssetCount: Int
     private var currentAsset: Int
     private var assets: [PHAsset]
@@ -46,10 +47,11 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
     private var supervisors: [Supervisor] = []
     private weak var navigation: TreeDetailsNavigating?
 
-    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, defaults: Defaults = CurrentEnvironment.defaults, assets: [PHAsset], staticSupervisor: Supervisor?, staticSite: Site?, navigation: TreeDetailsNavigating) {
+    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, defaults: Defaults = CurrentEnvironment.defaults, recentSpeciesManager: RecentSpeciesManaging = CurrentEnvironment.recentSpeciesManager, assets: [PHAsset], staticSupervisor: Supervisor?, staticSite: Site?, navigation: TreeDetailsNavigating) {
         self.api = api
         self.database = database
         self.defaults = defaults
+        self.recentSpeciesManager = recentSpeciesManager
         self.navigation = navigation
         self.assets = assets
         self.staticSupervisor = staticSupervisor
@@ -112,6 +114,9 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
         var site = site ?? defaultSite
         var notes = notes ?? ""
         var coordinates = coordinates ?? asset.stringifyCoordinates()
+        
+        let recentSpecies = recentSpeciesManager.fetch().filter { self.species.contains($0) }
+        let speciesWithRecentSpecies = recentSpecies + [Species(id: "", name: "--")] + self.species
 
         var fields: [TextFieldModel] = [
             .init(placeholder: "Coordinates",
@@ -122,10 +127,10 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
             .init(placeholder: "Species",
                   text: species?.name,
                   input: .keyboard(.selection(
-                                    ["--"] + self.species.map(\.name),
-                                    initialIndexSelected: self.species.firstIndex { $0.id == species?.id }.map { $0 + 1 },
+                                    speciesWithRecentSpecies.map(\.name),
+                                    initialIndexSelected: speciesWithRecentSpecies.firstIndex { $0.id == species?.id },
                                     indexSelected: { [weak self] selectedSpecies in
-                                        species = self?.species[safe: selectedSpecies - 1]
+                                        species = speciesWithRecentSpecies[safe: selectedSpecies]
                                         self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
                                     }),
                                    .done()),
@@ -170,7 +175,7 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
                             onChange: { notes = $0 }))
         self.fields = fields
 
-        if let species = species, let site = staticSite ?? site, let supervisor = staticSupervisor ?? supervisor {
+        if let species = species, species.id.isNotEmpty, let site = staticSite ?? site, let supervisor = staticSupervisor ?? supervisor {
             saveButton = ButtonModel(
                 title: .text("Save"),
                 action: { [weak self] in
@@ -191,6 +196,8 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
         defaults[.speciesId] = species.id
         defaults[.supervisorId] = supervisor.id
         defaults[.siteId] = site.id
+        
+        recentSpeciesManager.add(species)
 
         let tree = LocalTree(phImageId: asset.localIdentifier, createDate: asset.creationDate, supervisor: supervisor.id, species: species.id, site: site.id, what3words: nil, notes: notes, coordinates: coordinates, imageMd5: nil)
         database.save([tree])
@@ -198,4 +205,3 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
         presentNextAssetToFillOrComplete()
     }
 }
-

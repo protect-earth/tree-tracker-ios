@@ -1,7 +1,7 @@
 import Foundation
 import GRDB
 
-struct Species: Codable, FetchableRecord, PersistableRecord, TableRecord, Identifiable {
+struct Species: Codable, Equatable, Identifiable, FetchableRecord, PersistableRecord, TableRecord {
     let id: String
     let name: String
 
