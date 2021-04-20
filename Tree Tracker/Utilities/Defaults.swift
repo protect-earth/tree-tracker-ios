@@ -23,8 +23,12 @@ protocol DefaultsProviding {
 }
 
 struct Defaults: DefaultsProviding {
-    private let userDefaults = UserDefaults.standard
+    let userDefaults: UserDefaults
 
+    init(userDefaults: UserDefaults = .standard) {
+        self.userDefaults = userDefaults
+    }
+    
     subscript<T: Codable>(_ key: DefaultsKey<T>) -> T? {
         get {
             if T.self is String.Type {
