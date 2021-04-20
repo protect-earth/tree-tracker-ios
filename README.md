@@ -59,14 +59,5 @@ Finally, in the root folder, run `pouch`, which should generate a file at `./Tre
 4. You'll most likely need to change bundle identifier of the project. Basically because the project is set to auto-sign, each person that wants to run this on the device would need to update the bundle to be a unique id not registered before. E.g. from `com.protect.earth.Tree-Tracker` to `com.mynickname.Tree-Tracker`.
 5. When running on a device, you'll also need to trust the certificate in Settings -> General -> Profiles, otherwise you'll see an error after installing the build and before running it.
 
-## Todo
-- [ ] Show errors for when image upload fails (details should show when tapped on a tree cell).
-- [ ] List of all trees should be grouped. It can be grouped by Site, but eventually it would be great to have a Group By button that would change the default grouping option.
-- [ ] Better UI for editing tree details form
-- [ ] Better UI for tree cells
-- [ ] Edit uploaded tree
-- [ ] Map picker when tapping on coordinates so we can adjust it
-- [ ] Settings screen (enable/disable network fetching, credits for OSS & Icons)
-
 ## License
 [MIT](License.md)
