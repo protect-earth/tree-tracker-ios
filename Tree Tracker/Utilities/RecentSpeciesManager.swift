@@ -2,7 +2,7 @@ import Foundation
 
 protocol RecentSpeciesManaging {
     func fetch() -> [Species]
-    func add(_ species: Species)
+    func add(_ species: Species, timestamp: Date)
     func clearAll()
 }
 
@@ -32,11 +32,11 @@ final class RecentSpeciesManager: RecentSpeciesManaging {
         return filteredRecentSpecies.map(\.species)
     }
     
-    func add(_ species: Species) {
+    func add(_ species: Species, timestamp: Date) {
         var recentSpecies = defaults[.recentSpecies] ?? []
         guard !recentSpecies.contains(where: { $0.species == species }) else { return }
         
-        recentSpecies.append(RecentSpecies(timestamp: Date(), species: species))
+        recentSpecies.append(RecentSpecies(timestamp: timestamp, species: species))
         defaults[.recentSpecies] = recentSpecies
     }
     

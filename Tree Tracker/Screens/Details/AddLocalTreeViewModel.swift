@@ -197,7 +197,7 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
         defaults[.supervisorId] = supervisor.id
         defaults[.siteId] = site.id
         
-        recentSpeciesManager.add(species)
+        recentSpeciesManager.add(species, timestamp: .now)
 
         let tree = LocalTree(phImageId: asset.localIdentifier, createDate: asset.creationDate, supervisor: supervisor.id, species: species.id, site: site.id, what3words: nil, notes: notes, coordinates: coordinates, imageMd5: nil)
         database.save([tree])

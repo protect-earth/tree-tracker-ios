@@ -11,6 +11,7 @@
 		851DAC1D262B4B0B0087E1D4 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DAC1C262B4B0B0087E1D4 /* Date.swift */; };
 		851DAC20262C55FD0087E1D4 /* RecentSpeciesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DAC1F262C55FD0087E1D4 /* RecentSpeciesManager.swift */; };
 		851DAC36262F2FE30087E1D4 /* RecentSpeciesManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DAC35262F2FE30087E1D4 /* RecentSpeciesManagerTests.swift */; };
+		851DAC3A262F35B80087E1D4 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DAC39262F35B80087E1D4 /* TestHelpers.swift */; };
 		853415F025CEEE39006DDAC4 /* UploadSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853415EF25CEEE39006DDAC4 /* UploadSessionViewController.swift */; };
 		853415F325CEEE40006DDAC4 /* UploadSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853415F225CEEE40006DDAC4 /* UploadSessionViewModel.swift */; };
 		853415FA25CF0947006DDAC4 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853415F925CF0947006DDAC4 /* UIViewController.swift */; };
@@ -124,6 +125,7 @@
 		851DAC27262F2FA70087E1D4 /* Unit Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		851DAC2B262F2FA70087E1D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		851DAC35262F2FE30087E1D4 /* RecentSpeciesManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSpeciesManagerTests.swift; sourceTree = "<group>"; };
+		851DAC39262F35B80087E1D4 /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		853415EF25CEEE39006DDAC4 /* UploadSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadSessionViewController.swift; sourceTree = "<group>"; };
 		853415F225CEEE40006DDAC4 /* UploadSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadSessionViewModel.swift; sourceTree = "<group>"; };
 		853415F925CF0947006DDAC4 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 			children = (
 				851DAC2B262F2FA70087E1D4 /* Info.plist */,
 				851DAC35262F2FE30087E1D4 /* RecentSpeciesManagerTests.swift */,
+				851DAC39262F35B80087E1D4 /* TestHelpers.swift */,
 			);
 			path = "Unit Tests";
 			sourceTree = "<group>";
@@ -647,6 +650,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				851DAC36262F2FE30087E1D4 /* RecentSpeciesManagerTests.swift in Sources */,
+				851DAC3A262F35B80087E1D4 /* TestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
