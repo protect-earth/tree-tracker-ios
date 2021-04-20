@@ -60,5 +60,8 @@ Finally, in the root folder, run `pouch`, which should generate a file at `./Tre
 4. You'll most likely need to change bundle identifier of the project. Basically because the project is set to auto-sign, each person that wants to run this on the device would need to update the bundle to be a unique id not registered before. E.g. from `com.protect.earth.Tree-Tracker` to `com.mynickname.Tree-Tracker`.
 5. When running on a device, you'll also need to trust the certificate in Settings -> General -> Profiles, otherwise you'll see an error after installing the build and before running it.
 
+## Contributing
+Please feel free to create issues and PRs for anything, really. However, bear in mind that this app is created for specific audience so PRs with functionality that is out of scope might not be merged (if you feel like the PR you're working on is questionable, please feel free to reach out via Issues).
+
 ## License
 [MIT](License.md)
