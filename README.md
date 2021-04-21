@@ -1,5 +1,5 @@
 #  Tree Tracker
-App for managing trees.
+App for taking pictures of trees and storing that on a remote server. Mainly used by people who plant trees so they don't have to manually type coordinates with pictures they took and then try to guess the site/species afterwards.
 
 ## Prerequisites
 

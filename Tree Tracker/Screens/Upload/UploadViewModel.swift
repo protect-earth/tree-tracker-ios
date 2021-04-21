@@ -142,7 +142,7 @@ final class UploadViewModel: CollectionViewModel {
             self?.currentUpload = self?.api.upload(
                 tree: tree,
                 progress: { progress in
-                    NSLog("progress: \(progress)")
+                    self?.logger.log(.upload, "Progress: \(progress)")
                     self?.update(uploadProgress: progress, for: tree)
                 },
                 completion: { result in
