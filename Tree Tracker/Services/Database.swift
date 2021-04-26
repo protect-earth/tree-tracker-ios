@@ -219,7 +219,7 @@ final class Database {
     }
 
     func fetchRemoteTrees(_ completion: @escaping ([RemoteTree]) -> Void) {
-        dbQueue?.read { db in
+        try? dbQueue?.read { db in
             let trees = try? RemoteTree.fetchAll(db)
             DispatchQueue.main.async {
                 completion(trees ?? [])
@@ -228,7 +228,7 @@ final class Database {
     }
     
     func fetchUploadedTrees(_ completion: @escaping ([RemoteTree]) -> Void) {
-        dbQueue?.read { db in
+        try? dbQueue?.read { db in
             let trees = try? RemoteTree.filter(Column(RemoteTree.CodingKeys.sentFromThisDevice.rawValue) == true).fetchAll(db)
             DispatchQueue.main.async {
                 completion(trees ?? [])
@@ -237,7 +237,7 @@ final class Database {
     }
 
     func fetchLocalTrees(_ completion: @escaping ([LocalTree]) -> Void) {
-        dbQueue?.read { db in
+        try? dbQueue?.read { db in
             let trees = try? LocalTree.fetchAll(db)
             DispatchQueue.main.async {
                 completion(trees ?? [])
@@ -246,7 +246,7 @@ final class Database {
     }
 
     func fetch<T: Identifiable & TableRecord & FetchableRecord & PersistableRecord>(_ type: T, completion: @escaping ([T]) -> Void) {
-        dbQueue?.read { db in
+        try? dbQueue?.read { db in
             let models = try? T.fetchAll(db)
             DispatchQueue.main.async {
                 completion(models ?? [])
@@ -257,7 +257,7 @@ final class Database {
     func fetch<T, U>(_ type1: T.Type, _ type2: U.Type, completion: @escaping ([T], [U]) -> Void) where
         T: Identifiable & TableRecord & FetchableRecord & PersistableRecord,
         U: Identifiable & TableRecord & FetchableRecord & PersistableRecord {
-        dbQueue?.read { db in
+        try? dbQueue?.read { db in
             let models1 = (try? T.fetchAll(db)) ?? []
             let models2 = (try? U.fetchAll(db)) ?? []
             DispatchQueue.main.async {
@@ -270,7 +270,7 @@ final class Database {
         T: Identifiable & TableRecord & FetchableRecord & PersistableRecord,
         U: Identifiable & TableRecord & FetchableRecord & PersistableRecord,
         V: Identifiable & TableRecord & FetchableRecord & PersistableRecord {
-        dbQueue?.read { db in
+        try? dbQueue?.read { db in
             let models1 = (try? T.fetchAll(db)) ?? []
             let models2 = (try? U.fetchAll(db)) ?? []
             let models3 = (try? V.fetchAll(db)) ?? []
