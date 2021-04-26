@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		851DAC1A262B4A9A0087E1D4 /* RecentSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DAC19262B4A9A0087E1D4 /* RecentSpecies.swift */; };
+		851DAC1D262B4B0B0087E1D4 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DAC1C262B4B0B0087E1D4 /* Date.swift */; };
+		851DAC20262C55FD0087E1D4 /* RecentSpeciesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DAC1F262C55FD0087E1D4 /* RecentSpeciesManager.swift */; };
+		851DAC36262F2FE30087E1D4 /* RecentSpeciesManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DAC35262F2FE30087E1D4 /* RecentSpeciesManagerTests.swift */; };
+		851DAC3A262F35B80087E1D4 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DAC39262F35B80087E1D4 /* TestHelpers.swift */; };
 		853415F025CEEE39006DDAC4 /* UploadSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853415EF25CEEE39006DDAC4 /* UploadSessionViewController.swift */; };
 		853415F325CEEE40006DDAC4 /* UploadSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853415F225CEEE40006DDAC4 /* UploadSessionViewModel.swift */; };
 		853415FA25CF0947006DDAC4 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853415F925CF0947006DDAC4 /* UIViewController.swift */; };
@@ -102,7 +107,24 @@
 		85E0E06225B35744009D8FC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E06125B35744009D8FC0 /* UIView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		851DAC2C262F2FA70087E1D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 853ABD4A2596144900144B0D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 853ABD512596144900144B0D;
+			remoteInfo = "Tree Tracker";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		851DAC19262B4A9A0087E1D4 /* RecentSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSpecies.swift; sourceTree = "<group>"; };
+		851DAC1C262B4B0B0087E1D4 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		851DAC1F262C55FD0087E1D4 /* RecentSpeciesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSpeciesManager.swift; sourceTree = "<group>"; };
+		851DAC27262F2FA70087E1D4 /* Unit Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		851DAC2B262F2FA70087E1D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		851DAC35262F2FE30087E1D4 /* RecentSpeciesManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSpeciesManagerTests.swift; sourceTree = "<group>"; };
+		851DAC39262F35B80087E1D4 /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		853415EF25CEEE39006DDAC4 /* UploadSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadSessionViewController.swift; sourceTree = "<group>"; };
 		853415F225CEEE40006DDAC4 /* UploadSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadSessionViewModel.swift; sourceTree = "<group>"; };
 		853415F925CF0947006DDAC4 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
@@ -200,6 +222,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		851DAC24262F2FA70087E1D4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		853ABD4F2596144900144B0D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -213,6 +242,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		851DAC28262F2FA70087E1D4 /* Unit Tests */ = {
+			isa = PBXGroup;
+			children = (
+				851DAC2B262F2FA70087E1D4 /* Info.plist */,
+				851DAC35262F2FE30087E1D4 /* RecentSpeciesManagerTests.swift */,
+				851DAC39262F35B80087E1D4 /* TestHelpers.swift */,
+			);
+			path = "Unit Tests";
+			sourceTree = "<group>";
+		};
 		853415ED25CEEE28006DDAC4 /* Upload Session */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +268,7 @@
 				853ABD7925961C6500144B0D /* License.md */,
 				853ABD7C25961C6D00144B0D /* Readme.md */,
 				853ABD542596144900144B0D /* Tree Tracker */,
+				851DAC28262F2FA70087E1D4 /* Unit Tests */,
 				853ABD532596144900144B0D /* Products */,
 				853ABD8325961EFC00144B0D /* Frameworks */,
 			);
@@ -238,6 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				853ABD522596144900144B0D /* Tree Tracker.app */,
+				851DAC27262F2FA70087E1D4 /* Unit Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -284,6 +325,7 @@
 			children = (
 				85B839EB25B8661E0008E167 /* Collection.swift */,
 				85B83A3725B9D9C40008E167 /* Data.swift */,
+				851DAC1C262B4B0B0087E1D4 /* Date.swift */,
 				85B83A2C25B9C5DB0008E167 /* DateFormatter.swift */,
 				85B83A2925B9C5CB0008E167 /* JSONDecoder.swift */,
 				85B83A2F25B9C5E90008E167 /* JSONEncoder.swift */,
@@ -313,8 +355,9 @@
 				85763A9325E29CE300CB4ED3 /* Logger.swift */,
 				85B839F725B86F0A0008E167 /* PHAssetManager.swift */,
 				85B839BE25B492550008E167 /* PHImageLoader.swift */,
-				85B839FD25B86F320008E167 /* URLImageLoader.swift */,
+				851DAC1F262C55FD0087E1D4 /* RecentSpeciesManager.swift */,
 				85C781A025CC744E0034292D /* ScreenLockManager.swift */,
+				85B839FD25B86F320008E167 /* URLImageLoader.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -408,6 +451,7 @@
 				859F62CA25C1C5AA005E61F7 /* Database */,
 				859F62CB25C1C5B5005E61F7 /* UI */,
 				85B839B025B47C0A0008E167 /* Action.swift */,
+				851DAC19262B4A9A0087E1D4 /* RecentSpecies.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -484,6 +528,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		851DAC26262F2FA70087E1D4 /* Unit Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 851DAC2E262F2FA70087E1D4 /* Build configuration list for PBXNativeTarget "Unit Tests" */;
+			buildPhases = (
+				851DAC23262F2FA70087E1D4 /* Sources */,
+				851DAC24262F2FA70087E1D4 /* Frameworks */,
+				851DAC25262F2FA70087E1D4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				851DAC2D262F2FA70087E1D4 /* PBXTargetDependency */,
+			);
+			name = "Unit Tests";
+			productName = "Unit Tests";
+			productReference = 851DAC27262F2FA70087E1D4 /* Unit Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		853ABD512596144900144B0D /* Tree Tracker */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 853ABD662596144A00144B0D /* Build configuration list for PBXNativeTarget "Tree Tracker" */;
@@ -512,9 +574,15 @@
 		853ABD4A2596144900144B0D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1220;
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1220;
+				ORGANIZATIONNAME = "Protect Earth";
 				TargetAttributes = {
+					851DAC26262F2FA70087E1D4 = {
+						CreatedOnToolsVersion = 12.4;
+						LastSwiftMigration = 1240;
+						TestTargetID = 853ABD512596144900144B0D;
+					};
 					853ABD512596144900144B0D = {
 						CreatedOnToolsVersion = 12.2;
 					};
@@ -539,11 +607,19 @@
 			projectRoot = "";
 			targets = (
 				853ABD512596144900144B0D /* Tree Tracker */,
+				851DAC26262F2FA70087E1D4 /* Unit Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		851DAC25262F2FA70087E1D4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		853ABD502596144900144B0D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -558,6 +634,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		851DAC23262F2FA70087E1D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				851DAC36262F2FE30087E1D4 /* RecentSpeciesManagerTests.swift in Sources */,
+				851DAC3A262F35B80087E1D4 /* TestHelpers.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		853ABD4E2596144900144B0D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -583,6 +668,7 @@
 				85B839B825B47C3F0008E167 /* TreeCollectionViewCell.swift in Sources */,
 				85B839F825B86F0A0008E167 /* PHAssetManager.swift in Sources */,
 				85B839CB25B5F3EC0008E167 /* PHAsset.swift in Sources */,
+				851DAC1D262B4B0B0087E1D4 /* Date.swift in Sources */,
 				85B839EC25B8661E0008E167 /* Collection.swift in Sources */,
 				85B83A1525B87E780008E167 /* UploadViewModel.swift in Sources */,
 				85792A7625B0A35A00BFDA96 /* UIImage.swift in Sources */,
@@ -605,6 +691,7 @@
 				859F62FC25C70F29005E61F7 /* CollectionViewController.swift in Sources */,
 				85792A9225B1D5A500BFDA96 /* ButtonModel.swift in Sources */,
 				85B839CE25B5F8F30008E167 /* UIAlertController.swift in Sources */,
+				851DAC20262C55FD0087E1D4 /* RecentSpeciesManager.swift in Sources */,
 				859F62C025C1C436005E61F7 /* AirtableImageThumbnail.swift in Sources */,
 				859F62F225C5A7B8005E61F7 /* Cancellable.swift in Sources */,
 				85CC0304261CC8FE0016E618 /* LocationManager.swift in Sources */,
@@ -620,6 +707,7 @@
 				859F62D925C2215D005E61F7 /* Site.swift in Sources */,
 				85792A7D25B0A3E100BFDA96 /* Database.swift in Sources */,
 				85E0E06225B35744009D8FC0 /* UIView.swift in Sources */,
+				851DAC1A262B4A9A0087E1D4 /* RecentSpecies.swift in Sources */,
 				857BADA425B1FA87005D7D35 /* AddLocalTreeViewModel.swift in Sources */,
 				859F62E025C228AE005E61F7 /* KeyedContainer.swift in Sources */,
 				85B83A2625B9C1D50008E167 /* MainFlowViewController.swift in Sources */,
@@ -653,6 +741,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		851DAC2D262F2FA70087E1D4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 853ABD512596144900144B0D /* Tree Tracker */;
+			targetProxy = 851DAC2C262F2FA70087E1D4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		853ABD602596144A00144B0D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -665,6 +761,51 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		851DAC2F262F2FA70087E1D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K5RUKV288P;
+				INFOPLIST_FILE = "Unit Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.protect.earth.Tree-Tracker.Unit-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tree Tracker.app/Tree Tracker";
+			};
+			name = Debug;
+		};
+		851DAC30262F2FA70087E1D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K5RUKV288P;
+				INFOPLIST_FILE = "Unit Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.protect.earth.Tree-Tracker.Unit-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tree Tracker.app/Tree Tracker";
+			};
+			name = Release;
+		};
 		853ABD642596144A00144B0D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -826,6 +967,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		851DAC2E262F2FA70087E1D4 /* Build configuration list for PBXNativeTarget "Unit Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				851DAC2F262F2FA70087E1D4 /* Debug */,
+				851DAC30262F2FA70087E1D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		853ABD4D2596144900144B0D /* Build configuration list for PBXProject "Tree Tracker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

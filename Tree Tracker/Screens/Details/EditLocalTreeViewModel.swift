@@ -167,5 +167,3 @@ final class EditLocalTreeViewModel: TreeDetailsViewModel {
         }
     }
 }
-
-

@@ -8,18 +8,22 @@ struct Environment {
     let imageCache: ImageCaching
     let screenLockManager: ScreenLockManaging
     let photosCachingManager: PHCachingImageManager
+    let recentSpeciesManager: RecentSpeciesManaging
     let logger: Logging
 }
 
 let CurrentEnvironment: Environment = {
     let logger = Logger(output: .print)
+    let defaults = Defaults()
+    
     return Environment(
         api: Api(logger: logger),
         database: Database(logger: logger),
-        defaults: Defaults(),
+        defaults: defaults,
         imageCache: GRDBImageCache(logger: logger),
         screenLockManager: UIScreenLockManager(),
         photosCachingManager: PHCachingImageManager(),
+        recentSpeciesManager: RecentSpeciesManager(defaults: defaults, strategy: .todayUsedSpecies),
         logger: logger
     )
 }()
