@@ -26,6 +26,7 @@
 		853ABD8925961F9700144B0D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853ABD8825961F9700144B0D /* Constants.swift */; };
 		8547FC97261E19320062B82D /* UploadHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8547FC96261E19320062B82D /* UploadHistoryViewModel.swift */; };
 		8563C263260BBC7A00752793 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563C262260BBC7A00752793 /* Secrets.swift */; };
+		857123C8263997FD008EE027 /* AlamofireApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857123C7263997FD008EE027 /* AlamofireApi.swift */; };
 		85763A9425E29CE300CB4ED3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85763A9325E29CE300CB4ED3 /* Logger.swift */; };
 		85763A9D25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85763A9C25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift */; };
 		85792A7625B0A35A00BFDA96 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85792A7525B0A35A00BFDA96 /* UIImage.swift */; };
@@ -142,6 +143,7 @@
 		853ABD8825961F9700144B0D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8547FC96261E19320062B82D /* UploadHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadHistoryViewModel.swift; sourceTree = "<group>"; };
 		8563C262260BBC7A00752793 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		857123C7263997FD008EE027 /* AlamofireApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireApi.swift; sourceTree = "<group>"; };
 		85763A9325E29CE300CB4ED3 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		85763A9C25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatingUIImagePickerController.swift; sourceTree = "<group>"; };
 		85792A7525B0A35A00BFDA96 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
@@ -461,6 +463,7 @@
 			children = (
 				853ABD7F25961EEA00144B0D /* Api.swift */,
 				85792A7C25B0A3E100BFDA96 /* Database.swift */,
+				857123C7263997FD008EE027 /* AlamofireApi.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -708,6 +711,7 @@
 				85792A7D25B0A3E100BFDA96 /* Database.swift in Sources */,
 				85E0E06225B35744009D8FC0 /* UIView.swift in Sources */,
 				851DAC1A262B4A9A0087E1D4 /* RecentSpecies.swift in Sources */,
+				857123C8263997FD008EE027 /* AlamofireApi.swift in Sources */,
 				857BADA425B1FA87005D7D35 /* AddLocalTreeViewModel.swift in Sources */,
 				859F62E025C228AE005E61F7 /* KeyedContainer.swift in Sources */,
 				85B83A2625B9C1D50008E167 /* MainFlowViewController.swift in Sources */,
