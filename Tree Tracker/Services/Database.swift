@@ -94,8 +94,9 @@ final class Database {
                     table.primaryKey([Species.CodingKeys.id.stringValue])
                 }
             }
-            
-            if try !migrator.hasCompletedMigrations(db) {
+
+            let registeredColumn = (try? db.columns(in: RemoteTree.databaseTableName).first(where: { $0.name == RemoteTree.CodingKeys.sentFromThisDevice.stringValue })) != nil
+            if !registeredColumn, try !migrator.hasCompletedMigrations(db) {
                 needsMigration = true
             }
         }
