@@ -132,6 +132,8 @@ final class UploadViewModel: CollectionViewModel {
     private func uploadLocalTreesRecursively() {
         logger.log(.upload, "Uploading images...")
         database.fetchLocalTrees { [weak self] trees in
+            self?.logger.log(.upload, "Trees to upload: \(trees.count)")
+            
             guard let tree = trees.sorted(by: \.createDate, order: .descending).first else {
                 self?.logger.log(.upload, "No more items to upload - bailing.")
                 self?.stopUploading()
@@ -169,7 +171,9 @@ final class UploadViewModel: CollectionViewModel {
 
         let newItem = buildItem(tree: tree, progress: uploadProgress)
         let newSection = section.section(replacing: newItem)
-        data = [newSection]
+        DispatchQueue.main.async {
+            self.data = [newSection]
+        }
     }
 
     private func presentTreesFromDatabase() {
