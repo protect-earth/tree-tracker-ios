@@ -27,6 +27,8 @@
 		8547FC97261E19320062B82D /* UploadHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8547FC96261E19320062B82D /* UploadHistoryViewModel.swift */; };
 		8563C263260BBC7A00752793 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563C262260BBC7A00752793 /* Secrets.swift */; };
 		857123C8263997FD008EE027 /* AlamofireApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857123C7263997FD008EE027 /* AlamofireApi.swift */; };
+		857123CC26399B49008EE027 /* MockApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857123CB26399B49008EE027 /* MockApi.swift */; };
+		857123D02639C3AF008EE027 /* ClosureCancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857123CF2639C3AF008EE027 /* ClosureCancellable.swift */; };
 		85763A9425E29CE300CB4ED3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85763A9325E29CE300CB4ED3 /* Logger.swift */; };
 		85763A9D25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85763A9C25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift */; };
 		85792A7625B0A35A00BFDA96 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85792A7525B0A35A00BFDA96 /* UIImage.swift */; };
@@ -144,6 +146,8 @@
 		8547FC96261E19320062B82D /* UploadHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadHistoryViewModel.swift; sourceTree = "<group>"; };
 		8563C262260BBC7A00752793 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		857123C7263997FD008EE027 /* AlamofireApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireApi.swift; sourceTree = "<group>"; };
+		857123CB26399B49008EE027 /* MockApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockApi.swift; sourceTree = "<group>"; };
+		857123CF2639C3AF008EE027 /* ClosureCancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosureCancellable.swift; sourceTree = "<group>"; };
 		85763A9325E29CE300CB4ED3 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		85763A9C25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatingUIImagePickerController.swift; sourceTree = "<group>"; };
 		85792A7525B0A35A00BFDA96 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
@@ -453,6 +457,7 @@
 				859F62CA25C1C5AA005E61F7 /* Database */,
 				859F62CB25C1C5B5005E61F7 /* UI */,
 				85B839B025B47C0A0008E167 /* Action.swift */,
+				857123CF2639C3AF008EE027 /* ClosureCancellable.swift */,
 				851DAC19262B4A9A0087E1D4 /* RecentSpecies.swift */,
 			);
 			path = Models;
@@ -464,6 +469,7 @@
 				853ABD7F25961EEA00144B0D /* Api.swift */,
 				85792A7C25B0A3E100BFDA96 /* Database.swift */,
 				857123C7263997FD008EE027 /* AlamofireApi.swift */,
+				857123CB26399B49008EE027 /* MockApi.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -687,6 +693,7 @@
 				85B83A2D25B9C5DB0008E167 /* DateFormatter.swift in Sources */,
 				859F62E425C22D6C005E61F7 /* SelectionsKeyboardView.swift in Sources */,
 				85763A9425E29CE300CB4ED3 /* Logger.swift in Sources */,
+				857123CC26399B49008EE027 /* MockApi.swift in Sources */,
 				859F62D625C22140005E61F7 /* Species.swift in Sources */,
 				85B83A2325B9C1BC0008E167 /* NavigationViewController.swift in Sources */,
 				85DC214625E0FCBF003F0721 /* GRDBImageCache.swift in Sources */,
@@ -739,6 +746,7 @@
 				857BADAC25B1FAAA005D7D35 /* UploadListFlowViewController.swift in Sources */,
 				859F62EF25C48FD8005E61F7 /* AlertModel.swift in Sources */,
 				8547FC97261E19320062B82D /* UploadHistoryViewModel.swift in Sources */,
+				857123D02639C3AF008EE027 /* ClosureCancellable.swift in Sources */,
 				85B839BB25B4814F0008E167 /* ListSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

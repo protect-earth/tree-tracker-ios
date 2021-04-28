@@ -17,7 +17,7 @@ let CurrentEnvironment: Environment = {
     let defaults = Defaults()
     
     return Environment(
-        api: Api(logger: logger),
+        api: MockApi(),
         database: Database(logger: logger),
         defaults: defaults,
         imageCache: GRDBImageCache(logger: logger),

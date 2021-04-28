@@ -28,4 +28,8 @@ struct LocalTree: Codable, FetchableRecord, PersistableRecord, TableRecord {
     func toAirtableTree(imageUrl: String) -> AirtableTreeEncodable {
         return AirtableTreeEncodable(supervisor: supervisor, species: species, site: site, notes: notes, coordinates: coordinates, what3words: what3words, imageUrl: imageUrl, imageMd5: imageMd5, uploadDate: Date(), createDate: createDate)
     }
+    
+    func toAirtableTree(id: Int, imageUrl: String) -> AirtableTree {
+        return AirtableTree(id: id, supervisor: supervisor, species: species, site: site, notes: notes, coordinates: coordinates, what3words: what3words, imageUrl: imageUrl, thumbnailUrl: imageUrl, imageMd5: imageMd5, uploadDate: .now, createDate: .now)
+    }
 }
