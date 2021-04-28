@@ -40,18 +40,26 @@ final class EntitiesViewModel: TableViewModel {
             )
         ]
 
+        preheatEntities()
     }
 
     func onAppear() {
-        refreshData()
+        refreshData(syncOnEmptyData: true)
     }
 
-    private func refreshData() {
+    private func preheatEntities() {
         fetchDatabaseContent { [weak self] in
             if self?.sites.isEmpty == true || self?.supervisors.isEmpty == true || self?.species.isEmpty == true {
                 self?.sync()
-            } else {
-                self?.presentContentFromDatabase()
+            }
+        }
+    }
+    
+    private func refreshData(syncOnEmptyData: Bool = false) {
+        fetchDatabaseContent { [weak self] in
+            self?.presentContentFromDatabase()
+            if syncOnEmptyData, self?.sites.isEmpty == true || self?.supervisors.isEmpty == true || self?.species.isEmpty == true {
+                self?.sync()
             }
         }
     }
