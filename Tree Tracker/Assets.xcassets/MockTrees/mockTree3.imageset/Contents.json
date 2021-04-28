@@ -1,10 +1,12 @@
 {
   "images" : [
     {
+      "filename" : "planted-tree-inhouston-tx-640w.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "planted-tree-inhouston-tx-640w-1.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
