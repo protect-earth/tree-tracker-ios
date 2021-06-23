@@ -1,6 +1,11 @@
 #  Tree Tracker
 
 ## Next
+- Added Tree Tracker (Mock server) scheme so it's easier to work with the app without having a full backend server created.
+- Added entities preheating on first app launch (so you can go into the upload straight from the launch, you don't have to refresh the entities anymore).
+- Added more granular database logging so it will be easier to debug with the log export function later on.
+- Fixed progress lagging the UI being due to it called from backrgound thread (this might have not been noticed with not-so-big upload queue but it's good to fix regardless).
+- Fixed a bug where we will always try to run database migration, even if not needed - though did didn't break anything, it was unnecessary calling db for a migration.
 
 ## 0.6.0
 - Added "Recent Species" in the Species picker that shows Species selected that day.

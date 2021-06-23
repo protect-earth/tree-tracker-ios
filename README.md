@@ -1,7 +1,16 @@
 #  Tree Tracker
 App for taking pictures of trees and storing that on a remote server. Mainly used by people who plant trees so they don't have to manually type coordinates with pictures they took and then try to guess the site/species afterwards.
 
-## Prerequisites
+## Running the app from Xcode with Mock server
+1. Make sure you have downloaded Xcode 12.2+
+2. Open the project in Xcode (you'll notice the dependencies will start to fetch in the background).
+(In the meantime, Xcode will need to fetch dependencies for the project... 😴)
+3. You'll most likely need to change bundle identifier of the project. Basically because the project is set to auto-sign, each person that wants to run this on the device would need to update the bundle to be a unique id not registered before. E.g. from `com.protect.earth.Tree-Tracker` to `com.mynickname.Tree-Tracker`.
+4. Make sure you are running `Tree Tracker (Mock server)` scheme and hit run!
+5. When running on a device, you'll also need to trust the certificate in Settings -> General -> Profiles, otherwise you'll see an error after installing the build and before running it.
+
+## Using your own Airtable/Cloudinary server
+Well, this is a bit complicated but still doable.
 
 ### Airtable tables
 Our current API type expects that you have 4 tables:
@@ -40,11 +49,8 @@ Because Airtable doesn't support uploading images yet, we have to use an externa
 2. Now create an [upload preset](https://cloudinary.com/console/settings/upload) (this will give you the Upload Preset name).
 3. Keep the keys as you'd need to add them to Secrets.xcconfig later on.
 
-### Running the app from Xcode
-1. Make sure you have downloaded Xcode 12.2+
-2. Open the project in Xcode (you'll notice the dependencies will start to fetch in the background).
-(In the meantime, Xcode will need to fetch dependencies for the project... 😴)
-3. Now, to run the project, we'll need to generate Secrets file. This means you need to run first install [`pouch`](https://github.com/sunshinejr/pouch) (the easiest is using `brew install sunshinejr/formulae/pouch`). Now, you need to have these environment variables available. Have this at the end of the file (bash: most likely in `.bash_profile` or `.bashrc`, zsh: most likely `.zshenv` or `.zshrc`):
+### Additional project config
+Now, to run the project, we'll need to generate Secrets file. This means you need to run first install [`pouch`](https://github.com/sunshinejr/pouch) (the easiest is using `brew install sunshinejr/formulae/pouch`). Now, you need to have these environment variables available. Have this at the end of the file (bash: most likely in `.bash_profile` or `.bashrc`, zsh: most likely `.zshenv` or `.zshrc`):
 ```
 export AIRTABLE_API_KEY=yourKey123
 export AIRTABLE_BASE_ID=appNiceTree
@@ -55,10 +61,9 @@ export AIRTABLE_SITES_TABLE_NAME=Sites
 export CLOUDINARY_CLOUD_NAME=qqq2ek4mq
 export CLOUDINARY_UPLOAD_PRESET_NAME=iadfadff
 ```
-Finally, in the root folder, run `pouch`, which should generate a file at `./TreeTracker/Secrets.swift`.
+In the root folder, run `pouch`, which should generate a file at `./TreeTracker/Secrets.swift`.
 
-4. You'll most likely need to change bundle identifier of the project. Basically because the project is set to auto-sign, each person that wants to run this on the device would need to update the bundle to be a unique id not registered before. E.g. from `com.protect.earth.Tree-Tracker` to `com.mynickname.Tree-Tracker`.
-5. When running on a device, you'll also need to trust the certificate in Settings -> General -> Profiles, otherwise you'll see an error after installing the build and before running it.
+With all that, you can switch the scheme to `Tree Tracker` and it _should_ run just fine.
 
 ## Contributing
 Please feel free to create issues and PRs for anything, really. However, bear in mind that this app is created for specific audience so PRs with functionality that is out of scope might not be merged (if you feel like the PR you're working on is questionable, please feel free to reach out via Issues).

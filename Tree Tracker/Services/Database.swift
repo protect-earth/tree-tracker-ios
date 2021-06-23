@@ -94,8 +94,9 @@ final class Database {
                     table.primaryKey([Species.CodingKeys.id.stringValue])
                 }
             }
-            
-            if try !migrator.hasCompletedMigrations(db) {
+
+            let registeredColumn = (try? db.columns(in: RemoteTree.databaseTableName).first(where: { $0.name == RemoteTree.CodingKeys.sentFromThisDevice.stringValue })) != nil
+            if !registeredColumn, try !migrator.hasCompletedMigrations(db) {
                 needsMigration = true
             }
         }
@@ -108,62 +109,78 @@ final class Database {
     }
 
     func save(_ trees: [AirtableTree], sentFromThisDevice: Bool) {
-        try? dbQueue?.write { db in
-            trees.forEach { tree in
-                let tree = tree.toRemoteTree(sentFromThisDevice: sentFromThisDevice)
-                do {
-                    let potentialTree = try RemoteTree
-                        .filter(key: tree.id)
-                        .fetchOne(db)
+        do {
+            try dbQueue?.write { db in
+                trees.forEach { tree in
+                    let tree = tree.toRemoteTree(sentFromThisDevice: sentFromThisDevice)
+                    do {
+                        let potentialTree = try RemoteTree
+                            .filter(key: tree.id)
+                            .fetchOne(db)
 
-                    if potentialTree == nil {
-                        try tree.insert(db)
+                        if potentialTree == nil {
+                            try tree.insert(db)
+                            let count = try? RemoteTree.fetchCount(db)
+                            logger.log(.database, "Successfully added a remote tree to database. Current count: \(count ?? 0)")
+                        } else {
+                            logger.log(.database, "Error when adding remote tree to DB. Found a tree with the same id, bailing.")
+                        }
+                    } catch {
+                        logger.log(.database, "Tree: \(tree)")
+                        logger.log(.database, "Error when adding remote tree to DB. \(error)")
                     }
-                } catch {
-                    logger.log(.database, "Tree: \(tree)")
-                    logger.log(.database, "Error when adding remote tree to DB. \(error)")
                 }
             }
+        } catch {
+            logger.log(.database, "Error when adding remote tree to DB. \(error)")
         }
     }
 
     func save(_ trees: [LocalTree]) {
-        try? dbQueue?.write { db in
-            trees.forEach { tree in
-                do {
-                    let potentialTree = try LocalTree
-                        .filter(key: tree.phImageId)
-                        .fetchOne(db)
+        do {
+            try dbQueue?.write { db in
+                trees.forEach { tree in
+                    do {
+                        let potentialTree = try LocalTree
+                            .filter(key: tree.phImageId)
+                            .fetchOne(db)
 
-                    if potentialTree == nil {
-                        try tree.insert(db)
+                        if potentialTree == nil {
+                            try tree.insert(db)
+                        }
+                    } catch {
+                        logger.log(.database, "Tree: \(tree)")
+                        logger.log(.database, "Error when adding tree to DB. \(error)")
                     }
-                } catch {
-                    logger.log(.database, "Tree: \(tree)")
-                    logger.log(.database, "Error when adding tree to DB. \(error)")
                 }
             }
+        } catch {
+            logger.log(.database, "Error when adding tree to DB. \(error)")
         }
     }
 
     func save<T: Identifiable & TableRecord & FetchableRecord & PersistableRecord>(_ models: [T]) where T.ID: DatabaseValueConvertible {
-        try? dbQueue?.write { db in
-            models.forEach { model in
-                do {
-                    let potentialModel = try T
-                        .filter(key: model.id)
-                        .fetchOne(db)
+        do {
+            try dbQueue?.write { db in
+                models.forEach { model in
+                    do {
+                        let potentialModel = try T
+                            .filter(key: model.id)
+                            .fetchOne(db)
 
-                    if potentialModel == nil {
-                        try model.insert(db)
+                        if potentialModel == nil {
+                            try model.insert(db)
+                        }
+
+                        logger.log(.database, "Saved: \(model)")
+                    } catch {
+                        logger.log(.database, "Model: \(model)")
+                        logger.log(.database, "Error when adding model to DB. \(error)")
                     }
-
-                    logger.log(.database, "Saved: \(model)")
-                } catch {
-                    logger.log(.database, "Model: \(model)")
-                    logger.log(.database, "Error when adding model to DB. \(error)")
                 }
             }
+        } catch {
+            logger.log(.database, "Error when adding model to DB. \(error)")
         }
     }
     
@@ -181,7 +198,11 @@ final class Database {
                     self?.logger.log(.database, "Error when adding model to DB. \(error)")
                 }
             }
-        } completion: { db, result in
+        } completion: { [weak self] db, result in
+            if case let .failure(error) = result {
+                self?.logger.log(.database, "Error when adding model to DB. \(error)")
+            }
+            
             DispatchQueue.main.async {
                 completion()
             }
@@ -191,7 +212,11 @@ final class Database {
     func remove(tree: LocalTree, completion: @escaping () -> Void) {
         dbQueue?.asyncWrite { db in
             try? tree.delete(db)
-        } completion: { db, result in
+        } completion: { [weak self] db, result in
+            if case let .failure(error) = result {
+                self?.logger.log(.database, "Error when removing tree from DB. \(error)")
+            }
+            
             DispatchQueue.main.async {
                 completion()
             }
@@ -201,7 +226,11 @@ final class Database {
     func removeLocalTrees(completion: @escaping () -> Void) {
         dbQueue?.asyncWrite { db in
             try? LocalTree.deleteAll(db)
-        } completion: { db, result in
+        } completion: { [weak self] db, result in
+            if case let .failure(error) = result {
+                self?.logger.log(.database, "Error when removing local trees from DB. \(error)")
+            }
+            
             DispatchQueue.main.async {
                 completion()
             }
@@ -211,7 +240,11 @@ final class Database {
     func update(tree: LocalTree, completion: @escaping () -> Void) {
         dbQueue?.asyncWrite { db in
             try? tree.update(db)
-        } completion: { db, result in
+        } completion: { [weak self] db, result in
+            if case let .failure(error) = result {
+                self?.logger.log(.database, "Error when updating tree in DB. \(error)")
+            }
+            
             DispatchQueue.main.async {
                 completion()
             }
@@ -219,50 +252,70 @@ final class Database {
     }
 
     func fetchRemoteTrees(_ completion: @escaping ([RemoteTree]) -> Void) {
-        try? dbQueue?.read { db in
-            let trees = try? RemoteTree.fetchAll(db)
-            DispatchQueue.main.async {
-                completion(trees ?? [])
+        do {
+            try dbQueue?.read { db in
+                let trees = try? RemoteTree.fetchAll(db)
+                DispatchQueue.main.async {
+                    completion(trees ?? [])
+                }
             }
+        } catch {
+            logger.log(.database, "Error when fetching remote trees from DB. \(error)")
         }
     }
     
     func fetchUploadedTrees(_ completion: @escaping ([RemoteTree]) -> Void) {
-        try? dbQueue?.read { db in
-            let trees = try? RemoteTree.filter(Column(RemoteTree.CodingKeys.sentFromThisDevice.rawValue) == true).fetchAll(db)
-            DispatchQueue.main.async {
-                completion(trees ?? [])
+        do {
+            try dbQueue?.read { db in
+                let trees = try? RemoteTree.filter(Column(RemoteTree.CodingKeys.sentFromThisDevice.rawValue) == true).fetchAll(db)
+                DispatchQueue.main.async {
+                    completion(trees ?? [])
+                }
             }
+        } catch {
+            logger.log(.database, "Error when fetching uploaded trees from DB. \(error)")
         }
     }
 
     func fetchLocalTrees(_ completion: @escaping ([LocalTree]) -> Void) {
-        try? dbQueue?.read { db in
-            let trees = try? LocalTree.fetchAll(db)
-            DispatchQueue.main.async {
-                completion(trees ?? [])
+        do {
+            try dbQueue?.read { db in
+                let trees = try? LocalTree.fetchAll(db)
+                DispatchQueue.main.async {
+                    completion(trees ?? [])
+                }
             }
+        } catch {
+            logger.log(.database, "Error when fetching local trees from DB. \(error)")
         }
     }
 
     func fetch<T: Identifiable & TableRecord & FetchableRecord & PersistableRecord>(_ type: T, completion: @escaping ([T]) -> Void) {
-        try? dbQueue?.read { db in
-            let models = try? T.fetchAll(db)
-            DispatchQueue.main.async {
-                completion(models ?? [])
+        do {
+            try dbQueue?.read { db in
+                let models = try? T.fetchAll(db)
+                DispatchQueue.main.async {
+                    completion(models ?? [])
+                }
             }
+        } catch {
+            logger.log(.database, "Error when fetching type \(String(describing: T.self)) from DB. \(error)")
         }
     }
     
     func fetch<T, U>(_ type1: T.Type, _ type2: U.Type, completion: @escaping ([T], [U]) -> Void) where
         T: Identifiable & TableRecord & FetchableRecord & PersistableRecord,
         U: Identifiable & TableRecord & FetchableRecord & PersistableRecord {
-        try? dbQueue?.read { db in
-            let models1 = (try? T.fetchAll(db)) ?? []
-            let models2 = (try? U.fetchAll(db)) ?? []
-            DispatchQueue.main.async {
-                completion(models1, models2)
+        do {
+            try dbQueue?.read { db in
+                let models1 = (try? T.fetchAll(db)) ?? []
+                let models2 = (try? U.fetchAll(db)) ?? []
+                DispatchQueue.main.async {
+                    completion(models1, models2)
+                }
             }
+        } catch {
+            logger.log(.database, "Error when fetching types \([T.self, U.self].map(String.init(describing:)).joined(separator: ", ")) from DB. \(error)")
         }
     }
 
@@ -270,13 +323,17 @@ final class Database {
         T: Identifiable & TableRecord & FetchableRecord & PersistableRecord,
         U: Identifiable & TableRecord & FetchableRecord & PersistableRecord,
         V: Identifiable & TableRecord & FetchableRecord & PersistableRecord {
-        try? dbQueue?.read { db in
-            let models1 = (try? T.fetchAll(db)) ?? []
-            let models2 = (try? U.fetchAll(db)) ?? []
-            let models3 = (try? V.fetchAll(db)) ?? []
-            DispatchQueue.main.async {
-                completion(models1, models2, models3)
+        do {
+            try dbQueue?.read { db in
+                let models1 = (try? T.fetchAll(db)) ?? []
+                let models2 = (try? U.fetchAll(db)) ?? []
+                let models3 = (try? V.fetchAll(db)) ?? []
+                DispatchQueue.main.async {
+                    completion(models1, models2, models3)
+                }
             }
+        } catch {
+            logger.log(.database, "Error when fetching types \([T.self, U.self, V.self].map(String.init(describing:)).joined(separator: ", ")) from DB. \(error)")
         }
     }
 }

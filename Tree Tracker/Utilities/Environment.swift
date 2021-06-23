@@ -15,9 +15,10 @@ struct Environment {
 let CurrentEnvironment: Environment = {
     let logger = Logger(output: .print)
     let defaults = Defaults()
+    let shouldUseMockServer = CommandLine.arguments.contains("--mock-server")
     
     return Environment(
-        api: Api(logger: logger),
+        api: shouldUseMockServer ? MockApi() : AlamofireApi(logger: logger),
         database: Database(logger: logger),
         defaults: defaults,
         imageCache: GRDBImageCache(logger: logger),
