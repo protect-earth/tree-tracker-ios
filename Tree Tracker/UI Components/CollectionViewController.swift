@@ -55,8 +55,8 @@ final class CollectionViewController: UIViewController {
 
     override func loadView() {
         view = UIView()
-        view.backgroundColor = UIColor(named: "PrimaryColor")
-
+        view.backgroundColor = .systemBackground
+        
         collectionView.dataSource = dataSource
 
         view.addSubview(collectionView)

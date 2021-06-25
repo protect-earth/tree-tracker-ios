@@ -12,13 +12,13 @@ class NavigationViewController: UINavigationController {
     init() {
         super.init(nibName: nil, bundle: nil)
 
-        prefersLargeTitles = true
+        prefersLargeTitles = false
     }
 
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
 
-        prefersLargeTitles = true
+        prefersLargeTitles = false
     }
 
     init(rootViewController: UIViewController, prefersLargeTitles: Bool) {

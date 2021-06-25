@@ -55,8 +55,7 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
 
     override func loadView() {
         view = UIView()
-        view.backgroundColor = UIColor(named: "PrimaryColor")
-
+        view.backgroundColor = .systemBackground
         view.addSubview(stackView)
 
         stackView.addArrangedSubview(textFieldsStackView)
@@ -137,7 +136,9 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
     
     private func buildTextField() -> TextField {
         let textField = TextField()
-        textField.textColor = .black
+        textField.textColor = .label
+        textField.placeholderColor = .tertiaryLabel
+        textField.backgroundColor = .tertiarySystemBackground
         textField.borderStyle = .roundedRect
         textField.widthAnchor.constraint(equalToConstant: 250.0).isActive = true
         textField.heightAnchor.constraint(equalToConstant: 48.0).isActive = true

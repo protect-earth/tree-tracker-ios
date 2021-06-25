@@ -18,8 +18,9 @@ extension UIImage {
 }
 
 extension UIImage {
-    static var uploadIcon: UIImage { UIImage(named: "uploadIcon")! }
-    static var historyIcon: UIImage { UIImage(named: "historyIcon")! }
-    static var listIcon: UIImage { UIImage(named: "listIcon")! }
-    static var cameraIcon: UIImage { UIImage(named: "cameraIcon")! }
+    static var uploadIcon: UIImage { UIImage(systemName: "icloud.and.arrow.up")! }
+    static var historyIcon: UIImage { UIImage(systemName: "clock")! }
+    static var listIcon: UIImage { UIImage(systemName: "list.bullet")! }
+    static var cameraIcon: UIImage { UIImage(systemName: "camera")! }
+    static var map: UIImage { UIImage(systemName: "map")! }
 }

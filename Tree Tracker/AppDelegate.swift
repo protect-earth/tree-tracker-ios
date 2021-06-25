@@ -8,6 +8,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         window?.rootViewController = MainFlowViewController()
         window?.makeKeyAndVisible()
+        
+        UITabBar.appearance().tintColor = UIColor(named: "PrimaryColor")
+        UINavigationBar.appearance().tintColor = UIColor(named: "PrimaryColor")
 
         return true
     }

@@ -51,8 +51,8 @@ final class TableViewController: UIViewController {
 
     override func loadView() {
         view = UIView()
-        view.backgroundColor = UIColor(named: "PrimaryColor")
-
+        view.backgroundColor = .systemBackground
+        
         tableView.dataSource = dataSource
         tableView.delegate = dataSource
 

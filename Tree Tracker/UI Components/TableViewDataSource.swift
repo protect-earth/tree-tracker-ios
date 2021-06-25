@@ -37,7 +37,7 @@ final class TableViewDataSource<ListItem: Hashable & Identifiable>: UITableViewD
         guard let title = data[safe: section]?.title else { return nil }
         
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .label
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 16.0, weight: .semibold)
         label.text = title
