@@ -5,7 +5,6 @@ class NavigationViewController: UINavigationController {
         get { navigationBar.prefersLargeTitles }
         set {
             navigationBar.prefersLargeTitles = newValue
-            navigationBar.tintColor = prefersLargeTitles ? .white : .black
         }
     }
 

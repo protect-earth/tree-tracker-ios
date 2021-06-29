@@ -2,7 +2,7 @@ import UIKit
 
 final class TextField: UITextField, UITextFieldDelegate {
     var onChange: ((String) -> Void)?
-    var placeholderColor: UIColor = .gray
+    var placeholderColor: UIColor = .tertiaryLabel
     var isCaretHidden = false
 
     override init(frame: CGRect) {
@@ -21,7 +21,7 @@ final class TextField: UITextField, UITextFieldDelegate {
         delegate = self
 
         addTarget(self, action: #selector(didChangeText), for: .editingChanged)
-        backgroundColor = .white
+        backgroundColor = .secondarySystemFill
     }
 
     @objc private func didChangeText() {
