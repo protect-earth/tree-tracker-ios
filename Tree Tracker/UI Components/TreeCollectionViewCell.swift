@@ -33,7 +33,7 @@ final class TreeCollectionViewCell: UICollectionViewCell, Reusable {
     private let infoOverlay: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.backgroundColor = UIColor.label.withAlphaComponent(0.5)
         view.layer.cornerRadius = 4.0
         view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
 

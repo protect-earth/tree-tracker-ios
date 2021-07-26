@@ -4,7 +4,7 @@ final class TextTableViewCell: UITableViewCell, Reusable {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
+        label.textColor = .label
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 14.0)
 

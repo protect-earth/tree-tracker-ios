@@ -5,20 +5,19 @@ class NavigationViewController: UINavigationController {
         get { navigationBar.prefersLargeTitles }
         set {
             navigationBar.prefersLargeTitles = newValue
-            navigationBar.tintColor = prefersLargeTitles ? .white : .black
         }
     }
 
     init() {
         super.init(nibName: nil, bundle: nil)
 
-        prefersLargeTitles = true
+        prefersLargeTitles = false
     }
 
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
 
-        prefersLargeTitles = true
+        prefersLargeTitles = false
     }
 
     init(rootViewController: UIViewController, prefersLargeTitles: Bool) {

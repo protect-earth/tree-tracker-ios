@@ -12,10 +12,10 @@ final class MainFlowViewController: UITabBarController {
 
         viewControllers = [liveUpload, uploadQueue, uploadHistory, entities]
 
-        liveUpload.tabBarItem = UITabBarItem(title: "", image: .cameraIcon, selectedImage: .cameraIcon)
-        uploadQueue.tabBarItem = UITabBarItem(title: "", image: .uploadIcon, selectedImage: .uploadIcon)
-        uploadHistory.tabBarItem = UITabBarItem(title: "", image: .historyIcon, selectedImage: .historyIcon)
-        entities.tabBarItem = UITabBarItem(title: "", image: .listIcon, selectedImage: .listIcon)
+        liveUpload.tabBarItem = UITabBarItem(title: "Session", image: .cameraIcon, selectedImage: .cameraIcon)
+        uploadQueue.tabBarItem = UITabBarItem(title: "Queue", image: .uploadIcon, selectedImage: .uploadIcon)
+        uploadHistory.tabBarItem = UITabBarItem(title: "History", image: .historyIcon, selectedImage: .historyIcon)
+        entities.tabBarItem = UITabBarItem(title: "Entities", image: .listIcon, selectedImage: .listIcon)
 
         selectedIndex = 1
     }

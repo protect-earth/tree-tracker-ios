@@ -10,8 +10,7 @@ final class UploadListFlowViewController: NavigationViewController, UploadNaviga
         super.init()
 
         let rootViewController = CollectionViewController(viewModel: UploadViewModel(navigation: self))
-        navigationBar.prefersLargeTitles = true
-        navigationBar.tintColor = .white
+        rootViewController.view.backgroundColor = .systemBackground
         viewControllers = [rootViewController]
     }
 

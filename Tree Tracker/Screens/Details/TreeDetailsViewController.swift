@@ -76,9 +76,9 @@ final class TreeDetailsViewController: UIViewController {
 
     override func loadView() {
         view = UIView()
-        view.backgroundColor = UIColor(named: "PrimaryColor")
-
+        view.backgroundColor = .systemBackground
         view.addSubview(scrollView)
+        
         scrollView.addSubview(stackView)
         view.addSubview(actionButton)
 
@@ -202,7 +202,7 @@ final class TreeDetailsViewController: UIViewController {
 
     private func buildTextField() -> TextField {
         let textField = TextField()
-        textField.textColor = .black
+        textField.textColor = .label
         textField.borderStyle = .roundedRect
         textField.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
 

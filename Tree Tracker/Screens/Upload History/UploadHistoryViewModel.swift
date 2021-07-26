@@ -25,7 +25,7 @@ final class UploadHistoryViewModel: CollectionViewModel {
     private var supervisors: [Supervisor] = []
 
     init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, logger: Logging = CurrentEnvironment.logger) {
-        self.title = "Upload history"
+        self.title = "Upload History"
         self.api = api
         self.database = database
         self.logger = logger

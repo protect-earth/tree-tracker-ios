@@ -188,9 +188,9 @@ final class UploadViewModel: CollectionViewModel {
 
     private func presentTitle(itemsCount: Int) {
         if itemsCount > 0 {
-            title = "Upload queue (\(itemsCount))"
+            title = "Upload Queue (\(itemsCount))"
         } else {
-            title = "Upload queue"
+            title = "Upload Queue"
         }
     }
 
