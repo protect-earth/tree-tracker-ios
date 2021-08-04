@@ -1,6 +1,9 @@
 #  Tree Tracker
 
 ## Next
+
+## 0.7.0
+- Updated the UI
 - Added Tree Tracker (Mock server) scheme so it's easier to work with the app without having a full backend server created.
 - Added entities preheating on first app launch (so you can go into the upload straight from the launch, you don't have to refresh the entities anymore).
 - Added more granular database logging so it will be easier to debug with the log export function later on.
