@@ -22,6 +22,7 @@ final class UploadViewModel: CollectionViewModel {
     var rightNavigationButtonsPublisher: Published<[NavigationBarButtonModel]>.Publisher { $rightNavigationButtons }
     var dataPublisher: Published<[ListSection<CollectionListItem>]>.Publisher { $data }
 
+    let maxConcurrentUploads = 3
     private var api: Api
     private var database: Database
     private var screenLockManager: ScreenLockManaging
@@ -29,7 +30,7 @@ final class UploadViewModel: CollectionViewModel {
     private var sites: [Site] = []
     private var species: [Species] = []
     private var supervisors: [Supervisor] = []
-    private var currentUpload: Cancellable?
+    private var currentUploads: [String: Cancellable?] = [:]
     private weak var navigation: UploadNavigating?
 
     init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, screenLockManager: ScreenLockManaging = CurrentEnvironment.screenLockManager, logger: Logging = CurrentEnvironment.logger, navigation: UploadNavigating) {
@@ -125,7 +126,9 @@ final class UploadViewModel: CollectionViewModel {
 
     private func cancelUploading() {
         logger.log(.upload, "Uploading cancelled.")
-        currentUpload?.cancel()
+        for ((_, upload)) in currentUploads {
+            upload?.cancel();
+        }
         stopUploading()
     }
 
@@ -133,36 +136,40 @@ final class UploadViewModel: CollectionViewModel {
         logger.log(.upload, "Uploading images...")
         database.fetchLocalTrees { [weak self] trees in
             self?.logger.log(.upload, "Trees to upload: \(trees.count)")
-            
-            guard let tree = trees.sorted(by: \.createDate, order: .descending).first else {
-                self?.logger.log(.upload, "No more items to upload - bailing.")
-                self?.stopUploading()
-                return
-            }
-            
-            self?.logger.log(.upload, "Now uploading tree: \(tree)")
-            self?.currentUpload = self?.api.upload(
-                tree: tree,
-                progress: { progress in
-                    self?.logger.log(.upload, "Progress: \(progress)")
-                    self?.update(uploadProgress: progress, for: tree)
-                },
-                completion: { result in
-                    switch result {
-                    case let .success(airtableTree):
-                        self?.logger.log(.upload, "Successfully uploaded tree.")
-                        self?.database.save([airtableTree], sentFromThisDevice: true)
-                        self?.database.remove(tree: tree) {
-                            self?.presentTreesFromDatabase()
-                            self?.uploadLocalTreesRecursively()
-                        }
-                    case let .failure(error):
-                        self?.update(uploadProgress: 0.0, for: tree)
-                        self?.presentUploadButton(isUploading: false)
-                        self?.logger.log(.upload, "Error when uploading a local tree: \(error)")
-                    }
+            let sortedTrees = trees.sorted(by: \.createDate, order: .descending)
+            while (self != nil && self!.currentUploads.count < self!.maxConcurrentUploads && self!.currentUploads.count < trees.count) {
+
+                guard let tree = sortedTrees.filter({ treeEntry in self?.currentUploads[treeEntry.phImageId] == nil}).first else {
+                    self?.logger.log(.upload, "No more items to upload - bailing.")
+                    self?.stopUploading()
+                    return
                 }
-            )
+                
+                self?.logger.log(.upload, "Now uploading tree: \(tree)")
+                self?.currentUploads[tree.phImageId] = (self?.api.upload(
+                    tree: tree,
+                    progress: { progress in
+                        self?.logger.log(.upload, "Progress: \(progress)")
+                        self?.update(uploadProgress: progress, for: tree)
+                    },
+                    completion: { result in
+                        switch result {
+                        case let .success(airtableTree):
+                            self?.logger.log(.upload, "Successfully uploaded tree.")
+                            self?.database.save([airtableTree], sentFromThisDevice: true)
+                            self?.database.remove(tree: tree) {
+                                self?.currentUploads[tree.phImageId] = nil;
+                                self?.presentTreesFromDatabase()
+                                self?.uploadLocalTreesRecursively()
+                            }
+                        case let .failure(error):
+                            self?.update(uploadProgress: 0.0, for: tree)
+                            self?.presentUploadButton(isUploading: false)
+                            self?.logger.log(.upload, "Error when uploading a local tree: \(error)")
+                        }
+                    }
+                ))
+            }
         }
     }
 
