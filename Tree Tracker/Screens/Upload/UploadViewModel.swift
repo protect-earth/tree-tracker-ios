@@ -159,12 +159,18 @@ final class UploadViewModel: CollectionViewModel {
                             self?.database.save([airtableTree], sentFromThisDevice: true)
                             self?.database.remove(tree: tree) {
                                 self?.currentUploads[tree.phImageId] = nil;
+                                if (self != nil && self!.currentUploads.count == 0) {
+                                    self?.presentUploadButton(isUploading: false)
+                                }
                                 self?.presentTreesFromDatabase()
                                 self?.uploadLocalTreesRecursively()
                             }
                         case let .failure(error):
+                            self?.currentUploads[tree.phImageId] = nil;
+                            if (self != nil && self!.currentUploads.count == 0) {
+                                self?.presentUploadButton(isUploading: false)
+                            }
                             self?.update(uploadProgress: 0.0, for: tree)
-                            self?.presentUploadButton(isUploading: false)
                             self?.logger.log(.upload, "Error when uploading a local tree: \(error)")
                         }
                     }
