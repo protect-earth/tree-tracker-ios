@@ -16,6 +16,7 @@ final class UploadSessionViewModel {
     @DelayedPublished var state: State
     @DelayedPublished var alert: AlertModel
     @DelayedPublished var fields: [TextFieldModel]
+    @DelayedPublished var gpsReady: Bool
     
     private let navigation: UploadSessionNavigating
     private let assetManager: AssetManaging
@@ -23,12 +24,14 @@ final class UploadSessionViewModel {
     private let locationManager: LocationProviding & PermissionAsking
     private var sites: [Site] = []
     private var supervisors: [Supervisor] = []
+    private let minimumLocationAccuracy: Double = 30.0
 
     init(navigation: UploadSessionNavigating, assetManager: AssetManaging = PHAssetManager(), database: Database = CurrentEnvironment.database, locationManager: LocationProviding & PermissionAsking = LocationManager()) {
         self.navigation = navigation
         self.assetManager = assetManager
         self.database = database
         self.locationManager = locationManager
+        self.gpsReady = true
     }
 
     func onLoad() {}
@@ -104,7 +107,13 @@ final class UploadSessionViewModel {
     }
 
     private func startNewSession(site: Site?, supervisor: Supervisor?) {
-        locationManager.startTrackLocation()
+        locationManager.startTrackLocation(update: { (location: CLLocation) in
+            if (location.horizontalAccuracy < self.minimumLocationAccuracy) {
+                if (!self.gpsReady) { self.gpsReady = true; }
+            } else {
+                if (self.gpsReady) { self.gpsReady = false; }
+            }
+        })
         state = .takeAPicture { [weak self] in
             self?.presentContent()
         } completion: { [weak self] result in

@@ -41,6 +41,7 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
 
     private var photoSessionCancel: (() -> Void)?
     private var photoSessionCompletion: ((Result<UIImage, Error>) -> Void)?
+    private var picker: RotatingUIImagePickerController?
     private var observables = Set<AnyCancellable>()
 
     init(viewModel: UploadSessionViewModel) {
@@ -100,6 +101,16 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
                 self?.present(alert: alert)
             }
             .store(in: &observables)
+        
+        viewModel.$gpsReady
+            .sink { [weak self] ready in
+                self?.updateGpsWarning(ready: ready)
+            }
+            .store(in: &observables)
+    }
+    
+    private func updateGpsWarning(ready: Bool) {
+        self.picker?.cameraOverlayView = ready ? nil : GpsInaccuracyWarning()
     }
     
     private func removeCurrentCameraViewIfNeeded(completion: @escaping () -> Void) {
@@ -151,12 +162,12 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
             self?.photoSessionCancel = cancel
             self?.photoSessionCompletion = completion
 
-            let picker = RotatingUIImagePickerController()
-            picker.modalPresentationStyle = .overCurrentContext
-            picker.mediaTypes = ["public.image"]
-            picker.sourceType = .camera
-            picker.delegate = self
-            self?.present(picker, animated: true, completion: nil)
+            self?.picker = RotatingUIImagePickerController()
+            self?.picker!.modalPresentationStyle = .overCurrentContext
+            self?.picker!.mediaTypes = ["public.image"]
+            self?.picker!.sourceType = .camera
+            self?.picker!.delegate = self
+            self?.present(self!.picker!, animated: true, completion: nil)
         }
     }
 

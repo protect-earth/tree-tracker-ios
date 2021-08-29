@@ -108,6 +108,8 @@
 		85DC214625E0FCBF003F0721 /* GRDBImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC214525E0FCBF003F0721 /* GRDBImageCache.swift */; };
 		85E0E05E25B33F8C009D8FC0 /* TappableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */; };
 		85E0E06225B35744009D8FC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E06125B35744009D8FC0 /* UIView.swift */; };
+		C70677A926DB886B009B7D54 /* GpsInaccuracyWarning.xib in Resources */ = {isa = PBXBuildFile; fileRef = C70677A826DB886B009B7D54 /* GpsInaccuracyWarning.xib */; };
+		C70677AB26DB8994009B7D54 /* GpsInaccuracyWarning.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70677AA26DB8994009B7D54 /* GpsInaccuracyWarning.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -225,6 +227,8 @@
 		85DC214525E0FCBF003F0721 /* GRDBImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBImageCache.swift; sourceTree = "<group>"; };
 		85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableButton.swift; sourceTree = "<group>"; };
 		85E0E06125B35744009D8FC0 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		C70677A826DB886B009B7D54 /* GpsInaccuracyWarning.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GpsInaccuracyWarning.xib; sourceTree = "<group>"; };
+		C70677AA26DB8994009B7D54 /* GpsInaccuracyWarning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpsInaccuracyWarning.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -530,6 +534,8 @@
 				85B839DF25B74FF50008E167 /* TextField.swift */,
 				85B839B725B47C3F0008E167 /* TreeCollectionViewCell.swift */,
 				85CC02EB261B6EA90016E618 /* TextTableViewCell.swift */,
+				C70677A826DB886B009B7D54 /* GpsInaccuracyWarning.xib */,
+				C70677AA26DB8994009B7D54 /* GpsInaccuracyWarning.swift */,
 			);
 			path = "UI Components";
 			sourceTree = "<group>";
@@ -636,6 +642,7 @@
 				853ABD7A25961C6500144B0D /* License.md in Resources */,
 				853ABD622596144A00144B0D /* LaunchScreen.storyboard in Resources */,
 				853ABD7325961B4800144B0D /* IDETemplateMacros.plist in Resources */,
+				C70677A926DB886B009B7D54 /* GpsInaccuracyWarning.xib in Resources */,
 				853ABD5F2596144A00144B0D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -714,6 +721,7 @@
 				85B839E025B74FF50008E167 /* TextField.swift in Sources */,
 				859F62C625C1C464005E61F7 /* AirtableSpecies.swift in Sources */,
 				853ABD8925961F9700144B0D /* Constants.swift in Sources */,
+				C70677AB26DB8994009B7D54 /* GpsInaccuracyWarning.swift in Sources */,
 				859F62D925C2215D005E61F7 /* Site.swift in Sources */,
 				85792A7D25B0A3E100BFDA96 /* Database.swift in Sources */,
 				85E0E06225B35744009D8FC0 /* UIView.swift in Sources */,

@@ -14,7 +14,7 @@ protocol PermissionAsking {
 protocol LocationProviding {
     var currentLocation: CLLocation? { get }
 
-    func startTrackLocation()
+    func startTrackLocation(update: @escaping (CLLocation) -> Void)
     func stopTrackingLocation()
 }
 
@@ -38,6 +38,7 @@ final class LocationManager: NSObject, PermissionAsking, LocationProviding, CLLo
 
     private let manager: CLLocationManager
     private var authorizationChangeCompletion: ((PermissionStatus) -> Void)?
+    private var locationDidUpdate: ((CLLocation) -> Void)?
 
     init(manager: CLLocationManager = CLLocationManager()) {
         self.manager = manager
@@ -53,9 +54,14 @@ final class LocationManager: NSObject, PermissionAsking, LocationProviding, CLLo
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         authorizationChangeCompletion?(status)
     }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        locationDidUpdate?(locations.last!)
+    }
 
-    func startTrackLocation() {
+    func startTrackLocation(update: @escaping (CLLocation) -> Void) {
         manager.startUpdatingLocation()
+        self.locationDidUpdate = update
     }
 
     func stopTrackingLocation() {
