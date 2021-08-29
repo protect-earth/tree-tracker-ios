@@ -23,6 +23,7 @@ final class UploadViewModel: CollectionViewModel {
     var dataPublisher: Published<[ListSection<CollectionListItem>]>.Publisher { $data }
 
     let maxConcurrentUploads = 3
+    let maxUploadAttempts = 3
     private var api: Api
     private var database: Database
     private var screenLockManager: ScreenLockManaging
@@ -31,6 +32,7 @@ final class UploadViewModel: CollectionViewModel {
     private var species: [Species] = []
     private var supervisors: [Supervisor] = []
     private var currentUploads: [String: Cancellable?] = [:]
+    private var failedUploadCount: [String: Int] = [:]
     private weak var navigation: UploadNavigating?
 
     init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, screenLockManager: ScreenLockManaging = CurrentEnvironment.screenLockManager, logger: Logging = CurrentEnvironment.logger, navigation: UploadNavigating) {
@@ -108,6 +110,8 @@ final class UploadViewModel: CollectionViewModel {
         presentUploadButton(isUploading: true)
         presentNavigationButtons(isUploading: true)
         screenLockManager.disableLocking()
+        self.currentUploads = [:]
+        self.failedUploadCount = [:]
         uploadLocalTreesRecursively()
     }
 
@@ -139,7 +143,7 @@ final class UploadViewModel: CollectionViewModel {
             let sortedTrees = trees.sorted(by: \.createDate, order: .descending)
             while (self != nil && self!.currentUploads.count < self!.maxConcurrentUploads && self!.currentUploads.count < trees.count) {
 
-                guard let tree = sortedTrees.filter({ treeEntry in self?.currentUploads[treeEntry.phImageId] == nil}).first else {
+                guard let tree = sortedTrees.filter({ treeEntry in self?.currentUploads[treeEntry.phImageId] == nil && (self?.failedUploadCount[treeEntry.phImageId] ?? 0) < self!.maxUploadAttempts}).first else {
                     self?.logger.log(.upload, "No more items to upload - bailing.")
                     self?.stopUploading()
                     return
@@ -166,12 +170,14 @@ final class UploadViewModel: CollectionViewModel {
                                 self?.uploadLocalTreesRecursively()
                             }
                         case let .failure(error):
+                            self?.failedUploadCount[tree.phImageId] = (self?.failedUploadCount[tree.phImageId] ?? 0) + 1
                             self?.currentUploads[tree.phImageId] = nil;
+                            self?.update(uploadProgress: 0.0, for: tree)
+                            self?.logger.log(.upload, "Error when uploading a local tree: \(error)")
+                            self?.uploadLocalTreesRecursively()
                             if (self != nil && self!.currentUploads.count == 0) {
                                 self?.presentUploadButton(isUploading: false)
                             }
-                            self?.update(uploadProgress: 0.0, for: tree)
-                            self?.logger.log(.upload, "Error when uploading a local tree: \(error)")
                         }
                     }
                 ))
