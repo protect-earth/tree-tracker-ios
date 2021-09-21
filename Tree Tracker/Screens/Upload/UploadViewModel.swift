@@ -143,7 +143,7 @@ final class UploadViewModel: CollectionViewModel {
             let sortedTrees = trees.sorted(by: \.createDate, order: .descending)
             while (self != nil && self!.currentUploads.count < self!.maxConcurrentUploads && self!.currentUploads.count < trees.count) {
 
-                guard let tree = sortedTrees.filter({ treeEntry in self?.currentUploads[treeEntry.phImageId] == nil && (self?.failedUploadCount[treeEntry.phImageId] ?? 0) < self!.maxUploadAttempts}).first else {
+                guard let tree = sortedTrees.first(where: { treeEntry in self?.currentUploads[treeEntry.phImageId] == nil && (self?.failedUploadCount[treeEntry.phImageId] ?? 0) < self!.maxUploadAttempts}) else {
                     self?.logger.log(.upload, "No more items to upload - bailing.")
                     self?.stopUploading()
                     return
