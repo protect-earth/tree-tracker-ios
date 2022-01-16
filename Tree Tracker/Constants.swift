@@ -13,4 +13,10 @@ enum Constants {
         static let cloudName = Secrets.cloudinaryCloudName
         static let uploadPresetName = Secrets.cloudinaryUploadPresetName
     }
+    enum Http {
+        static let requestWaitsForConnectivity = true
+        static let requestTimeoutSeconds: TimeInterval = 30
+        static let requestRetryDelaySeconds = 5
+        static let requestRetryLimit = 3
+    }
 }

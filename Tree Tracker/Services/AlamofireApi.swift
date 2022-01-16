@@ -28,11 +28,12 @@ final class AlamofireApi: Api {
         self.logger = logger
         
         let sessionConfig = URLSessionConfiguration.af.default
-        sessionConfig.timeoutIntervalForRequest = 30
-        sessionConfig.waitsForConnectivity = true
+        sessionConfig.timeoutIntervalForRequest = Constants.Http.requestTimeoutSeconds
+        sessionConfig.waitsForConnectivity = Constants.Http.requestWaitsForConnectivity
         
         self.session = Session(configuration: sessionConfig,
-                               interceptor: RetryingRequestInterceptor(retryDelaySecs: 5, maxRetries: 3))
+                               interceptor: RetryingRequestInterceptor(retryDelaySecs: Constants.Http.requestRetryDelaySeconds,
+                                                                       maxRetries: Constants.Http.requestRetryLimit))
         
     }
  
