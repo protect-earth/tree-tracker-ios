@@ -8,6 +8,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install tools
+        run: |
+          brew install gnupg
+          brew install sunshinejr/formulae/pouch
       - name: Set Default Scheme
         run: |
           scheme_list=$(xcodebuild -list -json | tr -d "\n")
@@ -24,9 +28,7 @@ jobs:
           AIRTABLE_SITES_TABLE_NAME: ${{ secrets.AIRTABLE_SITES_TABLE_NAME }}
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_UPLOAD_PRESET_NAME: ${{ secrets.CLOUDINARY_UPLOAD_PRESET_NAME }}
-        run: |
-          brew install sunshinejr/formulae/pouch
-          pouch
+        run: pouch
       - name: Build
         env:
           scheme: ${{ 'default' }}
