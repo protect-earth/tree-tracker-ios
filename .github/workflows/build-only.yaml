@@ -14,6 +14,19 @@ jobs:
           default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
           echo $default | cat >default
           echo Using default scheme: $default
+      - name: Generate Secrets.swift
+        env:
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+          AIRTABLE_TREES_TABLE_NAME: ${{ secrets.AIRTABLE_TREES_TABLE_NAME }}
+          AIRTABLE_SPECIES_TABLE_NAME: ${{ secrets.AIRTABLE_SPECIES_TABLE_NAME }}
+          AIRTABLE_SUPERVISORS_TABLE_NAME: ${{ secrets.AIRTABLE_SUPERVISORS_TABLE_NAME }}
+          AIRTABLE_SITES_TABLE_NAME: ${{ secrets.AIRTABLE_SITES_TABLE_NAME }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_UPLOAD_PRESET_NAME: ${{ secrets.CLOUDINARY_UPLOAD_PRESET_NAME }}
+        run: |
+          brew install sunshinejr/formulae/pouch
+          pouch
       - name: Build
         env:
           scheme: ${{ 'default' }}
