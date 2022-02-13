@@ -46,7 +46,7 @@ jobs:
           APP_SPECIFIC_PWD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
         run: |
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          echo -n $PROVISIONING_PROFILE_BASE64 | base64 -D > ~/Library/MobileDevice/Provisioning\ Profiles/iOS_App_Store_Distribution_Profile_20220213.mobileprovision
+          echo -n $PROVISIONING_PROFILE_BASE64 | base64 -D > ~/Library/MobileDevice/Provisioning\ Profiles/iOS_App_Store_Distribution_Profile_20220213.mobileprovision.mobileprovision
           echo -n $DISTRIBUTION_CERT_BASE64 | base64 -D > ~/Certificates.p12
 
           ls -lrt ~/Library/MobileDevice/Provisioning\ Profiles
