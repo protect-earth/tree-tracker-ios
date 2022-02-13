@@ -40,3 +40,22 @@ jobs:
           if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
           file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
           xcodebuild build-for-testing -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -destination "platform=$platform,name=$device" | xcpretty
+      - name: Configure Keychain
+        env:
+          PROVISIONING_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
+          DISTRIBUTION_CERT_BASE64: ${{ secrets.DISTRIBUTION_CERT_BASE64 }}
+          APP_SPECIFIC_PWD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning \Profiles
+          echo -n $PROVISIONING_PROFILE_BASE64 | base64 -D > ~/Library/MobileDevice/Provisioning \Profiles/iOS_App_Store_Distribution_Profile_20220213.mobileprovision
+          echo -n $DISTRIBUTION_CERT_BASE64 | base64 -D > /tmp/Certificates.p12
+
+          ls -lrt ~/Library/MobileDevice/Provisioning \Profiles
+          ls -lrt /tmp/Certificates.p12
+
+          security create-keychain -p "" build.keychain
+          security import /tmp/Certificates.p12 -t agg -k ~/Library/Keychains/build.keychain -P "" -A
+          security list-keychains -s ~/Library/Keychains/build.keychain
+          security default-keychain -s ~/Library/Keychains/build.keychain
+          security unlock-keychain -p "" ~/Library/Keychains/build.keychain
+          security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
