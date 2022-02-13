@@ -10,7 +10,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Install tools
         run: |
-          brew install gnupg
           brew install sunshinejr/formulae/pouch
       - name: Set Default Scheme
         run: |
@@ -48,14 +47,19 @@ jobs:
         run: |
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           echo -n $PROVISIONING_PROFILE_BASE64 | base64 -D > ~/Library/MobileDevice/Provisioning\ Profiles/iOS_App_Store_Distribution_Profile_20220213.mobileprovision
-          echo -n $DISTRIBUTION_CERT_BASE64 | base64 -D > /tmp/Certificates.p12
+          echo -n $DISTRIBUTION_CERT_BASE64 | base64 -D > ~/Certificates.p12
 
           ls -lrt ~/Library/MobileDevice/Provisioning\ Profiles
-          ls -lrt /tmp/Certificates.p12
+          ls -lrt ~/Certificates.p12
 
           security create-keychain -p "" build.keychain
-          security import /tmp/Certificates.p12 -t agg -k ~/Library/Keychains/build.keychain -P "" -A
+          security import ~/Certificates.p12 -t agg -k ~/Library/Keychains/build.keychain -P "" -A
           security list-keychains -s ~/Library/Keychains/build.keychain
           security default-keychain -s ~/Library/Keychains/build.keychain
           security unlock-keychain -p "" ~/Library/Keychains/build.keychain
           security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
+      - name: Archive app
+        run: |
+          mkdir -p ~/build
+          xcodebuild -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -sdk iphoneos -configuration AppStoreDistribution -archivePath ~/build/Tree\ Tracker.xcarchive clean archive | xcpretty
+          ls -lrt ~/build
