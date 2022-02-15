@@ -71,4 +71,4 @@ jobs:
           APPLEID_USERNAME: ${{ secrets.APPLE_APPLE_ID }}
           APPLEID_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
         run: |
-          xcrun altool --upload-app -t ios -f build/Tree\ Tracker.ipa -u "$APPLEID_USERNAME" -p "$APPLEID_PASSWORD" --verbose
+          xcrun altool --upload-app -t ios -f ~/build/Tree\ Tracker.ipa -u "$APPLEID_USERNAME" -p "$APPLEID_PASSWORD" --verbose
