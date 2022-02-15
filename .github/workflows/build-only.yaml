@@ -61,5 +61,5 @@ jobs:
       - name: Archive app
         run: |
           mkdir -p ~/build
-          xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -sdk iphoneos -configuration AppStoreDistribution -archivePath ~/build/Tree\ Tracker.xcarchive
+          xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive
           ls -lrt ~/build
