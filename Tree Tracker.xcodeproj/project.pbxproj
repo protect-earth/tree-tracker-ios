@@ -950,6 +950,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Protect Earth CIO (K5RUKV288P)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K5RUKV288P;
 				INFOPLIST_FILE = "Tree Tracker/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -963,6 +964,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "iOS App Store Distribution Profile 2022-02-13";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -973,6 +975,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Protect Earth CIO (K5RUKV288P)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K5RUKV288P;
 				INFOPLIST_FILE = "Tree Tracker/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -986,6 +989,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "iOS App Store Distribution Profile 2022-02-13";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};

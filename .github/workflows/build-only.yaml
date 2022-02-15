@@ -28,6 +28,9 @@ jobs:
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_UPLOAD_PRESET_NAME: ${{ secrets.CLOUDINARY_UPLOAD_PRESET_NAME }}
         run: pouch
+      - name: Set build number
+        run: |
+          agvtool new-version $GITHUB_RUN_NUMBER
       - name: Build
         env:
           scheme: ${{ 'default' }}
