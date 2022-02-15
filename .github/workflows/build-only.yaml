@@ -61,5 +61,7 @@ jobs:
       - name: Archive app
         run: |
           mkdir -p ~/build
-          xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive
-          ls -lrt ~/build
+          xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive | xcpretty
+      - name: Export .ipa
+        run: |
+          xcodebuild -archivePath ~/build/Tree\ Tracker.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath ~/build -allowProvisioningUpdates -exportArchive
