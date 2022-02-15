@@ -108,6 +108,7 @@
 		85DC214625E0FCBF003F0721 /* GRDBImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC214525E0FCBF003F0721 /* GRDBImageCache.swift */; };
 		85E0E05E25B33F8C009D8FC0 /* TappableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */; };
 		85E0E06225B35744009D8FC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E06125B35744009D8FC0 /* UIView.swift */; };
+		9D5CDBD727BBC080007D4F0A /* ExportOptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D5CDBD627BBC080007D4F0A /* ExportOptions.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -225,6 +226,7 @@
 		85DC214525E0FCBF003F0721 /* GRDBImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBImageCache.swift; sourceTree = "<group>"; };
 		85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableButton.swift; sourceTree = "<group>"; };
 		85E0E06125B35744009D8FC0 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		9D5CDBD627BBC080007D4F0A /* ExportOptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ExportOptions.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -307,6 +309,7 @@
 				853ABD7225961B4800144B0D /* IDETemplateMacros.plist */,
 				853ABD602596144A00144B0D /* LaunchScreen.storyboard */,
 				853ABD632596144A00144B0D /* Info.plist */,
+				9D5CDBD627BBC080007D4F0A /* ExportOptions.plist */,
 			);
 			path = "Tree Tracker";
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9D5CDBD527BBB7D2007D4F0A /* PBXTargetDependency */,
 			);
 			name = "Tree Tracker";
 			packageProductDependencies = (
@@ -634,6 +638,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				853ABD7A25961C6500144B0D /* License.md in Resources */,
+				9D5CDBD727BBC080007D4F0A /* ExportOptions.plist in Resources */,
 				853ABD622596144A00144B0D /* LaunchScreen.storyboard in Resources */,
 				853ABD7325961B4800144B0D /* IDETemplateMacros.plist in Resources */,
 				853ABD5F2596144A00144B0D /* Assets.xcassets in Resources */,
@@ -758,6 +763,10 @@
 			isa = PBXTargetDependency;
 			target = 853ABD512596144900144B0D /* Tree Tracker */;
 			targetProxy = 851DAC2C262F2FA70087E1D4 /* PBXContainerItemProxy */;
+		};
+		9D5CDBD527BBB7D2007D4F0A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 9D5CDBD427BBB7D2007D4F0A /* Alamofire */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1054,6 +1063,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 85B83A0B25B87C0D0008E167 /* XCRemoteSwiftPackageReference "BSImagePicker" */;
 			productName = BSImagePicker;
+		};
+		9D5CDBD427BBB7D2007D4F0A /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 85A0EF8125A2271C003CE744 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

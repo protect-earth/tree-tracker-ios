@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>teamID</key>
+	<string>K5RUKV288P</string>
+	<key>signingCertificate</key>
+	<string>iPhone Distribution: Protect Earth CIO (K5RUKV288P)</string>
+	<key>provisioningProfiles</key>
+	<dict>
+		<key>com.protect.earth.Tree-Tracker</key>
+		<string>iOS App Store Distribution Profile 2022-02-13</string>
+	</dict>
 	<key>method</key>
 	<string>app-store</string>
 </dict>
