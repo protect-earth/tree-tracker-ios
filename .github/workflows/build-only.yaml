@@ -64,4 +64,4 @@ jobs:
           xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive | xcpretty
       - name: Export .ipa
         run: |
-          xcodebuild -archivePath ~/build/Tree\ Tracker.xcarchive -exportOptionsPlist ~/Tree\ Tracker/ExportOptions.plist -exportPath ~/build -allowProvisioningUpdates -exportArchive
+          xcodebuild -archivePath ~/build/Tree\ Tracker.xcarchive -exportOptionsPlist $GITHUB_WORKSPACE/Tree\ Tracker/ExportOptions.plist -exportPath ~/build -allowProvisioningUpdates -exportArchive
