@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<!--
-   ExportOptions.plist
-   Tree Tracker
-
-   Created by Allan Lang on 15/02/2022.
-   Copyright (c) 2022 Protect Earth. All rights reserved.
--->
 <plist version="1.0">
-<dict/>
+<dict>
+	<key>method</key>
+	<string>app-store</string>
+</dict>
 </plist>
