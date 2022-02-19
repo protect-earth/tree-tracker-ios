@@ -31,7 +31,7 @@ jobs:
           # xcrun xctrace returns via stderr, not the expected stdout (see https://developer.apple.com/forums/thread/663959)
           device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{print $1" "$2}'`
           set -o pipefail
-          xcodebuild build-for-testing -scheme "Unit Tests" -project "Tree Tracker.xcodeproj" -destination "platform=$platform,name=$device" | xcpretty
+          xcodebuild build-for-testing test -scheme "Unit Tests" -project "Tree Tracker.xcodeproj" -destination "platform=$platform,name=$device" | xcpretty
       - name: Configure Keychain
         env:
           PROVISIONING_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
