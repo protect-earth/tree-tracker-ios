@@ -11,12 +11,6 @@ jobs:
       - name: Install tools
         run: |
           brew install sunshinejr/formulae/pouch
-      - name: Set Default Scheme
-        run: |
-          scheme_list=$(xcodebuild -list -json | tr -d "\n")
-          default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
-          echo $default | cat >default
-          echo Using default scheme: $default
       - name: Generate Secrets.swift
         env:
           AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
@@ -28,54 +22,44 @@ jobs:
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_UPLOAD_PRESET_NAME: ${{ secrets.CLOUDINARY_UPLOAD_PRESET_NAME }}
         run: pouch
-      - name: Capture for analysis
-        uses: actions/upload-artifact@v2
-        with:
-          name: analysis-item
-          path: "Tree Tracker/Secrets.swift"
       - name: Set build number
+        run: agvtool new-version $GITHUB_RUN_NUMBER
+      - name: Build and test
+        env:
+          platform: ${{ 'iOS Simulator' }}
         run: |
-          agvtool new-version $GITHUB_RUN_NUMBER
-      # - name: Build
-      #   env:
-      #     scheme: ${{ 'default' }}
-      #     platform: ${{ 'iOS Simulator' }}
-      #   run: |
-      #     # xcrun xctrace returns via stderr, not the expected stdout (see https://developer.apple.com/forums/thread/663959)
-      #     device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{print $1" "$2}'`
-      #     if [ $scheme = default ]; then scheme=$(cat default); fi
-      #     if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
-      #     file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
-      #     set -o pipefail
-      #     xcodebuild build-for-testing -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -destination "platform=$platform,name=$device" | xcpretty
-      # - name: Configure Keychain
-      #   env:
-      #     PROVISIONING_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
-      #     DISTRIBUTION_CERT_BASE64: ${{ secrets.DISTRIBUTION_CERT_BASE64 }}
-      #     APP_SPECIFIC_PWD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
-      #   run: |
-      #     mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-      #     echo -n $PROVISIONING_PROFILE_BASE64 | base64 -D > ~/Library/MobileDevice/Provisioning\ Profiles/iOS_App_Store_Distribution_Profile_20220213.mobileprovision.mobileprovision
-      #     echo -n $DISTRIBUTION_CERT_BASE64 | base64 -D > ~/Certificates.p12
+          # xcrun xctrace returns via stderr, not the expected stdout (see https://developer.apple.com/forums/thread/663959)
+          device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{print $1" "$2}'`
+          set -o pipefail
+          xcodebuild build-for-testing -scheme "Unit Tests" -project "Tree Tracker.xcodeproj" -destination "platform=$platform,name=$device" | xcpretty
+      - name: Configure Keychain
+        env:
+          PROVISIONING_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
+          DISTRIBUTION_CERT_BASE64: ${{ secrets.DISTRIBUTION_CERT_BASE64 }}
+          APP_SPECIFIC_PWD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo -n $PROVISIONING_PROFILE_BASE64 | base64 -D > ~/Library/MobileDevice/Provisioning\ Profiles/iOS_App_Store_Distribution_Profile_20220213.mobileprovision.mobileprovision
+          echo -n $DISTRIBUTION_CERT_BASE64 | base64 -D > ~/Certificates.p12
 
-      #     ls -lrt ~/Library/MobileDevice/Provisioning\ Profiles
-      #     ls -lrt ~/Certificates.p12
+          ls -lrt ~/Library/MobileDevice/Provisioning\ Profiles
+          ls -lrt ~/Certificates.p12
 
-      #     security create-keychain -p "" build.keychain
-      #     security import ~/Certificates.p12 -t agg -k ~/Library/Keychains/build.keychain -P "" -A
-      #     security list-keychains -s ~/Library/Keychains/build.keychain
-      #     security default-keychain -s ~/Library/Keychains/build.keychain
-      #     security unlock-keychain -p "" ~/Library/Keychains/build.keychain
-      #     security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
-      # - name: Archive app
-      #   run: |
-      #     set -o pipefail
-      #     mkdir -p ~/build
-      #     xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive | xcpretty
-      # - name: Export .ipa
-      #   run: |
-      #     set -o pipefail
-      #     xcodebuild -archivePath ~/build/Tree\ Tracker.xcarchive -exportOptionsPlist $GITHUB_WORKSPACE/Tree\ Tracker/ExportOptions.plist -exportPath ~/build -allowProvisioningUpdates -exportArchive | xcpretty
+          security create-keychain -p "" build.keychain
+          security import ~/Certificates.p12 -t agg -k ~/Library/Keychains/build.keychain -P "" -A
+          security list-keychains -s ~/Library/Keychains/build.keychain
+          security default-keychain -s ~/Library/Keychains/build.keychain
+          security unlock-keychain -p "" ~/Library/Keychains/build.keychain
+          security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
+      - name: Build archive
+        run: |
+          set -o pipefail
+          mkdir -p ~/build
+          xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive | xcpretty
+      - name: Export .ipa
+        run: |
+          set -o pipefail
+          xcodebuild -archivePath ~/build/Tree\ Tracker.xcarchive -exportOptionsPlist $GITHUB_WORKSPACE/Tree\ Tracker/ExportOptions.plist -exportPath ~/build -allowProvisioningUpdates -exportArchive | xcpretty
       # - name: Publish
       #   if: success()
       #   env:
