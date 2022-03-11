@@ -58,6 +58,28 @@ final class PHImageLoader: ImageLoader {
             completion(image)
         }
     }
+    
+    func loadUploadImage(completion: @escaping (UIImage?) -> Void) {
+        guard let asset = assetManager.findAssets(for: [phImageId]).first else {
+            completion(nil)
+            return
+        }
+
+        let options = PHImageRequestOptions()
+        options.isNetworkAccessAllowed = false
+        options.resizeMode = .fast
+        options.isSynchronous = false
+        options.deliveryMode = .highQualityFormat
+
+        manager.allowsCachingHighQualityImages = false
+        manager.requestImage(
+            for: asset,
+            targetSize: uploadSize,
+            contentMode: .aspectFit,
+            options: options) { image, info in
+            completion(image)
+        }
+    }
 
     static func == (lhs: PHImageLoader, rhs: PHImageLoader) -> Bool {
         return lhs.phImageId == rhs.phImageId
