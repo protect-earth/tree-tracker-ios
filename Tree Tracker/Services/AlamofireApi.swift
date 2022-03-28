@@ -101,7 +101,8 @@ final class ImageUpload: Cancellable {
     func upload(tree: LocalTree, progress: @escaping (Double) -> Void = { _ in }, session: Session, completion: @escaping (Result<AirtableTree, AFError>) -> Void) {
         self.progress = progress
 
-        imageLoader.loadHighQualityImage { [weak self] image in
+        // issue-48 - upload images at 1150x1530px size
+        imageLoader.loadUploadImage { [weak self] image in
             guard self?.isCancelled != true else {
                 completion(.failure(AFError.explicitlyCancelled))
                 return

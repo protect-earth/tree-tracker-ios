@@ -10,4 +10,5 @@ protocol ImageLoader {
 extension ImageLoader {
     var thumbnailSize: CGSize { CGSize(width: 256.0, height: 256.0) }
     var highQualitySize: CGSize { CGSize(width: 2048.0, height: 2048.0) }
+    var uploadSize: CGSize { CGSize(width:1150, height:1530) }
 }
