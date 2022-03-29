@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6CC985AB27F393630027C795 /* RetryingRequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC985AA27F393630027C795 /* RetryingRequestInterceptor.swift */; };
 		851DAC1A262B4A9A0087E1D4 /* RecentSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DAC19262B4A9A0087E1D4 /* RecentSpecies.swift */; };
 		851DAC1D262B4B0B0087E1D4 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DAC1C262B4B0B0087E1D4 /* Date.swift */; };
 		851DAC20262C55FD0087E1D4 /* RecentSpeciesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DAC1F262C55FD0087E1D4 /* RecentSpeciesManager.swift */; };
@@ -122,6 +123,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6CC985AA27F393630027C795 /* RetryingRequestInterceptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetryingRequestInterceptor.swift; sourceTree = "<group>"; };
 		851DAC19262B4A9A0087E1D4 /* RecentSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSpecies.swift; sourceTree = "<group>"; };
 		851DAC1C262B4B0B0087E1D4 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		851DAC1F262C55FD0087E1D4 /* RecentSpeciesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSpeciesManager.swift; sourceTree = "<group>"; };
@@ -469,6 +471,7 @@
 		85A0EF9025A231F2003CE744 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				6CC985AA27F393630027C795 /* RetryingRequestInterceptor.swift */,
 				853ABD7F25961EEA00144B0D /* Api.swift */,
 				85792A7C25B0A3E100BFDA96 /* Database.swift */,
 				857123C7263997FD008EE027 /* AlamofireApi.swift */,
@@ -719,6 +722,7 @@
 				85B839E025B74FF50008E167 /* TextField.swift in Sources */,
 				859F62C625C1C464005E61F7 /* AirtableSpecies.swift in Sources */,
 				853ABD8925961F9700144B0D /* Constants.swift in Sources */,
+				6CC985AB27F393630027C795 /* RetryingRequestInterceptor.swift in Sources */,
 				859F62D925C2215D005E61F7 /* Site.swift in Sources */,
 				85792A7D25B0A3E100BFDA96 /* Database.swift in Sources */,
 				85E0E06225B35744009D8FC0 /* UIView.swift in Sources */,
