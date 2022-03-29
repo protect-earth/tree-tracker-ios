@@ -20,12 +20,21 @@ final class AlamofireApi: Api {
         }
     }
 
-    private let session = Session()
+    private let session: Session
     private let logger: Logging
     private var imageLoaders = [String: PHImageLoader]()
 
     init(logger: Logging = CurrentEnvironment.logger) {
         self.logger = logger
+        
+        let sessionConfig = URLSessionConfiguration.af.default
+        sessionConfig.timeoutIntervalForRequest = Constants.Http.requestTimeoutSeconds
+        sessionConfig.waitsForConnectivity = Constants.Http.requestWaitsForConnectivity
+        
+        self.session = Session(configuration: sessionConfig,
+                               interceptor: RetryingRequestInterceptor(retryDelaySecs: Constants.Http.requestRetryDelaySeconds,
+                                                                       maxRetries: Constants.Http.requestRetryLimit))
+        
     }
  
     func treesPlanted(offset: String?, completion: @escaping (Result<Paginated<AirtableTree>, AFError>) -> Void) {
