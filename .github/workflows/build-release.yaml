@@ -1,5 +1,5 @@
 name: build-release
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   build:
     name: Build default scheme
