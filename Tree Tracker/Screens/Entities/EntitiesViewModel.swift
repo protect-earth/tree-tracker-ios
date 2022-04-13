@@ -37,7 +37,12 @@ final class EntitiesViewModel: TableViewModel {
                 title: .system(.refresh),
                 action: { [weak self] in self?.sync() },
                 isEnabled: true
-            )
+            ),
+            .init(
+                title: .system(.add),
+                action: {},
+                isEnabled: true
+            ) //TODO: Add appropriate add handler
         ]
 
         preheatEntities()
