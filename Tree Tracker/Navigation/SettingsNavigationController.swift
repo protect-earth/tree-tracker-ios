@@ -1,6 +1,9 @@
 import Foundation
 import UIKit
 
+/*
+ Navigation controller for Settings - acts as a container for child view controllers
+ */
 class SettingsNavigationController: UINavigationController {
     
     init() {
