@@ -1,6 +1,9 @@
 import Foundation
 import UIKit
 
+/*
+ Controller for sheet view used to supply and save a new site
+ */
 class AddSiteController: UIViewController, UITextFieldDelegate {
     
     private let api = CurrentEnvironment.api

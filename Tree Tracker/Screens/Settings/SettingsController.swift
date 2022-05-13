@@ -2,6 +2,9 @@ import Foundation
 import UIKit
 import Combine
 
+/*
+ Top level Settings controller
+ */
 class SettingsController: UITableViewController {
     
     private var entityTypes = ["Sites", "Supervisors", "Species"]

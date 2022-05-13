@@ -3,7 +3,7 @@ import UIKit
 import Combine
 
 /*
- Table View Controller variant of the Sites view
+ Controller for sites list
  */
 class SitesController: UITableViewController {
     

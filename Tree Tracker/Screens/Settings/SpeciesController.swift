@@ -2,6 +2,9 @@ import Foundation
 import UIKit
 import Combine
 
+/*
+ Controller for species list
+ */
 class SpeciesController: UITableViewController {
     
     private let database = CurrentEnvironment.database

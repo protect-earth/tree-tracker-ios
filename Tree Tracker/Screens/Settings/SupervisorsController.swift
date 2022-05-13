@@ -2,6 +2,9 @@ import Foundation
 import UIKit
 import Combine
 
+/*
+ Controller for supervisors list
+ */
 class SupervisorsController: UITableViewController {
     
     private let database = CurrentEnvironment.database
