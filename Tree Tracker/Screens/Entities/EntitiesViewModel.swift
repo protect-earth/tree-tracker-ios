@@ -141,7 +141,6 @@ final class EntitiesViewModel: TableViewModel {
             .titled("Sites", sites.map { site in
                 return .text(id: site.id, text: site.name, tapAction: Action(id: "site_action_\(site.id)") { [weak self] in
                     print("Site tapped")
-                    
                 })
             }),
             .titled("Supervisors", supervisors.map { supervisor in
