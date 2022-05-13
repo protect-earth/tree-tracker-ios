@@ -42,7 +42,7 @@
 		857BADA425B1FA87005D7D35 /* AddLocalTreeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857BADA325B1FA87005D7D35 /* AddLocalTreeViewModel.swift */; };
 		857BADA825B1FA93005D7D35 /* TreeDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857BADA725B1FA93005D7D35 /* TreeDetailsViewController.swift */; };
 		857BADAC25B1FAAA005D7D35 /* UploadListFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857BADAB25B1FAAA005D7D35 /* UploadListFlowViewController.swift */; };
-		858A0F2725D8156100E12C2B /* AssetDetailsFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858A0F2625D8156100E12C2B /* AssetDetailsFlowViewController.swift */; };
+		858A0F2725D8156100E12C2B /* TreeDetailsFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858A0F2625D8156100E12C2B /* TreeDetailsFlowViewController.swift */; };
 		859F62C025C1C436005E61F7 /* AirtableImageThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62BF25C1C436005E61F7 /* AirtableImageThumbnail.swift */; };
 		859F62C325C1C44C005E61F7 /* AirtableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62C225C1C44C005E61F7 /* AirtableImage.swift */; };
 		859F62C625C1C464005E61F7 /* AirtableSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62C525C1C464005E61F7 /* AirtableSpecies.swift */; };
@@ -110,6 +110,14 @@
 		85E0E05E25B33F8C009D8FC0 /* TappableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */; };
 		85E0E06225B35744009D8FC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E06125B35744009D8FC0 /* UIView.swift */; };
 		9D5CDBD727BBC080007D4F0A /* ExportOptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D5CDBD627BBC080007D4F0A /* ExportOptions.plist */; };
+		9DB29B4E281DE04F00AAC73D /* SettingsNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B4D281DE04F00AAC73D /* SettingsNavigationController.swift */; };
+		9DB29B562821C28400AAC73D /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B552821C28300AAC73D /* SettingsController.swift */; };
+		9DB29B582821D50000AAC73D /* SimpleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B572821D50000AAC73D /* SimpleTableViewCell.swift */; };
+		9DB29B5A282876B700AAC73D /* SitesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B59282876B700AAC73D /* SitesController.swift */; };
+		9DB29B5E282C0AEB00AAC73D /* AddSiteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B5D282C0AEB00AAC73D /* AddSiteController.swift */; };
+		9DCC548C28073F0A00CF67AA /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 9DCC548B28073F0A00CF67AA /* Resolver */; };
+		9DFF6277282E63100008AEEF /* SupervisorsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF6276282E63100008AEEF /* SupervisorsController.swift */; };
+		9DFF6279282E64780008AEEF /* SpeciesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF6278282E64780008AEEF /* SpeciesController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -163,7 +171,7 @@
 		857BADA325B1FA87005D7D35 /* AddLocalTreeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocalTreeViewModel.swift; sourceTree = "<group>"; };
 		857BADA725B1FA93005D7D35 /* TreeDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeDetailsViewController.swift; sourceTree = "<group>"; };
 		857BADAB25B1FAAA005D7D35 /* UploadListFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadListFlowViewController.swift; sourceTree = "<group>"; };
-		858A0F2625D8156100E12C2B /* AssetDetailsFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetDetailsFlowViewController.swift; sourceTree = "<group>"; };
+		858A0F2625D8156100E12C2B /* TreeDetailsFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeDetailsFlowViewController.swift; sourceTree = "<group>"; };
 		859F62BF25C1C436005E61F7 /* AirtableImageThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableImageThumbnail.swift; sourceTree = "<group>"; };
 		859F62C225C1C44C005E61F7 /* AirtableImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableImage.swift; sourceTree = "<group>"; };
 		859F62C525C1C464005E61F7 /* AirtableSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSpecies.swift; sourceTree = "<group>"; };
@@ -229,6 +237,13 @@
 		85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableButton.swift; sourceTree = "<group>"; };
 		85E0E06125B35744009D8FC0 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		9D5CDBD627BBC080007D4F0A /* ExportOptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ExportOptions.plist; sourceTree = "<group>"; };
+		9DB29B4D281DE04F00AAC73D /* SettingsNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavigationController.swift; sourceTree = "<group>"; };
+		9DB29B552821C28300AAC73D /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		9DB29B572821D50000AAC73D /* SimpleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewCell.swift; sourceTree = "<group>"; };
+		9DB29B59282876B700AAC73D /* SitesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SitesController.swift; sourceTree = "<group>"; };
+		9DB29B5D282C0AEB00AAC73D /* AddSiteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSiteController.swift; sourceTree = "<group>"; };
+		9DFF6276282E63100008AEEF /* SupervisorsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupervisorsController.swift; sourceTree = "<group>"; };
+		9DFF6278282E64780008AEEF /* SpeciesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,6 +260,7 @@
 			files = (
 				85A0EF7F25A226D9003CE744 /* GRDB in Frameworks */,
 				85B83A0D25B87C0D0008E167 /* BSImagePicker in Frameworks */,
+				9DCC548C28073F0A00CF67AA /* Resolver in Frameworks */,
 				85A0EF8325A2271C003CE744 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,6 +392,7 @@
 		85792A8925B1D56D00BFDA96 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				9DCC548D2807815E00CF67AA /* Settings */,
 				85CC02EF261B76C80016E618 /* Entities */,
 				853415ED25CEEE28006DDAC4 /* Upload Session */,
 				8547FC95261E191A0062B82D /* Upload History */,
@@ -398,9 +415,10 @@
 		857BADAA25B1FA9D005D7D35 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				858A0F2625D8156100E12C2B /* AssetDetailsFlowViewController.swift */,
+				858A0F2625D8156100E12C2B /* TreeDetailsFlowViewController.swift */,
 				85B83A2525B9C1D50008E167 /* MainFlowViewController.swift */,
 				857BADAB25B1FAAA005D7D35 /* UploadListFlowViewController.swift */,
+				9DB29B4D281DE04F00AAC73D /* SettingsNavigationController.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -536,8 +554,21 @@
 				85B839DF25B74FF50008E167 /* TextField.swift */,
 				85B839B725B47C3F0008E167 /* TreeCollectionViewCell.swift */,
 				85CC02EB261B6EA90016E618 /* TextTableViewCell.swift */,
+				9DB29B572821D50000AAC73D /* SimpleTableViewCell.swift */,
 			);
 			path = "UI Components";
+			sourceTree = "<group>";
+		};
+		9DCC548D2807815E00CF67AA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				9DB29B552821C28300AAC73D /* SettingsController.swift */,
+				9DB29B59282876B700AAC73D /* SitesController.swift */,
+				9DFF6276282E63100008AEEF /* SupervisorsController.swift */,
+				9DB29B5D282C0AEB00AAC73D /* AddSiteController.swift */,
+				9DFF6278282E64780008AEEF /* SpeciesController.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -579,6 +610,7 @@
 				85A0EF7E25A226D9003CE744 /* GRDB */,
 				85A0EF8225A2271C003CE744 /* Alamofire */,
 				85B83A0C25B87C0D0008E167 /* BSImagePicker */,
+				9DCC548B28073F0A00CF67AA /* Resolver */,
 			);
 			productName = "Tree Tracker";
 			productReference = 853ABD522596144900144B0D /* Tree Tracker.app */;
@@ -617,6 +649,7 @@
 				85A0EF7D25A226D9003CE744 /* XCRemoteSwiftPackageReference "GRDB" */,
 				85A0EF8125A2271C003CE744 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				85B83A0B25B87C0D0008E167 /* XCRemoteSwiftPackageReference "BSImagePicker" */,
+				9DCC548A28073F0A00CF67AA /* XCRemoteSwiftPackageReference "Resolver" */,
 			);
 			productRefGroup = 853ABD532596144900144B0D /* Products */;
 			projectDirPath = "";
@@ -686,10 +719,12 @@
 				85B839F825B86F0A0008E167 /* PHAssetManager.swift in Sources */,
 				85B839CB25B5F3EC0008E167 /* PHAsset.swift in Sources */,
 				851DAC1D262B4B0B0087E1D4 /* Date.swift in Sources */,
+				9DB29B4E281DE04F00AAC73D /* SettingsNavigationController.swift in Sources */,
 				85B839EC25B8661E0008E167 /* Collection.swift in Sources */,
 				85B83A1525B87E780008E167 /* UploadViewModel.swift in Sources */,
 				85792A7625B0A35A00BFDA96 /* UIImage.swift in Sources */,
 				85792A7A25B0A36B00BFDA96 /* URL.swift in Sources */,
+				9DB29B5E282C0AEB00AAC73D /* AddSiteController.swift in Sources */,
 				85B839DD25B74FE00008E167 /* KeyboardAccessory.swift in Sources */,
 				85B83A1825B881EC0008E167 /* LocalTree.swift in Sources */,
 				859F62E925C48FA2005E61F7 /* DelayedPublished.swift in Sources */,
@@ -712,8 +747,10 @@
 				851DAC20262C55FD0087E1D4 /* RecentSpeciesManager.swift in Sources */,
 				859F62C025C1C436005E61F7 /* AirtableImageThumbnail.swift in Sources */,
 				859F62F225C5A7B8005E61F7 /* Cancellable.swift in Sources */,
+				9DFF6279282E64780008AEEF /* SpeciesController.swift in Sources */,
 				85CC0304261CC8FE0016E618 /* LocationManager.swift in Sources */,
 				859F62D125C1C62D005E61F7 /* AirtableSupervisor.swift in Sources */,
+				9DB29B562821C28400AAC73D /* SettingsController.swift in Sources */,
 				853ABD562596144900144B0D /* AppDelegate.swift in Sources */,
 				857BADA825B1FA93005D7D35 /* TreeDetailsViewController.swift in Sources */,
 				85B83A1C25B8AC650008E167 /* EditLocalTreeViewModel.swift in Sources */,
@@ -729,12 +766,14 @@
 				851DAC1A262B4A9A0087E1D4 /* RecentSpecies.swift in Sources */,
 				857123C8263997FD008EE027 /* AlamofireApi.swift in Sources */,
 				857BADA425B1FA87005D7D35 /* AddLocalTreeViewModel.swift in Sources */,
+				9DB29B5A282876B700AAC73D /* SitesController.swift in Sources */,
 				859F62E025C228AE005E61F7 /* KeyedContainer.swift in Sources */,
+				9DB29B582821D50000AAC73D /* SimpleTableViewCell.swift in Sources */,
 				85B83A2625B9C1D50008E167 /* MainFlowViewController.swift in Sources */,
 				85B839D925B74FD20008E167 /* Keyboard.swift in Sources */,
 				85DC213C25E0FC8F003F0721 /* ImageCacheInfo.swift in Sources */,
 				85A0EF8D25A23062003CE744 /* RemoteTree.swift in Sources */,
-				858A0F2725D8156100E12C2B /* AssetDetailsFlowViewController.swift in Sources */,
+				858A0F2725D8156100E12C2B /* TreeDetailsFlowViewController.swift in Sources */,
 				859F62DC25C2218B005E61F7 /* Supervisor.swift in Sources */,
 				85B839FB25B86F1A0008E167 /* ImageLoader.swift in Sources */,
 				85B839EF25B866370008E167 /* GridCollectionViewLayout.swift in Sources */,
@@ -750,6 +789,7 @@
 				85B83A0225B8735F0008E167 /* AnyImageLoader.swift in Sources */,
 				85CC02E9261B6E820016E618 /* TableListItem.swift in Sources */,
 				85CC02EC261B6EA90016E618 /* TextTableViewCell.swift in Sources */,
+				9DFF6277282E63100008AEEF /* SupervisorsController.swift in Sources */,
 				85763A9D25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift in Sources */,
 				859F62C325C1C44C005E61F7 /* AirtableImage.swift in Sources */,
 				857BADAC25B1FAAA005D7D35 /* UploadListFlowViewController.swift in Sources */,
@@ -791,10 +831,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K5RUKV288P;
 				INFOPLIST_FILE = "Unit Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -802,6 +843,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.protect.earth.Tree-Tracker.Unit-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -814,10 +856,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K5RUKV288P;
 				INFOPLIST_FILE = "Unit Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -825,6 +868,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.protect.earth.Tree-Tracker.Unit-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tree Tracker.app/Tree Tracker";
@@ -882,7 +926,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -937,7 +981,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -957,12 +1001,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K5RUKV288P;
 				INFOPLIST_FILE = "Tree Tracker/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.7.0;
+				MARKETING_VERSION = 0.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.protect.earth.Tree-Tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "iOS App Store Distribution Profile 2022-02-13";
@@ -982,12 +1026,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K5RUKV288P;
 				INFOPLIST_FILE = "Tree Tracker/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.7.0;
+				MARKETING_VERSION = 0.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.protect.earth.Tree-Tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "iOS App Store Distribution Profile 2022-02-13";
@@ -1054,6 +1098,14 @@
 				minimumVersion = 3.3.1;
 			};
 		};
+		9DCC548A28073F0A00CF67AA /* XCRemoteSwiftPackageReference "Resolver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Resolver.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.5.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1076,6 +1128,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 85A0EF8125A2271C003CE744 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		9DCC548B28073F0A00CF67AA /* Resolver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9DCC548A28073F0A00CF67AA /* XCRemoteSwiftPackageReference "Resolver" */;
+			productName = Resolver;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
