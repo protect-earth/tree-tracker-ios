@@ -22,7 +22,7 @@ final class RecentSpeciesManagerTests: XCTestCase {
     
     func test_fetchSpeciesRecentlyAdded_whenStrategyTodayUsedSpecies() {
         let species = Species(id: "1", name: "test")
-        manager.add(species, timestamp: .now)
+        manager.add(species, timestamp: Date())
         
         XCTAssertEqual(manager.fetch(), [species])
     }
@@ -31,7 +31,7 @@ final class RecentSpeciesManagerTests: XCTestCase {
         let todaySpecies = [Species(id: "1", name: "test1"), Species(id: "3", name: "test3")]
         let oldSpecies = [Species(id: "2", name: "test2"), Species(id: "4", name: "test4")]
         
-        todaySpecies.forEach { manager.add($0, timestamp: .now) }
+        todaySpecies.forEach { manager.add($0, timestamp: Date()) }
         oldSpecies.forEach { manager.add($0, timestamp: .generateRandomYesterdayDate()) }
         
         XCTAssertEqual(manager.fetch(), todaySpecies)
@@ -39,7 +39,7 @@ final class RecentSpeciesManagerTests: XCTestCase {
     
     func test_fetchReturnsNothing_whenStrategyTodayUsedSpeciesButWeClearedAll() {
         let species = Species(id: "1", name: "test")
-        manager.add(species, timestamp: .now)
+        manager.add(species, timestamp: Date())
         manager.clearAll()
         
         XCTAssertEqual(manager.fetch(), [])
