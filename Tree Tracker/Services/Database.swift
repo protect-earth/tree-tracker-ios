@@ -303,6 +303,19 @@ final class Database {
         }
     }
     
+    func fetchAll<T>(_ type1: T.Type, completion: @escaping ([T]) -> Void) where T: Identifiable & TableRecord & FetchableRecord & PersistableRecord {
+        do {
+            try dbQueue?.read { db in
+                let models1 = (try? T.fetchAll(db)) ?? []
+                DispatchQueue.main.async {
+                    completion(models1)
+                }
+            }
+        } catch {
+            logger.log(.database, "Error when fetching type \(T.self) from DB. \(error)")
+        }
+    }
+    
     func fetch<T, U>(_ type1: T.Type, _ type2: U.Type, completion: @escaping ([T], [U]) -> Void) where
         T: Identifiable & TableRecord & FetchableRecord & PersistableRecord,
         U: Identifiable & TableRecord & FetchableRecord & PersistableRecord {

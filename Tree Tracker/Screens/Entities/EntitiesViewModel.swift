@@ -37,12 +37,7 @@ final class EntitiesViewModel: TableViewModel {
                 title: .system(.refresh),
                 action: { [weak self] in self?.sync() },
                 isEnabled: true
-            ),
-            .init(
-                title: .system(.add),
-                action: {},
-                isEnabled: true
-            ) //TODO: Add appropriate add handler
+            )
         ]
 
         preheatEntities()
@@ -69,7 +64,7 @@ final class EntitiesViewModel: TableViewModel {
         }
     }
 
-    private func sync() {
+    func sync() {
         fetchAndReplaceAllSitesFromRemote()
         fetchAndReplaceAllSpeciesFromRemote()
         fetchAndReplaceAllSupervisorsFromRemote()
@@ -146,6 +141,7 @@ final class EntitiesViewModel: TableViewModel {
             .titled("Sites", sites.map { site in
                 return .text(id: site.id, text: site.name, tapAction: Action(id: "site_action_\(site.id)") { [weak self] in
                     print("Site tapped")
+                    
                 })
             }),
             .titled("Supervisors", supervisors.map { supervisor in

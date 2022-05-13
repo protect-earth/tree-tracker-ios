@@ -8,8 +8,7 @@ final class MainFlowViewController: UITabBarController {
         let liveUpload = UploadSessionViewController(viewModel: UploadSessionViewModel(navigation: self))
         let uploadQueue = UploadListFlowViewController()
         let uploadHistory = NavigationViewController(rootViewController: CollectionViewController(viewModel: UploadHistoryViewModel()))
-        //TODO: replace with appropriate settings view
-        let settings = NavigationViewController(rootViewController: TableViewController(viewModel: EntitiesViewModel()))
+        let settings = SettingsNavigationController()
 
         viewControllers = [liveUpload, uploadQueue, uploadHistory, settings]
 

@@ -9,4 +9,5 @@ protocol Api {
     func supervisors(offset: String?, completion: @escaping (Result<Paginated<AirtableSupervisor>, AFError>) -> Void)
     func upload(tree: LocalTree, progress: @escaping (Double) -> Void, completion: @escaping (Result<AirtableTree, AFError>) -> Void) -> Cancellable
     func loadImage(url: String, completion: @escaping (UIImage?) -> Void)
+    func addSite(name: String, completion: @escaping (Result<AirtableSite, AFError>) -> Void)
 }

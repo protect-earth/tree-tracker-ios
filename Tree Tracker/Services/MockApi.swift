@@ -68,6 +68,10 @@ final class MockApi: Api {
         }
     }
     
+    func addSite(name: String, completion: @escaping (Result<AirtableSite, AFError>) -> Void) {
+        // TODO: implement test
+    }
+    
     private func delay(completion: @escaping () -> Void) {
         let delay = TimeInterval.random(in: delayRange)
         

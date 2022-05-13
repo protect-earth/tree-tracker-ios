@@ -68,6 +68,20 @@ final class AlamofireApi: Api {
             completion(response.result)
         }
     }
+    
+    func addSite(name: String, completion: @escaping (Result<AirtableSite, AFError>) -> Void) {
+        // build struct to represent target JSON body
+        let parameters: [String: [String: String]] = [
+            "fields": ["Name": name]
+        ]
+        
+        // TODO: does specifying a nil interceptor here override the retrying interceptor we configure at session level?
+        let request = session.request(Config.sitesUrl, method: .post, parameters: parameters, encoder: JSONParameterEncoder.default, headers: Config.headers, interceptor: nil, requestModifier: nil)
+        
+        request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<AirtableSite, AFError>) in
+            completion(response.result)
+        }
+    }
 
     func upload(tree: LocalTree, progress: @escaping (Double) -> Void = { _ in }, completion: @escaping (Result<AirtableTree, AFError>) -> Void) -> Cancellable {
         let upload = ImageUpload(tree: tree, logger: logger)
