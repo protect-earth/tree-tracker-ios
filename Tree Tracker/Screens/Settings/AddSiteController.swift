@@ -22,45 +22,32 @@ class AddSiteController: UIViewController, UITextFieldDelegate {
         view = UIView()
         view.backgroundColor = .systemBackground
 
-        view.addSubview(scrollView)
-        scrollView.addSubview(stackView)
+        // text field
+        view.addSubview(stackView)
         stackView.addArrangedSubview(textField)
         textField.placeholder = "Enter site name"
         
         // save button
         let buttonModel = ButtonModel(title: ButtonModel.Title.text("Save"), action: {self.doSave()}, isEnabled: true)
         actionButton.set(model: buttonModel)
-        view.addSubview(actionButton)
+        stackView.addArrangedSubview(actionButton)
         
         // layout
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor),
+            textField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
 
-            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16.0),
-            stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.bottomAnchor, constant: -100.0),
-            stackView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            
             actionButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -10.0),
-            actionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            actionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            actionButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5)
         ])
     }
     
-    private let scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-
-        return scrollView
-    }()
-    
+    // MARK: - UI controls
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
+        stackView.alignment = .center
         stackView.spacing = 16.0
         stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
         stackView.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -84,6 +71,7 @@ class AddSiteController: UIViewController, UITextFieldDelegate {
         return textField
     }()
     
+    // MARK: - Delegate
     private func doSave() -> Void? {
         if(textField.hasText) {
             // set action button to spinner / working
