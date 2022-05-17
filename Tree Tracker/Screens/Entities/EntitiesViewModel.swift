@@ -64,7 +64,7 @@ final class EntitiesViewModel: TableViewModel {
         }
     }
 
-    private func sync() {
+    func sync() {
         fetchAndReplaceAllSitesFromRemote()
         fetchAndReplaceAllSpeciesFromRemote()
         fetchAndReplaceAllSupervisorsFromRemote()

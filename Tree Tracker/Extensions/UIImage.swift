@@ -23,4 +23,5 @@ extension UIImage {
     static var listIcon: UIImage { UIImage(systemName: "list.bullet")! }
     static var cameraIcon: UIImage { UIImage(systemName: "camera")! }
     static var map: UIImage { UIImage(systemName: "map")! }
+    static var settingsIcon: UIImage { UIImage(systemName: "gearshape")! }
 }
