@@ -1,11 +1,13 @@
 import Foundation
 import UIKit
-import Combine
+import Resolver
 
 /*
  Top level Settings controller
  */
 class SettingsController: UITableViewController {
+    
+    @Injected private var sitesController: SitesController
     
     private var entityTypes = ["Sites", "Supervisors", "Species"]
 
@@ -40,7 +42,7 @@ class SettingsController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch entityTypes[indexPath.item] {
         case "Sites":
-            self.navigationController?.pushViewController(SitesController(), animated: true)
+            self.navigationController?.pushViewController(sitesController, animated: true)
         case "Supervisors":
             self.navigationController?.pushViewController(SupervisorsController(), animated: true)
         case "Species":

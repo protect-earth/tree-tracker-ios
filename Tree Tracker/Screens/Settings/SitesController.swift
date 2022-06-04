@@ -1,21 +1,21 @@
 import Foundation
 import UIKit
 import Combine
+import Resolver
 
 /*
  Controller for sites list
  */
 class SitesController: UITableViewController {
     
-    private let database = CurrentEnvironment.database
-    private var entitiesModel: EntitiesViewModel = EntitiesViewModel()
+    @Injected var siteService: SiteService
     
     private var sites: [Site] = []
     private var cancellable: AnyCancellable!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         self.title = "Sites"
         
         self.tableView.register(SimpleTableViewCell.self, forCellReuseIdentifier: "basicStyle")
@@ -24,23 +24,18 @@ class SitesController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
         navigationItem.rightBarButtonItems?.append(UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshTapped)))
         
-        // here we are creating a Combine subscription to a @Published attribute of the entity view model which is handling data access
-        // the closure will be invoked on any change to the data property, which is itself refreshed via the onAppear method called
-        // in this controllers viewWillAppear() handler
-        cancellable = entitiesModel.$data.sink() { [weak self] data in
-            // refresh local sites array from database
-            self?.database.fetchAll(Site.self, completion: { [weak self] sites in
-                self?.sites = sites.sorted(by: \.name, order: .ascending)
-                // reload table view
-                self?.tableView.reloadData()
-            })
-            
+        // Here we are creating a Combine subscription to a @Published attribute of the SiteService which is handling data access.
+        // The closure will be invoked on any change to the data property.
+        cancellable = siteService.sitesPublisher.sink() { [weak self] data in
+            self?.sites = data.sorted(by: \.name, order: .ascending)
+            // reload table view
+            self?.tableView.reloadData()
         }
     }
     
     // MARK: - navigation item delegates
     @objc func addTapped() {
-        let addSiteController = AddSiteController(entitiesViewModel: entitiesModel)
+        let addSiteController = AddSiteController(siteService: self.siteService)
         if let sheet = addSiteController.sheetPresentationController {
             sheet.detents = [ .medium() ]
         }
@@ -48,13 +43,12 @@ class SitesController: UITableViewController {
     }
     
     @objc func refreshTapped() {
-        entitiesModel.sync()
+        siteService.sync(completion: {_ in })
     }
     
     // MARK: - Delegate
-    
     override func viewWillAppear(_ animated: Bool) {
-        entitiesModel.onAppear()
+
     }
     
     // MARK: - Datasource

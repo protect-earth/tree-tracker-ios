@@ -1,13 +1,14 @@
 import Foundation
 import UIKit
 import Combine
+import Resolver
 
 /*
  Controller for species list
  */
 class SpeciesController: UITableViewController {
     
-    private let database = CurrentEnvironment.database
+    @Injected var database: Database
     private var entitiesModel: EntitiesViewModel = EntitiesViewModel()
     
     private var species: [Species] = []

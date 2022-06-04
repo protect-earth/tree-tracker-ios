@@ -1,19 +1,19 @@
 import Foundation
 import UIKit
+import Resolver
 
 /*
  Controller for sheet view used to supply and save a new site
  */
 class AddSiteController: UIViewController, UITextFieldDelegate {
     
-    private let api = CurrentEnvironment.api
-    private var model: EntitiesViewModel
+    private var siteService: SiteService
     
-    init(entitiesViewModel: EntitiesViewModel) {
-        self.model = entitiesViewModel
+    init(siteService: SiteService) {
+        self.siteService = siteService
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -77,13 +77,8 @@ class AddSiteController: UIViewController, UITextFieldDelegate {
             // set action button to spinner / working
             actionButton.set(title: .loading)
             
-            // save new site via API
-            api.addSite(name: textField.text!, completion: { result in
-                // trigger refresh of EntitiesViewModel which will also resync local database to cloud table
-                self.model.sync()
-                
-                // dismiss the view
-                self.dismiss(animated: true)
+            siteService.addSite(name: textField.text!, completion: { [weak self] result in
+                self?.dismiss(animated: true)
             })
         }
         // just ignore the tap if there is no text in the text box - tap outside sheet to dismiss
