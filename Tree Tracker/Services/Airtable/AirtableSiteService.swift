@@ -70,9 +70,11 @@ class AirtableSiteService: SiteService {
         }
     }
     
-    // Return sites from local cache
+    // Return sites from local cache, adding to buffer
     func fetchAll(completion: @escaping (Result<[Site], DataAccessError>) -> Void) {
         database.fetchAll(Site.self) { [weak self] sites in
+            self?.sites.removeAll()
+            sites.forEach() { self?.sites.append($0) }
             completion(Result.success(self!.sites))
         }
     }
@@ -93,18 +95,17 @@ class AirtableSiteService: SiteService {
                                       requestModifier: nil)
         
         request.validate().responseDecodable(of: AirtableSite.self, decoder: JSONDecoder._iso8601ms) { response in
-                let addedSite = response.value
-                
-                switch response.result {
-                case .success:
-                    self.sync() {_ in} // fire and forget
-                    completion(.success(addedSite!.toSite()))
-                case .failure:
-                    completion(.failure(DataAccessError.remoteError(errorCode: response.error!.responseCode!,
-                                                                    errorMessage: (response.error!.errorDescription!))))
-                }
-                
+            let addedSite = response.value
+            
+            switch response.result {
+            case .success:
+                self.sync() {_ in} // fire and forget
+                completion(.success(addedSite!.toSite()))
+            case .failure:
+                completion(.failure(DataAccessError.remoteError(errorCode: response.error!.responseCode!,
+                                                                errorMessage: (response.error!.errorDescription!))))
             }
+        }
     }
     
 }
