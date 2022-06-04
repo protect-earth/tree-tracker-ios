@@ -70,9 +70,11 @@ class AirtableSupervisorService: SupervisorService {
         }
     }
     
-    // Return data from local cache
+    // Return data from local cache, adding to buffer
     func fetchAll(completion: @escaping (Result<[Supervisor], DataAccessError>) -> Void) {
         database.fetchAll(Supervisor.self) { [weak self] supervisor in
+            self?.supervisors.removeAll()
+            supervisor.forEach() { self?.supervisors.append($0) }
             completion(Result.success(self!.supervisors))
         }
     }

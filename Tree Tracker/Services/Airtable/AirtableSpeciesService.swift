@@ -73,6 +73,8 @@ class AirtableSpeciesService: SpeciesService {
     // Return species from local cache
     func fetchAll(completion: @escaping (Result<[Species], DataAccessError>) -> Void) {
         database.fetchAll(Species.self) { [weak self] species in
+            self?.species.removeAll()
+            species.forEach() { self?.species.append($0) }
             completion(Result.success(self!.species))
         }
     }
