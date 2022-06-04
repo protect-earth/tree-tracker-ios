@@ -110,6 +110,10 @@
 		85E0E05E25B33F8C009D8FC0 /* TappableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */; };
 		85E0E06225B35744009D8FC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E06125B35744009D8FC0 /* UIView.swift */; };
 		9D5CDBD727BBC080007D4F0A /* ExportOptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D5CDBD627BBC080007D4F0A /* ExportOptions.plist */; };
+		9D5D5E28284B630D00F3AD3E /* SpeciesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E27284B630D00F3AD3E /* SpeciesService.swift */; };
+		9D5D5E2A284B635900F3AD3E /* AirtableSpeciesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E29284B635900F3AD3E /* AirtableSpeciesService.swift */; };
+		9D5D5E2C284B66BB00F3AD3E /* SupervisorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E2B284B66BB00F3AD3E /* SupervisorService.swift */; };
+		9D5D5E2E284B670400F3AD3E /* AirtableSupervisorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E2D284B670400F3AD3E /* AirtableSupervisorService.swift */; };
 		9D79A5A7283AE03100F0F96C /* SiteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5A6283AE03100F0F96C /* SiteService.swift */; };
 		9D79A5AA283AE27500F0F96C /* DataAccessError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5A9283AE27500F0F96C /* DataAccessError.swift */; };
 		9D79A5AC283AE32C00F0F96C /* AirtableSiteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5AB283AE32C00F0F96C /* AirtableSiteService.swift */; };
@@ -241,6 +245,10 @@
 		85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableButton.swift; sourceTree = "<group>"; };
 		85E0E06125B35744009D8FC0 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		9D5CDBD627BBC080007D4F0A /* ExportOptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ExportOptions.plist; sourceTree = "<group>"; };
+		9D5D5E27284B630D00F3AD3E /* SpeciesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesService.swift; sourceTree = "<group>"; };
+		9D5D5E29284B635900F3AD3E /* AirtableSpeciesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSpeciesService.swift; sourceTree = "<group>"; };
+		9D5D5E2B284B66BB00F3AD3E /* SupervisorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupervisorService.swift; sourceTree = "<group>"; };
+		9D5D5E2D284B670400F3AD3E /* AirtableSupervisorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSupervisorService.swift; sourceTree = "<group>"; };
 		9D79A5A6283AE03100F0F96C /* SiteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteService.swift; sourceTree = "<group>"; };
 		9D79A5A9283AE27500F0F96C /* DataAccessError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAccessError.swift; sourceTree = "<group>"; };
 		9D79A5AB283AE32C00F0F96C /* AirtableSiteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSiteService.swift; sourceTree = "<group>"; };
@@ -499,13 +507,15 @@
 		85A0EF9025A231F2003CE744 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				9D5D5E2F284B698600F3AD3E /* Airtable */,
 				6CC985AA27F393630027C795 /* RetryingRequestInterceptor.swift */,
 				853ABD7F25961EEA00144B0D /* Api.swift */,
 				85792A7C25B0A3E100BFDA96 /* Database.swift */,
 				857123C7263997FD008EE027 /* AlamofireApi.swift */,
 				857123CB26399B49008EE027 /* MockApi.swift */,
 				9D79A5A6283AE03100F0F96C /* SiteService.swift */,
-				9D79A5AB283AE32C00F0F96C /* AirtableSiteService.swift */,
+				9D5D5E27284B630D00F3AD3E /* SpeciesService.swift */,
+				9D5D5E2B284B66BB00F3AD3E /* SupervisorService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -569,6 +579,16 @@
 				9DB29B572821D50000AAC73D /* SimpleTableViewCell.swift */,
 			);
 			path = "UI Components";
+			sourceTree = "<group>";
+		};
+		9D5D5E2F284B698600F3AD3E /* Airtable */ = {
+			isa = PBXGroup;
+			children = (
+				9D79A5AB283AE32C00F0F96C /* AirtableSiteService.swift */,
+				9D5D5E29284B635900F3AD3E /* AirtableSpeciesService.swift */,
+				9D5D5E2D284B670400F3AD3E /* AirtableSupervisorService.swift */,
+			);
+			path = Airtable;
 			sourceTree = "<group>";
 		};
 		9D79A5A8283AE25300F0F96C /* Errors */ = {
@@ -747,6 +767,7 @@
 				85792A7A25B0A36B00BFDA96 /* URL.swift in Sources */,
 				9DB29B5E282C0AEB00AAC73D /* AddSiteController.swift in Sources */,
 				85B839DD25B74FE00008E167 /* KeyboardAccessory.swift in Sources */,
+				9D5D5E28284B630D00F3AD3E /* SpeciesService.swift in Sources */,
 				85B83A1825B881EC0008E167 /* LocalTree.swift in Sources */,
 				859F62E925C48FA2005E61F7 /* DelayedPublished.swift in Sources */,
 				85B839F325B866590008E167 /* RoundedTappableButton.swift in Sources */,
@@ -773,8 +794,10 @@
 				85CC0304261CC8FE0016E618 /* LocationManager.swift in Sources */,
 				859F62D125C1C62D005E61F7 /* AirtableSupervisor.swift in Sources */,
 				9DB29B562821C28400AAC73D /* SettingsController.swift in Sources */,
+				9D5D5E2E284B670400F3AD3E /* AirtableSupervisorService.swift in Sources */,
 				853ABD562596144900144B0D /* AppDelegate.swift in Sources */,
 				857BADA825B1FA93005D7D35 /* TreeDetailsViewController.swift in Sources */,
+				9D5D5E2C284B66BB00F3AD3E /* SupervisorService.swift in Sources */,
 				85B83A1C25B8AC650008E167 /* EditLocalTreeViewModel.swift in Sources */,
 				85B83A2A25B9C5CB0008E167 /* JSONDecoder.swift in Sources */,
 				85A0EF8925A22FEE003CE744 /* AirtableTree.swift in Sources */,
@@ -798,6 +821,7 @@
 				858A0F2725D8156100E12C2B /* TreeDetailsFlowViewController.swift in Sources */,
 				859F62DC25C2218B005E61F7 /* Supervisor.swift in Sources */,
 				85B839FB25B86F1A0008E167 /* ImageLoader.swift in Sources */,
+				9D5D5E2A284B635900F3AD3E /* AirtableSpeciesService.swift in Sources */,
 				85B839EF25B866370008E167 /* GridCollectionViewLayout.swift in Sources */,
 				85B839E725B862B80008E167 /* CollectionViewDataSource.swift in Sources */,
 				8534160025CF09CE006DDAC4 /* PHPhotoLibrary.swift in Sources */,

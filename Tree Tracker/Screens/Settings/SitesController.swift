@@ -43,7 +43,7 @@ class SitesController: UITableViewController {
     }
     
     @objc func refreshTapped() {
-        siteService.sync(completion: {_ in })
+        siteService.sync() {_ in }
     }
     
     // MARK: - Delegate

@@ -8,8 +8,7 @@ import Resolver
  */
 class SupervisorsController: UITableViewController {
     
-    @Injected var database: Database
-    private var entitiesModel: EntitiesViewModel = EntitiesViewModel()
+    @Injected var supervisorService: SupervisorService
     
     private var supervisors: [Supervisor] = []
     private var cancellable: AnyCancellable!
@@ -27,25 +26,21 @@ class SupervisorsController: UITableViewController {
         // here we are creating a Combine subscription to a @Published attribute of the entity view model which is handling data access
         // the closure will be invoked on any change to the data property, which is itself refreshed via the onAppear method called
         // in this controllers viewWillAppear() handler
-        cancellable = entitiesModel.$data.sink() { [weak self] data in
-            // refresh local sites array from database
-            self?.database.fetchAll(Supervisor.self, completion: { [weak self] supervisors in
-                self?.supervisors = supervisors.sorted(by: \.name, order: .ascending)
-                // reload table view
-                self?.tableView.reloadData()
-            })
-            
+        cancellable = supervisorService.supervisorPublisher.sink() { [weak self] data in
+            self?.supervisors = data.sorted(by: \.name, order: .ascending)
+            // reload table view
+            self?.tableView.reloadData()
         }
     }
     
     // MARK: - navigation item delegates
     @objc func refreshTapped() {
-        entitiesModel.sync()
+        supervisorService.sync() {_ in}
     }
     
     // MARK: - Delegate
     override func viewWillAppear(_ animated: Bool) {
-        entitiesModel.onAppear()
+        
     }
     
     // MARK: - Datasource

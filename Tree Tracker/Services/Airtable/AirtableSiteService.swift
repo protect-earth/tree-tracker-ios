@@ -4,7 +4,7 @@ import Alamofire
 
 class AirtableSiteService: SiteService {
     
-    @Injected var database: Database
+    @Injected private var database: Database
     
     // MARK: data publisher
     // See https://swiftsenpai.com/swift/define-protocol-with-published-property-wrapper/

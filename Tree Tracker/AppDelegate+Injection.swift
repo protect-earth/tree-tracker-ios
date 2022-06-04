@@ -10,6 +10,7 @@ extension Resolver: ResolverRegistering {
         // register all components as singletons for lifetime of application
         // defaultScope = .application
         
+        // MARK: Base services
         register { Logger(output: .print) }.implements(Logging.self)
         register { Database(logger: resolve()) }
         register { AlamofireApi(logger: resolve()) }.implements(Api.self)
@@ -18,11 +19,19 @@ extension Resolver: ResolverRegistering {
         register { UIScreenLockManager() }
         register { PHCachingImageManager() }
         register { RecentSpeciesManager(defaults: resolve(), strategy: .todayUsedSpecies) }
+        
+        // MARK: Services
         register { AirtableSiteService() as SiteService }
+        register { AirtableSpeciesService() as SpeciesService }
+        register { AirtableSupervisorService() as SupervisorService }
+        
+        // MARK: Controllers
         register { SitesController() }
+        register { SpeciesController() }
+        register { SupervisorsController() }
         register { SettingsController(style: UITableView.Style.grouped) }
         
-        // test component registrations
+        // MARK: test component registrations
         mock.register { MockApi() as Api }
         
         if CommandLine.arguments.contains("--mock-server") {

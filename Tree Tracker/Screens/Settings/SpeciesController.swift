@@ -8,8 +8,7 @@ import Resolver
  */
 class SpeciesController: UITableViewController {
     
-    @Injected var database: Database
-    private var entitiesModel: EntitiesViewModel = EntitiesViewModel()
+    @Injected var speciesService: SpeciesService
     
     private var species: [Species] = []
     private var cancellable: AnyCancellable!
@@ -24,28 +23,21 @@ class SpeciesController: UITableViewController {
         // nav bar controls
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshTapped))
         
-        // here we are creating a Combine subscription to a @Published attribute of the entity view model which is handling data access
-        // the closure will be invoked on any change to the data property, which is itself refreshed via the onAppear method called
-        // in this controllers viewWillAppear() handler
-        cancellable = entitiesModel.$data.sink() { [weak self] data in
-            // refresh local sites array from database
-            self?.database.fetchAll(Species.self, completion: { [weak self] species in
-                self?.species = species.sorted(by: \.name, order: .ascending)
-                // reload table view
-                self?.tableView.reloadData()
-            })
-            
+        cancellable = speciesService.speciesPublisher.sink() { [weak self] data in
+            self?.species = data.sorted(by: \.name, order: .ascending)
+            // reload table view
+            self?.tableView.reloadData()
         }
     }
     
     // MARK: - navigation item delegates
     @objc func refreshTapped() {
-        entitiesModel.sync()
+        speciesService.sync() {_ in}
     }
     
     // MARK: - Delegate
     override func viewWillAppear(_ animated: Bool) {
-        entitiesModel.onAppear()
+
     }
     
     // MARK: - Datasource
