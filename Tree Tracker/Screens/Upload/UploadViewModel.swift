@@ -1,4 +1,5 @@
 import Foundation
+import Resolver
 
 protocol UploadNavigating: AnyObject {
     func triggerAddTreesFlow(completion: @escaping (Bool) -> Void)
@@ -22,8 +23,9 @@ final class UploadViewModel: CollectionViewModel {
     var rightNavigationButtonsPublisher: Published<[NavigationBarButtonModel]>.Publisher { $rightNavigationButtons }
     var dataPublisher: Published<[ListSection<CollectionListItem>]>.Publisher { $data }
 
-    private var api: Api
-    private var database: Database
+    @Injected private var api: Api
+    @Injected private var database: Database
+    
     private var screenLockManager: ScreenLockManaging
     private var logger: Logging
     private var sites: [Site] = []
@@ -32,10 +34,8 @@ final class UploadViewModel: CollectionViewModel {
     private var currentUpload: Cancellable?
     private weak var navigation: UploadNavigating?
 
-    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, screenLockManager: ScreenLockManaging = CurrentEnvironment.screenLockManager, logger: Logging = CurrentEnvironment.logger, navigation: UploadNavigating) {
+    init(screenLockManager: ScreenLockManaging = CurrentEnvironment.screenLockManager, logger: Logging = CurrentEnvironment.logger, navigation: UploadNavigating) {
         self.title = ""
-        self.api = api
-        self.database = database
         self.screenLockManager = screenLockManager
         self.logger = logger
         self.navigation = navigation

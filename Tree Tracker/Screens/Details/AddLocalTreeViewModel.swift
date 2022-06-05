@@ -1,5 +1,6 @@
 import Combine
 import Photos
+import Resolver
 
 protocol TreeDetailsNavigating: AnyObject {
     func detailsFilledSuccessfully()
@@ -33,9 +34,9 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
     var saveButtonPublisher: Published<ButtonModel?>.Publisher { $saveButton }
     var topRightNavigationButtonPublisher: Published<NavigationBarButtonModel?>.Publisher { $topRightNavigationButton }
 
-    private let api: Api
-    private let database: Database
-    private let defaults: Defaults
+    @Injected private var database: Database
+    @Injected private var defaults: Defaults
+    
     private let recentSpeciesManager: RecentSpeciesManaging
     private let initialAssetCount: Int
     private var currentAsset: Int
@@ -47,10 +48,7 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
     private var supervisors: [Supervisor] = []
     private weak var navigation: TreeDetailsNavigating?
 
-    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, defaults: Defaults = CurrentEnvironment.defaults, recentSpeciesManager: RecentSpeciesManaging = CurrentEnvironment.recentSpeciesManager, assets: [PHAsset], staticSupervisor: Supervisor?, staticSite: Site?, navigation: TreeDetailsNavigating) {
-        self.api = api
-        self.database = database
-        self.defaults = defaults
+    init(recentSpeciesManager: RecentSpeciesManaging = CurrentEnvironment.recentSpeciesManager, assets: [PHAsset], staticSupervisor: Supervisor?, staticSite: Site?, navigation: TreeDetailsNavigating) {
         self.recentSpeciesManager = recentSpeciesManager
         self.navigation = navigation
         self.assets = assets

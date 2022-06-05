@@ -1,5 +1,6 @@
 import Combine
 import Photos
+import Resolver
 
 final class EditLocalTreeViewModel: TreeDetailsViewModel {
     @DelayedPublished var alert: AlertModel
@@ -18,19 +19,16 @@ final class EditLocalTreeViewModel: TreeDetailsViewModel {
     var saveButtonPublisher: Published<ButtonModel?>.Publisher { $saveButton }
     var topRightNavigationButtonPublisher: Published<NavigationBarButtonModel?>.Publisher { $topRightNavigationButton }
 
-    private let api: Api
-    private let database: Database
-    private let defaults: Defaults
+    @Injected private var database: Database
+    @Injected private var defaults: Defaults
+    
     private var tree: LocalTree
     private var sites: [Site] = []
     private var species: [Species] = []
     private var supervisors: [Supervisor] = []
     private weak var navigation: TreeDetailsNavigating?
 
-    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, defaults: Defaults = CurrentEnvironment.defaults, tree: LocalTree, navigation: TreeDetailsNavigating) {
-        self.api = api
-        self.database = database
-        self.defaults = defaults
+    init(tree: LocalTree, navigation: TreeDetailsNavigating) {
         self.navigation = navigation
         self.tree = tree
         self.fields = []

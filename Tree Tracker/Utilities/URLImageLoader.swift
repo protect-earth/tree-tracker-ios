@@ -1,6 +1,7 @@
 import Foundation
 import class UIKit.UIImage
 import struct CoreGraphics.CGSize
+import Resolver
 
 fileprivate extension LogCategory {
     static var imageLoader = LogCategory(name: "ImageLoader")
@@ -13,13 +14,13 @@ final class URLImageLoader: ImageLoader {
         return url
     }
 
-    private let api: Api
+    @Injected private var api: Api
+    
     private let thumbnailsImageCache: ImageCaching
     private let logger: Logging
 
-    init(url: String, api: Api = CurrentEnvironment.api, thumbnailsImageCache: ImageCaching = CurrentEnvironment.imageCache, logger: Logging = CurrentEnvironment.logger) {
+    init(url: String, thumbnailsImageCache: ImageCaching = CurrentEnvironment.imageCache, logger: Logging = CurrentEnvironment.logger) {
         self.url = url
-        self.api = api
         self.thumbnailsImageCache = thumbnailsImageCache
         self.logger = logger
     }
