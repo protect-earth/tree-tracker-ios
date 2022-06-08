@@ -5,47 +5,23 @@ import Alamofire
 class AirtableSiteService: SiteService {
     
     @Injected private var database: Database
+    @Injected private var sessionFactory: AirtableSessionFactory
     
     // MARK: data publisher
     // See https://swiftsenpai.com/swift/define-protocol-with-published-property-wrapper/
     @Published var sites: [Site] = []
     var sitesPublisher: Published<[Site]>.Publisher { $sites }
-        
-    // MARK: private variables
-    private var session: Session
-    private var interceptor: RequestInterceptor
-    private var sitesUrl: URL
-    
-    private var headers = HTTPHeaders(["Authorization": "Bearer \(Constants.Airtable.apiKey)"])
     
     // MARK: business logic
     init() {
-        sitesUrl = URL(string: "https://api.airtable.com/v0/\(Constants.Airtable.baseId)")!
-        sitesUrl.appendPathComponent(Constants.Airtable.sitesTable)
-        
-        //TODO: consider injecting a session factory
-        let sessionConfig = URLSessionConfiguration.af.default
-        sessionConfig.timeoutIntervalForRequest = Constants.Http.requestTimeoutSeconds
-        sessionConfig.waitsForConnectivity = Constants.Http.requestWaitsForConnectivity
-        
-        interceptor = RetryingRequestInterceptor(retryDelaySecs: Constants.Http.requestRetryDelaySeconds,
-                                                 maxRetries: Constants.Http.requestRetryLimit)
-        
-        self.session = Session(configuration: sessionConfig,
-                               interceptor: interceptor)
-        
-        self.sync() {_ in} // fire and forget
+        self.sync() { _ in } // fire and forget
     }
     
     // Synchronise local cache with remote datastore
     func sync(completion: @escaping (Result<Bool, DataAccessError>) -> Void) {
-        let request = session.request(sitesUrl,
-                                      method: .get,
-                                      parameters: nil,
-                                      encoding: URLEncoding.queryString,
-                                      headers: headers,
-                                      interceptor: interceptor,
-                                      requestModifier: nil)
+        let request = getSession().request(sessionFactory.getSitesUrl(),
+                                           method: .get,
+                                           encoding: URLEncoding.queryString)
 
         request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { [weak self] (response: DataResponse<Paginated<AirtableSite>, AFError>) in
             // TODO: Handle multiple pages (where number of sites > 100)
@@ -80,32 +56,32 @@ class AirtableSiteService: SiteService {
     }
     
     // Add a site to remote and trigger a sync to update local cache
-    func addSite(name: String, completion: @escaping (Result<Site, DataAccessError>) -> Void) {
+    func addSite(name: String, completion: @escaping (Result<Bool, DataAccessError>) -> Void) {
         // build struct to represent target JSON body
         let parameters: [String: [String: String]] = [
             "fields": ["Name": name]
         ]
         
-        let request = session.request(sitesUrl,
-                                      method: .post,
-                                      parameters: parameters,
-                                      encoder: JSONParameterEncoder.default,
-                                      headers: headers,
-                                      interceptor: interceptor,
-                                      requestModifier: nil)
+        let request = getSession().request(sessionFactory.getSitesUrl(),
+                                           method: .post,
+                                           parameters: parameters,
+                                           encoder: JSONParameterEncoder.default)
         
-        request.validate().responseDecodable(of: AirtableSite.self, decoder: JSONDecoder._iso8601ms) { response in
-            let addedSite = response.value
-            
+        request.validate().responseDecodable(of: AirtableSite.self, decoder: JSONDecoder._iso8601ms) { response in            
             switch response.result {
             case .success:
-                self.sync() {_ in} // fire and forget
-                completion(.success(addedSite!.toSite()))
+                self.sync { result in
+                    completion(result)
+                }
             case .failure:
                 completion(.failure(DataAccessError.remoteError(errorCode: response.error!.responseCode!,
                                                                 errorMessage: (response.error!.errorDescription!))))
             }
         }
+    }
+    
+    private func getSession() -> Session {
+        sessionFactory.get()
     }
     
 }
