@@ -136,6 +136,9 @@ class AirtableSiteServiceTests: XCTestCase {
         
         let publisherExpectation = expectation(description: "Add triggers publisher")
         publisherExpectation.assertForOverFulfill = false
+        // Because we empty the list of sites and then refill it, the publisher should be fired for each new member, not just once
+        // so we need to wait for all expected publishing events before this expectation can be considered fulfilled
+        publisherExpectation.expectedFulfillmentCount = initialSites.count + 1
         
         // capture publishing of updated sites (happens later!)
         siteService.sitesPublisher.sink() { sites in
