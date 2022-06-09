@@ -5,47 +5,23 @@ import Alamofire
 class AirtableSupervisorService: SupervisorService {
     
     @Injected private var database: Database
+    @Injected private var sessionFactory: AirtableSessionFactory
     
     // MARK: data publisher
     // See https://swiftsenpai.com/swift/define-protocol-with-published-property-wrapper/
     @Published var supervisors: [Supervisor] = []
     var supervisorPublisher: Published<[Supervisor]>.Publisher { $supervisors }
-        
-    // MARK: private variables
-    private var session: Session
-    private var interceptor: RequestInterceptor
-    private var supervisorUrl: URL
-    
-    private var headers = HTTPHeaders(["Authorization": "Bearer \(Constants.Airtable.apiKey)"])
     
     // MARK: business logic
     init() {
-        supervisorUrl = URL(string: "https://api.airtable.com/v0/\(Constants.Airtable.baseId)")!
-        supervisorUrl.appendPathComponent(Constants.Airtable.supervisorsTable)
-        
-        //TODO: consider injecting a session factory
-        let sessionConfig = URLSessionConfiguration.af.default
-        sessionConfig.timeoutIntervalForRequest = Constants.Http.requestTimeoutSeconds
-        sessionConfig.waitsForConnectivity = Constants.Http.requestWaitsForConnectivity
-        
-        interceptor = RetryingRequestInterceptor(retryDelaySecs: Constants.Http.requestRetryDelaySeconds,
-                                                 maxRetries: Constants.Http.requestRetryLimit)
-        
-        self.session = Session(configuration: sessionConfig,
-                               interceptor: interceptor)
-        
-        self.sync() {_ in} // fire and forget
+        self.sync() { _ in } // fire and forget
     }
     
     // Synchronise local cache with remote datastore
     func sync(completion: @escaping (Result<Bool, DataAccessError>) -> Void) {
-        let request = session.request(supervisorUrl,
-                                      method: .get,
-                                      parameters: nil,
-                                      encoding: URLEncoding.queryString,
-                                      headers: headers,
-                                      interceptor: interceptor,
-                                      requestModifier: nil)
+        let request = getSession().request(sessionFactory.getSupervisorUrl(),
+                                           method: .get,
+                                           encoding: URLEncoding.queryString)
 
         request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { [weak self] (response: DataResponse<Paginated<AirtableSupervisor>, AFError>) in
             // TODO: Handle multiple pages (where number of entries > 100)
@@ -82,6 +58,10 @@ class AirtableSupervisorService: SupervisorService {
     // Add a record to remote and trigger a sync to update local cache
     func addSupervisor(name: String, completion: @escaping (Result<Supervisor, DataAccessError>) -> Void) {
         fatalError("addSupervisor(name:, completion:) has not been implemented")
+    }
+    
+    private func getSession() -> Session {
+        sessionFactory.get()
     }
     
 }

@@ -5,50 +5,26 @@ import Alamofire
 class AirtableSpeciesService: SpeciesService {
     
     @Injected private var database: Database
+    @Injected private var sessionFactory: AirtableSessionFactory
     
     // MARK: data publisher
     // See https://swiftsenpai.com/swift/define-protocol-with-published-property-wrapper/
     @Published var species: [Species] = []
     var speciesPublisher: Published<[Species]>.Publisher { $species }
-        
-    // MARK: private variables
-    private var session: Session
-    private var interceptor: RequestInterceptor
-    private var speciesUrl: URL
-    
-    private var headers = HTTPHeaders(["Authorization": "Bearer \(Constants.Airtable.apiKey)"])
     
     // MARK: business logic
     init() {
-        speciesUrl = URL(string: "https://api.airtable.com/v0/\(Constants.Airtable.baseId)")!
-        speciesUrl.appendPathComponent(Constants.Airtable.speciesTable)
-        
-        //TODO: consider injecting a session factory
-        let sessionConfig = URLSessionConfiguration.af.default
-        sessionConfig.timeoutIntervalForRequest = Constants.Http.requestTimeoutSeconds
-        sessionConfig.waitsForConnectivity = Constants.Http.requestWaitsForConnectivity
-        
-        interceptor = RetryingRequestInterceptor(retryDelaySecs: Constants.Http.requestRetryDelaySeconds,
-                                                 maxRetries: Constants.Http.requestRetryLimit)
-        
-        self.session = Session(configuration: sessionConfig,
-                               interceptor: interceptor)
-        
-        self.sync() {_ in} // fire and forget
+        self.sync() { _ in } // fire and forget
     }
     
     // Synchronise local cache with remote datastore
     func sync(completion: @escaping (Result<Bool, DataAccessError>) -> Void) {
-        let request = session.request(speciesUrl,
-                                      method: .get,
-                                      parameters: nil,
-                                      encoding: URLEncoding.queryString,
-                                      headers: headers,
-                                      interceptor: interceptor,
-                                      requestModifier: nil)
+        let request = getSession().request(sessionFactory.getSpeciesUrl(),
+                                           method: .get,
+                                           encoding: URLEncoding.queryString)
 
         request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { [weak self] (response: DataResponse<Paginated<AirtableSpecies>, AFError>) in
-            // TODO: Handle multiple pages (where number of sites > 100)
+            // TODO: Handle multiple pages (where number of species > 100)
             switch response.result {
             case .success:
                 do {
@@ -82,6 +58,10 @@ class AirtableSpeciesService: SpeciesService {
     // Add a species to remote and trigger a sync to update local cache
     func addSpecies(name: String, completion: @escaping (Result<Species, DataAccessError>) -> Void) {
         fatalError("addSpecies(name:, completion:) has not been implemented")
+    }
+    
+    private func getSession() -> Session {
+        sessionFactory.get()
     }
     
 }
