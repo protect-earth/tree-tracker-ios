@@ -157,8 +157,6 @@ class AirtableSiteServiceTests: XCTestCase {
         // note that this is effectively also an assertion
         waitForExpectations(timeout: 1)
         
-        // the published lists of sites should be initial size + 1
-//        XCTAssertTrue(newPublishedSites.count == initialSites.count + 1)
         // and should also contain a site with our new name
         let newSite = newPublishedSites.first(where: { $0.name == newSiteName })
         XCTAssertNotNil(newSite)
