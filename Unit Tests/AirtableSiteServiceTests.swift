@@ -135,15 +135,16 @@ class AirtableSiteServiceTests: XCTestCase {
         waitForExpectations(timeout: 1)
         
         let publisherExpectation = expectation(description: "Add triggers publisher")
-        publisherExpectation.assertForOverFulfill = false
-        // Because we empty the list of sites and then refill it, the publisher should be fired for each new member, not just once
-        // so we need to wait for all expected publishing events before this expectation can be considered fulfilled
-        publisherExpectation.expectedFulfillmentCount = initialSites.count + 1
         
         // capture publishing of updated sites (happens later!)
         siteService.sitesPublisher.sink() { sites in
-            publisherExpectation.fulfill()
-            newPublishedSites = sites
+            if ( sites.count == (initialSites.count + 1) &&
+                 sites.contains(where: { self.newSiteName == $0.name })) {
+                newPublishedSites = sites
+                // We have fulfilled the expectation that sites list should be increased
+                // and should contain a site with our new name
+                publisherExpectation.fulfill()
+            }
         }.store(in: &cancellables)
         
         // now add the new site, fire and forget style
@@ -153,10 +154,11 @@ class AirtableSiteServiceTests: XCTestCase {
         })
         
         // wait for the add site and publisher expectations (getInitial having already been fulfilled)
+        // note that this is effectively also an assertion
         waitForExpectations(timeout: 1)
         
         // the published lists of sites should be initial size + 1
-        XCTAssertTrue(newPublishedSites.count == initialSites.count + 1)
+//        XCTAssertTrue(newPublishedSites.count == initialSites.count + 1)
         // and should also contain a site with our new name
         let newSite = newPublishedSites.first(where: { $0.name == newSiteName })
         XCTAssertNotNil(newSite)
