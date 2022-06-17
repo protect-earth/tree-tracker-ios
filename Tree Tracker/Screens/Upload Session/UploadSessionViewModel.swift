@@ -2,6 +2,8 @@ import Foundation
 import class UIKit.UIImage
 import class CoreLocation.CLLocation
 import class Photos.PHAsset
+import Resolver
+import Combine
 
 protocol UploadSessionNavigating: AnyObject {
     func triggerAskForDetailsAndStoreFlow(assets: [PHAsset], site: Site?, supervisor: Supervisor?, completion: @escaping (Bool) -> Void)
@@ -17,27 +19,63 @@ final class UploadSessionViewModel {
     @DelayedPublished var alert: AlertModel
     @DelayedPublished var fields: [TextFieldModel]
     
+    @Injected private var siteService: SiteService
+    @Injected private var supervisorService: SupervisorService
+    
     private let navigation: UploadSessionNavigating
     private let assetManager: AssetManaging
-    private let database: Database
     private let locationManager: LocationProviding & PermissionAsking
     private var sites: [Site] = []
     private var supervisors: [Supervisor] = []
+    
+    private var observables = Set<AnyCancellable>()
 
-    init(navigation: UploadSessionNavigating, assetManager: AssetManaging = PHAssetManager(), database: Database = CurrentEnvironment.database, locationManager: LocationProviding & PermissionAsking = LocationManager()) {
+    init(navigation: UploadSessionNavigating, assetManager: AssetManaging = PHAssetManager(), locationManager: LocationProviding & PermissionAsking = LocationManager()) {
         self.navigation = navigation
         self.assetManager = assetManager
-        self.database = database
         self.locationManager = locationManager
+        
+        siteService.sitesPublisher.sink() { [weak self] data in
+            self?.sites = data.sorted(by: \.name, order: .ascending)
+            self?.presentContent()
+        }.store(in: &observables)
+        
+        supervisorService.supervisorPublisher.sink() { [weak self] data in
+            self?.supervisors = data.sorted(by: \.name, order: .ascending)
+            self?.presentContent()
+        }.store(in: &observables)
     }
 
     func onLoad() {}
     
     private func fetchDatabaseContent(completion: @escaping () -> Void) {
-        database.fetch(Site.self, Supervisor.self) { [weak self] sites, supervisors in
-            self?.sites = sites.sorted(by: \.name, order: .ascending)
-            self?.supervisors = supervisors.sorted(by: \.name, order: .ascending)
-            completion()
+        print("UploadSessionViewModel.fetchDatabaseContent")
+        fetchSites() { [weak self] in
+            self?.fetchSupervisors(completion: completion)
+        }
+    }
+    
+    private func fetchSites(completion: @escaping () -> Void) {
+        siteService.fetchAll() { [weak self] result in
+            do {
+                self?.sites = try result.get().sorted(by: \.name, order: .ascending)
+                print("\(self?.sites.count) sites loaded")
+                completion()
+            } catch {
+                print("Error loading sites")
+            }
+        }
+    }
+    
+    private func fetchSupervisors(completion: @escaping () -> Void) {
+        supervisorService.fetchAll() { [weak self] result in
+            do {
+                self?.supervisors = try result.get().sorted(by: \.name, order: .ascending)
+                print("\(self?.supervisors.count) supervisors loaded")
+                completion()
+            } catch {
+                print("Error loading supervisors")
+            }
         }
     }
 

@@ -1,18 +1,17 @@
 import Foundation
 import UIKit
+import Resolver
 
 /*
  Navigation controller for Settings - acts as a container for child view controllers
  */
 class SettingsNavigationController: UINavigationController {
     
+    @Injected var settingsContoller: SettingsController
+    
     init() {
         super.init(nibName: nil, bundle: nil)
-        
-        let top = SettingsController(style: UITableView.Style.grouped)
-        
-        self.viewControllers = [top]
-        
+        self.viewControllers = [settingsContoller]
         self.title = "Settings"
     }
     

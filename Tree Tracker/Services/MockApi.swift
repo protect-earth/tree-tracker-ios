@@ -69,7 +69,9 @@ final class MockApi: Api {
     }
     
     func addSite(name: String, completion: @escaping (Result<AirtableSite, AFError>) -> Void) {
-        // TODO: implement test
+        delay {
+            completion(.success(self.sites[0]))
+        }
     }
     
     private func delay(completion: @escaping () -> Void) {

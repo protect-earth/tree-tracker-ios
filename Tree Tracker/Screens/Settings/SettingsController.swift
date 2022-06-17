@@ -1,11 +1,15 @@
 import Foundation
 import UIKit
-import Combine
+import Resolver
 
 /*
  Top level Settings controller
  */
 class SettingsController: UITableViewController {
+    
+    @Injected private var sitesController: SitesController
+    @Injected private var speciesController: SpeciesController
+    @Injected private var supervisorsController: SupervisorsController
     
     private var entityTypes = ["Sites", "Supervisors", "Species"]
 
@@ -40,11 +44,11 @@ class SettingsController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch entityTypes[indexPath.item] {
         case "Sites":
-            self.navigationController?.pushViewController(SitesController(), animated: true)
+            self.navigationController?.pushViewController(sitesController, animated: true)
         case "Supervisors":
-            self.navigationController?.pushViewController(SupervisorsController(), animated: true)
+            self.navigationController?.pushViewController(supervisorsController, animated: true)
         case "Species":
-            self.navigationController?.pushViewController(SpeciesController(), animated: true)
+            self.navigationController?.pushViewController(speciesController, animated: true)
         default:
             break
         }

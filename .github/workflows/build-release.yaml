@@ -27,6 +27,9 @@ jobs:
           AIRTABLE_SITES_TABLE_NAME: ${{ secrets.AIRTABLE_SITES_TABLE_NAME }}
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_UPLOAD_PRESET_NAME: ${{ secrets.CLOUDINARY_UPLOAD_PRESET_NAME }}
+          TEST_AIRTABLE_API_KEY: ${{ secrets.TEST_AIRTABLE_API_KEY }}
+          TEST_AIRTABLE_BASE_ID: ${{ secrets.TEST_AIRTABLE_BASE_ID }}
+          TEST_AIRTABLE_TABLE_NAME_PREFIX: ${{ secrets.TEST_AIRTABLE_TABLE_NAME_PREFIX }}
         run: pouch
       - name: Set build number
         run: agvtool new-version $GITHUB_RUN_NUMBER

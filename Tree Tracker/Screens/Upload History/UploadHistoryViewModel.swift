@@ -1,4 +1,5 @@
 import Foundation
+import Resolver
 
 private extension LogCategory {
     static var treeList = LogCategory(name: "TreeList")
@@ -17,17 +18,15 @@ final class UploadHistoryViewModel: CollectionViewModel {
     var rightNavigationButtonsPublisher: Published<[NavigationBarButtonModel]>.Publisher { $rightNavigationButtons }
     var dataPublisher: Published<[ListSection<CollectionListItem>]>.Publisher { $data }
 
-    private let api: Api
-    private let database: Database
+    @Injected private var database: Database
+    
     private let logger: Logging
     private var sites: [Site] = []
     private var species: [Species] = []
     private var supervisors: [Supervisor] = []
 
-    init(api: Api = CurrentEnvironment.api, database: Database = CurrentEnvironment.database, logger: Logging = CurrentEnvironment.logger) {
+    init(logger: Logging = CurrentEnvironment.logger) {
         self.title = "Upload History"
-        self.api = api
-        self.database = database
         self.logger = logger
         self.data = []
         self.rightNavigationButtons = []
