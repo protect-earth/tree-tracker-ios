@@ -10,9 +10,8 @@ class AirtableSiteServiceTests: XCTestCase {
     @Injected private var sessionFactory: AirtableSessionFactory
     
     private var newSiteName: String = UUID.init().uuidString
-    
+    private let DEFAULT_EXPECTATION_TIMEOUT = TimeInterval(5)
     private var cancellables: Set<AnyCancellable> = []
-    
     private var deleteQueue: [Site] = []
     
     override func setUp() {
@@ -60,7 +59,7 @@ class AirtableSiteServiceTests: XCTestCase {
                 XCTFail("Error fetching sites: \(error)")
             }
         }
-        waitForExpectations(timeout: 5)
+        waitForExpectations(timeout: DEFAULT_EXPECTATION_TIMEOUT)
     }
     
     func test_fetchAll_andAdd() {
@@ -80,7 +79,7 @@ class AirtableSiteServiceTests: XCTestCase {
             }
         }
         
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: DEFAULT_EXPECTATION_TIMEOUT)
         
         // expect and wait for addition of new site
         let addSiteExpectation = expectation(description: "Add site")
@@ -89,7 +88,7 @@ class AirtableSiteServiceTests: XCTestCase {
             addSiteExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: DEFAULT_EXPECTATION_TIMEOUT)
         
         // expect and wait for the results of a subsequent fetch of sites
         let getUpdatedExpectation = expectation(description: "Get updated sites list")
@@ -103,7 +102,7 @@ class AirtableSiteServiceTests: XCTestCase {
             }
         }
         
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: DEFAULT_EXPECTATION_TIMEOUT)
         
         XCTAssertNotNil(newSites)
         // new sites should be 1 more than original list
@@ -132,7 +131,7 @@ class AirtableSiteServiceTests: XCTestCase {
             }
         }
         
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: DEFAULT_EXPECTATION_TIMEOUT)
         
         let publisherExpectation = expectation(description: "Add triggers publisher")
         
@@ -155,7 +154,7 @@ class AirtableSiteServiceTests: XCTestCase {
         
         // wait for the add site and publisher expectations (getInitial having already been fulfilled)
         // note that this is effectively also an assertion
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: DEFAULT_EXPECTATION_TIMEOUT)
         
         // and should also contain a site with our new name
         let newSite = newPublishedSites.first(where: { $0.name == newSiteName })
