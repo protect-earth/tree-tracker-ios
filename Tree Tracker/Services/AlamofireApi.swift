@@ -36,14 +36,6 @@ final class AlamofireApi: Api {
                                                                        maxRetries: Constants.Http.requestRetryLimit))
         
     }
- 
-    func treesPlanted(offset: String?, completion: @escaping (Result<Paginated<AirtableTree>, AFError>) -> Void) {
-        let request = session.request(Config.treesUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers, interceptor: nil, requestModifier: nil)
-
-        request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<Paginated<AirtableTree>, AFError>) in
-            completion(response.result)
-        }
-    }
 
     func species(offset: String?, completion: @escaping (Result<Paginated<AirtableSpecies>, AFError>) -> Void) {
         let request = session.request(Config.speciesUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers, interceptor: nil, requestModifier: nil)

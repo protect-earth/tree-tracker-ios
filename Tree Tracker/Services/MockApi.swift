@@ -18,10 +18,6 @@ final class MockApi: Api {
     private(set) var supervisors: [AirtableSupervisor] = [.init(id: "1", name: "Josh Hopkins")]
     private var images = [UIImage.mockTree1, .mockTree2, .mockTree3]
     
-    func treesPlanted(offset: String?, completion: @escaping (Result<Paginated<AirtableTree>, AFError>) -> Void) {
-        delayAndCompleteWithPossibleError(successResponse: Paginated(offset: offset, records: treesPlanted), completionToCall: completion)
-    }
-    
     func species(offset: String?, completion: @escaping (Result<Paginated<AirtableSpecies>, AFError>) -> Void) {
         delayAndCompleteWithPossibleError(successResponse: Paginated(offset: offset, records: species), completionToCall: completion)
     }

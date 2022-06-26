@@ -3,7 +3,6 @@ import Alamofire
 import class UIKit.UIImage
 
 protocol Api {
-    func treesPlanted(offset: String?, completion: @escaping (Result<Paginated<AirtableTree>, AFError>) -> Void)
     func species(offset: String?, completion: @escaping (Result<Paginated<AirtableSpecies>, AFError>) -> Void)
     func sites(offset: String?, completion: @escaping (Result<Paginated<AirtableSite>, AFError>) -> Void)
     func supervisors(offset: String?, completion: @escaping (Result<Paginated<AirtableSupervisor>, AFError>) -> Void)
