@@ -132,7 +132,6 @@
 		9DCC548C28073F0A00CF67AA /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 9DCC548B28073F0A00CF67AA /* Resolver */; };
 		9DFB9CC1284E9BF500298526 /* AirtableSiteServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFB9CC0284E9BF500298526 /* AirtableSiteServiceTests.swift */; };
 		9DFB9CC52851345800298526 /* AirtableSessionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFB9CC42851345800298526 /* AirtableSessionFactory.swift */; };
-		9DFB9CC7285134D200298526 /* AirtableAuthenticationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFB9CC6285134D200298526 /* AirtableAuthenticationAdapter.swift */; };
 		9DFF6277282E63100008AEEF /* SupervisorsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF6276282E63100008AEEF /* SupervisorsController.swift */; };
 		9DFF6279282E64780008AEEF /* SpeciesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF6278282E64780008AEEF /* SpeciesController.swift */; };
 /* End PBXBuildFile section */
@@ -275,7 +274,6 @@
 		9DB29B5D282C0AEB00AAC73D /* AddSiteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSiteController.swift; sourceTree = "<group>"; };
 		9DFB9CC0284E9BF500298526 /* AirtableSiteServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSiteServiceTests.swift; sourceTree = "<group>"; };
 		9DFB9CC42851345800298526 /* AirtableSessionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSessionFactory.swift; sourceTree = "<group>"; };
-		9DFB9CC6285134D200298526 /* AirtableAuthenticationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableAuthenticationAdapter.swift; sourceTree = "<group>"; };
 		9DFF6276282E63100008AEEF /* SupervisorsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupervisorsController.swift; sourceTree = "<group>"; };
 		9DFF6278282E64780008AEEF /* SpeciesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -528,6 +526,7 @@
 		85A0EF9025A231F2003CE744 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				9D5F061D286F35C700C8D4A6 /* BearerTokenAuthenticationAdapter.swift */,
 				9D5F0616286F344E00C8D4A6 /* ProtectEarth */,
 				9D5D5E2F284B698600F3AD3E /* Airtable */,
 				6CC985AA27F393630027C795 /* RetryingRequestInterceptor.swift */,
@@ -603,7 +602,6 @@
 				9D5D5E29284B635900F3AD3E /* AirtableSpeciesService.swift */,
 				9D5D5E2D284B670400F3AD3E /* AirtableSupervisorService.swift */,
 				9DFB9CC42851345800298526 /* AirtableSessionFactory.swift */,
-				9DFB9CC6285134D200298526 /* AirtableAuthenticationAdapter.swift */,
 			);
 			path = Airtable;
 			sourceTree = "<group>";
@@ -613,7 +611,6 @@
 			children = (
 				9D5F0617286F346800C8D4A6 /* ProtectEarthSupervisorService.swift */,
 				9D5F061A286F348F00C8D4A6 /* ProtectEarthSessionFactory.swift */,
-				9D5F061D286F35C700C8D4A6 /* BearerTokenAuthenticationAdapter.swift */,
 			);
 			path = ProtectEarth;
 			sourceTree = "<group>";
@@ -831,7 +828,6 @@
 				857BADA825B1FA93005D7D35 /* TreeDetailsViewController.swift in Sources */,
 				9D5D5E2C284B66BB00F3AD3E /* SupervisorService.swift in Sources */,
 				85B83A1C25B8AC650008E167 /* EditLocalTreeViewModel.swift in Sources */,
-				9DFB9CC7285134D200298526 /* AirtableAuthenticationAdapter.swift in Sources */,
 				85B83A2A25B9C5CB0008E167 /* JSONDecoder.swift in Sources */,
 				85A0EF8925A22FEE003CE744 /* AirtableTree.swift in Sources */,
 				85B839E025B74FF50008E167 /* TextField.swift in Sources */,

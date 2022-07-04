@@ -37,7 +37,7 @@ class AirtableSessionFactory: AlamofireSessionFactory {
             sessionConfig.timeoutIntervalForRequest = httpRequestTimeoutSeconds
             sessionConfig.waitsForConnectivity = httpWaitsForConnectivity
             
-            let interceptor = Interceptor(adapter: AirtableAuthenticationAdapter(airtableApiKey),
+            let interceptor = Interceptor(adapter: BearerTokenAuthenticationAdapter(airtableApiKey),
                                           retrier: RetryingRequestInterceptor(retryDelaySecs: httpRetryDelaySeconds,
                                                                               maxRetries: httpRetryLimit))
             
