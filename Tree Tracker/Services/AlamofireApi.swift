@@ -167,7 +167,7 @@ final class ImageUpload: Cancellable {
         return request.validate().responseJSON { [weak self] response in
             switch response.result {
             case let .failure(error):
-                self?.logger.log(.api, "Error when uploading image: \(response.data.map { String.init(data: $0, encoding: .utf8) })")
+                self?.logger.log(.api, "Error when uploading image: \(String(describing: response.data.map { String.init(data: $0, encoding: .utf8) }))")
                 completion(.failure(error))
             case let .success(json as [String: Any]):
                 let url = json["secure_url"] as? String
@@ -178,7 +178,7 @@ final class ImageUpload: Cancellable {
                     fallthrough
                 }
             default:
-                self?.logger.log(.api, "Error when parsing json: \(response.data.map { String.init(data: $0, encoding: .utf8) })")
+                self?.logger.log(.api, "Error when parsing json: \(String(describing: response.data.map { String.init(data: $0, encoding: .utf8) }))")
                 completion(.failure(.explicitlyCancelled))
             }
         }
@@ -196,7 +196,7 @@ final class ImageUpload: Cancellable {
                 self?.logger.log(.api, "Tree uploaded!")
                 completion(.success(tree))
             case let .failure(error):
-                self?.logger.log(.api, "Error when creating Airtable record: \(response.data.map { String.init(data: $0, encoding: .utf8) })")
+                self?.logger.log(.api, "Error when creating Airtable record: \(String(describing: response.data.map { String.init(data: $0, encoding: .utf8) }))")
                 completion(.failure(error))
             }
         }
