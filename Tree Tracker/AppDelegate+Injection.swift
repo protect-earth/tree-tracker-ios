@@ -6,7 +6,7 @@ extension Resolver: ResolverRegistering {
     
     static let mock = Resolver(child: main)
     static let integrationTest = Resolver(child: main)
-    static let protectEarthApi = Resolver(child: main)
+    static let protectEarthApi = Resolver(child: integrationTest)
     
     public static func registerAllServices() {
         // register all components as singletons for lifetime of application

@@ -8,7 +8,7 @@ class ProtectEarthSupervisorServiceTests: XCTestCase {
     private let DEFAULT_EXPECTATION_TIMEOUT = TimeInterval(5)
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        // Use protectEarthApi resolver
         Resolver.root = Resolver.protectEarthApi
         supervisorService = Resolver.resolve(SupervisorService.self)
         
@@ -17,6 +17,11 @@ class ProtectEarthSupervisorServiceTests: XCTestCase {
             expectation.fulfill()
         }
         waitForExpectations(timeout: 5)
+    }
+    
+    override func tearDownWithError() throws {
+        // Revert to integrationTest resolver when leaving tests
+        Resolver.root = Resolver.integrationTest
     }
     
     func test_sut_available() {
