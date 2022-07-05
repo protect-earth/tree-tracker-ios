@@ -7,7 +7,7 @@ import Combine
 class AirtableSiteServiceTests: XCTestCase {
     
     @Injected private var siteService: SiteService
-    @Injected private var sessionFactory: AirtableSessionFactory
+    @Injected private var sessionFactory: AlamofireSessionFactory
     
     private var newSiteName: String = UUID.init().uuidString
     private let DEFAULT_EXPECTATION_TIMEOUT = TimeInterval(5)

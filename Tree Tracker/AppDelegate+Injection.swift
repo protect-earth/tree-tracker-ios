@@ -59,7 +59,7 @@ extension Resolver: ResolverRegistering {
                                                           httpRequestTimeoutSeconds: Constants.Http.requestTimeoutSeconds,
                                                           httpWaitsForConnectivity: true,
                                                           httpRetryDelaySeconds: Constants.Http.requestRetryDelaySeconds,
-                                                          httpRetryLimit: Constants.Http.requestRetryLimit) }
+                                                          httpRetryLimit: Constants.Http.requestRetryLimit) as AlamofireSessionFactory }
         
         if CommandLine.arguments.contains("--mock-server") {
             Resolver.root = Resolver.mock
