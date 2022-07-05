@@ -43,6 +43,7 @@ extension Resolver: ResolverRegistering {
                                                               httpRetryDelaySeconds: Constants.Http.requestRetryDelaySeconds,
                                                               httpRetryLimit: Constants.Http.requestRetryLimit) as AlamofireSessionFactory }
         protectEarthApi.register { ProtectEarthSupervisorService() as SupervisorService }
+        protectEarthApi.register { ProtectEarthSiteService() as SiteService }
         
         // MARK: Controllers
         register { SitesController() }
