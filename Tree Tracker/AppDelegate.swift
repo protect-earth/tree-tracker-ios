@@ -9,10 +9,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let config = RollbarConfig()
         config.destination.accessToken = Secrets.rollbarAuthToken
         config.destination.environment = "local"
+        // TODO: Get app version from Bundle info dictionary
         config.setServerHost(nil, root: nil, branch: nil, codeVersion: "0.8.2")
         
         Rollbar.initWithConfiguration(config)
-        Rollbar.infoMessage("See this message on your Rollbar Project Dashboard...")
+        Rollbar.infoMessage("App startup")
         
         window = UIWindow()
         window?.rootViewController = MainFlowViewController()
