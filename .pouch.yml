@@ -10,5 +10,6 @@ secrets:
 - TEST_AIRTABLE_API_KEY
 - TEST_AIRTABLE_BASE_ID
 - TEST_AIRTABLE_TABLE_NAME_PREFIX
+- ROLLBAR_AUTH_TOKEN
 outputs:
 - ./Tree Tracker/Secrets.swift

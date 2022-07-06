@@ -108,6 +108,9 @@
 		85DC214625E0FCBF003F0721 /* GRDBImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC214525E0FCBF003F0721 /* GRDBImageCache.swift */; };
 		85E0E05E25B33F8C009D8FC0 /* TappableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */; };
 		85E0E06225B35744009D8FC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E06125B35744009D8FC0 /* UIView.swift */; };
+		9D01D562285CD2E50009F753 /* RollbarCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 9D01D561285CD2E50009F753 /* RollbarCommon */; };
+		9D01D564285CD2E50009F753 /* RollbarNotifier in Frameworks */ = {isa = PBXBuildFile; productRef = 9D01D563285CD2E50009F753 /* RollbarNotifier */; };
+		9D01D566285CD2E50009F753 /* RollbarSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9D01D565285CD2E50009F753 /* RollbarSwift */; };
 		9D5CDBD727BBC080007D4F0A /* ExportOptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D5CDBD627BBC080007D4F0A /* ExportOptions.plist */; };
 		9D5D5E28284B630D00F3AD3E /* SpeciesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E27284B630D00F3AD3E /* SpeciesService.swift */; };
 		9D5D5E2A284B635900F3AD3E /* AirtableSpeciesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E29284B635900F3AD3E /* AirtableSpeciesService.swift */; };
@@ -281,7 +284,10 @@
 				85A0EF7F25A226D9003CE744 /* GRDB in Frameworks */,
 				85B83A0D25B87C0D0008E167 /* BSImagePicker in Frameworks */,
 				9DCC548C28073F0A00CF67AA /* Resolver in Frameworks */,
+				9D01D566285CD2E50009F753 /* RollbarSwift in Frameworks */,
+				9D01D564285CD2E50009F753 /* RollbarNotifier in Frameworks */,
 				85A0EF8325A2271C003CE744 /* Alamofire in Frameworks */,
+				9D01D562285CD2E50009F753 /* RollbarCommon in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -649,6 +655,9 @@
 				85A0EF8225A2271C003CE744 /* Alamofire */,
 				85B83A0C25B87C0D0008E167 /* BSImagePicker */,
 				9DCC548B28073F0A00CF67AA /* Resolver */,
+				9D01D561285CD2E50009F753 /* RollbarCommon */,
+				9D01D563285CD2E50009F753 /* RollbarNotifier */,
+				9D01D565285CD2E50009F753 /* RollbarSwift */,
 			);
 			productName = "Tree Tracker";
 			productReference = 853ABD522596144900144B0D /* Tree Tracker.app */;
@@ -688,6 +697,7 @@
 				85A0EF8125A2271C003CE744 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				85B83A0B25B87C0D0008E167 /* XCRemoteSwiftPackageReference "BSImagePicker" */,
 				9DCC548A28073F0A00CF67AA /* XCRemoteSwiftPackageReference "Resolver" */,
+				9D01D560285CD2E50009F753 /* XCRemoteSwiftPackageReference "rollbar-apple" */,
 			);
 			productRefGroup = 853ABD532596144900144B0D /* Products */;
 			projectDirPath = "";
@@ -1146,6 +1156,14 @@
 				minimumVersion = 3.3.1;
 			};
 		};
+		9D01D560285CD2E50009F753 /* XCRemoteSwiftPackageReference "rollbar-apple" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rollbar/rollbar-apple.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		9DCC548A28073F0A00CF67AA /* XCRemoteSwiftPackageReference "Resolver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hmlongco/Resolver.git";
@@ -1171,6 +1189,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 85B83A0B25B87C0D0008E167 /* XCRemoteSwiftPackageReference "BSImagePicker" */;
 			productName = BSImagePicker;
+		};
+		9D01D561285CD2E50009F753 /* RollbarCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9D01D560285CD2E50009F753 /* XCRemoteSwiftPackageReference "rollbar-apple" */;
+			productName = RollbarCommon;
+		};
+		9D01D563285CD2E50009F753 /* RollbarNotifier */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9D01D560285CD2E50009F753 /* XCRemoteSwiftPackageReference "rollbar-apple" */;
+			productName = RollbarNotifier;
+		};
+		9D01D565285CD2E50009F753 /* RollbarSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9D01D560285CD2E50009F753 /* XCRemoteSwiftPackageReference "rollbar-apple" */;
+			productName = RollbarSwift;
 		};
 		9D5CDBD427BBB7D2007D4F0A /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
