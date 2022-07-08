@@ -152,6 +152,9 @@ final class ImageUpload: Cancellable {
                     fallthrough
                 }
             default:
+                Rollbar.errorMessage("Error while parsing JSON",
+                                     data: [:],
+                                     context: response.dataAsUTF8String())
                 self?.logger.log(.api, "Error when parsing json: \(response.dataAsUTF8String())")
                 completion(.failure(.explicitlyCancelled))
             }
