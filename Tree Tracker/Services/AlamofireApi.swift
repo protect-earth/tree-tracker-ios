@@ -1,6 +1,7 @@
 import Foundation
 import Alamofire
 import class UIKit.UIImage
+import RollbarNotifier
 
 fileprivate extension LogCategory {
     static var api = LogCategory(name: "Api")
@@ -38,7 +39,7 @@ final class AlamofireApi: Api {
     }
  
     func treesPlanted(offset: String?, completion: @escaping (Result<Paginated<AirtableTree>, AFError>) -> Void) {
-        let request = session.request(Config.treesUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers, interceptor: nil, requestModifier: nil)
+        let request = session.request(Config.treesUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers)
 
         request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<Paginated<AirtableTree>, AFError>) in
             completion(response.result)
@@ -46,7 +47,7 @@ final class AlamofireApi: Api {
     }
 
     func species(offset: String?, completion: @escaping (Result<Paginated<AirtableSpecies>, AFError>) -> Void) {
-        let request = session.request(Config.speciesUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers, interceptor: nil, requestModifier: nil)
+        let request = session.request(Config.speciesUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers)
 
         request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<Paginated<AirtableSpecies>, AFError>) in
             completion(response.result)
@@ -54,7 +55,7 @@ final class AlamofireApi: Api {
     }
 
     func sites(offset: String?, completion: @escaping (Result<Paginated<AirtableSite>, AFError>) -> Void) {
-        let request = session.request(Config.sitesUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers, interceptor: nil, requestModifier: nil)
+        let request = session.request(Config.sitesUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers)
 
         request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<Paginated<AirtableSite>, AFError>) in
             completion(response.result)
@@ -62,7 +63,7 @@ final class AlamofireApi: Api {
     }
 
     func supervisors(offset: String?, completion: @escaping (Result<Paginated<AirtableSupervisor>, AFError>) -> Void) {
-        let request = session.request(Config.supervisorsUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers, interceptor: nil, requestModifier: nil)
+        let request = session.request(Config.supervisorsUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers)
 
         request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<Paginated<AirtableSupervisor>, AFError>) in
             completion(response.result)
@@ -75,8 +76,7 @@ final class AlamofireApi: Api {
             "fields": ["Name": name]
         ]
         
-        // TODO: does specifying a nil interceptor here override the retrying interceptor we configure at session level?
-        let request = session.request(Config.sitesUrl, method: .post, parameters: parameters, encoder: JSONParameterEncoder.default, headers: Config.headers, interceptor: nil, requestModifier: nil)
+        let request = session.request(Config.sitesUrl, method: .post, parameters: parameters, encoder: JSONParameterEncoder.default, headers: Config.headers)
         
         request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<AirtableSite, AFError>) in
             completion(response.result)
@@ -145,6 +145,13 @@ final class ImageUpload: Cancellable {
                     newTree.imageMd5 = md5
                     self?.request = self?.upload(tree: newTree, imageUrl: url, session: session, completion: completion)
                 case let .failure(error):
+                    Rollbar.errorError(error,
+                                       data: ["md5": tree.imageMd5 ?? "",
+                                              "phImageId": tree.phImageId,
+                                              "coordinates": tree.coordinates ?? "",
+                                              "supervisor": tree.supervisor,
+                                              "site": tree.site],
+                                       context: "Fetching upload image for tree")
                     completion(.failure(error))
                 }
             }
@@ -175,6 +182,9 @@ final class ImageUpload: Cancellable {
         return request.validate().responseJSON { [weak self] response in
             switch response.result {
             case let .failure(error):
+                Rollbar.errorError(error,
+                                   data: ["md5": md5],
+                                   context: "Uploading image to Cloudinary")
                 self?.logger.log(.api, "Error when uploading image: \(response.data.map { String.init(data: $0, encoding: .utf8) })")
                 completion(.failure(error))
             case let .success(json as [String: Any]):
@@ -204,6 +214,13 @@ final class ImageUpload: Cancellable {
                 self?.logger.log(.api, "Tree uploaded!")
                 completion(.success(tree))
             case let .failure(error):
+                Rollbar.errorError(error,
+                                   data: ["md5": tree.imageMd5 ?? "",
+                                          "phImageId": tree.phImageId,
+                                          "coordinates": tree.coordinates ?? "",
+                                          "supervisor": tree.supervisor,
+                                          "site": tree.site],
+                                   context: "Uploading tree details to Airtable")
                 self?.logger.log(.api, "Error when creating Airtable record: \(response.data.map { String.init(data: $0, encoding: .utf8) })")
                 completion(.failure(error))
             }

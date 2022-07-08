@@ -1,5 +1,6 @@
 import Foundation
 import Resolver
+import RollbarNotifier
 
 protocol UploadNavigating: AnyObject {
     func triggerAddTreesFlow(completion: @escaping (Bool) -> Void)
@@ -133,8 +134,10 @@ final class UploadViewModel: CollectionViewModel {
         logger.log(.upload, "Uploading images...")
         database.fetchLocalTrees { [weak self] trees in
             self?.logger.log(.upload, "Trees to upload: \(trees.count)")
+            Rollbar.infoMessage("Starting upload of trees", data: ["tree_count": trees.count], context: "UploadViewModel.uploadLocalTreesRecursively")
             
             guard let tree = trees.sorted(by: \.createDate, order: .descending).first else {
+                Rollbar.infoMessage("Trees upload complete")
                 self?.logger.log(.upload, "No more items to upload - bailing.")
                 self?.stopUploading()
                 return
@@ -150,6 +153,8 @@ final class UploadViewModel: CollectionViewModel {
                 completion: { result in
                     switch result {
                     case let .success(airtableTree):
+                        Rollbar.infoMessage("Successfully uploaded tree", data: ["id": airtableTree.id,
+                                                                                 "md5": airtableTree.imageMd5 ?? ""])
                         self?.logger.log(.upload, "Successfully uploaded tree.")
                         self?.database.save([airtableTree], sentFromThisDevice: true)
                         self?.database.remove(tree: tree) {
@@ -159,6 +164,13 @@ final class UploadViewModel: CollectionViewModel {
                     case let .failure(error):
                         self?.update(uploadProgress: 0.0, for: tree)
                         self?.presentUploadButton(isUploading: false)
+                        Rollbar.errorError(error,
+                                           data: ["supervisor": tree.supervisor,
+                                                  "site": tree.site,
+                                                  "coordinates": tree.coordinates ?? "",
+                                                  "md5": tree.imageMd5 ?? "",
+                                                  "phImageId": tree.phImageId],
+                                           context: "UploadViewModel.uploadLocalTreesRecursively")
                         self?.logger.log(.upload, "Error when uploading a local tree: \(error)")
                     }
                 }
