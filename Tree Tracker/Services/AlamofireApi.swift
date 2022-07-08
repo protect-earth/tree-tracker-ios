@@ -37,51 +37,6 @@ final class AlamofireApi: Api {
                                                                        maxRetries: Constants.Http.requestRetryLimit))
         
     }
- 
-    func treesPlanted(offset: String?, completion: @escaping (Result<Paginated<AirtableTree>, AFError>) -> Void) {
-        let request = session.request(Config.treesUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers)
-
-        request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<Paginated<AirtableTree>, AFError>) in
-            completion(response.result)
-        }
-    }
-
-    func species(offset: String?, completion: @escaping (Result<Paginated<AirtableSpecies>, AFError>) -> Void) {
-        let request = session.request(Config.speciesUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers)
-
-        request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<Paginated<AirtableSpecies>, AFError>) in
-            completion(response.result)
-        }
-    }
-
-    func sites(offset: String?, completion: @escaping (Result<Paginated<AirtableSite>, AFError>) -> Void) {
-        let request = session.request(Config.sitesUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers)
-
-        request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<Paginated<AirtableSite>, AFError>) in
-            completion(response.result)
-        }
-    }
-
-    func supervisors(offset: String?, completion: @escaping (Result<Paginated<AirtableSupervisor>, AFError>) -> Void) {
-        let request = session.request(Config.supervisorsUrl, method: .get, parameters: ["offset": offset].compactMapValues { $0 }, encoding: URLEncoding.queryString, headers: Config.headers)
-
-        request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<Paginated<AirtableSupervisor>, AFError>) in
-            completion(response.result)
-        }
-    }
-    
-    func addSite(name: String, completion: @escaping (Result<AirtableSite, AFError>) -> Void) {
-        // build struct to represent target JSON body
-        let parameters: [String: [String: String]] = [
-            "fields": ["Name": name]
-        ]
-        
-        let request = session.request(Config.sitesUrl, method: .post, parameters: parameters, encoder: JSONParameterEncoder.default, headers: Config.headers)
-        
-        request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { (response: DataResponse<AirtableSite, AFError>) in
-            completion(response.result)
-        }
-    }
 
     func upload(tree: LocalTree, progress: @escaping (Double) -> Void = { _ in }, completion: @escaping (Result<AirtableTree, AFError>) -> Void) -> Cancellable {
         let upload = ImageUpload(tree: tree, logger: logger)
@@ -162,6 +117,7 @@ final class ImageUpload: Cancellable {
         logger.log(.api, "Uploading image to Cloudinary...")
         guard let data = image.jpegData(compressionQuality: 0.8) else {
             logger.log(.api, "No pngData for the image, bailing")
+            Rollbar.errorMessage("No pngData for image, upload will be skipped")
             completion(.failure(.explicitlyCancelled))
             return nil
         }
@@ -183,9 +139,9 @@ final class ImageUpload: Cancellable {
             switch response.result {
             case let .failure(error):
                 Rollbar.errorError(error,
-                                   data: ["md5": md5],
-                                   context: "Uploading image to Cloudinary")
-                self?.logger.log(.api, "Error when uploading image: \(response.data.map { String.init(data: $0, encoding: .utf8) })")
+                                   data: [:],
+                                   context: response.dataAsUTF8String())
+                self?.logger.log(.api, "Error when uploading image: \(response.dataAsUTF8String())")
                 completion(.failure(error))
             case let .success(json as [String: Any]):
                 let url = json["secure_url"] as? String
@@ -196,7 +152,7 @@ final class ImageUpload: Cancellable {
                     fallthrough
                 }
             default:
-                self?.logger.log(.api, "Error when parsing json: \(response.data.map { String.init(data: $0, encoding: .utf8) })")
+                self?.logger.log(.api, "Error when parsing json: \(response.dataAsUTF8String())")
                 completion(.failure(.explicitlyCancelled))
             }
         }
@@ -204,7 +160,7 @@ final class ImageUpload: Cancellable {
 
     private func upload(tree: LocalTree, imageUrl: String, session: Session, completion: @escaping (Result<AirtableTree, AFError>) -> Void) -> Request? {
         let airtableTree = tree.toAirtableTree(imageUrl: imageUrl)
-        let request = session.request(AlamofireApi.Config.treesUrl, method: .post, parameters: airtableTree, encoder: JSONParameterEncoder(encoder: ._iso8601ms), headers: AlamofireApi.Config.headers, interceptor: nil, requestModifier: nil)
+        let request = session.request(AlamofireApi.Config.treesUrl, method: .post, parameters: airtableTree, encoder: JSONParameterEncoder(encoder: ._iso8601ms), headers: AlamofireApi.Config.headers)
 
         return request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { [weak self] (response: DataResponse<AirtableTree, AFError>) in
             self?.progress?(1.0)
@@ -215,13 +171,9 @@ final class ImageUpload: Cancellable {
                 completion(.success(tree))
             case let .failure(error):
                 Rollbar.errorError(error,
-                                   data: ["md5": tree.imageMd5 ?? "",
-                                          "phImageId": tree.phImageId,
-                                          "coordinates": tree.coordinates ?? "",
-                                          "supervisor": tree.supervisor,
-                                          "site": tree.site],
-                                   context: "Uploading tree details to Airtable")
-                self?.logger.log(.api, "Error when creating Airtable record: \(response.data.map { String.init(data: $0, encoding: .utf8) })")
+                                   data: [:],
+                                   context: response.dataAsUTF8String())
+                self?.logger.log(.api, "Error when creating Airtable record: \(response.dataAsUTF8String())")
                 completion(.failure(error))
             }
         }
