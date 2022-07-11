@@ -31,6 +31,7 @@ jobs:
           TEST_AIRTABLE_BASE_ID: ${{ secrets.TEST_AIRTABLE_BASE_ID }}
           TEST_AIRTABLE_TABLE_NAME_PREFIX: ${{ secrets.TEST_AIRTABLE_TABLE_NAME_PREFIX }}
           PROTECT_EARTH_API_TOKEN: ${{ secrets.PROTECT_EARTH_API_TOKEN }}
+          ROLLBAR_AUTH_TOKEN: ${{ secrets.ROLLBAR_AUTH_TOKEN }}
         run: pouch
       - name: Set build number
         run: agvtool new-version $GITHUB_RUN_NUMBER
