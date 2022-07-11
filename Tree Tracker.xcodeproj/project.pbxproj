@@ -116,6 +116,7 @@
 		9D5D5E2A284B635900F3AD3E /* AirtableSpeciesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E29284B635900F3AD3E /* AirtableSpeciesService.swift */; };
 		9D5D5E2C284B66BB00F3AD3E /* SupervisorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E2B284B66BB00F3AD3E /* SupervisorService.swift */; };
 		9D5D5E2E284B670400F3AD3E /* AirtableSupervisorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E2D284B670400F3AD3E /* AirtableSupervisorService.swift */; };
+		9D5F06332878ADF000C8D4A6 /* DataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F06322878ADF000C8D4A6 /* DataResponse.swift */; };
 		9D79A5A7283AE03100F0F96C /* SiteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5A6283AE03100F0F96C /* SiteService.swift */; };
 		9D79A5AA283AE27500F0F96C /* DataAccessError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5A9283AE27500F0F96C /* DataAccessError.swift */; };
 		9D79A5AC283AE32C00F0F96C /* AirtableSiteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5AB283AE32C00F0F96C /* AirtableSiteService.swift */; };
@@ -253,6 +254,7 @@
 		9D5D5E29284B635900F3AD3E /* AirtableSpeciesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSpeciesService.swift; sourceTree = "<group>"; };
 		9D5D5E2B284B66BB00F3AD3E /* SupervisorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupervisorService.swift; sourceTree = "<group>"; };
 		9D5D5E2D284B670400F3AD3E /* AirtableSupervisorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSupervisorService.swift; sourceTree = "<group>"; };
+		9D5F06322878ADF000C8D4A6 /* DataResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataResponse.swift; sourceTree = "<group>"; };
 		9D79A5A6283AE03100F0F96C /* SiteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteService.swift; sourceTree = "<group>"; };
 		9D79A5A9283AE27500F0F96C /* DataAccessError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAccessError.swift; sourceTree = "<group>"; };
 		9D79A5AB283AE32C00F0F96C /* AirtableSiteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSiteService.swift; sourceTree = "<group>"; };
@@ -379,6 +381,7 @@
 		85792A7425B0A35100BFDA96 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				9D5F06322878ADF000C8D4A6 /* DataResponse.swift */,
 				85B839EB25B8661E0008E167 /* Collection.swift */,
 				85B83A3725B9D9C40008E167 /* Data.swift */,
 				851DAC1C262B4B0B0087E1D4 /* Date.swift */,
@@ -804,6 +807,7 @@
 				9DB29B562821C28400AAC73D /* SettingsController.swift in Sources */,
 				9D5D5E2E284B670400F3AD3E /* AirtableSupervisorService.swift in Sources */,
 				853ABD562596144900144B0D /* AppDelegate.swift in Sources */,
+				9D5F06332878ADF000C8D4A6 /* DataResponse.swift in Sources */,
 				857BADA825B1FA93005D7D35 /* TreeDetailsViewController.swift in Sources */,
 				9D5D5E2C284B66BB00F3AD3E /* SupervisorService.swift in Sources */,
 				85B83A1C25B8AC650008E167 /* EditLocalTreeViewModel.swift in Sources */,

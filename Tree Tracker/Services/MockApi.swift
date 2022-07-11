@@ -18,22 +18,6 @@ final class MockApi: Api {
     private(set) var supervisors: [AirtableSupervisor] = [.init(id: "1", name: "Josh Hopkins")]
     private var images = [UIImage.mockTree1, .mockTree2, .mockTree3]
     
-    func treesPlanted(offset: String?, completion: @escaping (Result<Paginated<AirtableTree>, AFError>) -> Void) {
-        delayAndCompleteWithPossibleError(successResponse: Paginated(offset: offset, records: treesPlanted), completionToCall: completion)
-    }
-    
-    func species(offset: String?, completion: @escaping (Result<Paginated<AirtableSpecies>, AFError>) -> Void) {
-        delayAndCompleteWithPossibleError(successResponse: Paginated(offset: offset, records: species), completionToCall: completion)
-    }
-    
-    func sites(offset: String?, completion: @escaping (Result<Paginated<AirtableSite>, AFError>) -> Void) {
-        delayAndCompleteWithPossibleError(successResponse: Paginated(offset: offset, records: sites), completionToCall: completion)
-    }
-    
-    func supervisors(offset: String?, completion: @escaping (Result<Paginated<AirtableSupervisor>, AFError>) -> Void) {
-        delayAndCompleteWithPossibleError(successResponse: Paginated(offset: offset, records: supervisors), completionToCall: completion)
-    }
-    
     func upload(tree: LocalTree, progress: @escaping (Double) -> Void, completion: @escaping (Result<AirtableTree, AFError>) -> Void) -> Cancellable {
         var isCancelled = false
         
@@ -65,12 +49,6 @@ final class MockApi: Api {
     func loadImage(url: String, completion: @escaping (UIImage?) -> Void) {
         delay {
             completion(self.images.randomElement())
-        }
-    }
-    
-    func addSite(name: String, completion: @escaping (Result<AirtableSite, AFError>) -> Void) {
-        delay {
-            completion(.success(self.sites[0]))
         }
     }
     
