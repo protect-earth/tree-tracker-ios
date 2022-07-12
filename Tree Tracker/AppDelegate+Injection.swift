@@ -44,6 +44,7 @@ extension Resolver: ResolverRegistering {
                                                               httpRetryLimit: Constants.Http.requestRetryLimit) as AlamofireSessionFactory }
         protectEarthApi.register { ProtectEarthSupervisorService() as SupervisorService }
         protectEarthApi.register { ProtectEarthSiteService() as SiteService }
+        protectEarthApi.register { ProtectEarthSpeciesService() as SpeciesService }
         
         // MARK: Controllers
         register { SitesController() }

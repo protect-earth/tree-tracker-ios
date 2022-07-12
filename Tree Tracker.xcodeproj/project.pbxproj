@@ -108,11 +108,11 @@
 		85DC214625E0FCBF003F0721 /* GRDBImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC214525E0FCBF003F0721 /* GRDBImageCache.swift */; };
 		85E0E05E25B33F8C009D8FC0 /* TappableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */; };
 		85E0E06225B35744009D8FC0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0E06125B35744009D8FC0 /* UIView.swift */; };
-		9D47D97F286F293000F7B92F /* ProtectEarthSupervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D47D97E286F293000F7B92F /* ProtectEarthSupervisor.swift */; };
-		9D47D982286F29E100F7B92F /* ProtectEarthCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D47D981286F29E100F7B92F /* ProtectEarthCodableTests.swift */; };
 		9D01D562285CD2E50009F753 /* RollbarCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 9D01D561285CD2E50009F753 /* RollbarCommon */; };
 		9D01D564285CD2E50009F753 /* RollbarNotifier in Frameworks */ = {isa = PBXBuildFile; productRef = 9D01D563285CD2E50009F753 /* RollbarNotifier */; };
 		9D01D566285CD2E50009F753 /* RollbarSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9D01D565285CD2E50009F753 /* RollbarSwift */; };
+		9D47D97F286F293000F7B92F /* ProtectEarthSupervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D47D97E286F293000F7B92F /* ProtectEarthSupervisor.swift */; };
+		9D47D982286F29E100F7B92F /* ProtectEarthCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D47D981286F29E100F7B92F /* ProtectEarthCodableTests.swift */; };
 		9D5CDBD727BBC080007D4F0A /* ExportOptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D5CDBD627BBC080007D4F0A /* ExportOptions.plist */; };
 		9D5D5E28284B630D00F3AD3E /* SpeciesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E27284B630D00F3AD3E /* SpeciesService.swift */; };
 		9D5D5E2A284B635900F3AD3E /* AirtableSpeciesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E29284B635900F3AD3E /* AirtableSpeciesService.swift */; };
@@ -131,6 +131,9 @@
 		9D79A5AA283AE27500F0F96C /* DataAccessError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5A9283AE27500F0F96C /* DataAccessError.swift */; };
 		9D79A5AC283AE32C00F0F96C /* AirtableSiteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5AB283AE32C00F0F96C /* AirtableSiteService.swift */; };
 		9DA1FC34283452CC00AEC584 /* AppDelegate+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA1FC33283452CC00AEC584 /* AppDelegate+Injection.swift */; };
+		9DA84707287DB9D400B0BB3E /* ProtectEarthSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA84706287DB9D400B0BB3E /* ProtectEarthSpecies.swift */; };
+		9DA84709287DBA3F00B0BB3E /* ProtectEarthSpeciesServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA84708287DBA3F00B0BB3E /* ProtectEarthSpeciesServiceTests.swift */; };
+		9DA8470B287DBBC300B0BB3E /* ProtectEarthSpeciesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8470A287DBBC300B0BB3E /* ProtectEarthSpeciesService.swift */; };
 		9DB29B4E281DE04F00AAC73D /* SettingsNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B4D281DE04F00AAC73D /* SettingsNavigationController.swift */; };
 		9DB29B562821C28400AAC73D /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B552821C28300AAC73D /* SettingsController.swift */; };
 		9DB29B582821D50000AAC73D /* SimpleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B572821D50000AAC73D /* SimpleTableViewCell.swift */; };
@@ -278,6 +281,9 @@
 		9D79A5A9283AE27500F0F96C /* DataAccessError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAccessError.swift; sourceTree = "<group>"; };
 		9D79A5AB283AE32C00F0F96C /* AirtableSiteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSiteService.swift; sourceTree = "<group>"; };
 		9DA1FC33283452CC00AEC584 /* AppDelegate+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Injection.swift"; sourceTree = "<group>"; };
+		9DA84706287DB9D400B0BB3E /* ProtectEarthSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthSpecies.swift; sourceTree = "<group>"; };
+		9DA84708287DBA3F00B0BB3E /* ProtectEarthSpeciesServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthSpeciesServiceTests.swift; sourceTree = "<group>"; };
+		9DA8470A287DBBC300B0BB3E /* ProtectEarthSpeciesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthSpeciesService.swift; sourceTree = "<group>"; };
 		9DB29B4D281DE04F00AAC73D /* SettingsNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavigationController.swift; sourceTree = "<group>"; };
 		9DB29B552821C28300AAC73D /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		9DB29B572821D50000AAC73D /* SimpleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewCell.swift; sourceTree = "<group>"; };
@@ -324,6 +330,7 @@
 				9D47D981286F29E100F7B92F /* ProtectEarthCodableTests.swift */,
 				9D5F0623286F755600C8D4A6 /* ProtectEarthSupervisorServiceTests.swift */,
 				9D5F062E2874E5CA00C8D4A6 /* ProtectEarthSiteServiceTests.swift */,
+				9DA84708287DBA3F00B0BB3E /* ProtectEarthSpeciesServiceTests.swift */,
 			);
 			path = "Unit Tests";
 			sourceTree = "<group>";
@@ -487,6 +494,7 @@
 				859F62F425C5A7DC005E61F7 /* Paginated.swift */,
 				9D47D97E286F293000F7B92F /* ProtectEarthSupervisor.swift */,
 				9D5F062A2874DD0400C8D4A6 /* ProtectEarthSite.swift */,
+				9DA84706287DB9D400B0BB3E /* ProtectEarthSpecies.swift */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -629,6 +637,7 @@
 				9D5F0617286F346800C8D4A6 /* ProtectEarthSupervisorService.swift */,
 				9D5F061A286F348F00C8D4A6 /* ProtectEarthSessionFactory.swift */,
 				9D5F062C2874E35D00C8D4A6 /* ProtectEarthSiteService.swift */,
+				9DA8470A287DBBC300B0BB3E /* ProtectEarthSpeciesService.swift */,
 			);
 			path = ProtectEarth;
 			sourceTree = "<group>";
@@ -777,6 +786,7 @@
 				9D5F0624286F755600C8D4A6 /* ProtectEarthSupervisorServiceTests.swift in Sources */,
 				9D5F062F2874E5CA00C8D4A6 /* ProtectEarthSiteServiceTests.swift in Sources */,
 				851DAC36262F2FE30087E1D4 /* RecentSpeciesManagerTests.swift in Sources */,
+				9DA84709287DBA3F00B0BB3E /* ProtectEarthSpeciesServiceTests.swift in Sources */,
 				851DAC3A262F35B80087E1D4 /* TestHelpers.swift in Sources */,
 				9D47D982286F29E100F7B92F /* ProtectEarthCodableTests.swift in Sources */,
 				9DFB9CC1284E9BF500298526 /* AirtableSiteServiceTests.swift in Sources */,
@@ -802,6 +812,7 @@
 				857BAD9D25B1DCDE005D7D35 /* Defaults.swift in Sources */,
 				85B839E425B753F10008E167 /* KeyboardLayoutGuide.swift in Sources */,
 				85CC02E6261B6DD90016E618 /* TableViewController.swift in Sources */,
+				9DA84707287DB9D400B0BB3E /* ProtectEarthSpecies.swift in Sources */,
 				85B839D625B74E960008E167 /* KeyboardAccessoryView.swift in Sources */,
 				85B839BF25B492550008E167 /* PHImageLoader.swift in Sources */,
 				85E0E05E25B33F8C009D8FC0 /* TappableButton.swift in Sources */,
@@ -848,6 +859,7 @@
 				9DB29B562821C28400AAC73D /* SettingsController.swift in Sources */,
 				9D5F0621286F5FEF00C8D4A6 /* AlamofireSessionFactory.swift in Sources */,
 				9D5D5E2E284B670400F3AD3E /* AirtableSupervisorService.swift in Sources */,
+				9DA8470B287DBBC300B0BB3E /* ProtectEarthSpeciesService.swift in Sources */,
 				853ABD562596144900144B0D /* AppDelegate.swift in Sources */,
 				9D5F06332878ADF000C8D4A6 /* DataResponse.swift in Sources */,
 				857BADA825B1FA93005D7D35 /* TreeDetailsViewController.swift in Sources */,

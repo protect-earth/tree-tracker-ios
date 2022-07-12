@@ -111,5 +111,34 @@ class ProtectEarthCodableTests: XCTestCase {
         XCTAssertNotNil(sites_empty)
         XCTAssertEqual(0, sites_empty.count)
     }
+    
+    func testProtectEarthSpeciesDecoding() throws {
+        let json = """
+        [{"id":"96c266a9-928b-48a7-9349-d88948e84bb4","name":"Quickthorn"},
+         {"id":"96c266a9-ae0d-42c7-bee2-2181159cbf82","name":"MYSTERY"},
+         {"id":"96c266a9-b06d-4173-9d1c-dd64e237774d","name":"Bird Cherry"}]
+        """.data(using: .utf8)!
+        
+        let species = try decoder.decode([ProtectEarthSpecies].self, from: json)
+        
+        XCTAssertNotNil(species)
+        XCTAssertEqual(3, species.count)
+        XCTAssertEqual("96c266a9-928b-48a7-9349-d88948e84bb4", species[0].id)
+        XCTAssertEqual("Quickthorn", species[0].name)
+        
+        let species_0 = species[0].toSpecies()
+        let species_1 = species[1].toSpecies()
+        
+        XCTAssertEqual("96c266a9-928b-48a7-9349-d88948e84bb4", species_0.id)
+        XCTAssertEqual("Quickthorn", species_0.name)
+        XCTAssertEqual("96c266a9-ae0d-42c7-bee2-2181159cbf82", species_1.id)
+        XCTAssertEqual("MYSTERY", species_1.name)
+        
+        let json_empty = "[]".data(using: .utf8)!
+        let species_empty = try decoder.decode([ProtectEarthSpecies].self, from: json_empty)
+        
+        XCTAssertNotNil(species_empty)
+        XCTAssertEqual(0, species_empty.count)
+    }
 
 }
