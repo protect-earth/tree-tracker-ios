@@ -45,6 +45,7 @@ extension Resolver: ResolverRegistering {
         protectEarthApi.register { ProtectEarthSupervisorService() as SupervisorService }
         protectEarthApi.register { ProtectEarthSiteService() as SiteService }
         protectEarthApi.register { ProtectEarthSpeciesService() as SpeciesService }
+        protectEarthApi.register { ProtectEarthTreeService() as TreeService }
         
         // MARK: Controllers
         register { SitesController() }
@@ -69,6 +70,10 @@ extension Resolver: ResolverRegistering {
         
         if CommandLine.arguments.contains("--integration-test") {
             Resolver.root = Resolver.integrationTest
+        }
+        
+        if CommandLine.arguments.contains("--protect-earth-api") {
+            Resolver.root = Resolver.protectEarthApi
         }
     }
 }
