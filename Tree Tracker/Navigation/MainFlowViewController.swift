@@ -7,14 +7,12 @@ final class MainFlowViewController: UITabBarController {
 
         let liveUpload = UploadSessionViewController(viewModel: UploadSessionViewModel(navigation: self))
         let uploadQueue = UploadListFlowViewController()
-        let uploadHistory = NavigationViewController(rootViewController: CollectionViewController(viewModel: UploadHistoryViewModel()))
         let settings = SettingsNavigationController()
 
-        viewControllers = [liveUpload, uploadQueue, uploadHistory, settings]
+        viewControllers = [liveUpload, uploadQueue, settings]
 
         liveUpload.tabBarItem = UITabBarItem(title: "Session", image: .cameraIcon, selectedImage: .cameraIcon)
         uploadQueue.tabBarItem = UITabBarItem(title: "Queue", image: .uploadIcon, selectedImage: .uploadIcon)
-        uploadHistory.tabBarItem = UITabBarItem(title: "History", image: .historyIcon, selectedImage: .historyIcon)
         settings.tabBarItem = UITabBarItem(title: "Settings", image: .settingsIcon, selectedImage: .settingsIcon)
 
         // Open on upload queue by default
