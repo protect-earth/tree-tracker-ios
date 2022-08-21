@@ -111,7 +111,9 @@ class AirtableSiteServiceTests: XCTestCase {
         let newSite = newSites.first(where: { $0.name == newSiteName })
         XCTAssertNotNil(newSite)
         
-        deleteQueue.append(newSite!)
+        if newSite != nil {
+            deleteQueue.append(newSite!)
+        }
     }
     
     func test_addPublishesUpdatedSitesList() {
@@ -160,7 +162,9 @@ class AirtableSiteServiceTests: XCTestCase {
         let newSite = newPublishedSites.first(where: { $0.name == newSiteName })
         XCTAssertNotNil(newSite)
         
-        deleteQueue.append(newSite!)
+        if newSite != nil {
+            deleteQueue.append(newSite!)
+        }
     }
     
 }
