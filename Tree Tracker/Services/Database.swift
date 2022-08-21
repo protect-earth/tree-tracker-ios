@@ -251,32 +251,6 @@ final class Database {
         }
     }
 
-    func fetchRemoteTrees(_ completion: @escaping ([RemoteTree]) -> Void) {
-        do {
-            try dbQueue?.read { db in
-                let trees = try? RemoteTree.fetchAll(db)
-                DispatchQueue.main.async {
-                    completion(trees ?? [])
-                }
-            }
-        } catch {
-            logger.log(.database, "Error when fetching remote trees from DB. \(error)")
-        }
-    }
-    
-    func fetchUploadedTrees(_ completion: @escaping ([RemoteTree]) -> Void) {
-        do {
-            try dbQueue?.read { db in
-                let trees = try? RemoteTree.filter(Column(RemoteTree.CodingKeys.sentFromThisDevice.rawValue) == true).fetchAll(db)
-                DispatchQueue.main.async {
-                    completion(trees ?? [])
-                }
-            }
-        } catch {
-            logger.log(.database, "Error when fetching uploaded trees from DB. \(error)")
-        }
-    }
-
     func fetchLocalTrees(_ completion: @escaping ([LocalTree]) -> Void) {
         do {
             try dbQueue?.read { db in
