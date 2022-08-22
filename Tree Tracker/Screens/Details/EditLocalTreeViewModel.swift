@@ -70,7 +70,7 @@ final class EditLocalTreeViewModel: TreeDetailsViewModel {
         }
     }
 
-    private func presentCurrentTreeFields(tree: LocalTree, coordinates: String? = nil, species: Species? = nil, supervisor: Supervisor? = nil, site: Site? = nil, notes: String? = nil) {
+    private func presentCurrentTreeFields(tree: LocalTree, species: Species? = nil, supervisor: Supervisor? = nil, site: Site? = nil) {
         let defaultSpecies = self.species.first(where: { $0.id == tree.species })
         let defaultSupervisor = self.supervisors.first(where: { $0.id == tree.supervisor })
         let defaultSite = self.sites.first(where: { $0.id == tree.site })
@@ -78,15 +78,8 @@ final class EditLocalTreeViewModel: TreeDetailsViewModel {
         var species = species ?? defaultSpecies
         var supervisor = supervisor ?? defaultSupervisor
         var site = site ?? defaultSite
-        var notes = notes ?? tree.notes ?? ""
-        var coordinates = coordinates ?? tree.coordinates ?? ""
 
         fields = [
-            .init(placeholder: "Coordinates",
-                  text: coordinates,
-                  input: .keyboard(.default),
-                  returnKey: .done,
-                  onChange: { coordinates = $0 }),
             .init(placeholder: "Species",
                   text: species?.name,
                   input: .keyboard(.selection(
@@ -94,7 +87,7 @@ final class EditLocalTreeViewModel: TreeDetailsViewModel {
                                     initialIndexSelected: self.species.firstIndex { $0.id == species?.id },
                                     indexSelected: { [weak self] selectedSpecies in
                                         species = self?.species[safe: selectedSpecies]
-                                        self?.presentCurrentTreeFields(tree: tree, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
+                                        self?.presentCurrentTreeFields(tree: tree, species: species, supervisor: supervisor, site: site)
                                     }),
                                    .done()),
                   returnKey: .done,
@@ -106,7 +99,7 @@ final class EditLocalTreeViewModel: TreeDetailsViewModel {
                                     initialIndexSelected: supervisors.firstIndex { $0.id == supervisor?.id },
                                     indexSelected: { [weak self] selectedSupervisor in
                                         supervisor = self?.supervisors[safe: selectedSupervisor]
-                                        self?.presentCurrentTreeFields(tree: tree, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
+                                        self?.presentCurrentTreeFields(tree: tree, species: species, supervisor: supervisor, site: site)
                                     }),
                                    .done()),
                   returnKey: .done,
@@ -118,23 +111,18 @@ final class EditLocalTreeViewModel: TreeDetailsViewModel {
                                     initialIndexSelected: self.sites.firstIndex { $0.id == site?.id },
                                     indexSelected: { [weak self] selectedSite in
                                         site = self?.sites[safe: selectedSite]
-                                        self?.presentCurrentTreeFields(tree: tree, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
+                                        self?.presentCurrentTreeFields(tree: tree, species: species, supervisor: supervisor, site: site)
                                     }),
                                    .done()),
                   returnKey: .done,
                   onChange: { _ in }),
-            .init(placeholder: "Notes",
-                  text: notes,
-                  input: .keyboard(.default),
-                  returnKey: .done,
-                  onChange: { notes = $0 }),
         ]
 
         if let species = species, let site = site, let supervisor = supervisor {
             saveButton = ButtonModel(
                 title: .text("Save"),
                 action: { [weak self] in
-                    self?.save(tree: tree, coordinates: coordinates, species: species, site: site, supervisor: supervisor, notes: notes)
+                    self?.save(tree: tree, species: species, site: site, supervisor: supervisor)
                 },
                 isEnabled: true
             )
@@ -147,13 +135,11 @@ final class EditLocalTreeViewModel: TreeDetailsViewModel {
         }
     }
 
-    private func save(tree: LocalTree, coordinates: String, species: Species, site: Site, supervisor: Supervisor, notes: String) {
+    private func save(tree: LocalTree, species: Species, site: Site, supervisor: Supervisor) {
         var newTree = tree
-        newTree.coordinates = coordinates
         newTree.species = species.id
         newTree.supervisor = supervisor.id
         newTree.site = site.id
-        newTree.notes = notes
         database.update(tree: newTree) { [weak self] in
             self?.navigation?.detailsFilledSuccessfully()
         }

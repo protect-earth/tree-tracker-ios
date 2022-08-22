@@ -102,7 +102,7 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
         presentCurrentAssetFields(asset: asset)
     }
 
-    private func presentCurrentAssetFields(asset: PHAsset, coordinates: String? = nil, species: Species? = nil, supervisor: Supervisor? = nil, site: Site? = nil, notes: String? = nil) {
+    private func presentCurrentAssetFields(asset: PHAsset, species: Species? = nil, supervisor: Supervisor? = nil, site: Site? = nil) {
         let defaultSpecies = self.species.first(where: { $0.id == defaults[.speciesId] })
         let defaultSupervisor = self.supervisors.first(where: { $0.id == defaults[.supervisorId] })
         let defaultSite = self.sites.first(where: { $0.id == defaults[.siteId] })
@@ -110,18 +110,11 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
         var species = species ?? defaultSpecies
         var supervisor = supervisor ?? defaultSupervisor
         var site = site ?? defaultSite
-        var notes = notes ?? ""
-        var coordinates = coordinates ?? asset.stringifyCoordinates()
         
         let recentSpecies = recentSpeciesManager.fetch().filter { self.species.contains($0) }
         let speciesWithRecentSpecies = recentSpecies + [Species(id: "", name: "--")] + self.species
 
         var fields: [TextFieldModel] = [
-            .init(placeholder: "Coordinates",
-                  text: coordinates,
-                  input: .keyboard(.default),
-                  returnKey: .done,
-                  onChange: { coordinates = $0 }),
             .init(placeholder: "Species",
                   text: species?.name,
                   input: .keyboard(.selection(
@@ -129,7 +122,7 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
                                     initialIndexSelected: speciesWithRecentSpecies.firstIndex { $0.id == species?.id },
                                     indexSelected: { [weak self] selectedSpecies in
                                         species = speciesWithRecentSpecies[safe: selectedSpecies]
-                                        self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
+                                        self?.presentCurrentAssetFields(asset: asset, species: species, supervisor: supervisor, site: site)
                                     }),
                                    .done()),
                   returnKey: .done,
@@ -144,7 +137,7 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
                                                   initialIndexSelected: supervisors.firstIndex { $0.id == supervisor?.id }.map { $0 + 1 },
                                                   indexSelected: { [weak self] selectedSupervisor in
                                                       supervisor = self?.supervisors[safe: selectedSupervisor - 1]
-                                                      self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
+                                                      self?.presentCurrentAssetFields(asset: asset, species: species, supervisor: supervisor, site: site)
                                                   }),
                                                  .done()),
                                 returnKey: .done,
@@ -159,25 +152,20 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
                                                   initialIndexSelected: self.sites.firstIndex { $0.id == site?.id }.map { $0 + 1 },
                                                   indexSelected: { [weak self] selectedSite in
                                                       site = self?.sites[safe: selectedSite - 1]
-                                                      self?.presentCurrentAssetFields(asset: asset, coordinates: coordinates, species: species, supervisor: supervisor, site: site, notes: notes)
+                                                      self?.presentCurrentAssetFields(asset: asset, species: species, supervisor: supervisor, site: site)
                                                   }),
                                                  .done()),
                                 returnKey: .done,
                                 onChange: { _ in }))
         }
         
-        fields.append(.init(placeholder: "Notes",
-                            text: notes,
-                            input: .keyboard(.default),
-                            returnKey: .done,
-                            onChange: { notes = $0 }))
         self.fields = fields
 
         if let species = species, species.id.isNotEmpty, let site = staticSite ?? site, let supervisor = staticSupervisor ?? supervisor {
             saveButton = ButtonModel(
                 title: .text("Save"),
                 action: { [weak self] in
-                    self?.save(asset: asset, coordinates: coordinates, species: species, site: site, supervisor: supervisor, notes: notes)
+                    self?.save(asset: asset, species: species, site: site, supervisor: supervisor)
                 },
                 isEnabled: true
             )
@@ -190,14 +178,21 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
         }
     }
 
-    private func save(asset: PHAsset, coordinates: String, species: Species, site: Site, supervisor: Supervisor, notes: String) {
+    private func save(asset: PHAsset, species: Species, site: Site, supervisor: Supervisor) {
         defaults[.speciesId] = species.id
         defaults[.supervisorId] = supervisor.id
         defaults[.siteId] = site.id
         
         recentSpeciesManager.add(species, timestamp: .now)
 
-        let tree = LocalTree(phImageId: asset.localIdentifier, createDate: asset.creationDate, supervisor: supervisor.id, species: species.id, site: site.id, what3words: nil, notes: notes, coordinates: coordinates, imageMd5: nil)
+        let tree = LocalTree(phImageId: asset.localIdentifier,
+                             createDate: asset.creationDate,
+                             supervisor: supervisor.id,
+                             species: species.id,
+                             site: site.id,
+                             what3words: nil,
+                             coordinates: asset.stringifyCoordinates(),
+                             imageMd5: nil)
         database.save([tree])
         assets.removeAll { $0 == asset }
         presentNextAssetToFillOrComplete()
