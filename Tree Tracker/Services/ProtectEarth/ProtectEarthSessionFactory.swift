@@ -8,7 +8,7 @@ class ProtectEarthSessionFactory: AlamofireSessionFactory {
     
     private var session: Session?
     private var baseUrl: String
-    private var apiVersion: String
+    private var apiVersion: String?
     private var authToken: String
     private var httpRequestTimeoutSeconds: TimeInterval
     private var httpWaitsForConnectivity: Bool
@@ -16,7 +16,7 @@ class ProtectEarthSessionFactory: AlamofireSessionFactory {
     private var httpRetryLimit: Int
     
     init(baseUrl: String,
-         apiVersion: String,
+         apiVersion: String?,
          authToken: String,
          httpRequestTimeoutSeconds: TimeInterval,
          httpWaitsForConnectivity: Bool,
@@ -48,7 +48,11 @@ class ProtectEarthSessionFactory: AlamofireSessionFactory {
     }
     
     func baseUrl(adding: String) -> URL {
-        var result = URL(string: "https://\(baseUrl)/\(apiVersion)/")!
+        var urlString = "https://\(baseUrl)/"
+        if apiVersion != nil {
+            urlString.append(contentsOf: "(apiVersion)/")
+        }
+        var result = URL(string: urlString)!
         result.appendPathComponent(adding)
         return result
     }
