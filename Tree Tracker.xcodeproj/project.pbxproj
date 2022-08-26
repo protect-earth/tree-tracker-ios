@@ -112,6 +112,8 @@
 		9D01D566285CD2E50009F753 /* RollbarSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9D01D565285CD2E50009F753 /* RollbarSwift */; };
 		9D47D97F286F293000F7B92F /* ProtectEarthSupervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D47D97E286F293000F7B92F /* ProtectEarthSupervisor.swift */; };
 		9D47D982286F29E100F7B92F /* ProtectEarthCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D47D981286F29E100F7B92F /* ProtectEarthCodableTests.swift */; };
+		9D562D6528B81BDE00B66716 /* ProtectEarthUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D562D6428B81BDE00B66716 /* ProtectEarthUpload.swift */; };
+		9D562D6728B81D5400B66716 /* ProtectEarthIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D562D6628B81D5400B66716 /* ProtectEarthIdentifier.swift */; };
 		9D5CDBD727BBC080007D4F0A /* ExportOptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D5CDBD627BBC080007D4F0A /* ExportOptions.plist */; };
 		9D5D5E28284B630D00F3AD3E /* SpeciesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E27284B630D00F3AD3E /* SpeciesService.swift */; };
 		9D5D5E2A284B635900F3AD3E /* AirtableSpeciesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E29284B635900F3AD3E /* AirtableSpeciesService.swift */; };
@@ -261,6 +263,8 @@
 		85E0E06125B35744009D8FC0 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		9D47D97E286F293000F7B92F /* ProtectEarthSupervisor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthSupervisor.swift; sourceTree = "<group>"; };
 		9D47D981286F29E100F7B92F /* ProtectEarthCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthCodableTests.swift; sourceTree = "<group>"; };
+		9D562D6428B81BDE00B66716 /* ProtectEarthUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthUpload.swift; sourceTree = "<group>"; };
+		9D562D6628B81D5400B66716 /* ProtectEarthIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthIdentifier.swift; sourceTree = "<group>"; };
 		9D5CDBD627BBC080007D4F0A /* ExportOptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ExportOptions.plist; sourceTree = "<group>"; };
 		9D5D5E27284B630D00F3AD3E /* SpeciesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesService.swift; sourceTree = "<group>"; };
 		9D5D5E29284B635900F3AD3E /* AirtableSpeciesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSpeciesService.swift; sourceTree = "<group>"; };
@@ -484,6 +488,8 @@
 				9D47D97E286F293000F7B92F /* ProtectEarthSupervisor.swift */,
 				9D5F062A2874DD0400C8D4A6 /* ProtectEarthSite.swift */,
 				9DA84706287DB9D400B0BB3E /* ProtectEarthSpecies.swift */,
+				9D562D6428B81BDE00B66716 /* ProtectEarthUpload.swift */,
+				9D562D6628B81D5400B66716 /* ProtectEarthIdentifier.swift */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -832,6 +838,7 @@
 				85B83A2D25B9C5DB0008E167 /* DateFormatter.swift in Sources */,
 				859F62E425C22D6C005E61F7 /* SelectionsKeyboardView.swift in Sources */,
 				85763A9425E29CE300CB4ED3 /* Logger.swift in Sources */,
+				9D562D6528B81BDE00B66716 /* ProtectEarthUpload.swift in Sources */,
 				857123CC26399B49008EE027 /* MockApi.swift in Sources */,
 				859F62D625C22140005E61F7 /* Species.swift in Sources */,
 				85B83A2325B9C1BC0008E167 /* NavigationViewController.swift in Sources */,
@@ -888,6 +895,7 @@
 				853415F025CEEE39006DDAC4 /* UploadSessionViewController.swift in Sources */,
 				85792A8625B1D53700BFDA96 /* Environment.swift in Sources */,
 				85DC214025E0FC9F003F0721 /* ImageCaching.swift in Sources */,
+				9D562D6728B81D5400B66716 /* ProtectEarthIdentifier.swift in Sources */,
 				8563C263260BBC7A00752793 /* Secrets.swift in Sources */,
 				85792A8F25B1D59F00BFDA96 /* SyncProgress.swift in Sources */,
 				9DFB9CC52851345800298526 /* AirtableSessionFactory.swift in Sources */,
