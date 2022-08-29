@@ -8,7 +8,10 @@ class ProtectEarthCodableTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        encoder.outputFormatting = .withoutEscapingSlashes
+        encoder.outputFormatting = .init(arrayLiteral: [.sortedKeys, .withoutEscapingSlashes])
+        
+//        encoder.outputFormatting.formUnion( .prettyPrinted)
+//        encoder.outputFormatting.formUnion( .sortedKeys)
         encoder.dateEncodingStrategy = .iso8601
     }
 
@@ -95,9 +98,6 @@ class ProtectEarthCodableTests: XCTestCase {
         XCTAssertEqual(3, sites.count)
         XCTAssertEqual("497f6eca-6276-4993-bfeb-53cbbbba6f08", sites[0].id)
         XCTAssertEqual("Slapton Bottom", sites[1].name)
-//        XCTAssertEqual("Cheltenham, England", sites[0].location)
-//        XCTAssertEqual(710, sites[0].plantedTrees)
-//        XCTAssertEqual("www.protect.earth", sites[0].url?.host)
         
         let site_0 = sites[0].toSite()
         XCTAssertEqual("497f6eca-6276-4993-bfeb-53cbbbba6f08", site_0.id)
@@ -160,13 +160,13 @@ class ProtectEarthCodableTests: XCTestCase {
         let jsonString = String(data: json, encoding: .utf8)
         let output = jsonString!.description
         print(output)
-        XCTAssertTrue(output.contains(#""image_url":"https://google.com","#))
-        XCTAssertTrue(output.contains(#""site":{"id":"497f6eca-6276-4993-bfeb-53cbbbba6f08"},"#))
-        XCTAssertTrue(output.contains(#""supervisor":{"id":"497f6eca-6276-4993-bfeb-53cbbbba6f08"},"#))
-        XCTAssertTrue(output.contains(#""species":{"id":"497f6eca-6276-4993-bfeb-53cbbbba6f08"},"#))
+        XCTAssertTrue(output.contains(#""image_url":"https://google.com""#))
+        XCTAssertTrue(output.contains(#""site":{"id":"497f6eca-6276-4993-bfeb-53cbbbba6f08"}"#))
+        XCTAssertTrue(output.contains(#""supervisor":{"id":"497f6eca-6276-4993-bfeb-53cbbbba6f08"}"#))
+        XCTAssertTrue(output.contains(#""species":{"id":"497f6eca-6276-4993-bfeb-53cbbbba6f08"}"#))
         XCTAssertTrue(output.contains(#""latitude":51.87351"#))
         XCTAssertTrue(output.contains(#""longitude":-1.90973"#))
-        XCTAssertTrue(output.contains(#""planted_at":"2019-08-24T14:15:22Z","#))
+        XCTAssertTrue(output.contains(#""planted_at":"2019-08-24T14:15:22Z""#))
     }
 
 }
