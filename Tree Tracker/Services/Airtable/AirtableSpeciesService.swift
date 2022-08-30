@@ -5,7 +5,7 @@ import Alamofire
 class AirtableSpeciesService: SpeciesService {
     
     @Injected private var database: Database
-    @Injected private var sessionFactory: AirtableSessionFactory
+    @Injected private var sessionFactory: AlamofireSessionFactory
     
     // MARK: data publisher
     // See https://swiftsenpai.com/swift/define-protocol-with-published-property-wrapper/

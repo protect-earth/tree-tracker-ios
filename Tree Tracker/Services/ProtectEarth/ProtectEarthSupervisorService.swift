@@ -2,7 +2,7 @@ import Foundation
 import Resolver
 import Alamofire
 
-class AirtableSupervisorService: SupervisorService {
+class ProtectEarthSupervisorService: SupervisorService {
     
     @Injected private var database: Database
     @Injected private var sessionFactory: AlamofireSessionFactory
@@ -23,35 +23,36 @@ class AirtableSupervisorService: SupervisorService {
                                            method: .get,
                                            encoding: URLEncoding.queryString)
 
-        request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { [weak self] (response: DataResponse<Paginated<AirtableSupervisor>, AFError>) in
-            // TODO: Handle multiple pages (where number of entries > 100)
+        request.validate().responseDecodable(decoder: JSONDecoder._iso8601ms) { [weak self] (response: DataResponse<[ProtectEarthSupervisor], AFError>) in
+            guard let self = self else { return }
             switch response.result {
-            case .success:
-                do {
-                    let result = try response.result.get()
-                    self?.supervisors.removeAll()
-                    result.records.forEach { record in
-                        self?.supervisors.append(record.toSupervisor())
+                case .success:
+                    do {
+                        let result = try response.result.get()
+                        self.supervisors.removeAll()
+                        result.forEach { record in
+                            self.supervisors.append(record.toSupervisor())
+                        }
+                        self.database.replace(self.supervisors) {
+                            completion(.success(true))
+                        }
+                    } catch {
+                        print("Unexpected error: \(error).")
                     }
-                    self?.database.replace(self!.supervisors) {
-                        completion(.success(true))
-                    }
-                } catch {
-                    print("Unexpected error: \(error).")
-                }
-            case .failure:
-                completion(.failure(DataAccessError.remoteError(errorCode: response.error!.responseCode!,
-                                                                errorMessage: (response.error!.errorDescription!))))
+                case .failure:
+                    completion(.failure(DataAccessError.remoteError(errorCode: response.error!.responseCode!,
+                                                                    errorMessage: (response.error!.errorDescription!))))
             }
         }
     }
     
     // Return data from local cache, adding to buffer
     func fetchAll(completion: @escaping (Result<[Supervisor], DataAccessError>) -> Void) {
-        database.fetchAll(Supervisor.self) { [weak self] supervisor in
-            self?.supervisors.removeAll()
-            supervisor.forEach() { self?.supervisors.append($0) }
-            completion(Result.success(self!.supervisors))
+        database.fetchAll(Supervisor.self) { [weak self] records in
+            guard let self = self else { return }
+            self.supervisors.removeAll()
+            records.forEach() { self.supervisors.append($0) }
+            completion(Result.success(self.supervisors))
         }
     }
     

@@ -6,6 +6,7 @@ extension Resolver: ResolverRegistering {
     
     static let mock = Resolver(child: main)
     static let integrationTest = Resolver(child: main)
+    static let protectEarthApi = Resolver(child: integrationTest)
     
     public static func registerAllServices() {
         // register all components as singletons for lifetime of application
@@ -27,10 +28,24 @@ extension Resolver: ResolverRegistering {
                                           httpRequestTimeoutSeconds: Constants.Http.requestTimeoutSeconds,
                                           httpWaitsForConnectivity: true,
                                           httpRetryDelaySeconds: Constants.Http.requestRetryDelaySeconds,
-                                          httpRetryLimit: Constants.Http.requestRetryLimit) }
+                                          httpRetryLimit: Constants.Http.requestRetryLimit) as AlamofireSessionFactory }
+        
         register { AirtableSiteService() as SiteService }
         register { AirtableSpeciesService() as SpeciesService }
         register { AirtableSupervisorService() as SupervisorService }
+        
+        // MARK: Protect Earth API specific services
+        protectEarthApi.register { ProtectEarthSessionFactory(baseUrl: Constants.Http.protectEarthApiBaseUrl,
+                                                              apiVersion: Constants.Http.protectEarthApiVersion,
+                                                              authToken: Secrets.protectEarthApiToken,
+                                                              httpRequestTimeoutSeconds: Constants.Http.requestTimeoutSeconds,
+                                                              httpWaitsForConnectivity: true,
+                                                              httpRetryDelaySeconds: Constants.Http.requestRetryDelaySeconds,
+                                                              httpRetryLimit: Constants.Http.requestRetryLimit) as AlamofireSessionFactory }
+        protectEarthApi.register { ProtectEarthSupervisorService() as SupervisorService }
+        protectEarthApi.register { ProtectEarthSiteService() as SiteService }
+        protectEarthApi.register { ProtectEarthSpeciesService() as SpeciesService }
+//        protectEarthApi.register { ProtectEarthTreeService() as TreeService }
         
         // MARK: Controllers
         register { SitesController() }
@@ -47,7 +62,7 @@ extension Resolver: ResolverRegistering {
                                                           httpRequestTimeoutSeconds: Constants.Http.requestTimeoutSeconds,
                                                           httpWaitsForConnectivity: true,
                                                           httpRetryDelaySeconds: Constants.Http.requestRetryDelaySeconds,
-                                                          httpRetryLimit: Constants.Http.requestRetryLimit) }
+                                                          httpRetryLimit: Constants.Http.requestRetryLimit) as AlamofireSessionFactory }
         
         if CommandLine.arguments.contains("--mock-server") {
             Resolver.root = Resolver.mock
@@ -55,6 +70,10 @@ extension Resolver: ResolverRegistering {
         
         if CommandLine.arguments.contains("--integration-test") {
             Resolver.root = Resolver.integrationTest
+        }
+        
+        if CommandLine.arguments.contains("--protect-earth-api") {
+            Resolver.root = Resolver.protectEarthApi
         }
     }
 }

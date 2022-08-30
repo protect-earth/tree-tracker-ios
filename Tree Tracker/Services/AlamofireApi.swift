@@ -122,7 +122,7 @@ final class ImageUpload: Cancellable {
             return nil
         }
 
-        let md5 = data.md5() ?? ""
+        let md5 = data.md5()
         let request = session
             .upload(
                 multipartFormData: { formData in

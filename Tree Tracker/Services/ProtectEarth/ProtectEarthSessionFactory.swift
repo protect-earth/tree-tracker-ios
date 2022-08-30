@@ -2,29 +2,29 @@ import Foundation
 import Alamofire
 
 /*
- Provides request interception, including retry and authentication, for Airtable requests
+ Provides request interception, including retry and authentication, for Protect Earth API requests
  */
-class AirtableSessionFactory: AlamofireSessionFactory {
+class ProtectEarthSessionFactory: AlamofireSessionFactory {
     
     private var session: Session?
-    private var airtableBaseId: String
-    private var airtableApiKey: String
+    private var baseUrl: String
+    private var apiVersion: String?
+    private var authToken: String
     private var httpRequestTimeoutSeconds: TimeInterval
     private var httpWaitsForConnectivity: Bool
     private var httpRetryDelaySeconds: Int
     private var httpRetryLimit: Int
-    private var airtableTablePrefix: String
     
-    init(airtableBaseId: String,
-         airtableApiKey: String,
-         airtableTablePrefix: String = "",
+    init(baseUrl: String,
+         apiVersion: String?,
+         authToken: String,
          httpRequestTimeoutSeconds: TimeInterval,
          httpWaitsForConnectivity: Bool,
          httpRetryDelaySeconds: Int,
          httpRetryLimit: Int) {
-        self.airtableBaseId = airtableBaseId
-        self.airtableApiKey = airtableApiKey
-        self.airtableTablePrefix = airtableTablePrefix
+        self.baseUrl = baseUrl
+        self.apiVersion = apiVersion
+        self.authToken = authToken
         self.httpRequestTimeoutSeconds = httpRequestTimeoutSeconds
         self.httpWaitsForConnectivity = httpWaitsForConnectivity
         self.httpRetryDelaySeconds = httpRetryDelaySeconds
@@ -37,7 +37,7 @@ class AirtableSessionFactory: AlamofireSessionFactory {
             sessionConfig.timeoutIntervalForRequest = httpRequestTimeoutSeconds
             sessionConfig.waitsForConnectivity = httpWaitsForConnectivity
             
-            let interceptor = Interceptor(adapter: BearerTokenAuthenticationAdapter(airtableApiKey),
+            let interceptor = Interceptor(adapter: BearerTokenAuthenticationAdapter(authToken),
                                           retrier: RetryingRequestInterceptor(retryDelaySecs: httpRetryDelaySeconds,
                                                                               maxRetries: httpRetryLimit))
             
@@ -48,21 +48,25 @@ class AirtableSessionFactory: AlamofireSessionFactory {
     }
     
     func baseUrl(adding: String) -> URL {
-        var result = URL(string: "https://api.airtable.com/v0/\(airtableBaseId)")!
+        var urlString = "https://\(baseUrl)/"
+        if apiVersion != nil {
+            urlString.append(contentsOf: "(apiVersion)/")
+        }
+        var result = URL(string: urlString)!
         result.appendPathComponent(adding)
         return result
     }
     
     func getSitesUrl() -> URL {
-        return baseUrl(adding: "\(airtableTablePrefix)\(Constants.Airtable.sitesTable)")
+        return baseUrl(adding: "sites")
     }
     
     func getSpeciesUrl() -> URL {
-        return baseUrl(adding: "\(airtableTablePrefix)\(Constants.Airtable.speciesTable)")
+        return baseUrl(adding: "species")
     }
     
     func getSupervisorUrl() -> URL {
-        return baseUrl(adding: "\(airtableTablePrefix)\(Constants.Airtable.supervisorsTable)")
+        return baseUrl(adding: "supervisors")
     }
     
 }

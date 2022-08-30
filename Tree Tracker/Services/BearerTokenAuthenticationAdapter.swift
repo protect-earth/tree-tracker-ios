@@ -1,17 +1,17 @@
 import Foundation
 import Alamofire
 
-class AirtableAuthenticationAdapter: RequestAdapter {
+class BearerTokenAuthenticationAdapter: RequestAdapter {
     
-    private var apiKey: String
+    private var token: String
     
-    init(_ apiKey: String) {
-        self.apiKey = apiKey
+    init(_ token: String) {
+        self.token = token
     }
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         var urlRequest = urlRequest
-        urlRequest.headers.add(.authorization(bearerToken: apiKey))
+        urlRequest.headers.add(.authorization(bearerToken: token))
         completion(.success(urlRequest))
     }
     

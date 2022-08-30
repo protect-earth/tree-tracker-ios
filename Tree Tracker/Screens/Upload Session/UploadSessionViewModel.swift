@@ -57,9 +57,10 @@ final class UploadSessionViewModel {
     
     private func fetchSites(completion: @escaping () -> Void) {
         siteService.fetchAll() { [weak self] result in
+            guard let self = self else { return }
             do {
-                self?.sites = try result.get().sorted(by: \.name, order: .ascending)
-                print("\(self?.sites.count) sites loaded")
+                self.sites = try result.get().sorted(by: \.name, order: .ascending)
+                print("\(self.sites.count) sites loaded")
                 completion()
             } catch {
                 print("Error loading sites")
@@ -69,9 +70,10 @@ final class UploadSessionViewModel {
     
     private func fetchSupervisors(completion: @escaping () -> Void) {
         supervisorService.fetchAll() { [weak self] result in
+            guard let self = self else { return }
             do {
-                self?.supervisors = try result.get().sorted(by: \.name, order: .ascending)
-                print("\(self?.supervisors.count) supervisors loaded")
+                self.supervisors = try result.get().sorted(by: \.name, order: .ascending)
+                print("\(self.supervisors.count) supervisors loaded")
                 completion()
             } catch {
                 print("Error loading supervisors")

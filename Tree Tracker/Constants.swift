@@ -18,5 +18,7 @@ enum Constants {
         static let requestTimeoutSeconds: TimeInterval = 30
         static let requestRetryDelaySeconds = 5
         static let requestRetryLimit = 3
+        static let protectEarthApiVersion: String? = nil
+        static let protectEarthApiBaseUrl = "royal-delhi-n3vjzgjonhc9.vapor-farm-f1.com"
     }
 }
