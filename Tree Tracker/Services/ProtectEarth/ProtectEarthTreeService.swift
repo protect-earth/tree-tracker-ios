@@ -7,7 +7,7 @@ class ProtectEarthTreeService: TreeService {
     @Injected private var database: Database
     @Injected private var sessionFactory: AlamofireSessionFactory
     
-    func publish(tree: LocalTree, completion: @escaping (Result<Bool, DataAccessError>) -> Void) {
+    func publish(tree: PETree, completion: @escaping (Result<Bool, DataAccessError>) -> Void) {
         fatalError("Not implemented yet!!")
     }
     
