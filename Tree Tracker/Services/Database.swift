@@ -108,6 +108,7 @@ final class Database {
         }
     }
 
+    @available(*, deprecated, message: "Unused since removal of upload history view")
     func save(_ trees: [AirtableTree], sentFromThisDevice: Bool) {
         do {
             try dbQueue?.write { db in
