@@ -8,10 +8,7 @@ class ProtectEarthCodableTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        encoder.outputFormatting = .init(arrayLiteral: [.sortedKeys, .withoutEscapingSlashes])
-        
-//        encoder.outputFormatting.formUnion( .prettyPrinted)
-//        encoder.outputFormatting.formUnion( .sortedKeys)
+        encoder.outputFormatting = .init(arrayLiteral: [.sortedKeys, .withoutEscapingSlashes, .prettyPrinted])
         encoder.dateEncodingStrategy = .iso8601
     }
 
@@ -149,8 +146,8 @@ class ProtectEarthCodableTests: XCTestCase {
         let formatter = ISO8601DateFormatter()
         let plantedDate = formatter.date(from: dateString)
         let sut = ProtectEarthUpload(imageUrl: "https://google.com",
-                                     latitude: 51.873510001,
-                                     longitude: -1.909730001,
+                                     latitude: 51.87351,
+                                     longitude: -1.90973,
                                      plantedAt: plantedDate!,
                                      supervisor: identifier,
                                      site: identifier,
@@ -160,13 +157,21 @@ class ProtectEarthCodableTests: XCTestCase {
         let jsonString = String(data: json, encoding: .utf8)
         let output = jsonString!.description
         print(output)
-        XCTAssertTrue(output.contains(#""image_url":"https://google.com""#))
-        XCTAssertTrue(output.contains(#""site":{"id":"497f6eca-6276-4993-bfeb-53cbbbba6f08"}"#))
-        XCTAssertTrue(output.contains(#""supervisor":{"id":"497f6eca-6276-4993-bfeb-53cbbbba6f08"}"#))
-        XCTAssertTrue(output.contains(#""species":{"id":"497f6eca-6276-4993-bfeb-53cbbbba6f08"}"#))
-        XCTAssertTrue(output.contains(#""latitude":51.87351"#))
-        XCTAssertTrue(output.contains(#""longitude":-1.90973"#))
-        XCTAssertTrue(output.contains(#""planted_at":"2019-08-24T14:15:22Z""#))
+        XCTAssertTrue(output.contains(#""image_url" : "https://google.com","#))
+        XCTAssertTrue(output.contains("""
+              "site" : {
+                "id" : "497f6eca-6276-4993-bfeb-53cbbbba6f08"
+              },
+            """), "site missing or malformed")
+        XCTAssertTrue(output.contains("""
+              "latitude" : 51.87351,
+            """), "latitude missing or malformed")
+        XCTAssertTrue(output.contains("""
+              "longitude" : -1.90973,
+            """), "longitude missing or malformed")
+        XCTAssertTrue(output.contains("""
+              "planted_at" : "2019-08-24T14:15:22Z",
+            """), "planted_at missing or malformed")
     }
 
 }

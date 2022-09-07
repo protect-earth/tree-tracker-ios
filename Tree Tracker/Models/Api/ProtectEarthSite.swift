@@ -1,5 +1,4 @@
 import Foundation
-import CoreLocation
 
 struct ProtectEarthSite: Codable {
     let id: String
