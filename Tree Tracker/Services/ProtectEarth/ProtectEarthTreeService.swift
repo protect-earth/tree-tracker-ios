@@ -147,7 +147,8 @@ class ProtectEarthTreeService: TreeService {
                 case .success:
                     self.database.remove(tree: tree) {
                         Rollbar.infoMessage("Successfully uploaded tree", data: ["id": "TODO",
-                                                                                 "md5": tree.imageMd5 ?? ""])
+                                                                                 "md5": tree.imageMd5 ?? "",
+                                                                                 "imageUrl": treeMeta.imageUrl])
                         completion(.success(true))
                     }
                 case let .failure(error):
