@@ -69,4 +69,8 @@ class ProtectEarthSessionFactory: AlamofireSessionFactory {
         return baseUrl(adding: "supervisors")
     }
     
+    func getTreeUrl() -> URL {
+        return baseUrl(adding: "upload")
+    }
+    
 }
