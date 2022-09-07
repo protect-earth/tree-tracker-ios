@@ -185,14 +185,13 @@ final class AddLocalTreeViewModel: TreeDetailsViewModel {
         
         recentSpeciesManager.add(species, timestamp: .now)
 
-        let tree = LocalTree(phImageId: asset.localIdentifier,
+        let tree = LocalTree(treeId: UUID().uuidString,
+                             phImageId: asset.localIdentifier,
                              createDate: asset.creationDate,
                              supervisor: supervisor.id,
                              species: species.id,
                              site: site.id,
-                             what3words: nil,
-                             coordinates: asset.stringifyCoordinates(),
-                             imageMd5: nil)
+                             coordinates: asset.stringifyCoordinates())
         database.save([tree])
         assets.removeAll { $0 == asset }
         presentNextAssetToFillOrComplete()

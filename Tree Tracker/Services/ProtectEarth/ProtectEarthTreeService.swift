@@ -109,12 +109,10 @@ class ProtectEarthTreeService: TreeService {
     }
     
     func postMetadata(tree: LocalTree, imageStoreUrl: String, completion: @escaping (Result<Bool, DataAccessError>) -> Void) {
-        
         guard let plantedDate = tree.createDate else { return }
         guard let coordinates: [String] = tree.coordinates?.components(separatedBy: ", ") else { return }
         guard let latitude = Decimal(string: coordinates[0]) else { return }
         guard let longitude = Decimal(string: coordinates[1]) else { return }
-        //guard let md5 = tree.imageMd5 else { return }
         
         let treeMeta = ProtectEarthUpload(imageUrl: imageStoreUrl,
                                           latitude: latitude,
@@ -129,8 +127,7 @@ class ProtectEarthTreeService: TreeService {
         encoder.outputFormatting = .init(arrayLiteral: [.sortedKeys, .withoutEscapingSlashes])
         encoder.dateEncodingStrategy = .iso8601
         
-        //TODO: use a genuine persisted identity value different from the photo id
-        let headers : HTTPHeaders = ["Idempotency-Key": UUID().uuidString]
+        let headers : HTTPHeaders = ["Idempotency-Key": tree.treeId]
         let request = getSession().request(sessionFactory.getTreeUrl(),
                                            method: .post,
                                            parameters: treeMeta,
@@ -146,7 +143,7 @@ class ProtectEarthTreeService: TreeService {
                 switch response.result {
                 case .success:
                     self.database.remove(tree: tree) {
-                        Rollbar.infoMessage("Successfully uploaded tree", data: ["id": "TODO",
+                        Rollbar.infoMessage("Successfully uploaded tree", data: ["id": tree.treeId,
                                                                                  "md5": tree.imageMd5 ?? "",
                                                                                  "imageUrl": treeMeta.imageUrl])
                         completion(.success(true))
