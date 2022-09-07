@@ -23,6 +23,7 @@ extension Resolver: ResolverRegistering {
         register { RecentSpeciesManager(defaults: resolve(), strategy: .todayUsedSpecies) }
         
         // MARK: Services
+        //TODO: remove all Airtable services
         register { AirtableSessionFactory(airtableBaseId: Constants.Airtable.baseId,
                                           airtableApiKey: Constants.Airtable.apiKey,
                                           httpRequestTimeoutSeconds: Constants.Http.requestTimeoutSeconds,
@@ -45,7 +46,13 @@ extension Resolver: ResolverRegistering {
         protectEarthApi.register { ProtectEarthSupervisorService() as SupervisorService }
         protectEarthApi.register { ProtectEarthSiteService() as SiteService }
         protectEarthApi.register { ProtectEarthSpeciesService() as SpeciesService }
-//        protectEarthApi.register { ProtectEarthTreeService() as TreeService }
+        protectEarthApi.register { ProtectEarthTreeService() as TreeService }
+        //TODO: sort out injection for prefixKey and naming
+        protectEarthApi.register { CloudinarySessionFactory(prefixKey: "dimx8xmap",
+                                                            httpRequestTimeoutSeconds: Constants.Http.requestTimeoutSeconds,
+                                                            httpWaitsForConnectivity: true,
+                                                            httpRetryDelaySeconds: Constants.Http.requestRetryDelaySeconds,
+                                                            httpRetryLimit: Constants.Http.requestRetryLimit) }
         
         // MARK: Controllers
         register { SitesController() }
@@ -72,8 +79,8 @@ extension Resolver: ResolverRegistering {
             Resolver.root = Resolver.integrationTest
         }
         
-        if CommandLine.arguments.contains("--protect-earth-api") {
+//        if CommandLine.arguments.contains("--protect-earth-api") {
             Resolver.root = Resolver.protectEarthApi
-        }
+//        }
     }
 }
