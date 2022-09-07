@@ -26,6 +26,7 @@ final class UploadViewModel: CollectionViewModel {
 
     @Injected private var api: Api
     @Injected private var database: Database
+    @Injected private var treeService: TreeService
     
     private var screenLockManager: ScreenLockManaging
     private var logger: Logging
@@ -144,37 +145,32 @@ final class UploadViewModel: CollectionViewModel {
             }
             
             self?.logger.log(.upload, "Now uploading tree: \(tree)")
-            self?.currentUpload = self?.api.upload(
+            self?.treeService.publish(
                 tree: tree,
                 progress: { progress in
                     self?.logger.log(.upload, "Progress: \(progress)")
                     self?.update(uploadProgress: progress, for: tree)
-                },
-                completion: { result in
-                    switch result {
-                    case let .success(airtableTree):
-                        Rollbar.infoMessage("Successfully uploaded tree", data: ["id": airtableTree.id,
-                                                                                 "md5": airtableTree.imageMd5 ?? ""])
-                        self?.logger.log(.upload, "Successfully uploaded tree.")
-                        self?.database.save([airtableTree], sentFromThisDevice: true)
-                        self?.database.remove(tree: tree) {
-                            self?.presentTreesFromDatabase()
-                            self?.uploadLocalTreesRecursively()
-                        }
-                    case let .failure(error):
-                        self?.update(uploadProgress: 0.0, for: tree)
-                        self?.presentUploadButton(isUploading: false)
-                        Rollbar.errorError(error,
-                                           data: ["supervisor": tree.supervisor,
-                                                  "site": tree.site,
-                                                  "coordinates": tree.coordinates ?? "",
-                                                  "md5": tree.imageMd5 ?? "",
-                                                  "phImageId": tree.phImageId],
-                                           context: "UploadViewModel.uploadLocalTreesRecursively")
-                        self?.logger.log(.upload, "Error when uploading a local tree: \(error)")
-                    }
                 }
-            )
+            ) { [weak self] result in
+                switch result {
+                case .success:
+                    self?.update(uploadProgress: 1.0, for: tree)
+                    self?.presentTreesFromDatabase()
+                    self?.uploadLocalTreesRecursively()
+                case let .failure(error):
+                    self?.update(uploadProgress: 0.0, for: tree)
+                    self?.presentUploadButton(isUploading: false)
+                    Rollbar.errorError(error,
+                                       data: ["supervisor": tree.supervisor,
+                                              "site": tree.site,
+                                              "coordinates": tree.coordinates ?? "",
+                                              "md5": tree.imageMd5 ?? "",
+                                              "phImageId": tree.phImageId],
+                                       context: "UploadViewModel.uploadLocalTreesRecursively")
+                    self?.logger.log(.upload, "Error when uploading a local tree: \(error)")
+                }
+
+            }
         }
     }
 
@@ -189,11 +185,12 @@ final class UploadViewModel: CollectionViewModel {
     }
 
     private func presentTreesFromDatabase() {
-        database.fetchLocalTrees { [weak self] trees in
+        database.fetchLocalTrees() { [weak self] trees in
+            guard let self = self else { return }
             let sortedTrees = trees.sorted(by: \.createDate, order: .descending)
-            self?.presentTitle(itemsCount: sortedTrees.count)
-            self?.data = [.untitled(id: "trees", sortedTrees.compactMap { tree in
-                return self?.buildItem(tree: tree, progress: 0.0)
+            self.presentTitle(itemsCount: sortedTrees.count)
+            self.data = [.untitled(id: "trees", sortedTrees.compactMap { tree in
+                return self.buildItem(tree: tree, progress: 0.0)
             })]
         }
     }
@@ -208,7 +205,7 @@ final class UploadViewModel: CollectionViewModel {
 
     private func buildItem(tree: LocalTree, progress: Double) -> CollectionListItem {
         let imageLoader = AnyImageLoader(imageLoader: PHImageLoader(phImageId: tree.phImageId))
-        let info = species.first { $0.id == tree.species }?.name ?? "Unknown specie"
+        let info = species.first { $0.id == tree.species }?.name ?? "Unknown"
         return .tree(id: tree.phImageId,
                      imageLoader: imageLoader,
                      progress: progress,
