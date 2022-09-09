@@ -130,7 +130,7 @@
 		9D5F062F2874E5CA00C8D4A6 /* ProtectEarthSiteServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F062E2874E5CA00C8D4A6 /* ProtectEarthSiteServiceTests.swift */; };
 		9D5F06332878ADF000C8D4A6 /* DataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F06322878ADF000C8D4A6 /* DataResponse.swift */; };
 		9D79A5A7283AE03100F0F96C /* SiteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5A6283AE03100F0F96C /* SiteService.swift */; };
-		9D79A5AA283AE27500F0F96C /* DataAccessError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5A9283AE27500F0F96C /* DataAccessError.swift */; };
+		9D79A5AA283AE27500F0F96C /* ProtectEarthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5A9283AE27500F0F96C /* ProtectEarthError.swift */; };
 		9D79A5AC283AE32C00F0F96C /* AirtableSiteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5AB283AE32C00F0F96C /* AirtableSiteService.swift */; };
 		9DA1FC34283452CC00AEC584 /* AppDelegate+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA1FC33283452CC00AEC584 /* AppDelegate+Injection.swift */; };
 		9DA84707287DB9D400B0BB3E /* ProtectEarthSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA84706287DB9D400B0BB3E /* ProtectEarthSpecies.swift */; };
@@ -285,7 +285,7 @@
 		9D5F062E2874E5CA00C8D4A6 /* ProtectEarthSiteServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthSiteServiceTests.swift; sourceTree = "<group>"; };
 		9D5F06322878ADF000C8D4A6 /* DataResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataResponse.swift; sourceTree = "<group>"; };
 		9D79A5A6283AE03100F0F96C /* SiteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteService.swift; sourceTree = "<group>"; };
-		9D79A5A9283AE27500F0F96C /* DataAccessError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAccessError.swift; sourceTree = "<group>"; };
+		9D79A5A9283AE27500F0F96C /* ProtectEarthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthError.swift; sourceTree = "<group>"; };
 		9D79A5AB283AE32C00F0F96C /* AirtableSiteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSiteService.swift; sourceTree = "<group>"; };
 		9DA1FC33283452CC00AEC584 /* AppDelegate+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Injection.swift"; sourceTree = "<group>"; };
 		9DA84706287DB9D400B0BB3E /* ProtectEarthSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthSpecies.swift; sourceTree = "<group>"; };
@@ -652,7 +652,7 @@
 		9D79A5A8283AE25300F0F96C /* Errors */ = {
 			isa = PBXGroup;
 			children = (
-				9D79A5A9283AE27500F0F96C /* DataAccessError.swift */,
+				9D79A5A9283AE27500F0F96C /* ProtectEarthError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -845,7 +845,7 @@
 				85C781A125CC744E0034292D /* ScreenLockManager.swift in Sources */,
 				85B839AD25B47BD30008E167 /* Reusable.swift in Sources */,
 				85B839A925B35B540008E167 /* TableViewDataSource.swift in Sources */,
-				9D79A5AA283AE27500F0F96C /* DataAccessError.swift in Sources */,
+				9D79A5AA283AE27500F0F96C /* ProtectEarthError.swift in Sources */,
 				85B83A3825B9D9C40008E167 /* Data.swift in Sources */,
 				85B83A2D25B9C5DB0008E167 /* DateFormatter.swift in Sources */,
 				859F62E425C22D6C005E61F7 /* SelectionsKeyboardView.swift in Sources */,

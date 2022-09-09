@@ -10,16 +10,14 @@ class ProtectEarthTreeService: TreeService {
     @Injected private var sessionFactory: AlamofireSessionFactory
     @Injected private var cloudinarySessionFactory: CloudinarySessionFactory
     
-    let cloudinaryUploadUrl = URL(string: "https://api.cloudinary.com/v1_1/\(Constants.Cloudinary.cloudName)/image/upload")!
-    
-    func publish(tree: LocalTree, progress: @escaping (Double) -> Void, completion: @escaping (Result<Bool, DataAccessError>) -> Void) {
+    func publish(tree: LocalTree, progress: @escaping (Double) -> Void, completion: @escaping (Result<Bool, ProtectEarthError>) -> Void) {
         // Step 1: retrieve image at appropriate resolution
         prepareImageForUpload(tree: tree) { [weak self] (image: UIImage?) in
             
             guard let self = self else { return }
             
             guard let image = image else {
-                return completion(.failure(DataAccessError.localError(errorCode: 1,
+                return completion(.failure(ProtectEarthError.localError(errorCode: 1,
                                                                errorMessage: "Unable to prepare upload image")))
             }
             
@@ -44,21 +42,22 @@ class ProtectEarthTreeService: TreeService {
                                               "supervisor": tree.supervisor,
                                               "site": tree.site],
                                        context: "Fetching upload image for tree")
-                    completion(.failure(DataAccessError.remoteError(errorCode: error.responseCode ?? -1,
+                    completion(.failure(ProtectEarthError.remoteError(errorCode: error.responseCode ?? -1,
                                                                     errorMessage: error.errorDescription ?? "")))
                 }
             }
         }
     }
     
-    func prepareImageForUpload(tree: LocalTree, completion: @escaping (UIImage?) -> Void) {
+    private func prepareImageForUpload(tree: LocalTree, completion: @escaping (UIImage?) -> Void) {
         let imageLoader = PHImageLoader(phImageId: tree.phImageId)
         imageLoader.loadUploadImage(completion: completion)
     }
     
-    func uploadImageToImageStore(image: UIImage,
+    private func uploadImageToImageStore(image: UIImage,
                                  progress: @escaping (Double) -> Void,
                                  completion: @escaping (Result<(String, String), AFError>) -> Void) {
+        let cloudinaryUploadUrl = URL(string: "https://api.cloudinary.com/v1_1/\(Constants.Cloudinary.cloudName)/image/upload")!
         let cloudinarySession = cloudinarySessionFactory.get()
         
         guard let data = image.jpegData(compressionQuality: 0.8) else {
@@ -108,7 +107,7 @@ class ProtectEarthTreeService: TreeService {
             }
     }
     
-    func postMetadata(tree: LocalTree, imageStoreUrl: String, completion: @escaping (Result<Bool, DataAccessError>) -> Void) {
+    private func postMetadata(tree: LocalTree, imageStoreUrl: String, completion: @escaping (Result<Bool, ProtectEarthError>) -> Void) {
         guard let plantedDate = tree.createDate else { return }
         guard let coordinates: [String] = tree.coordinates?.components(separatedBy: ", ") else { return }
         guard let latitude = Decimal(string: coordinates[0]) else { return }
@@ -149,7 +148,7 @@ class ProtectEarthTreeService: TreeService {
                         completion(.success(true))
                     }
                 case let .failure(error):
-                    completion(.failure(DataAccessError.remoteError(errorCode: error.responseCode ?? -1,
+                    completion(.failure(ProtectEarthError.remoteError(errorCode: error.responseCode ?? -1,
                                                                     errorMessage: error.errorDescription ?? "No description")))
                 }
             }

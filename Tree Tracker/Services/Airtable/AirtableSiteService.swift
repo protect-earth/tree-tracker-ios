@@ -18,7 +18,7 @@ class AirtableSiteService: SiteService {
     }
     
     // Synchronise local cache with remote datastore
-    func sync(completion: @escaping (Result<Bool, DataAccessError>) -> Void) {
+    func sync(completion: @escaping (Result<Bool, ProtectEarthError>) -> Void) {
         let request = getSession().request(sessionFactory.getSitesUrl(),
                                            method: .get,
                                            encoding: URLEncoding.queryString)
@@ -40,14 +40,14 @@ class AirtableSiteService: SiteService {
                     print("Unexpected error: \(error).")
                 }
             case .failure:
-                completion(.failure(DataAccessError.remoteError(errorCode: response.error!.responseCode!,
+                completion(.failure(ProtectEarthError.remoteError(errorCode: response.error!.responseCode!,
                                                                 errorMessage: (response.error!.errorDescription!))))
             }
         }
     }
     
     // Return sites from local cache, adding to buffer
-    func fetchAll(completion: @escaping (Result<[Site], DataAccessError>) -> Void) {
+    func fetchAll(completion: @escaping (Result<[Site], ProtectEarthError>) -> Void) {
         database.fetchAll(Site.self) { [weak self] sites in
             self?.sites.removeAll()
             sites.forEach() { self?.sites.append($0) }
@@ -56,7 +56,7 @@ class AirtableSiteService: SiteService {
     }
     
     // Add a site to remote and trigger a sync to update local cache
-    func addSite(name: String, completion: @escaping (Result<Bool, DataAccessError>) -> Void) {
+    func addSite(name: String, completion: @escaping (Result<Bool, ProtectEarthError>) -> Void) {
         // build struct to represent target JSON body
         let parameters: [String: [String: String]] = [
             "fields": ["Name": name]
@@ -74,7 +74,7 @@ class AirtableSiteService: SiteService {
                     completion(result)
                 }
             case .failure:
-                completion(.failure(DataAccessError.remoteError(errorCode: response.error!.responseCode!,
+                completion(.failure(ProtectEarthError.remoteError(errorCode: response.error!.responseCode!,
                                                                 errorMessage: (response.error!.errorDescription!))))
             }
         }

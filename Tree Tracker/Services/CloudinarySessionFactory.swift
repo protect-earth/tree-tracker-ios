@@ -4,22 +4,15 @@ import Alamofire
 class CloudinarySessionFactory {
     
     private var session: Session?
-    private var baseUrl: String
-    private var apiVersion: String
     private var httpRequestTimeoutSeconds: TimeInterval
     private var httpWaitsForConnectivity: Bool
     private var httpRetryDelaySeconds: Int
     private var httpRetryLimit: Int
     
-    init(baseUrl: String = "https://api.cloudinary.com",
-         apiVersion: String = "v1_1",
-         prefixKey: String,
-         httpRequestTimeoutSeconds: TimeInterval,
+    init(httpRequestTimeoutSeconds: TimeInterval,
          httpWaitsForConnectivity: Bool,
          httpRetryDelaySeconds: Int,
          httpRetryLimit: Int) {
-        self.baseUrl = baseUrl
-        self.apiVersion = apiVersion
         self.httpRequestTimeoutSeconds = httpRequestTimeoutSeconds
         self.httpWaitsForConnectivity = httpWaitsForConnectivity
         self.httpRetryDelaySeconds = httpRetryDelaySeconds
@@ -41,11 +34,6 @@ class CloudinarySessionFactory {
         }
         return session!
     }
-    
-    func getUploadUrl() -> String {
-        return "\(baseUrl)/\(apiVersion)/xxx/image/upload"
-    }
-    
 }
 
 private class NoOpAdapter: RequestAdapter {

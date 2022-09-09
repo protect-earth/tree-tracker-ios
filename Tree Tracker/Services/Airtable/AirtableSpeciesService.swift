@@ -18,7 +18,7 @@ class AirtableSpeciesService: SpeciesService {
     }
     
     // Synchronise local cache with remote datastore
-    func sync(completion: @escaping (Result<Bool, DataAccessError>) -> Void) {
+    func sync(completion: @escaping (Result<Bool, ProtectEarthError>) -> Void) {
         let request = getSession().request(sessionFactory.getSpeciesUrl(),
                                            method: .get,
                                            encoding: URLEncoding.queryString)
@@ -40,14 +40,14 @@ class AirtableSpeciesService: SpeciesService {
                     print("Unexpected error: \(error).")
                 }
             case .failure:
-                completion(.failure(DataAccessError.remoteError(errorCode: response.error!.responseCode!,
+                completion(.failure(ProtectEarthError.remoteError(errorCode: response.error!.responseCode!,
                                                                 errorMessage: (response.error!.errorDescription!))))
             }
         }
     }
     
     // Return species from local cache
-    func fetchAll(completion: @escaping (Result<[Species], DataAccessError>) -> Void) {
+    func fetchAll(completion: @escaping (Result<[Species], ProtectEarthError>) -> Void) {
         database.fetchAll(Species.self) { [weak self] species in
             self?.species.removeAll()
             species.forEach() { self?.species.append($0) }
@@ -56,7 +56,7 @@ class AirtableSpeciesService: SpeciesService {
     }
     
     // Add a species to remote and trigger a sync to update local cache
-    func addSpecies(name: String, completion: @escaping (Result<Species, DataAccessError>) -> Void) {
+    func addSpecies(name: String, completion: @escaping (Result<Species, ProtectEarthError>) -> Void) {
         fatalError("addSpecies(name:, completion:) has not been implemented")
     }
     

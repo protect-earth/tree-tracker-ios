@@ -7,10 +7,12 @@ extension Resolver: ResolverRegistering {
     static let mock = Resolver(child: main)
     static let integrationTest = Resolver(child: main)
     static let protectEarthApi = Resolver(child: integrationTest)
+    static let airtable = Resolver(child: main)
     
     public static func registerAllServices() {
         // register all components as singletons for lifetime of application
         // defaultScope = .application
+        Resolver.defaultScope = .application
         
         // MARK: Base services
         register { Logger(output: .print) }.implements(Logging.self)
@@ -24,16 +26,16 @@ extension Resolver: ResolverRegistering {
         
         // MARK: Services
         //TODO: remove all Airtable services
-        register { AirtableSessionFactory(airtableBaseId: Constants.Airtable.baseId,
-                                          airtableApiKey: Constants.Airtable.apiKey,
-                                          httpRequestTimeoutSeconds: Constants.Http.requestTimeoutSeconds,
-                                          httpWaitsForConnectivity: true,
-                                          httpRetryDelaySeconds: Constants.Http.requestRetryDelaySeconds,
-                                          httpRetryLimit: Constants.Http.requestRetryLimit) as AlamofireSessionFactory }
+        airtable.register { AirtableSessionFactory(airtableBaseId: Constants.Airtable.baseId,
+                                                   airtableApiKey: Constants.Airtable.apiKey,
+                                                   httpRequestTimeoutSeconds: Constants.Http.requestTimeoutSeconds,
+                                                   httpWaitsForConnectivity: true,
+                                                   httpRetryDelaySeconds: Constants.Http.requestRetryDelaySeconds,
+                                                   httpRetryLimit: Constants.Http.requestRetryLimit) as AlamofireSessionFactory }
         
-        register { AirtableSiteService() as SiteService }
-        register { AirtableSpeciesService() as SpeciesService }
-        register { AirtableSupervisorService() as SupervisorService }
+        airtable.register { AirtableSiteService() as SiteService }
+        airtable.register { AirtableSpeciesService() as SpeciesService }
+        airtable.register { AirtableSupervisorService() as SupervisorService }
         
         // MARK: Protect Earth API specific services
         protectEarthApi.register { ProtectEarthSessionFactory(baseUrl: Constants.Http.protectEarthApiBaseUrl,
@@ -48,8 +50,7 @@ extension Resolver: ResolverRegistering {
         protectEarthApi.register { ProtectEarthSpeciesService() as SpeciesService }
         protectEarthApi.register { ProtectEarthTreeService() as TreeService }
         //TODO: sort out injection for prefixKey and naming
-        protectEarthApi.register { CloudinarySessionFactory(prefixKey: "dimx8xmap",
-                                                            httpRequestTimeoutSeconds: Constants.Http.requestTimeoutSeconds,
+        protectEarthApi.register { CloudinarySessionFactory(httpRequestTimeoutSeconds: Constants.Http.requestTimeoutSeconds,
                                                             httpWaitsForConnectivity: true,
                                                             httpRetryDelaySeconds: Constants.Http.requestRetryDelaySeconds,
                                                             httpRetryLimit: Constants.Http.requestRetryLimit) }
@@ -79,8 +80,11 @@ extension Resolver: ResolverRegistering {
             Resolver.root = Resolver.integrationTest
         }
         
-//        if CommandLine.arguments.contains("--protect-earth-api") {
-            Resolver.root = Resolver.protectEarthApi
-//        }
+        if CommandLine.arguments.contains("--airtable") {
+            Resolver.root = Resolver.airtable
+        }
+        
+        // default to using Protect Earth API
+        Resolver.root = Resolver.protectEarthApi
     }
 }

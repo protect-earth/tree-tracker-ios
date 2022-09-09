@@ -43,6 +43,7 @@ final class Database {
          */
         
         var migrator = DatabaseMigrator()
+        migrator.eraseDatabaseOnSchemaChange = true
         
         migrator.registerMigration("reset") { db in
             for table in ["remoteTree", "localTree", "site", "supervisor", "species"] {
@@ -90,22 +91,31 @@ final class Database {
         
         guard let dbQueue = dbQueue else { return }
         var needsMigration = false
+        var alreadyAppliedMigrations: Set<String> = []
 
         try dbQueue.read() { db in
             needsMigration = try !migrator.hasCompletedMigrations(db)
+            alreadyAppliedMigrations = try migrator.appliedIdentifiers(db)
         }
         
+        logger.log("Migrations previously applied: \(alreadyAppliedMigrations)")
+        
         if needsMigration {
-            try migrator.migrate(dbQueue)
+            do {
+                try migrator.migrate(dbQueue)
+            } catch {
+                Rollbar.criticalError(error)
+                fatalError("Unable to complete schema preparation: \(error)")
+            }
             try dbQueue.read() { db in
                 let appliedMigrations = try migrator.completedMigrations(db)
                 Rollbar.infoMessage("Successfully completed database migration",
                                     data: ["migrationsApplied": appliedMigrations.description])
                 logger.log(.database, "Database migration completed. Cumulative applied migrations: \(appliedMigrations)")
             }
-            
         } else {
-            Rollbar.infoMessage("Database migration was not required")
+            Rollbar.infoMessage("Database migration was not required",
+                                data: ["alreadyAppliedMigrations": alreadyAppliedMigrations.description])
         }
     }
 
