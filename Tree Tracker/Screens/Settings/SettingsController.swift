@@ -55,6 +55,7 @@ class SettingsController: UITableViewController {
             cell.textLabel?.text = entityTypes[indexPath.item]
         case 1:
             cell.textLabel?.text = Constants.Http.protectEarthApiBaseUrl
+            cell.selectionStyle = .none
         default:
             break
         }
@@ -63,15 +64,17 @@ class SettingsController: UITableViewController {
     
     // MARK: - Delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch entityTypes[indexPath.item] {
-        case "Sites":
-            self.navigationController?.pushViewController(sitesController, animated: true)
-        case "Supervisors":
-            self.navigationController?.pushViewController(supervisorsController, animated: true)
-        case "Species":
-            self.navigationController?.pushViewController(speciesController, animated: true)
-        default:
-            break
+        if indexPath.section == 0 {
+            switch entityTypes[indexPath.item] {
+            case "Sites":
+                self.navigationController?.pushViewController(sitesController, animated: true)
+            case "Supervisors":
+                self.navigationController?.pushViewController(supervisorsController, animated: true)
+            case "Species":
+                self.navigationController?.pushViewController(speciesController, animated: true)
+            default:
+                break
+            }
         }
     }
     
