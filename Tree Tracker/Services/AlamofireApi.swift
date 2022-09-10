@@ -38,6 +38,7 @@ final class AlamofireApi: Api {
         
     }
 
+    @available(*, deprecated, message: "Replaced by ProtectEarthTreeService")
     func upload(tree: LocalTree, progress: @escaping (Double) -> Void = { _ in }, completion: @escaping (Result<AirtableTree, AFError>) -> Void) -> Cancellable {
         let upload = ImageUpload(tree: tree, logger: logger)
         upload.upload(tree: tree, progress: progress, session: session, completion: completion)
@@ -54,6 +55,7 @@ final class AlamofireApi: Api {
     }
 }
 
+@available(*, deprecated, message: "Replaced by ProtectEarthTreeService")
 final class ImageUpload: Cancellable {
     private let tree: LocalTree
     private let imageLoader: PHImageLoader

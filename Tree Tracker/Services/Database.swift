@@ -1,5 +1,6 @@
 import Foundation
 import GRDB
+import RollbarNotifier
 
 private extension LogCategory {
     static var database = LogCategory(name: "Database")
@@ -17,97 +18,108 @@ final class Database {
         self.dbQueue = try? DatabaseQueue(path: Constants.databaseUrl.path)
         self.logger = logger
 
-        try? createTablesAndMigrateIfNeeded()
+        try? prepareSchema()
     }
 
-    private func createTablesAndMigrateIfNeeded() throws {
+    private func prepareSchema() throws {
+        
+        /*
+         In the wild we may have either:
+         - databases which have been created from scratch with all tables and full set of columns - for these databases no migration will have been applied
+         - databases which originally had all tables but not the sentfromdevice column - these databases will have migration "v1" applied
+         
+         We essentially want:
+         - to drop RemoteTree table
+         - change all migrations to avoid referencing CodingKeys and use static strings instead
+         - add column treeId to LocalTree and make this the new PK
+         
+         The plan:
+         - create a completely new set of migrations with new names
+         - check whether all registered migrations have been completed, if not apply the newly registered set
+         - first migration should drop any legacy tables where they exist
+         - second migration should create all the tables the way we want them
+         - notify Rollbar what's going on so we have some visibility
+         - any subsequent migrations should fit nicely into this model
+         */
+        
         var migrator = DatabaseMigrator()
-        migrator.registerMigration("v1") { db in
-            try db.alter(table: RemoteTree.databaseTableName) { table in
-                let column = table.add(column: RemoteTree.CodingKeys.sentFromThisDevice.stringValue, .boolean)
-                column.defaults(to: false)
+        migrator.eraseDatabaseOnSchemaChange = true
+        
+        migrator.registerMigration("reset") { db in
+            for table in ["remoteTree", "localTree", "site", "supervisor", "species"] {
+                if try db.tableExists(table) {
+                    try db.drop(table: table)
+                }
             }
         }
         
-        var needsMigration: Bool = false
-        
-        try dbQueue?.write { db in
-            if try db.tableExists(RemoteTree.databaseTableName) == false {
-                try db.create(table: RemoteTree.databaseTableName) { table in
-                    table.column(RemoteTree.CodingKeys.id.stringValue, .text)
-                    table.column(RemoteTree.CodingKeys.supervisor.stringValue, .text)
-                    table.column(RemoteTree.CodingKeys.species.stringValue, .text)
-                    table.column(RemoteTree.CodingKeys.site.stringValue, .text)
-                    table.column(RemoteTree.CodingKeys.notes.stringValue, .text)
-                    table.column(RemoteTree.CodingKeys.coordinates.stringValue, .text)
-                    table.column(RemoteTree.CodingKeys.what3words.stringValue, .text)
-                    table.column(RemoteTree.CodingKeys.imageUrl.stringValue, .text)
-                    table.column(RemoteTree.CodingKeys.thumbnailUrl.stringValue, .text)
-                    table.column(RemoteTree.CodingKeys.imageMd5.stringValue, .text)
-                    table.column(RemoteTree.CodingKeys.uploadDate.stringValue, .date)
-                    table.column(RemoteTree.CodingKeys.createDate.stringValue, .date)
-                    table.column(RemoteTree.CodingKeys.sentFromThisDevice.stringValue, .boolean)
-
-                    table.primaryKey([RemoteTree.CodingKeys.id.stringValue])
-                }
+        migrator.registerMigration("1.0") { db in
+            try db.create(table: "localTree") { table in
+                table.column("treeId", .text)
+                table.column("phImageId", .text)
+                table.column("createDate", .date)
+                table.column("supervisor", .text)
+                table.column("species", .text)
+                table.column("site", .text)
+                table.column("coordinates", .text)
+                table.column("imageMd5", .text)
+                
+                table.primaryKey(["treeId"])
             }
 
-            if try db.tableExists(LocalTree.databaseTableName) == false {
-                try db.create(table: LocalTree.databaseTableName) { table in
-                    table.column(LocalTree.CodingKeys.phImageId.stringValue, .text)
-                    table.column(LocalTree.CodingKeys.createDate.stringValue, .date)
-                    table.column(LocalTree.CodingKeys.supervisor.stringValue, .text)
-                    table.column(LocalTree.CodingKeys.species.stringValue, .text)
-                    table.column(LocalTree.CodingKeys.site.stringValue, .text)
-                    table.column(LocalTree.CodingKeys.notes.stringValue, .text)
-                    table.column(LocalTree.CodingKeys.coordinates.stringValue, .text)
-                    table.column(LocalTree.CodingKeys.what3words.stringValue, .text)
-                    table.column(LocalTree.CodingKeys.imageMd5.stringValue, .text)
+            try db.create(table: "site") { table in
+                table.column("id", .text)
+                table.column("name", .text)
 
-                    table.primaryKey([LocalTree.CodingKeys.phImageId.stringValue])
-                }
+                table.primaryKey(["id"])
             }
 
-            if try db.tableExists(Site.databaseTableName) == false {
-                try db.create(table: Site.databaseTableName) { table in
-                    table.column(Site.CodingKeys.id.stringValue, .text)
-                    table.column(Site.CodingKeys.name.stringValue, .text)
+            try db.create(table: "supervisor") { table in
+                table.column("id", .text)
+                table.column("name", .text)
 
-                    table.primaryKey([Site.CodingKeys.id.stringValue])
-                }
+                table.primaryKey(["id"])
             }
 
-            if try db.tableExists(Supervisor.databaseTableName) == false {
-                try db.create(table: Supervisor.databaseTableName) { table in
-                    table.column(Supervisor.CodingKeys.id.stringValue, .text)
-                    table.column(Supervisor.CodingKeys.name.stringValue, .text)
+            try db.create(table: "species") { table in
+                table.column("id", .text)
+                table.column("name", .text)
 
-                    table.primaryKey([Supervisor.CodingKeys.id.stringValue])
-                }
-            }
-
-            if try db.tableExists(Species.databaseTableName) == false {
-                try db.create(table: Species.databaseTableName) { table in
-                    table.column(Species.CodingKeys.id.stringValue, .text)
-                    table.column(Species.CodingKeys.name.stringValue, .text)
-
-                    table.primaryKey([Species.CodingKeys.id.stringValue])
-                }
-            }
-
-            let registeredColumn = (try? db.columns(in: RemoteTree.databaseTableName).first(where: { $0.name == RemoteTree.CodingKeys.sentFromThisDevice.stringValue })) != nil
-            if !registeredColumn, try !migrator.hasCompletedMigrations(db) {
-                needsMigration = true
+                table.primaryKey(["id"])
             }
         }
         
-        if needsMigration, let dbQueue = dbQueue {
-            logger.log(.database, "Needs migration - starting...")
-            try migrator.migrate(dbQueue)
-            logger.log(.database, "Migration finished succesfully!")
+        guard let dbQueue = dbQueue else { return }
+        var needsMigration = false
+        var alreadyAppliedMigrations: Set<String> = []
+
+        try dbQueue.read() { db in
+            needsMigration = try !migrator.hasCompletedMigrations(db)
+            alreadyAppliedMigrations = try migrator.appliedIdentifiers(db)
+        }
+        
+        logger.log("Migrations previously applied: \(alreadyAppliedMigrations)")
+        
+        if needsMigration {
+            do {
+                try migrator.migrate(dbQueue)
+            } catch {
+                Rollbar.criticalError(error)
+                fatalError("Unable to complete schema preparation: \(error)")
+            }
+            try dbQueue.read() { db in
+                let appliedMigrations = try migrator.completedMigrations(db)
+                Rollbar.infoMessage("Successfully completed database migration",
+                                    data: ["migrationsApplied": appliedMigrations.description])
+                logger.log(.database, "Database migration completed. Cumulative applied migrations: \(appliedMigrations)")
+            }
+        } else {
+            Rollbar.infoMessage("Database migration was not required",
+                                data: ["alreadyAppliedMigrations": alreadyAppliedMigrations.description])
         }
     }
 
+    @available(*, deprecated, message: "Unused since removal of upload history view")
     func save(_ trees: [AirtableTree], sentFromThisDevice: Bool) {
         do {
             try dbQueue?.write { db in

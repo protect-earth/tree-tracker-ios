@@ -7,4 +7,5 @@ protocol AlamofireSessionFactory {
     func getSitesUrl() -> URL
     func getSpeciesUrl() -> URL
     func getSupervisorUrl() -> URL
+    func getTreeUrl() -> URL
 }

@@ -1,30 +1,18 @@
 import Foundation
 import Alamofire
 
-/*
- Provides request interception, including retry and authentication, for Protect Earth API requests
- */
-class ProtectEarthSessionFactory: AlamofireSessionFactory {
+class CloudinarySessionFactory {
     
     private var session: Session?
-    private var baseUrl: String
-    private var apiVersion: String?
-    private var authToken: String
     private var httpRequestTimeoutSeconds: TimeInterval
     private var httpWaitsForConnectivity: Bool
     private var httpRetryDelaySeconds: Int
     private var httpRetryLimit: Int
     
-    init(baseUrl: String,
-         apiVersion: String?,
-         authToken: String,
-         httpRequestTimeoutSeconds: TimeInterval,
+    init(httpRequestTimeoutSeconds: TimeInterval,
          httpWaitsForConnectivity: Bool,
          httpRetryDelaySeconds: Int,
          httpRetryLimit: Int) {
-        self.baseUrl = baseUrl
-        self.apiVersion = apiVersion
-        self.authToken = authToken
         self.httpRequestTimeoutSeconds = httpRequestTimeoutSeconds
         self.httpWaitsForConnectivity = httpWaitsForConnectivity
         self.httpRetryDelaySeconds = httpRetryDelaySeconds
@@ -37,7 +25,7 @@ class ProtectEarthSessionFactory: AlamofireSessionFactory {
             sessionConfig.timeoutIntervalForRequest = httpRequestTimeoutSeconds
             sessionConfig.waitsForConnectivity = httpWaitsForConnectivity
             
-            let interceptor = Interceptor(adapter: BearerTokenAuthenticationAdapter(authToken),
+            let interceptor = Interceptor(adapter: NoOpAdapter(),
                                           retrier: RetryingRequestInterceptor(retryDelaySecs: httpRetryDelaySeconds,
                                                                               maxRetries: httpRetryLimit))
             
@@ -46,31 +34,10 @@ class ProtectEarthSessionFactory: AlamofireSessionFactory {
         }
         return session!
     }
-    
-    func baseUrl(adding: String) -> URL {
-        var urlString = "https://\(baseUrl)/"
-        if apiVersion != nil {
-            urlString.append(contentsOf: "(apiVersion)/")
-        }
-        var result = URL(string: urlString)!
-        result.appendPathComponent(adding)
-        return result
+}
+
+private class NoOpAdapter: RequestAdapter {
+    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+        completion(.success(urlRequest))
     }
-    
-    func getSitesUrl() -> URL {
-        return baseUrl(adding: "sites")
-    }
-    
-    func getSpeciesUrl() -> URL {
-        return baseUrl(adding: "species")
-    }
-    
-    func getSupervisorUrl() -> URL {
-        return baseUrl(adding: "supervisors")
-    }
-    
-    func getTreeUrl() -> URL {
-        return baseUrl(adding: "upload")
-    }
-    
 }
