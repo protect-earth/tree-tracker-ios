@@ -75,7 +75,7 @@ jobs:
           ROLLBAR_AUTH_TOKEN: ${{ secrets.ROLLBAR_AUTH_TOKEN }}
         run: pouch
       - name: Set build number
-        run: agvtool new-version $GITHUB_RUN_NUMBER-stage
+        run: agvtool new-version $GITHUB_RUN_NUMBER.1
       - name: Configure Keychain
         env:
           PROVISIONING_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
