@@ -18,7 +18,7 @@ class ProtectEarthSupervisorService: SupervisorService {
     }
     
     // Synchronise local cache with remote datastore
-    func sync(completion: @escaping (Result<Bool, DataAccessError>) -> Void) {
+    func sync(completion: @escaping (Result<Bool, ProtectEarthError>) -> Void) {
         let request = getSession().request(sessionFactory.getSupervisorUrl(),
                                            method: .get,
                                            encoding: URLEncoding.queryString)
@@ -40,14 +40,14 @@ class ProtectEarthSupervisorService: SupervisorService {
                         print("Unexpected error: \(error).")
                     }
                 case .failure:
-                    completion(.failure(DataAccessError.remoteError(errorCode: response.error!.responseCode!,
+                    completion(.failure(ProtectEarthError.remoteError(errorCode: response.error!.responseCode!,
                                                                     errorMessage: (response.error!.errorDescription!))))
             }
         }
     }
     
     // Return data from local cache, adding to buffer
-    func fetchAll(completion: @escaping (Result<[Supervisor], DataAccessError>) -> Void) {
+    func fetchAll(completion: @escaping (Result<[Supervisor], ProtectEarthError>) -> Void) {
         database.fetchAll(Supervisor.self) { [weak self] records in
             guard let self = self else { return }
             self.supervisors.removeAll()
@@ -57,7 +57,7 @@ class ProtectEarthSupervisorService: SupervisorService {
     }
     
     // Add a record to remote and trigger a sync to update local cache
-    func addSupervisor(name: String, completion: @escaping (Result<Supervisor, DataAccessError>) -> Void) {
+    func addSupervisor(name: String, completion: @escaping (Result<Supervisor, ProtectEarthError>) -> Void) {
         fatalError("addSupervisor(name:, completion:) has not been implemented")
     }
     

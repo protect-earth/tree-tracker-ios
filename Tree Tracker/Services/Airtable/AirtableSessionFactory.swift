@@ -65,4 +65,8 @@ class AirtableSessionFactory: AlamofireSessionFactory {
         return baseUrl(adding: "\(airtableTablePrefix)\(Constants.Airtable.supervisorsTable)")
     }
     
+    func getTreeUrl() -> URL {
+        fatalError("getTreeUrl not implemented!")
+    }
+    
 }

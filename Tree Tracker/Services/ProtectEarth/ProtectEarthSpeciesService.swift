@@ -17,7 +17,7 @@ class ProtectEarthSpeciesService: SpeciesService {
         self.sync() { _ in } // fire and forget
     }
     
-    func fetchAll(completion: @escaping (Result<[Species], DataAccessError>) -> Void) {
+    func fetchAll(completion: @escaping (Result<[Species], ProtectEarthError>) -> Void) {
         database.fetchAll(Species.self) { [weak self] records in
             guard let self = self else { return }
             self.species.removeAll()
@@ -26,7 +26,7 @@ class ProtectEarthSpeciesService: SpeciesService {
         }
     }
     
-    func sync(completion: @escaping (Result<Bool, DataAccessError>) -> Void) {
+    func sync(completion: @escaping (Result<Bool, ProtectEarthError>) -> Void) {
         let request = getSession().request(sessionFactory.getSpeciesUrl(),
                                            method: .get,
                                            encoding: URLEncoding.queryString)
@@ -48,13 +48,13 @@ class ProtectEarthSpeciesService: SpeciesService {
                         print("Unexpected error: \(error).")
                     }
                 case .failure:
-                    completion(.failure(DataAccessError.remoteError(errorCode: response.error!.responseCode!,
+                    completion(.failure(ProtectEarthError.remoteError(errorCode: response.error!.responseCode!,
                                                                     errorMessage: (response.error!.errorDescription!))))
             }
         }
     }
     
-    func addSpecies(name: String, completion: @escaping (Result<Species, DataAccessError>) -> Void) {
+    func addSpecies(name: String, completion: @escaping (Result<Species, ProtectEarthError>) -> Void) {
         fatalError("addSpecies(name:, completion:) has not been implemented")
     }
     

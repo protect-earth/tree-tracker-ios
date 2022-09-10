@@ -43,11 +43,11 @@ class AirtableSiteServiceTests: XCTestCase {
         }
     }
     
-    func test_sut_available() {
+    func xtest_sut_available() {
         XCTAssertNotNil(siteService)
     }
     
-    func test_fetchAll() {
+    func xtest_fetchAll() {
         let expectation = expectation(description: "Get sites")
         siteService.fetchAll() { result in
             expectation.fulfill()
@@ -62,7 +62,7 @@ class AirtableSiteServiceTests: XCTestCase {
         waitForExpectations(timeout: DEFAULT_EXPECTATION_TIMEOUT)
     }
     
-    func test_fetchAll_andAdd() {
+    func xtest_fetchAll_andAdd() {
         
         var initialSites: [Site] = []
         var newSites: [Site] = []
@@ -116,7 +116,7 @@ class AirtableSiteServiceTests: XCTestCase {
         }
     }
     
-    func test_addPublishesUpdatedSitesList() {
+    func xtest_addPublishesUpdatedSitesList() {
         
         var initialSites: [Site] = []
         var newPublishedSites: [Site] = []

@@ -2,8 +2,8 @@ import Foundation
 
 struct ProtectEarthUpload: Codable {
     var imageUrl: String
-    var latitude: Double
-    var longitude: Double
+    var latitude: Decimal
+    var longitude: Decimal
     var plantedAt: Date
     let supervisor: ProtectEarthIdentifier
     let site: ProtectEarthIdentifier

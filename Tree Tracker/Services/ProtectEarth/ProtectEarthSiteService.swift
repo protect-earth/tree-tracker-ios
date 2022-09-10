@@ -17,7 +17,7 @@ class ProtectEarthSiteService: SiteService {
         self.sync() { _ in } // fire and forget
     }
     
-    func fetchAll(completion: @escaping (Result<[Site], DataAccessError>) -> Void) {
+    func fetchAll(completion: @escaping (Result<[Site], ProtectEarthError>) -> Void) {
         database.fetchAll(Site.self) { [weak self] records in
             guard let self = self else { return }
             self.sites.removeAll()
@@ -26,7 +26,7 @@ class ProtectEarthSiteService: SiteService {
         }
     }
     
-    func sync(completion: @escaping (Result<Bool, DataAccessError>) -> Void) {
+    func sync(completion: @escaping (Result<Bool, ProtectEarthError>) -> Void) {
         let request = getSession().request(sessionFactory.getSitesUrl(),
                                            method: .get,
                                            encoding: URLEncoding.queryString)
@@ -48,13 +48,13 @@ class ProtectEarthSiteService: SiteService {
                         print("Unexpected error: \(error).")
                     }
                 case .failure:
-                    completion(.failure(DataAccessError.remoteError(errorCode: response.error!.responseCode!,
+                    completion(.failure(ProtectEarthError.remoteError(errorCode: response.error!.responseCode!,
                                                                     errorMessage: (response.error!.errorDescription!))))
             }
         }
     }
     
-    func addSite(name: String, completion: @escaping (Result<Bool, DataAccessError>) -> Void) {
+    func addSite(name: String, completion: @escaping (Result<Bool, ProtectEarthError>) -> Void) {
         // build struct to represent target JSON body
         let parameters: [String: String] = [
             "name": name
@@ -72,7 +72,7 @@ class ProtectEarthSiteService: SiteService {
                     completion(result)
                 }
             case .failure:
-                completion(.failure(DataAccessError.remoteError(errorCode: response.error!.responseCode!,
+                completion(.failure(ProtectEarthError.remoteError(errorCode: response.error!.responseCode!,
                                                                 errorMessage: (response.error!.errorDescription!))))
             }
         }
