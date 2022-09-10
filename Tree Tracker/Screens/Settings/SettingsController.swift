@@ -22,21 +22,42 @@ class SettingsController: UITableViewController {
     
     // MARK: - Datasource
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Entities"
+        switch section {
+        case 0:
+            return "Entities"
+        case 1:
+            return "API"
+        default:
+            return "Error"
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return entityTypes.count
+        switch section {
+        case 0:
+            return entityTypes.count
+        case 1:
+            return 1
+        default:
+            return 0
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "basicStyle", for: indexPath)
-        cell.accessoryType = .disclosureIndicator
-        cell.textLabel?.text = entityTypes[indexPath.item]
+        switch indexPath.section {
+        case 0:
+            cell.accessoryType = .disclosureIndicator
+            cell.textLabel?.text = entityTypes[indexPath.item]
+        case 1:
+            cell.textLabel?.text = Constants.Http.protectEarthApiBaseUrl
+        default:
+            break
+        }
         return cell
     }
     
