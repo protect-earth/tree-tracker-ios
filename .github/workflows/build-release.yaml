@@ -7,10 +7,11 @@ on:
     branches:
     - main
 jobs:
-  build:
-    name: Build default scheme
+  test:
+    name: Build and test
     runs-on: macos-latest
-
+    environment:
+      name: Test
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -33,8 +34,6 @@ jobs:
           PROTECT_EARTH_API_TOKEN: ${{ secrets.PROTECT_EARTH_API_TOKEN }}
           ROLLBAR_AUTH_TOKEN: ${{ secrets.ROLLBAR_AUTH_TOKEN }}
         run: pouch
-      - name: Set build number
-        run: agvtool new-version $GITHUB_RUN_NUMBER
       - name: Build and test
         env:
           platform: ${{ 'iOS Simulator' }}
@@ -43,6 +42,107 @@ jobs:
           device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{print $1" "$2}'`
           set -o pipefail
           xcodebuild build-for-testing test -scheme "Unit Tests" -project "Tree Tracker.xcodeproj" -destination "platform=$platform,name=$device" | xcpretty
+
+  build-publish-stage:
+    name: Build and publish - Stage
+    if: ${{ github.ref_name == 'main' && github.event_name != 'pull_request' }}
+    runs-on: macos-latest
+    needs: test
+    environment:
+      name: Stage
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install tools
+        run: |
+          brew install sunshinejr/formulae/pouch
+      - name: Generate Secrets.swift
+        env:
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+          AIRTABLE_TREES_TABLE_NAME: ${{ secrets.AIRTABLE_TREES_TABLE_NAME }}
+          AIRTABLE_SPECIES_TABLE_NAME: ${{ secrets.AIRTABLE_SPECIES_TABLE_NAME }}
+          AIRTABLE_SUPERVISORS_TABLE_NAME: ${{ secrets.AIRTABLE_SUPERVISORS_TABLE_NAME }}
+          AIRTABLE_SITES_TABLE_NAME: ${{ secrets.AIRTABLE_SITES_TABLE_NAME }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_UPLOAD_PRESET_NAME: ${{ secrets.CLOUDINARY_UPLOAD_PRESET_NAME }}
+          TEST_AIRTABLE_API_KEY: ${{ secrets.TEST_AIRTABLE_API_KEY }}
+          TEST_AIRTABLE_BASE_ID: ${{ secrets.TEST_AIRTABLE_BASE_ID }}
+          TEST_AIRTABLE_TABLE_NAME_PREFIX: ${{ secrets.TEST_AIRTABLE_TABLE_NAME_PREFIX }}
+          PROTECT_EARTH_API_TOKEN: ${{ secrets.PROTECT_EARTH_API_TOKEN }}
+          PROTECT_EARTH_API_BASE_URL: ${{ secrets.PROTECT_EARTH_API_BASE_URL }}
+          ROLLBAR_AUTH_TOKEN: ${{ secrets.ROLLBAR_AUTH_TOKEN }}
+        run: pouch
+      - name: Set build number
+        run: agvtool new-version $GITHUB_RUN_NUMBER-stage
+      - name: Configure Keychain
+        env:
+          PROVISIONING_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
+          DISTRIBUTION_CERT_BASE64: ${{ secrets.DISTRIBUTION_CERT_BASE64 }}
+          APP_SPECIFIC_PWD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo -n $PROVISIONING_PROFILE_BASE64 | base64 -D > ~/Library/MobileDevice/Provisioning\ Profiles/iOS_App_Store_Distribution_Profile_20220213.mobileprovision.mobileprovision
+          echo -n $DISTRIBUTION_CERT_BASE64 | base64 -D > ~/Certificates.p12
+
+          ls -lrt ~/Library/MobileDevice/Provisioning\ Profiles
+          ls -lrt ~/Certificates.p12
+
+          security create-keychain -p "" build.keychain
+          security import ~/Certificates.p12 -t agg -k ~/Library/Keychains/build.keychain -P "" -A
+          security list-keychains -s ~/Library/Keychains/build.keychain
+          security default-keychain -s ~/Library/Keychains/build.keychain
+          security unlock-keychain -p "" ~/Library/Keychains/build.keychain
+          security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
+      - name: Build archive
+        run: |
+          set -o pipefail
+          mkdir -p ~/build
+          xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive | xcpretty
+      - name: Export .ipa
+        run: |
+          set -o pipefail
+          xcodebuild -archivePath ~/build/Tree\ Tracker.xcarchive -exportOptionsPlist $GITHUB_WORKSPACE/Tree\ Tracker/ExportOptions.plist -exportPath ~/build -allowProvisioningUpdates -exportArchive | xcpretty
+      - name: Publish
+        if: ${{ success() && github.ref_name == 'main' && github.event_name != 'pull_request' }}
+        env:
+          APPLEID_USERNAME: ${{ secrets.APPLE_APPLE_ID }}
+          APPLEID_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+        run: |
+          xcrun altool --upload-app -t ios -f ~/build/Tree\ Tracker.ipa -u "$APPLEID_USERNAME" -p "$APPLEID_PASSWORD" --verbose
+
+  build-publish-prod:
+    name: Build and publish - Production
+    if: ${{ github.ref_name == 'main' && github.event_name != 'pull_request' }}
+    runs-on: macos-latest
+    needs: test
+    environment:
+      name: Production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install tools
+        run: |
+          brew install sunshinejr/formulae/pouch
+      - name: Generate Secrets.swift
+        env:
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+          AIRTABLE_TREES_TABLE_NAME: ${{ secrets.AIRTABLE_TREES_TABLE_NAME }}
+          AIRTABLE_SPECIES_TABLE_NAME: ${{ secrets.AIRTABLE_SPECIES_TABLE_NAME }}
+          AIRTABLE_SUPERVISORS_TABLE_NAME: ${{ secrets.AIRTABLE_SUPERVISORS_TABLE_NAME }}
+          AIRTABLE_SITES_TABLE_NAME: ${{ secrets.AIRTABLE_SITES_TABLE_NAME }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_UPLOAD_PRESET_NAME: ${{ secrets.CLOUDINARY_UPLOAD_PRESET_NAME }}
+          TEST_AIRTABLE_API_KEY: ${{ secrets.TEST_AIRTABLE_API_KEY }}
+          TEST_AIRTABLE_BASE_ID: ${{ secrets.TEST_AIRTABLE_BASE_ID }}
+          TEST_AIRTABLE_TABLE_NAME_PREFIX: ${{ secrets.TEST_AIRTABLE_TABLE_NAME_PREFIX }}
+          PROTECT_EARTH_API_TOKEN: ${{ secrets.PROTECT_EARTH_API_TOKEN }}
+          PROTECT_EARTH_API_BASE_URL: ${{ secrets.PROTECT_EARTH_API_BASE_URL }}
+          ROLLBAR_AUTH_TOKEN: ${{ secrets.ROLLBAR_AUTH_TOKEN }}
+        run: pouch
+      - name: Set build number
+        run: agvtool new-version $GITHUB_RUN_NUMBER
       - name: Configure Keychain
         env:
           PROVISIONING_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
