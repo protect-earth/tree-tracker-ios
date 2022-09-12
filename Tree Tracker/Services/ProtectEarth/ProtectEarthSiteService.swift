@@ -54,30 +54,6 @@ class ProtectEarthSiteService: SiteService {
         }
     }
     
-    func addSite(name: String, completion: @escaping (Result<Bool, ProtectEarthError>) -> Void) {
-        // build struct to represent target JSON body
-        let parameters: [String: String] = [
-            "name": name
-        ]
-        
-        let request = getSession().request(sessionFactory.getSitesUrl(),
-                                           method: .put,
-                                           parameters: parameters,
-                                           encoder: JSONParameterEncoder.default)
-        
-        request.validate().responseDecodable(of: ProtectEarthSite.self, decoder: JSONDecoder._iso8601ms) { response in
-            switch response.result {
-            case .success:
-                self.sync { result in
-                    completion(result)
-                }
-            case .failure:
-                completion(.failure(ProtectEarthError.remoteError(errorCode: response.error!.responseCode!,
-                                                                errorMessage: (response.error!.errorDescription!))))
-            }
-        }
-    }
-    
     private func getSession() -> Session {
         sessionFactory.get()
     }

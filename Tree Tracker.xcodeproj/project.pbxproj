@@ -142,7 +142,6 @@
 		9DB29B562821C28400AAC73D /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B552821C28300AAC73D /* SettingsController.swift */; };
 		9DB29B582821D50000AAC73D /* SimpleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B572821D50000AAC73D /* SimpleTableViewCell.swift */; };
 		9DB29B5A282876B700AAC73D /* SitesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B59282876B700AAC73D /* SitesController.swift */; };
-		9DB29B5E282C0AEB00AAC73D /* AddSiteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B5D282C0AEB00AAC73D /* AddSiteController.swift */; };
 		9DCC548C28073F0A00CF67AA /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 9DCC548B28073F0A00CF67AA /* Resolver */; };
 		9DFB9CC1284E9BF500298526 /* AirtableSiteServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFB9CC0284E9BF500298526 /* AirtableSiteServiceTests.swift */; };
 		9DFB9CC52851345800298526 /* AirtableSessionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFB9CC42851345800298526 /* AirtableSessionFactory.swift */; };
@@ -297,7 +296,6 @@
 		9DB29B552821C28300AAC73D /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		9DB29B572821D50000AAC73D /* SimpleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewCell.swift; sourceTree = "<group>"; };
 		9DB29B59282876B700AAC73D /* SitesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SitesController.swift; sourceTree = "<group>"; };
-		9DB29B5D282C0AEB00AAC73D /* AddSiteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSiteController.swift; sourceTree = "<group>"; };
 		9DFB9CC0284E9BF500298526 /* AirtableSiteServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSiteServiceTests.swift; sourceTree = "<group>"; };
 		9DFB9CC42851345800298526 /* AirtableSessionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSessionFactory.swift; sourceTree = "<group>"; };
 		9DFF45C328C69AAD00D45C73 /* CloudinaryUploadResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudinaryUploadResponse.swift; sourceTree = "<group>"; };
@@ -663,7 +661,6 @@
 				9DB29B552821C28300AAC73D /* SettingsController.swift */,
 				9DB29B59282876B700AAC73D /* SitesController.swift */,
 				9DFF6276282E63100008AEEF /* SupervisorsController.swift */,
-				9DB29B5D282C0AEB00AAC73D /* AddSiteController.swift */,
 				9DFF6278282E64780008AEEF /* SpeciesController.swift */,
 			);
 			path = Settings;
@@ -835,7 +832,6 @@
 				85B83A1525B87E780008E167 /* UploadViewModel.swift in Sources */,
 				85792A7625B0A35A00BFDA96 /* UIImage.swift in Sources */,
 				85792A7A25B0A36B00BFDA96 /* URL.swift in Sources */,
-				9DB29B5E282C0AEB00AAC73D /* AddSiteController.swift in Sources */,
 				85B839DD25B74FE00008E167 /* KeyboardAccessory.swift in Sources */,
 				9D5D5E28284B630D00F3AD3E /* SpeciesService.swift in Sources */,
 				85B83A1825B881EC0008E167 /* LocalTree.swift in Sources */,

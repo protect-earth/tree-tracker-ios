@@ -55,31 +55,6 @@ class AirtableSiteService: SiteService {
         }
     }
     
-    // Add a site to remote and trigger a sync to update local cache
-    func addSite(name: String, completion: @escaping (Result<Bool, ProtectEarthError>) -> Void) {
-        // build struct to represent target JSON body
-        let parameters: [String: [String: String]] = [
-            "fields": ["Name": name]
-        ]
-        
-        let request = getSession().request(sessionFactory.getSitesUrl(),
-                                           method: .post,
-                                           parameters: parameters,
-                                           encoder: JSONParameterEncoder.default)
-        
-        request.validate().responseDecodable(of: AirtableSite.self, decoder: JSONDecoder._iso8601ms) { response in            
-            switch response.result {
-            case .success:
-                self.sync { result in
-                    completion(result)
-                }
-            case .failure:
-                completion(.failure(ProtectEarthError.remoteError(errorCode: response.error!.responseCode!,
-                                                                errorMessage: (response.error!.errorDescription!))))
-            }
-        }
-    }
-    
     private func getSession() -> Session {
         sessionFactory.get()
     }
