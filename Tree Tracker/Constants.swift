@@ -20,5 +20,6 @@ enum Constants {
         static let requestRetryLimit = 3
         static let protectEarthApiVersion: String? = nil
         static let protectEarthApiBaseUrl = Secrets.protectEarthApiBaseUrl
+        static let protectEarthEnvironmentName = Secrets.protectEarthEnvName
     }
 }
