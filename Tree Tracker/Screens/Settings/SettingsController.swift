@@ -12,6 +12,8 @@ class SettingsController: UITableViewController {
     @Injected private var supervisorsController: SupervisorsController
     
     private var entityTypes = ["Sites", "Supervisors", "Species"]
+    private var apiProperties = [Constants.Http.protectEarthApiBaseUrl,
+                                 Constants.Http.protectEarthEnvironmentName]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +43,7 @@ class SettingsController: UITableViewController {
         case 0:
             return entityTypes.count
         case 1:
-            return 1
+            return apiProperties.count
         default:
             return 0
         }
@@ -54,7 +56,7 @@ class SettingsController: UITableViewController {
             cell.accessoryType = .disclosureIndicator
             cell.textLabel?.text = entityTypes[indexPath.item]
         case 1:
-            cell.textLabel?.text = Constants.Http.protectEarthApiBaseUrl
+            cell.textLabel?.text = apiProperties[indexPath.item]
             cell.selectionStyle = .none
         default:
             break

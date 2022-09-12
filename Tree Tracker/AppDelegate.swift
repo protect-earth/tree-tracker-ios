@@ -8,7 +8,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let config = RollbarConfig()
         config.destination.accessToken = Secrets.rollbarAuthToken
-        config.destination.environment = "local"
+        config.destination.environment = Constants.Http.protectEarthEnvironmentName
 
         Rollbar.initWithConfiguration(config)
         Rollbar.infoMessage("App startup")

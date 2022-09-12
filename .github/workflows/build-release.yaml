@@ -33,6 +33,7 @@ jobs:
           TEST_AIRTABLE_TABLE_NAME_PREFIX: ${{ secrets.TEST_AIRTABLE_TABLE_NAME_PREFIX }}
           PROTECT_EARTH_API_TOKEN: ${{ secrets.PROTECT_EARTH_API_TOKEN }}
           PROTECT_EARTH_API_BASE_URL: ${{ secrets.PROTECT_EARTH_API_BASE_URL }}
+          PROTECT_EARTH_ENV_NAME: ${{ secrets.PROTECT_EARTH_ENV_NAME }}
           ROLLBAR_AUTH_TOKEN: ${{ secrets.ROLLBAR_AUTH_TOKEN }}
         run: pouch
       - name: Build and test
@@ -72,6 +73,7 @@ jobs:
           TEST_AIRTABLE_TABLE_NAME_PREFIX: ${{ secrets.TEST_AIRTABLE_TABLE_NAME_PREFIX }}
           PROTECT_EARTH_API_TOKEN: ${{ secrets.PROTECT_EARTH_API_TOKEN }}
           PROTECT_EARTH_API_BASE_URL: ${{ secrets.PROTECT_EARTH_API_BASE_URL }}
+          PROTECT_EARTH_ENV_NAME: ${{ secrets.PROTECT_EARTH_ENV_NAME }}
           ROLLBAR_AUTH_TOKEN: ${{ secrets.ROLLBAR_AUTH_TOKEN }}
         run: pouch
       - name: Set build number
@@ -140,6 +142,7 @@ jobs:
           TEST_AIRTABLE_TABLE_NAME_PREFIX: ${{ secrets.TEST_AIRTABLE_TABLE_NAME_PREFIX }}
           PROTECT_EARTH_API_TOKEN: ${{ secrets.PROTECT_EARTH_API_TOKEN }}
           PROTECT_EARTH_API_BASE_URL: ${{ secrets.PROTECT_EARTH_API_BASE_URL }}
+          PROTECT_EARTH_ENV_NAME: ${{ secrets.PROTECT_EARTH_ENV_NAME }}
           ROLLBAR_AUTH_TOKEN: ${{ secrets.ROLLBAR_AUTH_TOKEN }}
         run: pouch
       - name: Set build number
