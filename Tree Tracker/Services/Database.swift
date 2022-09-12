@@ -119,35 +119,6 @@ final class Database {
         }
     }
 
-    @available(*, deprecated, message: "Unused since removal of upload history view")
-    func save(_ trees: [AirtableTree], sentFromThisDevice: Bool) {
-        do {
-            try dbQueue?.write { db in
-                trees.forEach { tree in
-                    let tree = tree.toRemoteTree(sentFromThisDevice: sentFromThisDevice)
-                    do {
-                        let potentialTree = try RemoteTree
-                            .filter(key: tree.id)
-                            .fetchOne(db)
-
-                        if potentialTree == nil {
-                            try tree.insert(db)
-                            let count = try? RemoteTree.fetchCount(db)
-                            logger.log(.database, "Successfully added a remote tree to database. Current count: \(count ?? 0)")
-                        } else {
-                            logger.log(.database, "Error when adding remote tree to DB. Found a tree with the same id, bailing.")
-                        }
-                    } catch {
-                        logger.log(.database, "Tree: \(tree)")
-                        logger.log(.database, "Error when adding remote tree to DB. \(error)")
-                    }
-                }
-            }
-        } catch {
-            logger.log(.database, "Error when adding remote tree to DB. \(error)")
-        }
-    }
-
     func save(_ trees: [LocalTree]) {
         do {
             try dbQueue?.write { db in

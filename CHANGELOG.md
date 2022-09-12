@@ -1,6 +1,10 @@
 #  Tree Tracker
 
-## Next
+## 0.10.3
+- Airtable integration is entirely replaced with Protect Earth custom API backend
+- Removal of all redundant code
+- Adoption of Resolver framework for dependency injection throughout
+- Integration of Rollbar for error tracking and general telemetry so we can see how the app is behaving in the wild
 
 ## 0.7.0
 - Updated the UI

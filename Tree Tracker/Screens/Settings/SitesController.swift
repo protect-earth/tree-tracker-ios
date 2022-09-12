@@ -21,8 +21,7 @@ class SitesController: UITableViewController {
         self.tableView.register(SimpleTableViewCell.self, forCellReuseIdentifier: "basicStyle")
         
         // nav bar controls
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
-        navigationItem.rightBarButtonItems?.append(UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshTapped)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshTapped))
         
         // Here we are creating a Combine subscription to a @Published attribute of the SiteService which is handling data access.
         // The closure will be invoked on any change to the data property.
@@ -33,15 +32,7 @@ class SitesController: UITableViewController {
         }
     }
     
-    // MARK: - navigation item delegates
-    @objc func addTapped() {
-        let addSiteController = AddSiteController(siteService: self.siteService)
-        if let sheet = addSiteController.sheetPresentationController {
-            sheet.detents = [ .medium() ]
-        }
-        present(addSiteController, animated: true)
-    }
-    
+    // MARK: - navigation item delegates    
     @objc func refreshTapped() {
         siteService.sync() {_ in }
     }

@@ -24,7 +24,6 @@ final class UploadViewModel: CollectionViewModel {
     var rightNavigationButtonsPublisher: Published<[NavigationBarButtonModel]>.Publisher { $rightNavigationButtons }
     var dataPublisher: Published<[ListSection<CollectionListItem>]>.Publisher { $data }
 
-    @Injected private var api: Api
     @Injected private var database: Database
     @Injected private var treeService: TreeService
     

@@ -23,11 +23,8 @@
 		853ABD622596144A00144B0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 853ABD602596144A00144B0D /* LaunchScreen.storyboard */; };
 		853ABD7325961B4800144B0D /* IDETemplateMacros.plist in Resources */ = {isa = PBXBuildFile; fileRef = 853ABD7225961B4800144B0D /* IDETemplateMacros.plist */; };
 		853ABD7A25961C6500144B0D /* License.md in Resources */ = {isa = PBXBuildFile; fileRef = 853ABD7925961C6500144B0D /* License.md */; };
-		853ABD8025961EEA00144B0D /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853ABD7F25961EEA00144B0D /* Api.swift */; };
 		853ABD8925961F9700144B0D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853ABD8825961F9700144B0D /* Constants.swift */; };
 		8563C263260BBC7A00752793 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563C262260BBC7A00752793 /* Secrets.swift */; };
-		857123C8263997FD008EE027 /* AlamofireApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857123C7263997FD008EE027 /* AlamofireApi.swift */; };
-		857123CC26399B49008EE027 /* MockApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857123CB26399B49008EE027 /* MockApi.swift */; };
 		857123D02639C3AF008EE027 /* ClosureCancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857123CF2639C3AF008EE027 /* ClosureCancellable.swift */; };
 		85763A9425E29CE300CB4ED3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85763A9325E29CE300CB4ED3 /* Logger.swift */; };
 		85763A9D25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85763A9C25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift */; };
@@ -42,11 +39,6 @@
 		857BADA825B1FA93005D7D35 /* TreeDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857BADA725B1FA93005D7D35 /* TreeDetailsViewController.swift */; };
 		857BADAC25B1FAAA005D7D35 /* UploadListFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857BADAB25B1FAAA005D7D35 /* UploadListFlowViewController.swift */; };
 		858A0F2725D8156100E12C2B /* TreeDetailsFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858A0F2625D8156100E12C2B /* TreeDetailsFlowViewController.swift */; };
-		859F62C025C1C436005E61F7 /* AirtableImageThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62BF25C1C436005E61F7 /* AirtableImageThumbnail.swift */; };
-		859F62C325C1C44C005E61F7 /* AirtableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62C225C1C44C005E61F7 /* AirtableImage.swift */; };
-		859F62C625C1C464005E61F7 /* AirtableSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62C525C1C464005E61F7 /* AirtableSpecies.swift */; };
-		859F62CD25C1C61E005E61F7 /* AirtableSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62CC25C1C61E005E61F7 /* AirtableSite.swift */; };
-		859F62D125C1C62D005E61F7 /* AirtableSupervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62D025C1C62D005E61F7 /* AirtableSupervisor.swift */; };
 		859F62D625C22140005E61F7 /* Species.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62D525C22140005E61F7 /* Species.swift */; };
 		859F62D925C2215D005E61F7 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62D825C2215D005E61F7 /* Site.swift */; };
 		859F62DC25C2218B005E61F7 /* Supervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62DB25C2218B005E61F7 /* Supervisor.swift */; };
@@ -55,11 +47,9 @@
 		859F62E925C48FA2005E61F7 /* DelayedPublished.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62E825C48FA2005E61F7 /* DelayedPublished.swift */; };
 		859F62EF25C48FD8005E61F7 /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62EE25C48FD8005E61F7 /* AlertModel.swift */; };
 		859F62F225C5A7B8005E61F7 /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62F125C5A7B8005E61F7 /* Cancellable.swift */; };
-		859F62F525C5A7DC005E61F7 /* Paginated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62F425C5A7DC005E61F7 /* Paginated.swift */; };
 		859F62FC25C70F29005E61F7 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F62FB25C70F29005E61F7 /* CollectionViewController.swift */; };
 		85A0EF7F25A226D9003CE744 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 85A0EF7E25A226D9003CE744 /* GRDB */; };
 		85A0EF8325A2271C003CE744 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 85A0EF8225A2271C003CE744 /* Alamofire */; };
-		85A0EF8925A22FEE003CE744 /* AirtableTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0EF8825A22FEE003CE744 /* AirtableTree.swift */; };
 		85B839A925B35B540008E167 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839A825B35B540008E167 /* TableViewDataSource.swift */; };
 		85B839AD25B47BD30008E167 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839AC25B47BD30008E167 /* Reusable.swift */; };
 		85B839B125B47C0A0008E167 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839B025B47C0A0008E167 /* Action.swift */; };
@@ -82,7 +72,6 @@
 		85B839F325B866590008E167 /* RoundedTappableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839F225B866590008E167 /* RoundedTappableButton.swift */; };
 		85B839F825B86F0A0008E167 /* PHAssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839F725B86F0A0008E167 /* PHAssetManager.swift */; };
 		85B839FB25B86F1A0008E167 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839FA25B86F1A0008E167 /* ImageLoader.swift */; };
-		85B839FE25B86F320008E167 /* URLImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B839FD25B86F320008E167 /* URLImageLoader.swift */; };
 		85B83A0225B8735F0008E167 /* AnyImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A0125B8735F0008E167 /* AnyImageLoader.swift */; };
 		85B83A0D25B87C0D0008E167 /* BSImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 85B83A0C25B87C0D0008E167 /* BSImagePicker */; };
 		85B83A1525B87E780008E167 /* UploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B83A1425B87E780008E167 /* UploadViewModel.swift */; };
@@ -113,13 +102,10 @@
 		9D47D982286F29E100F7B92F /* ProtectEarthCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D47D981286F29E100F7B92F /* ProtectEarthCodableTests.swift */; };
 		9D562D6528B81BDE00B66716 /* ProtectEarthUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D562D6428B81BDE00B66716 /* ProtectEarthUpload.swift */; };
 		9D562D6728B81D5400B66716 /* ProtectEarthIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D562D6628B81D5400B66716 /* ProtectEarthIdentifier.swift */; };
-		9D562D6B28C2BBDC00B66716 /* RemoteTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D562D6A28C2BBDC00B66716 /* RemoteTree.swift */; };
 		9D562D7228C4129000B66716 /* CloudinarySessionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D562D7128C4129000B66716 /* CloudinarySessionFactory.swift */; };
 		9D5CDBD727BBC080007D4F0A /* ExportOptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D5CDBD627BBC080007D4F0A /* ExportOptions.plist */; };
 		9D5D5E28284B630D00F3AD3E /* SpeciesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E27284B630D00F3AD3E /* SpeciesService.swift */; };
-		9D5D5E2A284B635900F3AD3E /* AirtableSpeciesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E29284B635900F3AD3E /* AirtableSpeciesService.swift */; };
 		9D5D5E2C284B66BB00F3AD3E /* SupervisorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E2B284B66BB00F3AD3E /* SupervisorService.swift */; };
-		9D5D5E2E284B670400F3AD3E /* AirtableSupervisorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5D5E2D284B670400F3AD3E /* AirtableSupervisorService.swift */; };
 		9D5F0618286F346800C8D4A6 /* ProtectEarthSupervisorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F0617286F346800C8D4A6 /* ProtectEarthSupervisorService.swift */; };
 		9D5F061B286F348F00C8D4A6 /* ProtectEarthSessionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F061A286F348F00C8D4A6 /* ProtectEarthSessionFactory.swift */; };
 		9D5F061E286F35C700C8D4A6 /* BearerTokenAuthenticationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F061D286F35C700C8D4A6 /* BearerTokenAuthenticationAdapter.swift */; };
@@ -131,7 +117,6 @@
 		9D5F06332878ADF000C8D4A6 /* DataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F06322878ADF000C8D4A6 /* DataResponse.swift */; };
 		9D79A5A7283AE03100F0F96C /* SiteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5A6283AE03100F0F96C /* SiteService.swift */; };
 		9D79A5AA283AE27500F0F96C /* ProtectEarthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5A9283AE27500F0F96C /* ProtectEarthError.swift */; };
-		9D79A5AC283AE32C00F0F96C /* AirtableSiteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5AB283AE32C00F0F96C /* AirtableSiteService.swift */; };
 		9DA1FC34283452CC00AEC584 /* AppDelegate+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA1FC33283452CC00AEC584 /* AppDelegate+Injection.swift */; };
 		9DA84707287DB9D400B0BB3E /* ProtectEarthSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA84706287DB9D400B0BB3E /* ProtectEarthSpecies.swift */; };
 		9DA84709287DBA3F00B0BB3E /* ProtectEarthSpeciesServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA84708287DBA3F00B0BB3E /* ProtectEarthSpeciesServiceTests.swift */; };
@@ -142,10 +127,7 @@
 		9DB29B562821C28400AAC73D /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B552821C28300AAC73D /* SettingsController.swift */; };
 		9DB29B582821D50000AAC73D /* SimpleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B572821D50000AAC73D /* SimpleTableViewCell.swift */; };
 		9DB29B5A282876B700AAC73D /* SitesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B59282876B700AAC73D /* SitesController.swift */; };
-		9DB29B5E282C0AEB00AAC73D /* AddSiteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B5D282C0AEB00AAC73D /* AddSiteController.swift */; };
 		9DCC548C28073F0A00CF67AA /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 9DCC548B28073F0A00CF67AA /* Resolver */; };
-		9DFB9CC1284E9BF500298526 /* AirtableSiteServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFB9CC0284E9BF500298526 /* AirtableSiteServiceTests.swift */; };
-		9DFB9CC52851345800298526 /* AirtableSessionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFB9CC42851345800298526 /* AirtableSessionFactory.swift */; };
 		9DFF45C428C69AAD00D45C73 /* CloudinaryUploadResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF45C328C69AAD00D45C73 /* CloudinaryUploadResponse.swift */; };
 		9DFF6277282E63100008AEEF /* SupervisorsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF6276282E63100008AEEF /* SupervisorsController.swift */; };
 		9DFF6279282E64780008AEEF /* SpeciesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF6278282E64780008AEEF /* SpeciesController.swift */; };
@@ -183,11 +165,8 @@
 		853ABD7225961B4800144B0D /* IDETemplateMacros.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = IDETemplateMacros.plist; path = "Tree Tracker.xcodeproj/xcshareddata/IDETemplateMacros.plist"; sourceTree = SOURCE_ROOT; };
 		853ABD7925961C6500144B0D /* License.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = License.md; sourceTree = "<group>"; };
 		853ABD7C25961C6D00144B0D /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
-		853ABD7F25961EEA00144B0D /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		853ABD8825961F9700144B0D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8563C262260BBC7A00752793 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
-		857123C7263997FD008EE027 /* AlamofireApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireApi.swift; sourceTree = "<group>"; };
-		857123CB26399B49008EE027 /* MockApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockApi.swift; sourceTree = "<group>"; };
 		857123CF2639C3AF008EE027 /* ClosureCancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosureCancellable.swift; sourceTree = "<group>"; };
 		85763A9325E29CE300CB4ED3 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		85763A9C25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatingUIImagePickerController.swift; sourceTree = "<group>"; };
@@ -202,11 +181,6 @@
 		857BADA725B1FA93005D7D35 /* TreeDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeDetailsViewController.swift; sourceTree = "<group>"; };
 		857BADAB25B1FAAA005D7D35 /* UploadListFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadListFlowViewController.swift; sourceTree = "<group>"; };
 		858A0F2625D8156100E12C2B /* TreeDetailsFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeDetailsFlowViewController.swift; sourceTree = "<group>"; };
-		859F62BF25C1C436005E61F7 /* AirtableImageThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableImageThumbnail.swift; sourceTree = "<group>"; };
-		859F62C225C1C44C005E61F7 /* AirtableImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableImage.swift; sourceTree = "<group>"; };
-		859F62C525C1C464005E61F7 /* AirtableSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSpecies.swift; sourceTree = "<group>"; };
-		859F62CC25C1C61E005E61F7 /* AirtableSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSite.swift; sourceTree = "<group>"; };
-		859F62D025C1C62D005E61F7 /* AirtableSupervisor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSupervisor.swift; sourceTree = "<group>"; };
 		859F62D525C22140005E61F7 /* Species.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Species.swift; sourceTree = "<group>"; };
 		859F62D825C2215D005E61F7 /* Site.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Site.swift; sourceTree = "<group>"; };
 		859F62DB25C2218B005E61F7 /* Supervisor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Supervisor.swift; sourceTree = "<group>"; };
@@ -215,10 +189,8 @@
 		859F62E825C48FA2005E61F7 /* DelayedPublished.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayedPublished.swift; sourceTree = "<group>"; };
 		859F62EE25C48FD8005E61F7 /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
 		859F62F125C5A7B8005E61F7 /* Cancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
-		859F62F425C5A7DC005E61F7 /* Paginated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paginated.swift; sourceTree = "<group>"; };
 		859F62FB25C70F29005E61F7 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		859F630125C7176E005E61F7 /* Changelog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Changelog.md; sourceTree = "<group>"; };
-		85A0EF8825A22FEE003CE744 /* AirtableTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableTree.swift; sourceTree = "<group>"; };
 		85B839A825B35B540008E167 /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
 		85B839AC25B47BD30008E167 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		85B839B025B47C0A0008E167 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
@@ -241,7 +213,6 @@
 		85B839F225B866590008E167 /* RoundedTappableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTappableButton.swift; sourceTree = "<group>"; };
 		85B839F725B86F0A0008E167 /* PHAssetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHAssetManager.swift; sourceTree = "<group>"; };
 		85B839FA25B86F1A0008E167 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
-		85B839FD25B86F320008E167 /* URLImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImageLoader.swift; sourceTree = "<group>"; };
 		85B83A0125B8735F0008E167 /* AnyImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyImageLoader.swift; sourceTree = "<group>"; };
 		85B83A1425B87E780008E167 /* UploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewModel.swift; sourceTree = "<group>"; };
 		85B83A1725B881EC0008E167 /* LocalTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTree.swift; sourceTree = "<group>"; };
@@ -268,13 +239,10 @@
 		9D47D981286F29E100F7B92F /* ProtectEarthCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthCodableTests.swift; sourceTree = "<group>"; };
 		9D562D6428B81BDE00B66716 /* ProtectEarthUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthUpload.swift; sourceTree = "<group>"; };
 		9D562D6628B81D5400B66716 /* ProtectEarthIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthIdentifier.swift; sourceTree = "<group>"; };
-		9D562D6A28C2BBDC00B66716 /* RemoteTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteTree.swift; sourceTree = "<group>"; };
 		9D562D7128C4129000B66716 /* CloudinarySessionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudinarySessionFactory.swift; sourceTree = "<group>"; };
 		9D5CDBD627BBC080007D4F0A /* ExportOptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ExportOptions.plist; sourceTree = "<group>"; };
 		9D5D5E27284B630D00F3AD3E /* SpeciesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesService.swift; sourceTree = "<group>"; };
-		9D5D5E29284B635900F3AD3E /* AirtableSpeciesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSpeciesService.swift; sourceTree = "<group>"; };
 		9D5D5E2B284B66BB00F3AD3E /* SupervisorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupervisorService.swift; sourceTree = "<group>"; };
-		9D5D5E2D284B670400F3AD3E /* AirtableSupervisorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSupervisorService.swift; sourceTree = "<group>"; };
 		9D5F0617286F346800C8D4A6 /* ProtectEarthSupervisorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthSupervisorService.swift; sourceTree = "<group>"; };
 		9D5F061A286F348F00C8D4A6 /* ProtectEarthSessionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthSessionFactory.swift; sourceTree = "<group>"; };
 		9D5F061D286F35C700C8D4A6 /* BearerTokenAuthenticationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearerTokenAuthenticationAdapter.swift; sourceTree = "<group>"; };
@@ -286,7 +254,6 @@
 		9D5F06322878ADF000C8D4A6 /* DataResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataResponse.swift; sourceTree = "<group>"; };
 		9D79A5A6283AE03100F0F96C /* SiteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteService.swift; sourceTree = "<group>"; };
 		9D79A5A9283AE27500F0F96C /* ProtectEarthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthError.swift; sourceTree = "<group>"; };
-		9D79A5AB283AE32C00F0F96C /* AirtableSiteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSiteService.swift; sourceTree = "<group>"; };
 		9DA1FC33283452CC00AEC584 /* AppDelegate+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Injection.swift"; sourceTree = "<group>"; };
 		9DA84706287DB9D400B0BB3E /* ProtectEarthSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthSpecies.swift; sourceTree = "<group>"; };
 		9DA84708287DBA3F00B0BB3E /* ProtectEarthSpeciesServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthSpeciesServiceTests.swift; sourceTree = "<group>"; };
@@ -297,9 +264,6 @@
 		9DB29B552821C28300AAC73D /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		9DB29B572821D50000AAC73D /* SimpleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewCell.swift; sourceTree = "<group>"; };
 		9DB29B59282876B700AAC73D /* SitesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SitesController.swift; sourceTree = "<group>"; };
-		9DB29B5D282C0AEB00AAC73D /* AddSiteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSiteController.swift; sourceTree = "<group>"; };
-		9DFB9CC0284E9BF500298526 /* AirtableSiteServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSiteServiceTests.swift; sourceTree = "<group>"; };
-		9DFB9CC42851345800298526 /* AirtableSessionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtableSessionFactory.swift; sourceTree = "<group>"; };
 		9DFF45C328C69AAD00D45C73 /* CloudinaryUploadResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudinaryUploadResponse.swift; sourceTree = "<group>"; };
 		9DFF6276282E63100008AEEF /* SupervisorsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupervisorsController.swift; sourceTree = "<group>"; };
 		9DFF6278282E64780008AEEF /* SpeciesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesController.swift; sourceTree = "<group>"; };
@@ -336,7 +300,6 @@
 				851DAC2B262F2FA70087E1D4 /* Info.plist */,
 				851DAC35262F2FE30087E1D4 /* RecentSpeciesManagerTests.swift */,
 				851DAC39262F35B80087E1D4 /* TestHelpers.swift */,
-				9DFB9CC0284E9BF500298526 /* AirtableSiteServiceTests.swift */,
 				9D47D981286F29E100F7B92F /* ProtectEarthCodableTests.swift */,
 				9D5F0623286F755600C8D4A6 /* ProtectEarthSupervisorServiceTests.swift */,
 				9D5F062E2874E5CA00C8D4A6 /* ProtectEarthSiteServiceTests.swift */,
@@ -446,7 +409,6 @@
 				85B839BE25B492550008E167 /* PHImageLoader.swift */,
 				851DAC1F262C55FD0087E1D4 /* RecentSpeciesManager.swift */,
 				85C781A025CC744E0034292D /* ScreenLockManager.swift */,
-				85B839FD25B86F320008E167 /* URLImageLoader.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -486,13 +448,6 @@
 		859F62C825C1C599005E61F7 /* Api */ = {
 			isa = PBXGroup;
 			children = (
-				859F62C225C1C44C005E61F7 /* AirtableImage.swift */,
-				859F62BF25C1C436005E61F7 /* AirtableImageThumbnail.swift */,
-				859F62CC25C1C61E005E61F7 /* AirtableSite.swift */,
-				859F62C525C1C464005E61F7 /* AirtableSpecies.swift */,
-				859F62D025C1C62D005E61F7 /* AirtableSupervisor.swift */,
-				85A0EF8825A22FEE003CE744 /* AirtableTree.swift */,
-				859F62F425C5A7DC005E61F7 /* Paginated.swift */,
 				9D47D97E286F293000F7B92F /* ProtectEarthSupervisor.swift */,
 				9D5F062A2874DD0400C8D4A6 /* ProtectEarthSite.swift */,
 				9DA84706287DB9D400B0BB3E /* ProtectEarthSpecies.swift */,
@@ -506,7 +461,6 @@
 		859F62CA25C1C5AA005E61F7 /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				9D562D6A28C2BBDC00B66716 /* RemoteTree.swift */,
 				85B83A1725B881EC0008E167 /* LocalTree.swift */,
 				859F62D825C2215D005E61F7 /* Site.swift */,
 				859F62D525C22140005E61F7 /* Species.swift */,
@@ -558,12 +512,8 @@
 				9D5F0620286F5FEF00C8D4A6 /* AlamofireSessionFactory.swift */,
 				9D5F061D286F35C700C8D4A6 /* BearerTokenAuthenticationAdapter.swift */,
 				9D5F0616286F344E00C8D4A6 /* ProtectEarth */,
-				9D5D5E2F284B698600F3AD3E /* Airtable */,
 				6CC985AA27F393630027C795 /* RetryingRequestInterceptor.swift */,
-				853ABD7F25961EEA00144B0D /* Api.swift */,
 				85792A7C25B0A3E100BFDA96 /* Database.swift */,
-				857123C7263997FD008EE027 /* AlamofireApi.swift */,
-				857123CB26399B49008EE027 /* MockApi.swift */,
 				9D79A5A6283AE03100F0F96C /* SiteService.swift */,
 				9D5D5E27284B630D00F3AD3E /* SpeciesService.swift */,
 				9D5D5E2B284B66BB00F3AD3E /* SupervisorService.swift */,
@@ -626,17 +576,6 @@
 			path = "UI Components";
 			sourceTree = "<group>";
 		};
-		9D5D5E2F284B698600F3AD3E /* Airtable */ = {
-			isa = PBXGroup;
-			children = (
-				9D79A5AB283AE32C00F0F96C /* AirtableSiteService.swift */,
-				9D5D5E29284B635900F3AD3E /* AirtableSpeciesService.swift */,
-				9D5D5E2D284B670400F3AD3E /* AirtableSupervisorService.swift */,
-				9DFB9CC42851345800298526 /* AirtableSessionFactory.swift */,
-			);
-			path = Airtable;
-			sourceTree = "<group>";
-		};
 		9D5F0616286F344E00C8D4A6 /* ProtectEarth */ = {
 			isa = PBXGroup;
 			children = (
@@ -663,7 +602,6 @@
 				9DB29B552821C28300AAC73D /* SettingsController.swift */,
 				9DB29B59282876B700AAC73D /* SitesController.swift */,
 				9DFF6276282E63100008AEEF /* SupervisorsController.swift */,
-				9DB29B5D282C0AEB00AAC73D /* AddSiteController.swift */,
 				9DFF6278282E64780008AEEF /* SpeciesController.swift */,
 			);
 			path = Settings;
@@ -796,7 +734,6 @@
 				9DA84709287DBA3F00B0BB3E /* ProtectEarthSpeciesServiceTests.swift in Sources */,
 				851DAC3A262F35B80087E1D4 /* TestHelpers.swift in Sources */,
 				9D47D982286F29E100F7B92F /* ProtectEarthCodableTests.swift in Sources */,
-				9DFB9CC1284E9BF500298526 /* AirtableSiteServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -807,15 +744,12 @@
 				85DC214325E0FCAD003F0721 /* DiskImageCache.swift in Sources */,
 				853415FA25CF0947006DDAC4 /* UIViewController.swift in Sources */,
 				85B839C325B4A5280008E167 /* BarButtonItem.swift in Sources */,
-				853ABD8025961EEA00144B0D /* Api.swift in Sources */,
-				85B839FE25B86F320008E167 /* URLImageLoader.swift in Sources */,
 				9D5F0618286F346800C8D4A6 /* ProtectEarthSupervisorService.swift in Sources */,
 				853415F325CEEE40006DDAC4 /* UploadSessionViewModel.swift in Sources */,
 				85B839B525B47C230008E167 /* CollectionListItem.swift in Sources */,
 				85B839D225B742510008E167 /* TextFieldModel.swift in Sources */,
 				85B839B125B47C0A0008E167 /* Action.swift in Sources */,
 				85B83A3325B9C9DC0008E167 /* String.swift in Sources */,
-				859F62F525C5A7DC005E61F7 /* Paginated.swift in Sources */,
 				857BAD9D25B1DCDE005D7D35 /* Defaults.swift in Sources */,
 				85B839E425B753F10008E167 /* KeyboardLayoutGuide.swift in Sources */,
 				85CC02E6261B6DD90016E618 /* TableViewController.swift in Sources */,
@@ -823,7 +757,6 @@
 				85B839D625B74E960008E167 /* KeyboardAccessoryView.swift in Sources */,
 				85B839BF25B492550008E167 /* PHImageLoader.swift in Sources */,
 				85E0E05E25B33F8C009D8FC0 /* TappableButton.swift in Sources */,
-				859F62CD25C1C61E005E61F7 /* AirtableSite.swift in Sources */,
 				85B839B825B47C3F0008E167 /* TreeCollectionViewCell.swift in Sources */,
 				85B839F825B86F0A0008E167 /* PHAssetManager.swift in Sources */,
 				85B839CB25B5F3EC0008E167 /* PHAsset.swift in Sources */,
@@ -835,7 +768,6 @@
 				85B83A1525B87E780008E167 /* UploadViewModel.swift in Sources */,
 				85792A7625B0A35A00BFDA96 /* UIImage.swift in Sources */,
 				85792A7A25B0A36B00BFDA96 /* URL.swift in Sources */,
-				9DB29B5E282C0AEB00AAC73D /* AddSiteController.swift in Sources */,
 				85B839DD25B74FE00008E167 /* KeyboardAccessory.swift in Sources */,
 				9D5D5E28284B630D00F3AD3E /* SpeciesService.swift in Sources */,
 				85B83A1825B881EC0008E167 /* LocalTree.swift in Sources */,
@@ -852,7 +784,6 @@
 				85763A9425E29CE300CB4ED3 /* Logger.swift in Sources */,
 				9D562D6528B81BDE00B66716 /* ProtectEarthUpload.swift in Sources */,
 				9D562D7228C4129000B66716 /* CloudinarySessionFactory.swift in Sources */,
-				857123CC26399B49008EE027 /* MockApi.swift in Sources */,
 				859F62D625C22140005E61F7 /* Species.swift in Sources */,
 				85B83A2325B9C1BC0008E167 /* NavigationViewController.swift in Sources */,
 				9DFF45C428C69AAD00D45C73 /* CloudinaryUploadResponse.swift in Sources */,
@@ -861,14 +792,11 @@
 				85792A9225B1D5A500BFDA96 /* ButtonModel.swift in Sources */,
 				85B839CE25B5F8F30008E167 /* UIAlertController.swift in Sources */,
 				851DAC20262C55FD0087E1D4 /* RecentSpeciesManager.swift in Sources */,
-				859F62C025C1C436005E61F7 /* AirtableImageThumbnail.swift in Sources */,
 				859F62F225C5A7B8005E61F7 /* Cancellable.swift in Sources */,
 				9DFF6279282E64780008AEEF /* SpeciesController.swift in Sources */,
 				85CC0304261CC8FE0016E618 /* LocationManager.swift in Sources */,
-				859F62D125C1C62D005E61F7 /* AirtableSupervisor.swift in Sources */,
 				9DB29B562821C28400AAC73D /* SettingsController.swift in Sources */,
 				9D5F0621286F5FEF00C8D4A6 /* AlamofireSessionFactory.swift in Sources */,
-				9D5D5E2E284B670400F3AD3E /* AirtableSupervisorService.swift in Sources */,
 				9DA8470B287DBBC300B0BB3E /* ProtectEarthSpeciesService.swift in Sources */,
 				853ABD562596144900144B0D /* AppDelegate.swift in Sources */,
 				9D5F06332878ADF000C8D4A6 /* DataResponse.swift in Sources */,
@@ -876,9 +804,7 @@
 				9D5D5E2C284B66BB00F3AD3E /* SupervisorService.swift in Sources */,
 				85B83A1C25B8AC650008E167 /* EditLocalTreeViewModel.swift in Sources */,
 				85B83A2A25B9C5CB0008E167 /* JSONDecoder.swift in Sources */,
-				85A0EF8925A22FEE003CE744 /* AirtableTree.swift in Sources */,
 				85B839E025B74FF50008E167 /* TextField.swift in Sources */,
-				859F62C625C1C464005E61F7 /* AirtableSpecies.swift in Sources */,
 				853ABD8925961F9700144B0D /* Constants.swift in Sources */,
 				6CC985AB27F393630027C795 /* RetryingRequestInterceptor.swift in Sources */,
 				859F62D925C2215D005E61F7 /* Site.swift in Sources */,
@@ -886,7 +812,6 @@
 				9D47D97F286F293000F7B92F /* ProtectEarthSupervisor.swift in Sources */,
 				85E0E06225B35744009D8FC0 /* UIView.swift in Sources */,
 				851DAC1A262B4A9A0087E1D4 /* RecentSpecies.swift in Sources */,
-				857123C8263997FD008EE027 /* AlamofireApi.swift in Sources */,
 				857BADA425B1FA87005D7D35 /* AddLocalTreeViewModel.swift in Sources */,
 				9DB29B5A282876B700AAC73D /* SitesController.swift in Sources */,
 				859F62E025C228AE005E61F7 /* KeyedContainer.swift in Sources */,
@@ -897,7 +822,6 @@
 				858A0F2725D8156100E12C2B /* TreeDetailsFlowViewController.swift in Sources */,
 				859F62DC25C2218B005E61F7 /* Supervisor.swift in Sources */,
 				85B839FB25B86F1A0008E167 /* ImageLoader.swift in Sources */,
-				9D5D5E2A284B635900F3AD3E /* AirtableSpeciesService.swift in Sources */,
 				85B839EF25B866370008E167 /* GridCollectionViewLayout.swift in Sources */,
 				9DA8470D28844E5100B0BB3E /* ProtectEarthTreeService.swift in Sources */,
 				85B839E725B862B80008E167 /* CollectionViewDataSource.swift in Sources */,
@@ -912,7 +836,6 @@
 				9D562D6728B81D5400B66716 /* ProtectEarthIdentifier.swift in Sources */,
 				8563C263260BBC7A00752793 /* Secrets.swift in Sources */,
 				85792A8F25B1D59F00BFDA96 /* SyncProgress.swift in Sources */,
-				9DFB9CC52851345800298526 /* AirtableSessionFactory.swift in Sources */,
 				85B83A0225B8735F0008E167 /* AnyImageLoader.swift in Sources */,
 				85CC02E9261B6E820016E618 /* TableListItem.swift in Sources */,
 				85CC02EC261B6EA90016E618 /* TextTableViewCell.swift in Sources */,
@@ -920,11 +843,8 @@
 				9DFF6277282E63100008AEEF /* SupervisorsController.swift in Sources */,
 				85763A9D25E2B0AB00CB4ED3 /* RotatingUIImagePickerController.swift in Sources */,
 				9D5F061B286F348F00C8D4A6 /* ProtectEarthSessionFactory.swift in Sources */,
-				9D562D6B28C2BBDC00B66716 /* RemoteTree.swift in Sources */,
-				859F62C325C1C44C005E61F7 /* AirtableImage.swift in Sources */,
 				857BADAC25B1FAAA005D7D35 /* UploadListFlowViewController.swift in Sources */,
 				859F62EF25C48FD8005E61F7 /* AlertModel.swift in Sources */,
-				9D79A5AC283AE32C00F0F96C /* AirtableSiteService.swift in Sources */,
 				857123D02639C3AF008EE027 /* ClosureCancellable.swift in Sources */,
 				85B839BB25B4814F0008E167 /* ListSection.swift in Sources */,
 			);
