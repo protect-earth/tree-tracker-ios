@@ -8,8 +8,6 @@ class ProtectEarthSiteServiceTests: XCTestCase {
     private let DEFAULT_EXPECTATION_TIMEOUT = TimeInterval(5)
 
     override func setUpWithError() throws {
-        // Use protectEarthApi resolver
-        Resolver.root = Resolver.protectEarthApi
         siteService = Resolver.resolve(SiteService.self)
         
         let expectation = expectation(description: "Sync()")
