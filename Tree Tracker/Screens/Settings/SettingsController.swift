@@ -24,7 +24,7 @@ class SettingsController: UITableViewController {
     
     // MARK: - Datasource
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -33,6 +33,8 @@ class SettingsController: UITableViewController {
             return "Entities"
         case 1:
             return "API"
+        case 2:
+            return "Device ID"
         default:
             return "Error"
         }
@@ -44,6 +46,8 @@ class SettingsController: UITableViewController {
             return entityTypes.count
         case 1:
             return apiProperties.count
+        case 2:
+            return 1
         default:
             return 0
         }
@@ -57,6 +61,9 @@ class SettingsController: UITableViewController {
             cell.textLabel?.text = entityTypes[indexPath.item]
         case 1:
             cell.textLabel?.text = apiProperties[indexPath.item]
+            cell.selectionStyle = .none
+        case 2:
+            cell.textLabel?.text = UIDevice.current.identifierForVendor?.uuidString ?? "unknown"
             cell.selectionStyle = .none
         default:
             break
