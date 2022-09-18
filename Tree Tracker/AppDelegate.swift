@@ -9,6 +9,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let config = RollbarConfig()
         config.destination.accessToken = Secrets.rollbarAuthToken
         config.destination.environment = Constants.Http.protectEarthEnvironmentName
+        config.person.id = UIDevice.current.identifierForVendor?.uuidString ?? "unknown"
 
         Rollbar.initWithConfiguration(config)
         Rollbar.infoMessage("App startup")
