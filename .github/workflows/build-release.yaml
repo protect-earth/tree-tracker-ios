@@ -36,7 +36,7 @@ jobs:
           PROTECT_EARTH_ENV_NAME: ${{ secrets.PROTECT_EARTH_ENV_NAME }}
           ROLLBAR_AUTH_TOKEN: ${{ secrets.ROLLBAR_AUTH_TOKEN }}
         run: pouch
-      - name: Build and test
+      - name: Build and unit test
         env:
           platform: ${{ 'iOS Simulator' }}
         run: |
@@ -44,6 +44,14 @@ jobs:
           device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{print $1" "$2}'`
           set -o pipefail
           xcodebuild build-for-testing test -scheme "Unit Tests" -project "Tree Tracker.xcodeproj" -destination "platform=$platform,name=$device" | xcpretty
+      - name: UI Tests
+        env:
+          platform: ${{ 'iOS Simulator' }}
+        run: |
+          # xcrun xctrace returns via stderr, not the expected stdout (see https://developer.apple.com/forums/thread/663959)
+          device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{print $1" "$2}'`
+          set -o pipefail
+          xcodebuild build-for-testing test -scheme "UI Tests" -project "Tree Tracker.xcodeproj" -destination "platform=$platform,name=$device" | xcpretty
 
   build-publish-stage:
     name: Build and publish - Stage
