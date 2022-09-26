@@ -9,7 +9,7 @@ on:
 jobs:
   test:
     name: Build and test
-    runs-on: macos-latest
+    runs-on: macos-12
     environment:
       name: Test
     steps:
@@ -36,6 +36,8 @@ jobs:
           PROTECT_EARTH_ENV_NAME: ${{ secrets.PROTECT_EARTH_ENV_NAME }}
           ROLLBAR_AUTH_TOKEN: ${{ secrets.ROLLBAR_AUTH_TOKEN }}
         run: pouch
+      - name: Select XCode version
+        run: sudo xcode-select -s "/Applications/Xcode_13.4.1.app"
       - name: Build and unit test
         env:
           platform: ${{ 'iOS Simulator' }}
