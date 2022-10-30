@@ -48,7 +48,7 @@ extension Resolver: ResolverRegistering {
         // MARK: Integration testing
         register { let service = DummyLocationService()
             service.accuracyMode = .inaccurate
-            return service
+            return service as LocationService
         }.implements(LocationService.self)
         
         if CommandLine.arguments.contains("--integration-test") {
