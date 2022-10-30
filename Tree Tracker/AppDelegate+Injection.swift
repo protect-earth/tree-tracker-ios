@@ -46,10 +46,7 @@ extension Resolver: ResolverRegistering {
         register { SettingsController(style: UITableView.Style.grouped) }
         
         // MARK: Integration testing
-        register { let service = DummyLocationService()
-            service.accuracyMode = .inaccurate
-            return service as LocationService
-        }.implements(LocationService.self)
+        register { DummyLocationService(.inaccurate) as LocationService }
         
         if CommandLine.arguments.contains("--integration-test") {
             Resolver.root = Resolver.integrationTest

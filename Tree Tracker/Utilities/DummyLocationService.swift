@@ -24,6 +24,10 @@ class DummyLocationService: LocationService {
     
     var accuracyMode: AccuracyMode = .accurate
     
+    init(_ accuracyMode: AccuracyMode = .accurate) {
+        self.accuracyMode = accuracyMode
+    }
+    
     func startTrackLocation() {
     }
     
