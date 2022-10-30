@@ -19,6 +19,8 @@ extension Resolver: ResolverRegistering {
         register { UIScreenLockManager() }
         register { PHCachingImageManager() }
         register { RecentSpeciesManager(defaults: resolve(), strategy: .todayUsedSpecies) }
+        register { DefaultImagePickerFactory() as ImagePickerFactory }
+        register { LocationManager() as LocationService }
         
         // MARK: Services
         register { ProtectEarthSessionFactory(baseUrl: Constants.Http.protectEarthApiBaseUrl,
@@ -42,6 +44,12 @@ extension Resolver: ResolverRegistering {
         register { SpeciesController() }
         register { SupervisorsController() }
         register { SettingsController(style: UITableView.Style.grouped) }
+        
+        // MARK: Integration testing
+        register { let service = DummyLocationService()
+            service.accuracyMode = .inaccurate
+            return service
+        }.implements(LocationService.self)
         
         if CommandLine.arguments.contains("--integration-test") {
             Resolver.root = Resolver.integrationTest

@@ -18,7 +18,11 @@ protocol LocationProviding {
     func stopTrackingLocation()
 }
 
-final class LocationManager: NSObject, PermissionAsking, LocationProviding, CLLocationManagerDelegate {
+protocol LocationService: LocationProviding, PermissionAsking {
+    
+}
+
+final class LocationManager: NSObject, LocationService, CLLocationManagerDelegate {
     var currentLocation: CLLocation? {
         manager.location
     }

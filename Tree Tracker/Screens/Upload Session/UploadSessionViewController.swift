@@ -2,9 +2,13 @@ import UIKit
 import AVFoundation
 import CoreLocation
 import Combine
+import Resolver
 
 final class UploadSessionViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate {
     let viewModel: UploadSessionViewModel
+    
+    @Injected private var pickerFactory: ImagePickerFactory
+    @Injected private var locationService: LocationService
 
     private lazy var actionButton: RoundedTappableButton = {
         let button = RoundedTappableButton()
@@ -148,15 +152,19 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
 
     private func presentPhotoSession(cancel: @escaping () -> Void, completion: @escaping (Result<UIImage, Error>) -> Void) {
         removeCurrentCameraViewIfNeeded { [weak self] in
-            self?.photoSessionCancel = cancel
-            self?.photoSessionCompletion = completion
+            guard let self = self else { return }
+            self.photoSessionCancel = cancel
+            self.photoSessionCompletion = completion
 
-            let picker = RotatingUIImagePickerController()
+            let picker = self.pickerFactory.get()
             picker.modalPresentationStyle = .overCurrentContext
             picker.mediaTypes = ["public.image"]
-            picker.sourceType = .camera
             picker.delegate = self
-            self?.present(picker, animated: true, completion: nil)
+            
+            // TODO - display a warning in the camera view while location horiz.accuracy
+            // exceeds some threshold
+            
+            self.present(picker, animated: true, completion: nil)
         }
     }
 
@@ -180,7 +188,10 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
             return
         }
 
-        picker.stopVideoCapture()
+        if picker.sourceType == .camera {
+            picker.stopVideoCapture()
+        }
+
         photoSessionCompletion?(.success(image))
     }
 }

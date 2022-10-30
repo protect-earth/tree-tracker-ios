@@ -21,19 +21,19 @@ final class UploadSessionViewModel {
     
     @Injected private var siteService: SiteService
     @Injected private var supervisorService: SupervisorService
+    @Injected private var locationManager: LocationService
     
     private let navigation: UploadSessionNavigating
     private let assetManager: AssetManaging
-    private let locationManager: LocationProviding & PermissionAsking
+    
     private var sites: [Site] = []
     private var supervisors: [Supervisor] = []
     
     private var observables = Set<AnyCancellable>()
 
-    init(navigation: UploadSessionNavigating, assetManager: AssetManaging = PHAssetManager(), locationManager: LocationProviding & PermissionAsking = LocationManager()) {
+    init(navigation: UploadSessionNavigating, assetManager: AssetManaging = PHAssetManager()) {
         self.navigation = navigation
         self.assetManager = assetManager
-        self.locationManager = locationManager
         
         siteService.sitesPublisher.sink() { [weak self] data in
             self?.sites = data.sorted(by: \.name, order: .ascending)

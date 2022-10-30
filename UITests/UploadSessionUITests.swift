@@ -1,4 +1,5 @@
 import XCTest
+import Resolver
 
 final class UploadSessionUITests: XCTestCase {
     
@@ -6,22 +7,58 @@ final class UploadSessionUITests: XCTestCase {
 
     override func setUpWithError() throws {
         continueAfterFailure = false
+        app.launchArguments = ["--integration-test"]
         app.launch()
     }
     
-    func x_testStartSessionSelectingSiteAndSupervisor() throws {
+    func testStartSessionSelectingSiteAndSupervisor() throws {
+        // Get initial queue size
+        app.tabBars["Tab Bar"].buttons["Queue"].tap()
+        let initialQueueSize = app.collectionViews.cells.count
+        
+        // Add one more tree to the queue
         app.tabBars["Tab Bar"].buttons["Session"].tap()
         app.textFields["Supervisor"].tap()
         
-        let pickerWheel = app/*@START_MENU_TOKEN@*/.pickerWheels["--"]/*[[".pickers.pickerWheels[\"--\"]",".pickerWheels[\"--\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        let pickerWheel = app.pickerWheels.firstMatch
         pickerWheel.swipeUp()
-        app/*@START_MENU_TOKEN@*/.staticTexts["Done"]/*[[".buttons[\"Done\"].staticTexts[\"Done\"]",".staticTexts[\"Done\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        let supervisorName = String(describing: pickerWheel.value!)
+        app.buttons["Done"].tap()
         
         app.textFields["Site"].tap()
-        let sitePicker = app.pickerWheels["--"]
+        let sitePicker = app.pickerWheels.firstMatch
         sitePicker.swipeUp()
-        app/*@START_MENU_TOKEN@*/.staticTexts["Done"]/*[[".buttons[\"Done\"].staticTexts[\"Done\"]",".staticTexts[\"Done\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        let siteName = String(describing: sitePicker.value!)
+        app.buttons["Done"].tap()
         
-        app/*@START_MENU_TOKEN@*/.staticTexts["Start new session"]/*[[".buttons[\"Start new session\"].staticTexts[\"Start new session\"]",".staticTexts[\"Start new session\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.buttons["Start new session"].tap()
+        
+        app.otherElements["Photos"].scrollViews.otherElements.images.firstMatch.tap()
+        app.scrollViews.otherElements.textFields["Species"].tap()
+        
+        let speciesPicker = app.pickerWheels.firstMatch
+        speciesPicker.swipeUp()
+        let speciesName = String(describing: speciesPicker.value!)
+        app.buttons["Done"].tap()
+        
+        app.buttons["Save"].tap()
+        
+        app.navigationBars["Photos"].buttons["Cancel"].tap()
+        
+        // Confirm queue is 1+ initial size
+        app.tabBars["Tab Bar"].buttons["Queue"].tap()
+        XCTAssertEqual(initialQueueSize + 1, app.collectionViews.cells.count)
+        
+        // Open edit view for most recent tree
+        app.collectionViews.images.firstMatch.tap()
+        
+        let supervisorFinal = app.scrollViews.otherElements.textFields["Supervisor"].value!
+        let speciesFinal = app.scrollViews.otherElements.textFields["Species"].value!
+        let siteFinal = app.scrollViews.otherElements.textFields["Site"].value!
+        
+        // Confirm site/super/species are the values we selected earlier
+        XCTAssertEqual(supervisorName, String(describing: supervisorFinal))
+        XCTAssertEqual(speciesName, String(describing: speciesFinal))
+        XCTAssertEqual(siteName, String(describing: siteFinal))
     }
 }
