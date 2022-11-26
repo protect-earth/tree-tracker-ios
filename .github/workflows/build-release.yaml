@@ -48,8 +48,8 @@ jobs:
           xcodebuild build-for-testing test -scheme "Unit Tests" -project "Tree Tracker.xcodeproj" -destination "platform=$platform,name=$device" -resultBundlePath TestResults | xcpretty
       - name: Report unit test results
         uses: kishikawakatsumi/xcresulttool@v1.7.0
-        title: Unit test results
         with:
+          title: Unit test results
           path: TestResults.xcresult
         if: success() || failure()
       - name: UI Tests
@@ -62,8 +62,8 @@ jobs:
           xcodebuild build-for-testing test -scheme "UI Tests" -project "Tree Tracker.xcodeproj" -destination "platform=$platform,name=$device" -resultBundlePath UITestResults | xcpretty
       - name: Report UI test results
         uses: kishikawakatsumi/xcresulttool@v1.7.0
-        title: UI test results
         with:
+          title: UI test results
           path: UITestResults.xcresult
         if: success() || failure()
 
