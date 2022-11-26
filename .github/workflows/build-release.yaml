@@ -51,6 +51,7 @@ jobs:
         with:
           title: Unit test results
           path: TestResults.xcresult
+          show-code-coverage: false
         if: success() || failure()
       - name: UI Tests
         env:
@@ -65,6 +66,7 @@ jobs:
         with:
           title: UI test results
           path: UITestResults.xcresult
+          show-code-coverage: false
         if: success() || failure()
 
   build-publish-stage:
