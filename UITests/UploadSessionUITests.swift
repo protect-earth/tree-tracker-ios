@@ -9,6 +9,17 @@ final class UploadSessionUITests: XCTestCase {
         continueAfterFailure = false
         app.launchArguments = ["--integration-test"]
         app.launch()
+        
+        // prime settings
+        app.tabBars["Tab Bar"].buttons["Settings"].tap()
+        
+        let tablesQuery = app.tables
+        for entity in ["Sites","Supervisors","Species"] {
+            tablesQuery.staticTexts[entity].tap()
+            app.navigationBars[entity].buttons["Refresh"].tap()
+            app.navigationBars[entity].buttons["Settings"].tap()
+        }
+        
     }
     
     func testStartSessionSelectingSiteAndSupervisor() throws {
