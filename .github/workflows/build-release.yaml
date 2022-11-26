@@ -45,7 +45,13 @@ jobs:
           # xcrun xctrace returns via stderr, not the expected stdout (see https://developer.apple.com/forums/thread/663959)
           device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{print $1" "$2}'`
           set -o pipefail
-          xcodebuild build-for-testing test -scheme "Unit Tests" -project "Tree Tracker.xcodeproj" -destination "platform=$platform,name=$device" | xcpretty
+          xcodebuild build-for-testing test -scheme "Unit Tests" -project "Tree Tracker.xcodeproj" -destination "platform=$platform,name=$device" -resultBundlePath TestResults | xcpretty
+      - name: Report unit test results
+        uses: kishikawakatsumi/xcresulttool@v1.7.0
+        title: Unit test results
+        with:
+          path: TestResults.xcresult
+        if: success() || failure()
       - name: UI Tests
         env:
           platform: ${{ 'iOS Simulator' }}
@@ -53,7 +59,13 @@ jobs:
           # xcrun xctrace returns via stderr, not the expected stdout (see https://developer.apple.com/forums/thread/663959)
           device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{print $1" "$2}'`
           set -o pipefail
-          xcodebuild build-for-testing test -scheme "UI Tests" -project "Tree Tracker.xcodeproj" -destination "platform=$platform,name=$device" | xcpretty
+          xcodebuild build-for-testing test -scheme "UI Tests" -project "Tree Tracker.xcodeproj" -destination "platform=$platform,name=$device" -resultBundlePath UITestResults | xcpretty
+      - name: Report UI test results
+        uses: kishikawakatsumi/xcresulttool@v1.7.0
+        title: UI test results
+        with:
+          path: UITestResults.xcresult
+        if: success() || failure()
 
   build-publish-stage:
     name: Build and publish - Stage
