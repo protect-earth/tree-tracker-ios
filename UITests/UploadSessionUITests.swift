@@ -58,7 +58,7 @@ final class UploadSessionUITests: XCTestCase {
         
         // Confirm queue is 1+ initial size
         app.tabBars["Tab Bar"].buttons["Queue"].tap()
-        XCTAssertEqual(initialQueueSize + 1, app.collectionViews.cells.count)
+        XCTAssertEqual(initialQueueSize + 1, app.collectionViews.cells.count, "Upload queue length not incremented by the expected amount")
         
         // Open edit view for most recent tree
         app.collectionViews.images.firstMatch.tap()
@@ -68,8 +68,8 @@ final class UploadSessionUITests: XCTestCase {
         let siteFinal = app.scrollViews.otherElements.textFields["Site"].value!
         
         // Confirm site/super/species are the values we selected earlier
-        XCTAssertEqual(supervisorName, String(describing: supervisorFinal))
-        XCTAssertEqual(speciesName, String(describing: speciesFinal))
-        XCTAssertEqual(siteName, String(describing: siteFinal))
+        XCTAssertEqual(supervisorName, String(describing: supervisorFinal), "Unexpected supervisor")
+        XCTAssertEqual(speciesName, String(describing: speciesFinal), "Unexpected species")
+        XCTAssertEqual(siteName, String(describing: siteFinal), "Unexpected site")
     }
 }
