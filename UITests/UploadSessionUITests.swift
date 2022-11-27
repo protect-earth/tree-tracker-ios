@@ -7,6 +7,7 @@ final class UploadSessionUITests: XCTestCase {
 
     override func setUpWithError() throws {
         continueAfterFailure = false
+        
         app.launchArguments = ["--integration-test"]
         app.launch()
         
@@ -43,8 +44,8 @@ final class UploadSessionUITests: XCTestCase {
         app.buttons["Done"].tap()
         
         app.buttons["Start new session"].tap()
-        
         app.otherElements["Photos"].scrollViews.otherElements.images.firstMatch.tap()
+        waitAndApproveAlertModal()
         app.scrollViews.otherElements.textFields["Species"].tap()
         
         let speciesPicker = app.pickerWheels.firstMatch
@@ -71,5 +72,15 @@ final class UploadSessionUITests: XCTestCase {
         XCTAssertEqual(supervisorName, String(describing: supervisorFinal), "Unexpected supervisor")
         XCTAssertEqual(speciesName, String(describing: speciesFinal), "Unexpected species")
         XCTAssertEqual(siteName, String(describing: siteFinal), "Unexpected site")
+    }
+    
+    private func waitAndApproveAlertModal() {
+        // Ref: https://stackoverflow.com/questions/39973904/handler-of-adduiinterruptionmonitor-is-not-called-for-alert-related-to-photos
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+
+        let alertAllowButton = springboard.buttons.element(boundBy: 1)
+        if alertAllowButton.waitForExistence(timeout: 5) {
+           alertAllowButton.tap()
+        }
     }
 }
