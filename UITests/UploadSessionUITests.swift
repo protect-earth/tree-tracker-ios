@@ -43,7 +43,11 @@ final class UploadSessionUITests: XCTestCase {
         let siteName = String(describing: sitePicker.value!)
         app.buttons["Done"].tap()
         
+        _ = app.buttons["Start new session"].waitForExistence(timeout: 5)
+        
         app.buttons["Start new session"].tap()
+        
+        // NOTE: In Simulator we only have photo library, but on device and in GitHub Actions, we have a camera picker controller!
         app.otherElements["Photos"].scrollViews.otherElements.images.firstMatch.tap()
         waitAndApproveAlertModal()
         app.scrollViews.otherElements.textFields["Species"].tap()
@@ -72,6 +76,27 @@ final class UploadSessionUITests: XCTestCase {
         XCTAssertEqual(supervisorName, String(describing: supervisorFinal), "Unexpected supervisor")
         XCTAssertEqual(speciesName, String(describing: speciesFinal), "Unexpected species")
         XCTAssertEqual(siteName, String(describing: siteFinal), "Unexpected site")
+        
+        
+        
+        
+//        let app = XCUIApplication()
+//        app/*@START_MENU_TOKEN@*/.staticTexts["Start new session"]/*[[".buttons[\"Start new session\"].staticTexts[\"Start new session\"]",".staticTexts[\"Start new session\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+//        app/*@START_MENU_TOKEN@*/.buttons["PhotoCapture"]/*[[".buttons[\"Take Picture\"]",".buttons[\"PhotoCapture\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+//        
+//        let doneButton = app/*@START_MENU_TOKEN@*/.buttons["Done"]/*[[".buttons[\"Use Photo\"]",".buttons[\"Done\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+//        doneButton.tap()
+//        
+//        let element = app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element(boundBy: 0)
+//        element.tap()
+//        doneButton.tap()
+//        element.tap()
+//        doneButton.tap()
+//                
+//        
+        
+        
+        
     }
     
     private func waitAndApproveAlertModal() {

@@ -120,9 +120,9 @@
 		9D5F062D2874E35D00C8D4A6 /* ProtectEarthSiteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F062C2874E35D00C8D4A6 /* ProtectEarthSiteService.swift */; };
 		9D5F062F2874E5CA00C8D4A6 /* ProtectEarthSiteServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F062E2874E5CA00C8D4A6 /* ProtectEarthSiteServiceTests.swift */; };
 		9D5F06332878ADF000C8D4A6 /* DataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F06322878ADF000C8D4A6 /* DataResponse.swift */; };
+		9D62EB6329425B9400C963F7 /* LocationWarningOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D62EB6229425B9400C963F7 /* LocationWarningOverlayView.swift */; };
 		9D79A5A7283AE03100F0F96C /* SiteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5A6283AE03100F0F96C /* SiteService.swift */; };
 		9D79A5AA283AE27500F0F96C /* ProtectEarthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79A5A9283AE27500F0F96C /* ProtectEarthError.swift */; };
-		9D91BD8A290D9E9700E6B46E /* CameraOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D91BD89290D9E9700E6B46E /* CameraOverlayView.swift */; };
 		9DA1FC34283452CC00AEC584 /* AppDelegate+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA1FC33283452CC00AEC584 /* AppDelegate+Injection.swift */; };
 		9DA84707287DB9D400B0BB3E /* ProtectEarthSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA84706287DB9D400B0BB3E /* ProtectEarthSpecies.swift */; };
 		9DA84709287DBA3F00B0BB3E /* ProtectEarthSpeciesServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA84708287DBA3F00B0BB3E /* ProtectEarthSpeciesServiceTests.swift */; };
@@ -271,9 +271,9 @@
 		9D5F062C2874E35D00C8D4A6 /* ProtectEarthSiteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthSiteService.swift; sourceTree = "<group>"; };
 		9D5F062E2874E5CA00C8D4A6 /* ProtectEarthSiteServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthSiteServiceTests.swift; sourceTree = "<group>"; };
 		9D5F06322878ADF000C8D4A6 /* DataResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataResponse.swift; sourceTree = "<group>"; };
+		9D62EB6229425B9400C963F7 /* LocationWarningOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationWarningOverlayView.swift; sourceTree = "<group>"; };
 		9D79A5A6283AE03100F0F96C /* SiteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteService.swift; sourceTree = "<group>"; };
 		9D79A5A9283AE27500F0F96C /* ProtectEarthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthError.swift; sourceTree = "<group>"; };
-		9D91BD89290D9E9700E6B46E /* CameraOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOverlayView.swift; sourceTree = "<group>"; };
 		9DA1FC33283452CC00AEC584 /* AppDelegate+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Injection.swift"; sourceTree = "<group>"; };
 		9DA84706287DB9D400B0BB3E /* ProtectEarthSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthSpecies.swift; sourceTree = "<group>"; };
 		9DA84708287DBA3F00B0BB3E /* ProtectEarthSpeciesServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthSpeciesServiceTests.swift; sourceTree = "<group>"; };
@@ -567,6 +567,7 @@
 			isa = PBXGroup;
 			children = (
 				85B83A1425B87E780008E167 /* UploadViewModel.swift */,
+				9D62EB6229425B9400C963F7 /* LocationWarningOverlayView.swift */,
 			);
 			path = Upload;
 			sourceTree = "<group>";
@@ -604,7 +605,6 @@
 				9DB29B572821D50000AAC73D /* SimpleTableViewCell.swift */,
 				9D4D2A7228E2371500E0F6F0 /* DefaultImagePickerFactory.swift */,
 				9D4D2A7428E238BC00E0F6F0 /* ImagePickerFactory.swift */,
-				9D91BD89290D9E9700E6B46E /* CameraOverlayView.swift */,
 			);
 			path = "UI Components";
 			sourceTree = "<group>";
@@ -831,13 +831,13 @@
 				85E0E05E25B33F8C009D8FC0 /* TappableButton.swift in Sources */,
 				85B839B825B47C3F0008E167 /* TreeCollectionViewCell.swift in Sources */,
 				85B839F825B86F0A0008E167 /* PHAssetManager.swift in Sources */,
+				9D62EB6329425B9400C963F7 /* LocationWarningOverlayView.swift in Sources */,
 				85B839CB25B5F3EC0008E167 /* PHAsset.swift in Sources */,
 				851DAC1D262B4B0B0087E1D4 /* Date.swift in Sources */,
 				9D5F062B2874DD0500C8D4A6 /* ProtectEarthSite.swift in Sources */,
 				9DB29B4E281DE04F00AAC73D /* SettingsNavigationController.swift in Sources */,
 				85B839EC25B8661E0008E167 /* Collection.swift in Sources */,
 				9D79A5A7283AE03100F0F96C /* SiteService.swift in Sources */,
-				9D91BD8A290D9E9700E6B46E /* CameraOverlayView.swift in Sources */,
 				85B83A1525B87E780008E167 /* UploadViewModel.swift in Sources */,
 				85792A7625B0A35A00BFDA96 /* UIImage.swift in Sources */,
 				85792A7A25B0A36B00BFDA96 /* URL.swift in Sources */,
@@ -1136,10 +1136,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Protect Earth CIO (K5RUKV288P)";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = K5RUKV288P;
+				DEVELOPMENT_TEAM = 3D44G9SUKA;
 				INFOPLIST_FILE = "Tree Tracker/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1147,9 +1147,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.7.2;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.protect.earth.Tree-Tracker";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.goongo.Tree-Tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "iOS App Store Distribution Profile 2022-02-13";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

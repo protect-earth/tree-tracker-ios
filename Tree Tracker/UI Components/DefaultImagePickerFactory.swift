@@ -8,9 +8,8 @@ class DefaultImagePickerFactory: ImagePickerFactory {
             picker.sourceType = .photoLibrary
         } else {
             picker.sourceType = .camera
-            // TODO
-//            let overlay = CameraOverlayView(frame: (picker.cameraOverlayView?.frame)!)
-//            picker.cameraOverlayView = overlay
+            let overlay = LocationWarningOverlayView(frame: (picker.cameraOverlayView?.frame)!)
+            picker.cameraOverlayView = overlay
         }
         return picker
     }
