@@ -24,4 +24,5 @@ extension UIImage {
     static var cameraIcon: UIImage { UIImage(systemName: "camera")! }
     static var map: UIImage { UIImage(systemName: "map")! }
     static var settingsIcon: UIImage { UIImage(systemName: "gearshape")! }
+    static var warningTriangle: UIImage { UIImage(systemName: "exclamationmark.triangle")! }
 }

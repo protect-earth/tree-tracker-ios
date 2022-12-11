@@ -154,7 +154,12 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
             let picker = RotatingUIImagePickerController()
             picker.modalPresentationStyle = .overCurrentContext
             picker.mediaTypes = ["public.image"]
-            picker.sourceType = .camera
+            if !UIImagePickerController.isSourceTypeAvailable(.camera) {
+                picker.sourceType = .photoLibrary
+            } else {
+                picker.sourceType = .camera
+                picker.cameraOverlayView = LocationWarningOverlayView(frame: (picker.cameraOverlayView?.frame)!)
+            }
             picker.delegate = self
             self?.present(picker, animated: true, completion: nil)
         }
@@ -180,7 +185,9 @@ final class UploadSessionViewController: UIViewController, UIImagePickerControll
             return
         }
 
-        picker.stopVideoCapture()
+        if picker.sourceType == .camera {
+            picker.stopVideoCapture()
+        }
         photoSessionCompletion?(.success(image))
     }
 }
