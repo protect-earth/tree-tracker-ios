@@ -23,28 +23,11 @@ final class Database {
 
     private func prepareSchema() throws {
         
-        /*
-         In the wild we may have either:
-         - databases which have been created from scratch with all tables and full set of columns - for these databases no migration will have been applied
-         - databases which originally had all tables but not the sentfromdevice column - these databases will have migration "v1" applied
-         
-         We essentially want:
-         - to drop RemoteTree table
-         - change all migrations to avoid referencing CodingKeys and use static strings instead
-         - add column treeId to LocalTree and make this the new PK
-         
-         The plan:
-         - create a completely new set of migrations with new names
-         - check whether all registered migrations have been completed, if not apply the newly registered set
-         - first migration should drop any legacy tables where they exist
-         - second migration should create all the tables the way we want them
-         - notify Rollbar what's going on so we have some visibility
-         - any subsequent migrations should fit nicely into this model
-         */
-        
         var migrator = DatabaseMigrator()
         migrator.eraseDatabaseOnSchemaChange = true
         
+        // Reset migration removes all legacy db objects
+        // to prepare for new schema fully managed by migrations
         migrator.registerMigration("reset") { db in
             for table in ["remoteTree", "localTree", "site", "supervisor", "species"] {
                 if try db.tableExists(table) {
@@ -53,6 +36,7 @@ final class Database {
             }
         }
         
+        // 1.0 migration adds db objects fully via migration
         migrator.registerMigration("1.0") { db in
             try db.create(table: "localTree") { table in
                 table.column("treeId", .text)
@@ -84,6 +68,17 @@ final class Database {
             try db.create(table: "species") { table in
                 table.column("id", .text)
                 table.column("name", .text)
+
+                table.primaryKey(["id"])
+            }
+        }
+        
+        // 1.1 migration adds uploadedTree table to track uploads and allow local cleanup
+        migrator.registerMigration("1.1") { db in
+            try db.create(table: "uploadedTree") { table in
+                table.column("id", .text)
+                table.column("phImageId", .text)
+                table.column("uploadDate", .date)
 
                 table.primaryKey(["id"])
             }

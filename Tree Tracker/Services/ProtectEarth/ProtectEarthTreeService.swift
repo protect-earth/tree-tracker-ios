@@ -10,6 +10,18 @@ class ProtectEarthTreeService: TreeService {
     @Injected private var sessionFactory: AlamofireSessionFactory
     @Injected private var cloudinarySessionFactory: CloudinarySessionFactory
     
+    // Complete any local tidy up following an upload session
+    func tidyUp() {
+        database.fetchAll(UploadedTree.self) { uploadItems in
+            if uploadItems.isNotEmpty {
+                let assetManager = PHAssetManager()
+                let assetIds = uploadItems.map { $0.phImageId }
+                Rollbar.infoMessage("Cleaning up \(uploadItems.count) tree photos")
+                assetManager.deletePhotoAssets(withIds: assetIds)
+            }
+        }
+    }
+    
     func publish(tree: LocalTree, progress: @escaping (Double) -> Void, completion: @escaping (Result<Bool, ProtectEarthError>) -> Void) {
         // Step 1: retrieve image at appropriate resolution
         prepareImageForUpload(tree: tree) { [weak self] (image: UIImage?) in
@@ -141,6 +153,8 @@ class ProtectEarthTreeService: TreeService {
             .response { response in
                 switch response.result {
                 case .success:
+                    let upload = UploadedTree.fromTree(tree)
+                    self.database.save([upload])
                     self.database.remove(tree: tree) {
                         Rollbar.infoMessage("Successfully uploaded tree", data: ["id": tree.treeId,
                                                                                  "md5": tree.imageMd5 ?? "",
