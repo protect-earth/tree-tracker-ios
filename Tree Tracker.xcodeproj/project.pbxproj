@@ -99,6 +99,7 @@
 		9D01D564285CD2E50009F753 /* RollbarNotifier in Frameworks */ = {isa = PBXBuildFile; productRef = 9D01D563285CD2E50009F753 /* RollbarNotifier */; };
 		9D01D566285CD2E50009F753 /* RollbarSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9D01D565285CD2E50009F753 /* RollbarSwift */; };
 		9D2B454F2944F54000B09C84 /* LocationWarningOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2B454E2944F54000B09C84 /* LocationWarningOverlayView.swift */; };
+		9D2DB5F629606B220040B1DB /* UploadedTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2DB5F529606B220040B1DB /* UploadedTree.swift */; };
 		9D47D97F286F293000F7B92F /* ProtectEarthSupervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D47D97E286F293000F7B92F /* ProtectEarthSupervisor.swift */; };
 		9D47D982286F29E100F7B92F /* ProtectEarthCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D47D981286F29E100F7B92F /* ProtectEarthCodableTests.swift */; };
 		9D562D6528B81BDE00B66716 /* ProtectEarthUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D562D6428B81BDE00B66716 /* ProtectEarthUpload.swift */; };
@@ -237,6 +238,7 @@
 		85E0E05D25B33F8C009D8FC0 /* TappableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableButton.swift; sourceTree = "<group>"; };
 		85E0E06125B35744009D8FC0 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		9D2B454E2944F54000B09C84 /* LocationWarningOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationWarningOverlayView.swift; sourceTree = "<group>"; };
+		9D2DB5F529606B220040B1DB /* UploadedTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedTree.swift; sourceTree = "<group>"; };
 		9D47D97E286F293000F7B92F /* ProtectEarthSupervisor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthSupervisor.swift; sourceTree = "<group>"; };
 		9D47D981286F29E100F7B92F /* ProtectEarthCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthCodableTests.swift; sourceTree = "<group>"; };
 		9D562D6428B81BDE00B66716 /* ProtectEarthUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectEarthUpload.swift; sourceTree = "<group>"; };
@@ -467,6 +469,7 @@
 				859F62D825C2215D005E61F7 /* Site.swift */,
 				859F62D525C22140005E61F7 /* Species.swift */,
 				859F62DB25C2218B005E61F7 /* Supervisor.swift */,
+				9D2DB5F529606B220040B1DB /* UploadedTree.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -755,6 +758,7 @@
 				85B83A3325B9C9DC0008E167 /* String.swift in Sources */,
 				857BAD9D25B1DCDE005D7D35 /* Defaults.swift in Sources */,
 				85B839E425B753F10008E167 /* KeyboardLayoutGuide.swift in Sources */,
+				9D2DB5F629606B220040B1DB /* UploadedTree.swift in Sources */,
 				85CC02E6261B6DD90016E618 /* TableViewController.swift in Sources */,
 				9DA84707287DB9D400B0BB3E /* ProtectEarthSpecies.swift in Sources */,
 				85B839D625B74E960008E167 /* KeyboardAccessoryView.swift in Sources */,

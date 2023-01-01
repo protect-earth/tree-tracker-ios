@@ -140,6 +140,7 @@ final class UploadViewModel: CollectionViewModel {
                 Rollbar.infoMessage("Trees upload complete")
                 self?.logger.log(.upload, "No more items to upload - bailing.")
                 self?.stopUploading()
+                self?.treeService.tidyUp()
                 return
             }
             
