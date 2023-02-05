@@ -12,12 +12,36 @@ class ProtectEarthTreeService: TreeService {
     
     // Complete any local tidy up following an upload session
     func tidyUp() {
-        database.fetchAll(UploadedTree.self) { uploadItems in
+        database.fetchAll(UploadedTree.self) { [weak self] uploadItems in
             if uploadItems.isNotEmpty {
                 let assetManager = PHAssetManager()
                 let assetIds = uploadItems.map { $0.phImageId }
-                Rollbar.infoMessage("Cleaning up \(uploadItems.count) tree photos")
-                assetManager.deletePhotoAssets(withIds: assetIds)
+                assetManager.deletePhotoAssets(withIds: assetIds) { success, error in
+                    if success {
+                        print("Deleted \(assetIds.count) photos successfully")
+                        Rollbar.infoMessage("Successfully cleared photos from library",
+                                           data: ["assetCount": assetIds.count],
+                                           context: "PHAssetManager.deletePhotoAssets")
+                        
+                    } else {
+                        print("Photos could not be cleared: \(error!.localizedDescription)")
+                        Rollbar.errorError(error!,
+                                          data: nil,
+                                          context: "PHAssetManager.deletePhotoAssets")
+                    }
+                    /*
+                     If we did not delete photos this is probably because the user declined this option.
+                     
+                     We should clear down the uploaded items list regardless because otherwise we risk
+                     deleting those photos at a later date.
+                     
+                     A consequence of this is that if the user declines, they will always have to clean up
+                     those photos manually, since the app will lose track of them.
+                     */
+                    self?.database.clearUploadedItems {
+                        print("Uploaded items list cleared")
+                    }
+                }
             }
         }
     }

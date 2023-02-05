@@ -214,6 +214,21 @@ final class Database {
             }
         }
     }
+    
+    func clearUploadedItems(completion: @escaping () -> Void) {
+        dbQueue?.asyncWrite { db in
+            try? UploadedTree.deleteAll(db)
+        } completion: { db, result in
+            switch result {
+            case .failure(let error):
+                Rollbar.errorError(error, data: nil, context: "Error deleting uploaded items")
+            default:
+                DispatchQueue.main.async {
+                    completion()
+                }
+            }
+        }
+    }
 
     func update(tree: LocalTree, completion: @escaping () -> Void) {
         dbQueue?.asyncWrite { db in
