@@ -130,6 +130,7 @@
 		9DB29B582821D50000AAC73D /* SimpleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B572821D50000AAC73D /* SimpleTableViewCell.swift */; };
 		9DB29B5A282876B700AAC73D /* SitesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB29B59282876B700AAC73D /* SitesController.swift */; };
 		9DCC548C28073F0A00CF67AA /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 9DCC548B28073F0A00CF67AA /* Resolver */; };
+		9DD03B13299952E400537A31 /* PortraitUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD03B12299952E400537A31 /* PortraitUITabBarController.swift */; };
 		9DFF45C428C69AAD00D45C73 /* CloudinaryUploadResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF45C328C69AAD00D45C73 /* CloudinaryUploadResponse.swift */; };
 		9DFF6277282E63100008AEEF /* SupervisorsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF6276282E63100008AEEF /* SupervisorsController.swift */; };
 		9DFF6279282E64780008AEEF /* SpeciesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF6278282E64780008AEEF /* SpeciesController.swift */; };
@@ -268,6 +269,7 @@
 		9DB29B552821C28300AAC73D /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		9DB29B572821D50000AAC73D /* SimpleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewCell.swift; sourceTree = "<group>"; };
 		9DB29B59282876B700AAC73D /* SitesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SitesController.swift; sourceTree = "<group>"; };
+		9DD03B12299952E400537A31 /* PortraitUITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitUITabBarController.swift; sourceTree = "<group>"; };
 		9DFF45C328C69AAD00D45C73 /* CloudinaryUploadResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudinaryUploadResponse.swift; sourceTree = "<group>"; };
 		9DFF6276282E63100008AEEF /* SupervisorsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupervisorsController.swift; sourceTree = "<group>"; };
 		9DFF6278282E64780008AEEF /* SpeciesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesController.swift; sourceTree = "<group>"; };
@@ -578,6 +580,7 @@
 				85CC02EB261B6EA90016E618 /* TextTableViewCell.swift */,
 				9DB29B572821D50000AAC73D /* SimpleTableViewCell.swift */,
 				9D2B454E2944F54000B09C84 /* LocationWarningOverlayView.swift */,
+				9DD03B12299952E400537A31 /* PortraitUITabBarController.swift */,
 			);
 			path = "UI Components";
 			sourceTree = "<group>";
@@ -824,6 +827,7 @@
 				859F62E025C228AE005E61F7 /* KeyedContainer.swift in Sources */,
 				9DB29B582821D50000AAC73D /* SimpleTableViewCell.swift in Sources */,
 				85B83A2625B9C1D50008E167 /* MainFlowViewController.swift in Sources */,
+				9DD03B13299952E400537A31 /* PortraitUITabBarController.swift in Sources */,
 				85B839D925B74FD20008E167 /* Keyboard.swift in Sources */,
 				85DC213C25E0FC8F003F0721 /* ImageCacheInfo.swift in Sources */,
 				858A0F2725D8156100E12C2B /* TreeDetailsFlowViewController.swift in Sources */,
