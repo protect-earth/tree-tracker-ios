@@ -1,7 +1,7 @@
 import UIKit
 import Photos
 
-final class MainFlowViewController: UITabBarController {
+final class MainFlowViewController: PortraitUITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
