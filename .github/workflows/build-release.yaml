@@ -113,7 +113,7 @@ jobs:
 
   build-publish-prod:
     name: Build and publish - Production
-    # if: ${{ github.ref_name == 'main' && github.event_name != 'pull_request' }}
+    if: ${{ github.ref_name == 'main' && github.event_name != 'pull_request' }}
     runs-on: macos-latest
     needs: test
     environment:
@@ -176,7 +176,7 @@ jobs:
           set -o pipefail
           xcodebuild -archivePath ~/build/Tree\ Tracker.xcarchive -exportOptionsPlist $GITHUB_WORKSPACE/Tree\ Tracker/ExportOptions.plist -exportPath ~/build -allowProvisioningUpdates -exportArchive | xcpretty
       - name: Publish
-        if: ${{ success() && github.ref_name == 'absolutely_not_main' && github.event_name != 'pull_request' }}
+        if: ${{ success() && github.ref_name == 'main' && github.event_name != 'pull_request' }}
         env:
           APPLEID_USERNAME: ${{ secrets.APPLE_APPLE_ID }}
           APPLEID_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
