@@ -14,18 +14,12 @@ jobs:
       name: Test
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Install tools
         run: |
           brew install sunshinejr/formulae/pouch
       - name: Generate Secrets.swift
         env:
-          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
-          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
-          AIRTABLE_TREES_TABLE_NAME: ${{ secrets.AIRTABLE_TREES_TABLE_NAME }}
-          AIRTABLE_SPECIES_TABLE_NAME: ${{ secrets.AIRTABLE_SPECIES_TABLE_NAME }}
-          AIRTABLE_SUPERVISORS_TABLE_NAME: ${{ secrets.AIRTABLE_SUPERVISORS_TABLE_NAME }}
-          AIRTABLE_SITES_TABLE_NAME: ${{ secrets.AIRTABLE_SITES_TABLE_NAME }}
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_UPLOAD_PRESET_NAME: ${{ secrets.CLOUDINARY_UPLOAD_PRESET_NAME }}
           TEST_AIRTABLE_API_KEY: ${{ secrets.TEST_AIRTABLE_API_KEY }}
@@ -54,18 +48,12 @@ jobs:
       name: Stage
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Install tools
         run: |
           brew install sunshinejr/formulae/pouch
       - name: Generate Secrets.swift
         env:
-          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
-          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
-          AIRTABLE_TREES_TABLE_NAME: ${{ secrets.AIRTABLE_TREES_TABLE_NAME }}
-          AIRTABLE_SPECIES_TABLE_NAME: ${{ secrets.AIRTABLE_SPECIES_TABLE_NAME }}
-          AIRTABLE_SUPERVISORS_TABLE_NAME: ${{ secrets.AIRTABLE_SUPERVISORS_TABLE_NAME }}
-          AIRTABLE_SITES_TABLE_NAME: ${{ secrets.AIRTABLE_SITES_TABLE_NAME }}
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_UPLOAD_PRESET_NAME: ${{ secrets.CLOUDINARY_UPLOAD_PRESET_NAME }}
           TEST_AIRTABLE_API_KEY: ${{ secrets.TEST_AIRTABLE_API_KEY }}
@@ -80,23 +68,32 @@ jobs:
         run: agvtool new-version $GITHUB_RUN_NUMBER.1
       - name: Configure Keychain
         env:
-          PROVISIONING_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
-          DISTRIBUTION_CERT_BASE64: ${{ secrets.DISTRIBUTION_CERT_BASE64 }}
-          APP_SPECIFIC_PWD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.DISTRIBUTION_CERT_BASE64 }}
+          P12_PASSWORD: ${{ secrets.DISTRIBUTION_CERT_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
+          # create variables
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          
+          # import certificate and provisioning profile from secrets
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
+
+          # create temporary keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          # import certificate to keychain
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
+          # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          echo -n $PROVISIONING_PROFILE_BASE64 | base64 -D > ~/Library/MobileDevice/Provisioning\ Profiles/iOS_App_Store_Distribution_Profile_20220213.mobileprovision.mobileprovision
-          echo -n $DISTRIBUTION_CERT_BASE64 | base64 -D > ~/Certificates.p12
-
-          ls -lrt ~/Library/MobileDevice/Provisioning\ Profiles
-          ls -lrt ~/Certificates.p12
-
-          security create-keychain -p "" build.keychain
-          security import ~/Certificates.p12 -t agg -k ~/Library/Keychains/build.keychain -P "" -A
-          security list-keychains -s ~/Library/Keychains/build.keychain
-          security default-keychain -s ~/Library/Keychains/build.keychain
-          security unlock-keychain -p "" ~/Library/Keychains/build.keychain
-          security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
+          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
       - name: Build archive
         run: |
           set -o pipefail
@@ -123,18 +120,12 @@ jobs:
       name: Production
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Install tools
         run: |
           brew install sunshinejr/formulae/pouch
       - name: Generate Secrets.swift
         env:
-          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
-          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
-          AIRTABLE_TREES_TABLE_NAME: ${{ secrets.AIRTABLE_TREES_TABLE_NAME }}
-          AIRTABLE_SPECIES_TABLE_NAME: ${{ secrets.AIRTABLE_SPECIES_TABLE_NAME }}
-          AIRTABLE_SUPERVISORS_TABLE_NAME: ${{ secrets.AIRTABLE_SUPERVISORS_TABLE_NAME }}
-          AIRTABLE_SITES_TABLE_NAME: ${{ secrets.AIRTABLE_SITES_TABLE_NAME }}
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_UPLOAD_PRESET_NAME: ${{ secrets.CLOUDINARY_UPLOAD_PRESET_NAME }}
           TEST_AIRTABLE_API_KEY: ${{ secrets.TEST_AIRTABLE_API_KEY }}
@@ -149,23 +140,32 @@ jobs:
         run: agvtool new-version $GITHUB_RUN_NUMBER
       - name: Configure Keychain
         env:
-          PROVISIONING_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
-          DISTRIBUTION_CERT_BASE64: ${{ secrets.DISTRIBUTION_CERT_BASE64 }}
-          APP_SPECIFIC_PWD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.DISTRIBUTION_CERT_BASE64 }}
+          P12_PASSWORD: ${{ secrets.DISTRIBUTION_CERT_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
+          # create variables
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          
+          # import certificate and provisioning profile from secrets
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
+
+          # create temporary keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          # import certificate to keychain
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
+          # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          echo -n $PROVISIONING_PROFILE_BASE64 | base64 -D > ~/Library/MobileDevice/Provisioning\ Profiles/iOS_App_Store_Distribution_Profile_20220213.mobileprovision.mobileprovision
-          echo -n $DISTRIBUTION_CERT_BASE64 | base64 -D > ~/Certificates.p12
-
-          ls -lrt ~/Library/MobileDevice/Provisioning\ Profiles
-          ls -lrt ~/Certificates.p12
-
-          security create-keychain -p "" build.keychain
-          security import ~/Certificates.p12 -t agg -k ~/Library/Keychains/build.keychain -P "" -A
-          security list-keychains -s ~/Library/Keychains/build.keychain
-          security default-keychain -s ~/Library/Keychains/build.keychain
-          security unlock-keychain -p "" ~/Library/Keychains/build.keychain
-          security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
+          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
       - name: Build archive
         run: |
           set -o pipefail
