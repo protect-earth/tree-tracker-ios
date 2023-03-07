@@ -4,8 +4,6 @@
 <dict>
 	<key>teamID</key>
 	<string>K5RUKV288P</string>
-	<key>signingCertificate</key>
-	<string>iPhone Distribution: Protect Earth CIO (K5RUKV288P)</string>
 	<key>provisioningProfiles</key>
 	<dict>
 		<key>com.protect.earth.Tree-Tracker</key>
