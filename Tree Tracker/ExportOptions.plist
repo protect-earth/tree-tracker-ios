@@ -9,7 +9,7 @@
 	<key>provisioningProfiles</key>
 	<dict>
 		<key>com.protect.earth.Tree-Tracker</key>
-		<string>iOS App Store Distribution Profile 2022-02-13</string>
+		<string>iOS AppStore Profile 07-Mar-2023</string>
 	</dict>
 	<key>method</key>
 	<string>app-store</string>
