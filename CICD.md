@@ -20,12 +20,13 @@ PROTECT_EARTH_ENV_NAME
 ROLLBAR_AUTH_TOKEN
 ```
 
-Finally, additional secrets must be configured to store the details required for signing and publishing the app to the AppStore. Add the following secrets in the same way as before, with the appropriate values:
+Finally, additional secrets must be configured to store the details required for signing and publishing the app to the AppStore. Add the following secrets in the same way as before, with the appropriate values. Note that `KEYCHAIN_PASSWORD` can be any random string. It is used to secure the temporary keychain created during the build process, and is not referenced anywhere outside of the build.
 
 ```
 PROVISIONING_PROFILE_BASE64
 DISTRIBUTION_CERT_BASE64
 DISTRIBUTION_CERT_PASSWORD
+KEYCHAIN_PASSWORD
 APPLE_APPLE_ID
 APPLE_APP_SPECIFIC_PASSWORD
 ```
