@@ -1,6 +1,7 @@
 import Resolver
 import Photos
 import UIKit
+import AWSS3
 
 extension Resolver: ResolverRegistering {
     
@@ -19,6 +20,7 @@ extension Resolver: ResolverRegistering {
         register { UIScreenLockManager() }
         register { PHCachingImageManager() }
         register { RecentSpeciesManager(defaults: resolve(), strategy: .todayUsedSpecies) }
+        register { AWSS3Configuration(accessKey: Secrets.awsAccessKey, secretKey: Secrets.awsSecretKey, region: .EUWest1) }
         
         // MARK: Services
         register { ProtectEarthSessionFactory(baseUrl: Constants.Http.protectEarthApiBaseUrl,
@@ -32,10 +34,6 @@ extension Resolver: ResolverRegistering {
         register { ProtectEarthSiteService() as SiteService }
         register { ProtectEarthSpeciesService() as SpeciesService }
         register { ProtectEarthTreeService() as TreeService }
-        register { CloudinarySessionFactory(httpRequestTimeoutSeconds: Constants.Http.requestTimeoutSeconds,
-                                            httpWaitsForConnectivity: true,
-                                            httpRetryDelaySeconds: Constants.Http.requestRetryDelaySeconds,
-                                            httpRetryLimit: Constants.Http.requestRetryLimit) }
         
         // MARK: Controllers
         register { SitesController() }

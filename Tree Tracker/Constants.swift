@@ -1,10 +1,6 @@
 import Foundation
 
 enum Constants {
-    enum Cloudinary {
-        static let cloudName = Secrets.cloudinaryCloudName
-        static let uploadPresetName = Secrets.cloudinaryUploadPresetName
-    }
     enum Http {
         static let requestWaitsForConnectivity = true
         static let requestTimeoutSeconds: TimeInterval = 30

@@ -3,12 +3,14 @@ import Resolver
 import Alamofire
 import UIKit
 import RollbarNotifier
+import AWSS3
 
 class ProtectEarthTreeService: TreeService {
 
     @Injected private var database: Database
-    @Injected private var sessionFactory: AlamofireSessionFactory
-    @Injected private var cloudinarySessionFactory: CloudinarySessionFactory
+    @Injected private var awsS3Configuration: AWSS3Configuration
+    
+    private var completionHolders: [UploadCompletionHolder] = []
     
     // Complete any local tidy up following an upload session
     func tidyUp() {
@@ -48,7 +50,7 @@ class ProtectEarthTreeService: TreeService {
     
     func publish(tree: LocalTree, progress: @escaping (Double) -> Void, completion: @escaping (Result<Bool, ProtectEarthError>) -> Void) {
         // Step 1: retrieve image at appropriate resolution
-        prepareImageForUpload(tree: tree) { [weak self] (image: UIImage?) in
+        prepareImageForUpload(tree: tree) { [weak self] image in
             
             guard let self = self else { return }
             
@@ -59,28 +61,55 @@ class ProtectEarthTreeService: TreeService {
             
             progress(0.1)
             
-            // Step 2: upload image to cloudinary
-            self.uploadImageToImageStore(image: image, progress: progress) { imageUploadResult in
+            // Step 2: Upload the image to storage, with appropriate metadata
+            guard let data = image.jpegData(compressionQuality: 0.8) else {
+                Rollbar.errorMessage("No jpeg for image, upload will be skipped")
+                completion(.failure(.localError(errorCode: 100, errorMessage: "Unable to fetch jpeg image data")))
+                return
+            }
+            let md5 = data.md5()
+            
+//            guard let plantedDate = tree.createDate else { return }
+            guard let coordinates: [String] = tree.coordinates?.components(separatedBy: ", ") else { return }
+            
+            var latitude = ""
+            var longitude = ""
+            
+            if (coordinates.count == 2) {
+                latitude = coordinates[0]
+                longitude = coordinates[1]
+            }
+            
+            let expression = AWSS3TransferUtilityUploadExpression()
+            expression.progressBlock = {(task, taskProgress) in
+                progress(0.1 + taskProgress.fractionCompleted * 0.9)
+            }
+            expression.setValue(tree.createDate?.ISO8601Format(), forRequestHeader: "x-amz-meta-planted-at")
+            expression.setValue(tree.supervisor, forRequestHeader: "x-amz-meta-supervisor")
+            expression.setValue(latitude, forRequestHeader: "x-amz-meta-latitude")
+            expression.setValue(longitude, forRequestHeader: "x-amz-meta-longitude")
+            expression.setValue(tree.site, forRequestHeader: "x-amz-meta-site")
+            expression.setValue(tree.species, forRequestHeader: "x-amz-meta-species")
+            expression.setValue(tree.phImageId, forRequestHeader: "x-amz-meta-phimageid")
+            expression.setValue(md5, forRequestHeader: "x-amz-meta-md5")
+            expression.contentMD5 = md5 // uncommenting this leads to a HTTP 400 error
 
-                switch imageUploadResult {
-                case let .success((url, md5)):
-                    var newTree = tree
-                    newTree.imageMd5 = md5
-
-                    // Step 3: post tree details to API and remove tree from queue
-                    self.postMetadata(tree: newTree, imageStoreUrl: url, completion: completion)
-
-                case let .failure(error):
-                    Rollbar.errorError(error,
-                                       data: ["md5": tree.imageMd5 ?? "",
-                                              "phImageId": tree.phImageId,
-                                              "coordinates": tree.coordinates ?? "",
-                                              "supervisor": tree.supervisor,
-                                              "site": tree.site],
-                                       context: "Fetching upload image for tree")
-                    completion(.failure(ProtectEarthError.remoteError(errorCode: error.responseCode ?? -1,
-                                                                    errorMessage: error.errorDescription ?? "")))
-                }
+            let transferUtility = AWSS3TransferUtility.default()
+            transferUtility.shouldRemoveCompletedTasks = true
+            
+            let completionHolder = UploadCompletionHolder(tree: tree, database: database, completion: completion)
+            completionHolders.append(completionHolder)
+            
+            transferUtility.uploadData(data,
+                                       bucket: Secrets.awsBucketName,
+                                       key: tree.treeId,
+                                       contentType: "image/jpeg",
+                                       expression: expression,
+                                       completionHandler: completionHolder.completionHandler
+            )
+            .continueWith { (task) -> AnyObject? in
+                // stuff we want to do once the task is *STARTED*
+                return nil
             }
         }
     }
@@ -88,112 +117,6 @@ class ProtectEarthTreeService: TreeService {
     private func prepareImageForUpload(tree: LocalTree, completion: @escaping (UIImage?) -> Void) {
         let imageLoader = PHImageLoader(phImageId: tree.phImageId)
         imageLoader.loadUploadImage(completion: completion)
-    }
-    
-    private func uploadImageToImageStore(image: UIImage,
-                                 progress: @escaping (Double) -> Void,
-                                 completion: @escaping (Result<(String, String), AFError>) -> Void) {
-        let cloudinaryUploadUrl = URL(string: "https://api.cloudinary.com/v1_1/\(Constants.Cloudinary.cloudName)/image/upload")!
-        let cloudinarySession = cloudinarySessionFactory.get()
-        
-        guard let data = image.jpegData(compressionQuality: 0.8) else {
-            Rollbar.errorMessage("No pngData for image, upload will be skipped")
-            completion(.failure(.explicitlyCancelled))
-            return
-        }
-        
-        let md5 = data.md5()
-        let request = cloudinarySession
-            .upload(
-                multipartFormData: { formData in
-                    formData.append(data, withName: "file", fileName: "image.jpg", mimeType: "image/jpg")
-                    formData.append(Constants.Cloudinary.uploadPresetName.data(using: .utf8)!, withName: "upload_preset")
-                },
-                to: cloudinaryUploadUrl,
-                method: .post
-            )
-            .uploadProgress { uploadProgress in
-                // as we expect uploading of the image to be our most network intensive
-                // phase of the upload process we allow this operation to consume the
-                // 10-90% complete segment of our total progress
-                progress(0.1 + 0.8 * uploadProgress.fractionCompleted)
-            }
-        
-        request
-            .validate(statusCode: [200])
-            .cURLDescription { desc in
-                print(desc)
-            }
-            .responseDecodable(of: CloudinaryUploadResponse.self) { response in
-                switch response.result {
-                case let .failure(error):
-                    Rollbar.errorError(error,
-                                       data: [:],
-                                       context: response.dataAsUTF8String())
-                    completion(.failure(error))
-                case let.success(response):
-                    guard let url = response.secureUrl else { fallthrough }
-                    completion(.success((url, md5)))
-                default:
-                    Rollbar.errorMessage("Error while parsing JSON",
-                                         data: [:],
-                                         context: response.dataAsUTF8String())
-                    completion(.failure(.explicitlyCancelled))
-                }
-            }
-    }
-    
-    private func postMetadata(tree: LocalTree, imageStoreUrl: String, completion: @escaping (Result<Bool, ProtectEarthError>) -> Void) {
-        guard let plantedDate = tree.createDate else { return }
-        guard let coordinates: [String] = tree.coordinates?.components(separatedBy: ", ") else { return }
-        guard let latitude = Decimal(string: coordinates[0]) else { return }
-        guard let longitude = Decimal(string: coordinates[1]) else { return }
-        
-        let treeMeta = ProtectEarthUpload(imageUrl: imageStoreUrl,
-                                          latitude: latitude,
-                                          longitude: longitude,
-                                          plantedAt: plantedDate,
-                                          supervisor: ProtectEarthIdentifier(id: tree.supervisor),
-                                          site: ProtectEarthIdentifier(id: tree.site),
-                                          species: ProtectEarthIdentifier(id: tree.species))
-        
-        let encoder = JSONEncoder()
-        // php api doesn't like escaped slashes
-        encoder.outputFormatting = .init(arrayLiteral: [.sortedKeys, .withoutEscapingSlashes])
-        encoder.dateEncodingStrategy = .iso8601
-        
-        let headers : HTTPHeaders = ["Idempotency-Key": tree.treeId]
-        let request = getSession().request(sessionFactory.getTreeUrl(),
-                                           method: .post,
-                                           parameters: treeMeta,
-                                           encoder: JSONParameterEncoder(encoder: encoder),
-                                           headers: headers)
-        
-        request
-            .cURLDescription { description in
-                print(description)
-            }
-            .validate(statusCode: [201])
-            .response { response in
-                switch response.result {
-                case .success:
-                    let upload = UploadedTree.fromTree(tree)
-                    self.database.save([upload])
-                    self.database.remove(tree: tree) {
-                        Rollbar.infoMessage("Successfully uploaded tree", data: ["id": tree.treeId,
-                                                                                 "md5": tree.imageMd5 ?? "",
-                                                                                 "imageUrl": treeMeta.imageUrl])
-                        completion(.success(true))
-                    }
-                case let .failure(error):
-                    completion(.failure(ProtectEarthError.remoteError(errorCode: error.responseCode ?? -1,
-                                                                    errorMessage: error.errorDescription ?? "No description")))
-                }
-            }
-    }
-    
-    private func getSession() -> Session {
-        sessionFactory.get()
     }
     
 }
