@@ -92,7 +92,7 @@ class ProtectEarthTreeService: TreeService {
             expression.setValue(tree.species, forRequestHeader: "x-amz-meta-species")
             expression.setValue(tree.phImageId, forRequestHeader: "x-amz-meta-phimageid")
             expression.setValue(md5, forRequestHeader: "x-amz-meta-md5")
-            expression.contentMD5 = md5 // uncommenting this leads to a HTTP 400 error
+//            expression.contentMD5 = md5 // uncommenting this leads to a HTTP 400 error
 
             let transferUtility = AWSS3TransferUtility.default()
             transferUtility.shouldRemoveCompletedTasks = true
