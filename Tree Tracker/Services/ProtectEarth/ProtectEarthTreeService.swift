@@ -97,8 +97,8 @@ class ProtectEarthTreeService: TreeService {
             let transferUtility = AWSS3TransferUtility.default()
             transferUtility.shouldRemoveCompletedTasks = true
             
-            let completionHolder = UploadCompletionHolder(tree: tree, database: database, completion: completion)
-            completionHolders.append(completionHolder)
+            let completionHolder = UploadCompletionHolder(tree: tree, database: self.database, completion: completion)
+            self.completionHolders.append(completionHolder)
             
             transferUtility.uploadData(data,
                                        bucket: Secrets.awsBucketName,
