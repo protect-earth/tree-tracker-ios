@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -101,8 +101,8 @@
 		9D2B454F2944F54000B09C84 /* LocationWarningOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2B454E2944F54000B09C84 /* LocationWarningOverlayView.swift */; };
 		9D2DB5F629606B220040B1DB /* UploadedTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2DB5F529606B220040B1DB /* UploadedTree.swift */; };
 		9D36C7EB2A22950B00E04552 /* AWSS3Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D36C7EA2A22950B00E04552 /* AWSS3Configuration.swift */; };
-		9D3C323729F420C800462558 /* AWSCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9D3C323629F420C800462558 /* AWSCore */; };
-		9D3C323929F420C800462558 /* AWSS3 in Frameworks */ = {isa = PBXBuildFile; productRef = 9D3C323829F420C800462558 /* AWSS3 */; };
+		9D375F912AC8873C009AF2D2 /* AWSCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9D375F902AC8873C009AF2D2 /* AWSCore */; };
+		9D375F932AC8873C009AF2D2 /* AWSS3 in Frameworks */ = {isa = PBXBuildFile; productRef = 9D375F922AC8873C009AF2D2 /* AWSS3 */; };
 		9D3C323B29F5BDEA00462558 /* UploadCompletionHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3C323A29F5BDEA00462558 /* UploadCompletionHolder.swift */; };
 		9D47D97F286F293000F7B92F /* ProtectEarthSupervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D47D97E286F293000F7B92F /* ProtectEarthSupervisor.swift */; };
 		9D47D982286F29E100F7B92F /* ProtectEarthCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D47D981286F29E100F7B92F /* ProtectEarthCodableTests.swift */; };
@@ -294,8 +294,8 @@
 				85A0EF7F25A226D9003CE744 /* GRDB in Frameworks */,
 				85B83A0D25B87C0D0008E167 /* BSImagePicker in Frameworks */,
 				9DCC548C28073F0A00CF67AA /* Resolver in Frameworks */,
-				9D3C323929F420C800462558 /* AWSS3 in Frameworks */,
-				9D3C323729F420C800462558 /* AWSCore in Frameworks */,
+				9D375F932AC8873C009AF2D2 /* AWSS3 in Frameworks */,
+				9D375F912AC8873C009AF2D2 /* AWSCore in Frameworks */,
 				9D01D566285CD2E50009F753 /* RollbarSwift in Frameworks */,
 				9D01D564285CD2E50009F753 /* RollbarNotifier in Frameworks */,
 				85A0EF8325A2271C003CE744 /* Alamofire in Frameworks */,
@@ -666,8 +666,8 @@
 				9D01D561285CD2E50009F753 /* RollbarCommon */,
 				9D01D563285CD2E50009F753 /* RollbarNotifier */,
 				9D01D565285CD2E50009F753 /* RollbarSwift */,
-				9D3C323629F420C800462558 /* AWSCore */,
-				9D3C323829F420C800462558 /* AWSS3 */,
+				9D375F902AC8873C009AF2D2 /* AWSCore */,
+				9D375F922AC8873C009AF2D2 /* AWSS3 */,
 			);
 			productName = "Tree Tracker";
 			productReference = 853ABD522596144900144B0D /* Tree Tracker.app */;
@@ -708,7 +708,7 @@
 				85B83A0B25B87C0D0008E167 /* XCRemoteSwiftPackageReference "BSImagePicker" */,
 				9DCC548A28073F0A00CF67AA /* XCRemoteSwiftPackageReference "Resolver" */,
 				9D01D560285CD2E50009F753 /* XCRemoteSwiftPackageReference "rollbar-apple" */,
-				9D3C323529F420C800462558 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */,
+				9D375F8F2AC8873C009AF2D2 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */,
 			);
 			productRefGroup = 853ABD532596144900144B0D /* Products */;
 			projectDirPath = "";
@@ -1073,7 +1073,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K5RUKV288P;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K5RUKV288P;
 				INFOPLIST_FILE = "Tree Tracker/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -1185,12 +1185,12 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		9D3C323529F420C800462558 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */ = {
+		9D375F8F2AC8873C009AF2D2 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/aws-amplify/aws-sdk-ios-spm";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 2.30.0;
+				minimumVersion = 2.33.0;
 			};
 		};
 		9DCC548A28073F0A00CF67AA /* XCRemoteSwiftPackageReference "Resolver" */ = {
@@ -1234,14 +1234,14 @@
 			package = 9D01D560285CD2E50009F753 /* XCRemoteSwiftPackageReference "rollbar-apple" */;
 			productName = RollbarSwift;
 		};
-		9D3C323629F420C800462558 /* AWSCore */ = {
+		9D375F902AC8873C009AF2D2 /* AWSCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9D3C323529F420C800462558 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */;
+			package = 9D375F8F2AC8873C009AF2D2 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */;
 			productName = AWSCore;
 		};
-		9D3C323829F420C800462558 /* AWSS3 */ = {
+		9D375F922AC8873C009AF2D2 /* AWSS3 */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9D3C323529F420C800462558 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */;
+			package = 9D375F8F2AC8873C009AF2D2 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */;
 			productName = AWSS3;
 		};
 		9D5CDBD427BBB7D2007D4F0A /* Alamofire */ = {

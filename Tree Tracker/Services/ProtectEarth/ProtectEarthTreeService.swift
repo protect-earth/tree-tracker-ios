@@ -102,7 +102,7 @@ class ProtectEarthTreeService: TreeService {
             
             transferUtility.uploadData(data,
                                        bucket: Secrets.awsBucketName,
-                                       key: tree.treeId,
+                                       key: "\(Secrets.awsBucketPrefix)/\(tree.treeId)",
                                        contentType: "image/jpeg",
                                        expression: expression,
                                        completionHandler: completionHolder.completionHandler

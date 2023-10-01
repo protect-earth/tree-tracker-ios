@@ -16,7 +16,8 @@ class UploadCompletionHolder {
         
         self.completionHandler = { (task, error) -> Void in
             if let error = error {
-                completion(.failure(.remoteError(errorCode: 243, errorMessage: error.localizedDescription)))
+                let responseCode = task.response?.statusCode.description ?? "???"
+                completion(.failure(.remoteError(errorCode: 243, errorMessage: "Error in S3 upload - [\(responseCode)] \(error.localizedDescription)")))
             }
             else if task.status != .completed {
                 completion(.failure(.remoteError(errorCode: 245, errorMessage: "Unknown S3 error")))
