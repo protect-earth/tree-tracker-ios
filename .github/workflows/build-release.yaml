@@ -20,8 +20,11 @@ jobs:
           brew install sunshinejr/formulae/pouch
       - name: Generate Secrets.swift
         env:
-          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
-          CLOUDINARY_UPLOAD_PRESET_NAME: ${{ secrets.CLOUDINARY_UPLOAD_PRESET_NAME }}
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+          AWS_BUCKET_NAME: ${{ vars.AWS_BUCKET_NAME }}
+          AWS_BUCKET_REGION: ${{ vars.AWS_BUCKET_REGION }}
+          AWS_BUCKET_PREFIX: ${{ vars.AWS_BUCKET_PREFIX }}
           PROTECT_EARTH_API_TOKEN: ${{ secrets.PROTECT_EARTH_API_TOKEN }}
           PROTECT_EARTH_API_BASE_URL: ${{ secrets.PROTECT_EARTH_API_BASE_URL }}
           PROTECT_EARTH_ENV_NAME: ${{ secrets.PROTECT_EARTH_ENV_NAME }}
@@ -51,8 +54,11 @@ jobs:
           brew install sunshinejr/formulae/pouch
       - name: Generate Secrets.swift
         env:
-          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
-          CLOUDINARY_UPLOAD_PRESET_NAME: ${{ secrets.CLOUDINARY_UPLOAD_PRESET_NAME }}
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+          AWS_BUCKET_NAME: ${{ vars.AWS_BUCKET_NAME }}
+          AWS_BUCKET_REGION: ${{ vars.AWS_BUCKET_REGION }}
+          AWS_BUCKET_PREFIX: ${{ vars.AWS_BUCKET_PREFIX }}
           PROTECT_EARTH_API_TOKEN: ${{ secrets.PROTECT_EARTH_API_TOKEN }}
           PROTECT_EARTH_API_BASE_URL: ${{ secrets.PROTECT_EARTH_API_BASE_URL }}
           PROTECT_EARTH_ENV_NAME: ${{ secrets.PROTECT_EARTH_ENV_NAME }}
@@ -120,8 +126,11 @@ jobs:
           brew install sunshinejr/formulae/pouch
       - name: Generate Secrets.swift
         env:
-          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
-          CLOUDINARY_UPLOAD_PRESET_NAME: ${{ secrets.CLOUDINARY_UPLOAD_PRESET_NAME }}
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+          AWS_BUCKET_NAME: ${{ vars.AWS_BUCKET_NAME }}
+          AWS_BUCKET_REGION: ${{ vars.AWS_BUCKET_REGION }}
+          AWS_BUCKET_PREFIX: ${{ vars.AWS_BUCKET_PREFIX }}
           PROTECT_EARTH_API_TOKEN: ${{ secrets.PROTECT_EARTH_API_TOKEN }}
           PROTECT_EARTH_API_BASE_URL: ${{ secrets.PROTECT_EARTH_API_BASE_URL }}
           PROTECT_EARTH_ENV_NAME: ${{ secrets.PROTECT_EARTH_ENV_NAME }}

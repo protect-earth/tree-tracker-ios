@@ -13,7 +13,10 @@ class SettingsController: UITableViewController {
     
     private var entityTypes = ["Sites", "Supervisors", "Species"]
     private var apiProperties = [Constants.Http.protectEarthApiBaseUrl,
-                                 Constants.Http.protectEarthEnvironmentName]
+                                 Constants.Http.protectEarthEnvironmentName,
+                                 Secrets.awsBucketName,
+                                 "\(Secrets.awsAccessKey.prefix(4))************\(Secrets.awsAccessKey.suffix(4))",
+                                 Secrets.awsBucketRegion]
 
     override func viewDidLoad() {
         super.viewDidLoad()

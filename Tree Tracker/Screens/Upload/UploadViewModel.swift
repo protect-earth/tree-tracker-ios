@@ -69,17 +69,19 @@ final class UploadViewModel: CollectionViewModel {
     }
 
     private func presentUploadButton(isUploading: Bool) {
-        self.actionButton = ButtonModel(
-            title: .text(isUploading ? "Stop uploading" : "Upload"),
-            action: { [weak self] in
-                if isUploading {
-                    self?.cancelUploading()
-                } else {
-                    self?.upload()
-                }
-            },
-            isEnabled: true
-        )
+        DispatchQueue.main.async {
+            self.actionButton = ButtonModel(
+                title: .text(isUploading ? "Stop uploading" : "Upload"),
+                action: { [weak self] in
+                    if isUploading {
+                        self?.cancelUploading()
+                    } else {
+                        self?.upload()
+                    }
+                },
+                isEnabled: true
+            )
+        }
     }
 
     private func presentNavigationButtons(isUploading: Bool) {
