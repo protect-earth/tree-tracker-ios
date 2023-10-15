@@ -72,8 +72,8 @@ class ProtectEarthTreeService: TreeService {
 //            guard let plantedDate = tree.createDate else { return }
             guard let coordinates: [String] = tree.coordinates?.components(separatedBy: ", ") else { return }
             
-            var latitude = ""
-            var longitude = ""
+            var latitude = "0"
+            var longitude = "0"
             
             if (coordinates.count == 2) {
                 latitude = coordinates[0]
@@ -109,6 +109,17 @@ class ProtectEarthTreeService: TreeService {
             )
             .continueWith { (task) -> AnyObject? in
                 // stuff we want to do once the task is *STARTED*
+                Rollbar.infoMessage("S3 upload started", data: [
+                    "bucket-path": "\(Secrets.awsBucketPrefix)/\(tree.treeId)",
+                    "x-amz-meta-planted-at": tree.createDate?.ISO8601Format(),
+                    "x-amz-meta-supervisor": tree.supervisor,
+                    "x-amz-meta-latitude": latitude,
+                    "x-amz-meta-longitude": longitude,
+                    "x-amz-meta-site": tree.site,
+                    "x-amz-meta-species": tree.species,
+                    "x-amz-meta-phimageid": tree.phImageId,
+                    "x-amz-meta-md5": md5
+                ])
                 return nil
             }
         }
