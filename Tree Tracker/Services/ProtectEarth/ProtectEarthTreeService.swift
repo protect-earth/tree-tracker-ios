@@ -72,8 +72,8 @@ class ProtectEarthTreeService: TreeService {
 //            guard let plantedDate = tree.createDate else { return }
             guard let coordinates: [String] = tree.coordinates?.components(separatedBy: ", ") else { return }
             
-            var latitude = ""
-            var longitude = ""
+            var latitude = "0"
+            var longitude = "0"
             
             if (coordinates.count == 2) {
                 latitude = coordinates[0]
