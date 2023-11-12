@@ -67,9 +67,7 @@ class ProtectEarthTreeService: TreeService {
                 completion(.failure(.localError(errorCode: 100, errorMessage: "Unable to fetch jpeg image data")))
                 return
             }
-            let md5 = data.md5()
             
-//            guard let plantedDate = tree.createDate else { return }
             guard let coordinates: [String] = tree.coordinates?.components(separatedBy: ", ") else { return }
             
             var latitude = "0"
@@ -84,15 +82,13 @@ class ProtectEarthTreeService: TreeService {
             expression.progressBlock = {(task, taskProgress) in
                 progress(0.1 + taskProgress.fractionCompleted * 0.9)
             }
-            expression.setValue(tree.createDate?.ISO8601Format(), forRequestHeader: "x-amz-meta-planted-at")
+            expression.setValue(tree.createDate?.ISO8601Format(), forRequestHeader: "x-amz-meta-datetaken")
             expression.setValue(tree.supervisor, forRequestHeader: "x-amz-meta-supervisor")
             expression.setValue(latitude, forRequestHeader: "x-amz-meta-latitude")
             expression.setValue(longitude, forRequestHeader: "x-amz-meta-longitude")
             expression.setValue(tree.site, forRequestHeader: "x-amz-meta-site")
             expression.setValue(tree.species, forRequestHeader: "x-amz-meta-species")
             expression.setValue(tree.phImageId, forRequestHeader: "x-amz-meta-phimageid")
-            expression.setValue(md5, forRequestHeader: "x-amz-meta-md5")
-//            expression.contentMD5 = md5 // uncommenting this leads to a HTTP 400 error
 
             let transferUtility = AWSS3TransferUtility.default()
             transferUtility.shouldRemoveCompletedTasks = true
@@ -111,14 +107,13 @@ class ProtectEarthTreeService: TreeService {
                 // stuff we want to do once the task is *STARTED*
                 Rollbar.infoMessage("S3 upload started", data: [
                     "bucket-path": "\(Secrets.awsBucketPrefix)/\(tree.treeId)",
-                    "x-amz-meta-planted-at": tree.createDate?.ISO8601Format(),
+                    "x-amz-meta-datetaken": tree.createDate?.ISO8601Format(),
                     "x-amz-meta-supervisor": tree.supervisor,
                     "x-amz-meta-latitude": latitude,
                     "x-amz-meta-longitude": longitude,
                     "x-amz-meta-site": tree.site,
                     "x-amz-meta-species": tree.species,
-                    "x-amz-meta-phimageid": tree.phImageId,
-                    "x-amz-meta-md5": md5
+                    "x-amz-meta-phimageid": tree.phImageId
                 ])
                 return nil
             }
