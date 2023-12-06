@@ -72,6 +72,7 @@ class ProtectEarthTreeService: TreeService {
             
             var latitude = "0"
             var longitude = "0"
+            var uploadKey = "\(Secrets.awsBucketPrefix)/\(tree.treeId).jpg"
             
             if (coordinates.count == 2) {
                 latitude = coordinates[0]
@@ -98,7 +99,7 @@ class ProtectEarthTreeService: TreeService {
             
             transferUtility.uploadData(data,
                                        bucket: Secrets.awsBucketName,
-                                       key: "\(Secrets.awsBucketPrefix)/\(tree.treeId)",
+                                       key: uploadKey,
                                        contentType: "image/jpeg",
                                        expression: expression,
                                        completionHandler: completionHolder.completionHandler
@@ -106,7 +107,7 @@ class ProtectEarthTreeService: TreeService {
             .continueWith { (task) -> AnyObject? in
                 // stuff we want to do once the task is *STARTED*
                 Rollbar.infoMessage("S3 upload started", data: [
-                    "bucket-path": "\(Secrets.awsBucketPrefix)/\(tree.treeId)",
+                    "bucket-path": uploadKey,
                     "x-amz-meta-datetaken": tree.createDate?.ISO8601Format(),
                     "x-amz-meta-supervisor": tree.supervisor,
                     "x-amz-meta-latitude": latitude,
