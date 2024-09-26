@@ -9,17 +9,8 @@ App for cataloguing trees planted and allowing the recorded trees to be uploaded
 4. Running the `Tree Tracker` scheme will use the API settings you [configure in your secrets file](#config).
 5. When running on a device, you'll also need to trust the certificate in _Settings -> General -> Profiles_, otherwise you'll see an error after installing the build and before running it.
 
-## Using your own Cloudinary server
-
-### Cloudinary setup
-Cloudinary is used as an image storage and manipulation service, to temporarily hold captured images of the trees and allow these to be quickly resized for our needs.
-
-1. Create a free account on [Cloudinary](https://cloudinary.com/users/register/free) (this will give you the needed Cloud name).
-2. Now create an [upload preset](https://cloudinary.com/console/settings/upload) (this will give you the Upload Preset name).
-3. Keep the keys as you'd need to add them to Secrets.swift later on.
-
 ## Rollbar
-We use [Rollbar](https://www.rollbar.com) for centralised logging of errors, to help us troubleshoot issues with the app during real world usage. 
+We use [Rollbar](https://www.rollbar.com) for centralised error tracking, to help us troubleshoot issues with the app during real world usage. 
 If you wish, you can sign up for a free Rollbar account, generate your own API token and provide it through `ROLLBAR_AUTH_TOKEN` to see telemetry in Rollbar during development. This can be useful if you are specifically adding telemetry features, but otherwise is probably more complex than just looking at the logs in XCode console. 
 
 If you choose not to setup Rollbar, simply add a dummy value for `ROLLBAR_AUTH_TOKEN` and any Rollbar calls will silently fail.
@@ -28,8 +19,11 @@ If you choose not to setup Rollbar, simply add a dummy value for `ROLLBAR_AUTH_T
 Now, to run the project, we'll need to generate the Secrets file. This means you need to run first install [`pouch`](https://github.com/sunshinejr/pouch) (the easiest is using `brew install sunshinejr/formulae/pouch`). Now, you need to have these environment variables available. It would be wise to prepare this file once and keep it somewhere obvious but take care not to check it in to Git. You can simply `source` the file whenever you need to regenerate Secrets.
 
 ```
-export CLOUDINARY_CLOUD_NAME=qqq2ek4mq
-export CLOUDINARY_UPLOAD_PRESET_NAME=iadfadff
+export AWS_BUCKET_NAME=
+export AWS_BUCKET_REGION=
+export AWS_BUCKET_PREFIX=
+export AWS_ACCESS_KEY=
+export AWS_SECRET_KEY=
 export PROTECT_EARTH_API_TOKEN="n|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 export PROTECT_EARTH_API_BASE_URL="api.endpoint.com"
 export PROTECT_EARTH_ENV_NAME=Development
