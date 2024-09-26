@@ -9,15 +9,22 @@ on:
 jobs:
   test:
     name: Build and test
-    runs-on: macos-latest
+    runs-on: macos-13
     environment:
       name: Test
     steps:
+      # Older xcode used to avoid timeouts in fastlane that were introduced by Xcode 15...
+      # https://github.com/orgs/community/discussions/68807
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '14.3.1'
+
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Install tools
-        run: |
-          brew install sunshinejr/formulae/pouch
+        uses: actions/checkout@v4
+        
+      - name: Install Pouch
+        run: brew install sunshinejr/formulae/pouch
+
       - name: Generate Secrets.swift
         env:
           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
@@ -30,6 +37,7 @@ jobs:
           PROTECT_EARTH_ENV_NAME: ${{ secrets.PROTECT_EARTH_ENV_NAME }}
           ROLLBAR_AUTH_TOKEN: ${{ secrets.ROLLBAR_AUTH_TOKEN }}
         run: pouch
+
       - name: Build and test
         env:
           platform: ${{ 'iOS Simulator' }}
@@ -39,91 +47,26 @@ jobs:
           set -o pipefail
           xcodebuild build-for-testing test -scheme "Unit Tests" -project "Tree Tracker.xcodeproj" -destination "platform=$platform,name=$device" | xcpretty
 
-  build-publish-stage:
-    name: Build and publish - Stage
-    if: ${{ false }}
-    runs-on: macos-latest
-    needs: build-publish-prod
-    environment:
-      name: Stage
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Install tools
-        run: |
-          brew install sunshinejr/formulae/pouch
-      - name: Generate Secrets.swift
-        env:
-          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
-          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-          AWS_BUCKET_NAME: ${{ vars.AWS_BUCKET_NAME }}
-          AWS_BUCKET_REGION: ${{ vars.AWS_BUCKET_REGION }}
-          AWS_BUCKET_PREFIX: ${{ vars.AWS_BUCKET_PREFIX }}
-          PROTECT_EARTH_API_TOKEN: ${{ secrets.PROTECT_EARTH_API_TOKEN }}
-          PROTECT_EARTH_API_BASE_URL: ${{ secrets.PROTECT_EARTH_API_BASE_URL }}
-          PROTECT_EARTH_ENV_NAME: ${{ secrets.PROTECT_EARTH_ENV_NAME }}
-          ROLLBAR_AUTH_TOKEN: ${{ secrets.ROLLBAR_AUTH_TOKEN }}
-        run: pouch
-      - name: Set build number
-        run: agvtool new-version $GITHUB_RUN_NUMBER.1
-      - name: Configure Keychain
-        env:
-          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
-          BUILD_CERTIFICATE_BASE64: ${{ secrets.DISTRIBUTION_CERT_BASE64 }}
-          P12_PASSWORD: ${{ secrets.DISTRIBUTION_CERT_PASSWORD }}
-          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-        run: |
-          # create variables
-          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-          
-          # import certificate and provisioning profile from secrets
-          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
-          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
-
-          # create temporary keychain
-          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-
-          # import certificate to keychain
-          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security list-keychain -d user -s $KEYCHAIN_PATH
-
-          # apply provisioning profile
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
-      - name: Build archive
-        run: |
-          set -o pipefail
-          mkdir -p ~/build
-          xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive | xcpretty
-      - name: Export .ipa
-        run: |
-          set -o pipefail
-          xcodebuild -archivePath ~/build/Tree\ Tracker.xcarchive -exportOptionsPlist $GITHUB_WORKSPACE/Tree\ Tracker/ExportOptions.plist -exportPath ~/build -allowProvisioningUpdates -exportArchive | xcpretty
-      - name: Publish
-        if: ${{ success() && github.ref_name == 'main' && github.event_name != 'pull_request' }}
-        env:
-          APPLEID_USERNAME: ${{ secrets.APPLE_APPLE_ID }}
-          APPLEID_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
-        run: |
-          xcrun altool --upload-app -t ios -f ~/build/Tree\ Tracker.ipa -u "$APPLEID_USERNAME" -p "$APPLEID_PASSWORD" --verbose
-
-  build-publish-prod:
-    name: Build and publish - Production
+  build-publish:
+    name: Build and Publish
     if: ${{ github.ref_name == 'main' && github.event_name != 'pull_request' }}
-    runs-on: macos-latest
+    runs-on: macos-13
     needs: test
     environment:
       name: Production
     steps:
+      # Older xcode used to avoid timeouts in fastlane that were introduced by Xcode 15...
+      # https://github.com/orgs/community/discussions/68807
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '14.3.1'
+
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Install tools
-        run: |
-          brew install sunshinejr/formulae/pouch
+        uses: actions/checkout@v4
+
+      - name: Install Pouch
+        run: brew install sunshinejr/formulae/pouch
+          
       - name: Generate Secrets.swift
         env:
           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
@@ -136,8 +79,10 @@ jobs:
           PROTECT_EARTH_ENV_NAME: ${{ secrets.PROTECT_EARTH_ENV_NAME }}
           ROLLBAR_AUTH_TOKEN: ${{ secrets.ROLLBAR_AUTH_TOKEN }}
         run: pouch
+
       - name: Set build number
         run: agvtool new-version $GITHUB_RUN_NUMBER
+        
       - name: Configure Keychain
         env:
           BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
@@ -166,15 +111,18 @@ jobs:
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+
       - name: Build archive
         run: |
           set -o pipefail
           mkdir -p ~/build
           xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive | xcpretty
+
       - name: Export .ipa
         run: |
           set -o pipefail
           xcodebuild -archivePath ~/build/Tree\ Tracker.xcarchive -exportOptionsPlist $GITHUB_WORKSPACE/Tree\ Tracker/ExportOptions.plist -exportPath ~/build -allowProvisioningUpdates -exportArchive | xcpretty
+      
       - name: Publish
         if: ${{ success() && github.ref_name == 'main' && github.event_name != 'pull_request' }}
         env:
