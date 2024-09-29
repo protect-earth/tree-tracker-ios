@@ -9,15 +9,17 @@ on:
 jobs:
   test:
     name: Build and test
-    runs-on: macos-latest
+    runs-on: macos-14
     environment:
-      name: Test
+      name: Production
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Install tools
         run: |
           brew install sunshinejr/formulae/pouch
+
       - name: Generate Secrets.swift
         env:
           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
@@ -30,6 +32,7 @@ jobs:
           PROTECT_EARTH_ENV_NAME: ${{ secrets.PROTECT_EARTH_ENV_NAME }}
           ROLLBAR_AUTH_TOKEN: ${{ secrets.ROLLBAR_AUTH_TOKEN }}
         run: pouch
+
       - name: Build and test
         env:
           platform: ${{ 'iOS Simulator' }}
@@ -42,16 +45,18 @@ jobs:
   build-publish-stage:
     name: Build and publish - Stage
     if: ${{ false }}
-    runs-on: macos-latest
+    runs-on: macos-14
     needs: build-publish-prod
     environment:
       name: Stage
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Install tools
         run: |
           brew install sunshinejr/formulae/pouch
+
       - name: Generate Secrets.swift
         env:
           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
@@ -64,8 +69,10 @@ jobs:
           PROTECT_EARTH_ENV_NAME: ${{ secrets.PROTECT_EARTH_ENV_NAME }}
           ROLLBAR_AUTH_TOKEN: ${{ secrets.ROLLBAR_AUTH_TOKEN }}
         run: pouch
+
       - name: Set build number
         run: agvtool new-version $GITHUB_RUN_NUMBER.1
+
       - name: Configure Keychain
         env:
           BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
@@ -94,15 +101,18 @@ jobs:
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+
       - name: Build archive
         run: |
           set -o pipefail
           mkdir -p ~/build
           xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive | xcpretty
+
       - name: Export .ipa
         run: |
           set -o pipefail
           xcodebuild -archivePath ~/build/Tree\ Tracker.xcarchive -exportOptionsPlist $GITHUB_WORKSPACE/Tree\ Tracker/ExportOptions.plist -exportPath ~/build -allowProvisioningUpdates -exportArchive | xcpretty
+
       - name: Publish
         if: ${{ success() && github.ref_name == 'main' && github.event_name != 'pull_request' }}
         env:
@@ -114,16 +124,18 @@ jobs:
   build-publish-prod:
     name: Build and publish - Production
     if: ${{ github.ref_name == 'main' && github.event_name != 'pull_request' }}
-    runs-on: macos-latest
+    runs-on: macos-14
     needs: test
     environment:
       name: Production
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Install tools
         run: |
           brew install sunshinejr/formulae/pouch
+
       - name: Generate Secrets.swift
         env:
           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
@@ -136,8 +148,10 @@ jobs:
           PROTECT_EARTH_ENV_NAME: ${{ secrets.PROTECT_EARTH_ENV_NAME }}
           ROLLBAR_AUTH_TOKEN: ${{ secrets.ROLLBAR_AUTH_TOKEN }}
         run: pouch
+
       - name: Set build number
         run: agvtool new-version $GITHUB_RUN_NUMBER
+
       - name: Configure Keychain
         env:
           BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
@@ -166,15 +180,18 @@ jobs:
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+
       - name: Build archive
         run: |
           set -o pipefail
           mkdir -p ~/build
           xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive | xcpretty
+
       - name: Export .ipa
         run: |
           set -o pipefail
           xcodebuild -archivePath ~/build/Tree\ Tracker.xcarchive -exportOptionsPlist $GITHUB_WORKSPACE/Tree\ Tracker/ExportOptions.plist -exportPath ~/build -allowProvisioningUpdates -exportArchive | xcpretty
+          
       - name: Publish
         if: ${{ success() && github.ref_name == 'main' && github.event_name != 'pull_request' }}
         env:
