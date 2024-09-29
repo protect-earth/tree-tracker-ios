@@ -16,7 +16,7 @@ If you wish, you can sign up for a free Rollbar account, generate your own API t
 If you choose not to setup Rollbar, simply add a dummy value for `ROLLBAR_AUTH_TOKEN` and any Rollbar calls will silently fail.
 
 ## Additional project config {#config}
-Now, to run the project, we'll need to generate the Secrets file. This means you need to run first install [`pouch`](https://github.com/sunshinejr/pouch) (the easiest is using `brew install sunshinejr/formulae/pouch`). Now, you need to have these environment variables available. It would be wise to prepare this file once and keep it somewhere obvious but take care not to check it in to Git. You can simply `source` the file whenever you need to regenerate Secrets.
+Now, to run the project, we'll need to generate the Secrets file. This means you need to first install [`pouch`](https://github.com/sunshinejr/pouch) (the easiest is using `brew install sunshinejr/formulae/pouch`). Now, you need to have these environment variables available. It would be wise to prepare this file once and keep it somewhere obvious but take care not to check it in to Git. You can simply `source` the file whenever you need to regenerate Secrets.
 
 ```
 export AWS_BUCKET_NAME=
