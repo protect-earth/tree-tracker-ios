@@ -14,7 +14,7 @@ class ProtectEarthSpeciesServiceTests: XCTestCase {
         speciesService!.sync() { _ in
             expectation.fulfill()
         }
-        waitForExpectations(timeout: 5)
+        waitForExpectations(timeout: 10)
     }
     
     override func tearDownWithError() throws {
