@@ -1113,7 +1113,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.protect.earth.Tree-Tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "iOS AppStore Profile 07-Mar-2023";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "App Store Distribution Profile 06-July-2025";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
