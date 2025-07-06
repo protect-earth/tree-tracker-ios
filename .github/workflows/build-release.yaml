@@ -106,7 +106,7 @@ jobs:
       - name: Build archive
         run: |
           mkdir -p ~/build
-          xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -destination "generic/platform=iOS" -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive | xcpretty
+          xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -destination "generic/platform=iOS" -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive
 
       - name: Export .ipa
         run: |
