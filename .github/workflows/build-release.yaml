@@ -111,7 +111,7 @@ jobs:
       - name: Export .ipa
         run: |
           set -o pipefail
-          xcodebuild -archivePath ~/build/Tree\ Tracker.xcarchive -exportOptionsPlist $GITHUB_WORKSPACE/Tree\ Tracker/ExportOptions.plist -exportPath ~/build -allowProvisioningUpdates -exportArchive | xcpretty
+          xcodebuild -archivePath ~/build/Tree\ Tracker.xcarchive -exportOptionsPlist $GITHUB_WORKSPACE/Tree\ Tracker/ExportOptions.plist -exportPath ~/build -allowProvisioningUpdates -exportArchive
           
       - name: Publish
         if: ${{ success() && github.ref_name == 'main' && github.event_name != 'pull_request' }}
