@@ -105,14 +105,13 @@ jobs:
 
       - name: Build archive
         run: |
-          set -o pipefail
           mkdir -p ~/build
-          xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive | xcpretty
+          xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -destination "generic/platform=iOS" -allowProvisioningUpdates -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive
 
       - name: Export .ipa
         run: |
           set -o pipefail
-          xcodebuild -archivePath ~/build/Tree\ Tracker.xcarchive -exportOptionsPlist $GITHUB_WORKSPACE/Tree\ Tracker/ExportOptions.plist -exportPath ~/build -allowProvisioningUpdates -exportArchive | xcpretty
+          xcodebuild -archivePath ~/build/Tree\ Tracker.xcarchive -exportOptionsPlist $GITHUB_WORKSPACE/Tree\ Tracker/ExportOptions.plist -exportPath ~/build -allowProvisioningUpdates -exportArchive
           
       - name: Publish
         if: ${{ success() && github.ref_name == 'main' && github.event_name != 'pull_request' }}
