@@ -104,14 +104,9 @@ jobs:
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
       - name: Build archive
-        env:
-          platform: ${{ 'iOS Simulator' }}
         run: |
-          # xcrun xctrace returns via stderr, not the expected stdout (see https://developer.apple.com/forums/thread/663959)
-          device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{print $1" "$2}'`
-          set -o pipefail
           mkdir -p ~/build
-          xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -destination "platform=$platform,name=$device,arch=x86_64" -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive | xcpretty
+          xcodebuild clean archive -scheme "Tree Tracker" -project "Tree Tracker.xcodeproj" -destination "generic/platform=iOS" -sdk iphoneos -configuration Release -archivePath ~/build/Tree\ Tracker.xcarchive | xcpretty
 
       - name: Export .ipa
         run: |
